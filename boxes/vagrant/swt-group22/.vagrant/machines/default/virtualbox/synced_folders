@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/work":{"guestpath":"/home/vagrant/work","hostpath":"/home/lars/boxes/vagrant/swt-group22","disabled":false},"/vagrant_data":{"guestpath":"/vagrant_data","hostpath":"/home/lars/boxes/vagrant/data","disabled":false}}}
