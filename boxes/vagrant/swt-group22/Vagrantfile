@@ -16,7 +16,8 @@ Vagrant.configure(2) do |config|
   config.vm.box = "ndrwdn/arch-dev"
   config.vm.hostname = "swt-build"
   config.vm.provision :shell, :path => '../arch/bootstrap.sh', args: user
-
+  config.ssh.forward_x11 = true
+  config.ssh.forward_agent = true
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -41,6 +42,7 @@ Vagrant.configure(2) do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   config.vm.synced_folder "../data", "/vagrant_data"
+  config.vm.synced_folder "../../../app", "/home/vagrant/Eclipse/"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
