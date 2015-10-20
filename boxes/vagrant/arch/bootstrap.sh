@@ -19,12 +19,18 @@ if [ ! -e $LOCAL_SRC$ORACLE_JAVA ]; then
     sudo -u vagrant yaourt -G jdk
     cd /home/vagrant/jdk
     sudo -u vagrant makepkg -si --noconfirm -p /home/vagrant/jdk/PKGBUILD
+    [ ! -d /vagrant_data/packages/ ] && mkdir -p /vagrant_data/packages
     mv $ORACLE_JAVA $LOCAL_SRC$ORACLE_JAVA
     cd .. && rm -R jdk
 fi
 
 eval "sudo chsh -s /bin/bash vagrant"
 eval "sudo -u vagrant touch /home/vagrant/.Xauthority"
+
+echo -e "TERM=xterm" >> /home/vagrant/.bashrc
+echo -e "X11Forwarding yes" >> /etc/ssh/sshd_config
+
+eval "systemctl restart sshd"
 
 eval "$INSTALL_SINGLE $LOCAL_SRC$ORACLE_JAVA"
 [ -n "$EXTERNAL_PACKAGES" ] && eval "$INSTALL_PACKAGES $EXTERNAL_PACKAGES"
