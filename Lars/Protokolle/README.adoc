@@ -1,1 +1,2 @@
-Die Protokolle sind HTML exporte. Weil das Repo private ist, funktioniert die html preview funktion leider nicht :(
+Das Protokoll ist ueber folgenden link als HTML Preview verfuegbar:
+http://htmlpreview.github.io/?https://raw.githubusercontent.com/st-tu-dresden-2015/swt15w22/master/Lars/Protokolle/20.10.2015.html?token=AK6YWT8YgaDr6uBeV_bE5MqRgXA_vI4Lks5WMLERwA%3D%3D
