@@ -1,7 +1,11 @@
 #ignore vim swp files
-.swp
+*.swp
 #ignore packages
-.tar.xz
+*.tar.xz
+#ignore java builds files
+*.jar
+*.war
+
 #ignore vagrant meta files
 /boxes/vagrant/swt-group22/.vagrant
 /boxes/vagrang/data/packages/*
