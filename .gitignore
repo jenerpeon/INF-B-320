@@ -2,5 +2,5 @@
 .swp
 #ignore packages
 .tar.xz
-#ignore vagrant
-/swt15w22/boxes/vagrant/swt-group22/.vagrant/
+#ignore vagrant meta files
+/boxes/vagrant/swt-group22/.vagrant
