@@ -32,6 +32,7 @@ Dokumentieren Sie ihre Top-Level-Architektur mit Hilfe eines Komponentendiagramm
 == Anwendungsfälle
 
 === Überblick Anwendungsfalldiagramm
+
 Anwendungsfall-Diagramm, das alle Anwendungsfälle und alle Akteure darstellt
 === Akteure
 
@@ -41,12 +42,10 @@ Akteure sind die Benutzer des Software-Systems oder Nachbarsysteme, welche darau
 [options="header"]
 |===
 |Name |Beschreibung |
-|Gast  |Gäste sind Nutzer, die noch kein Konto erstellt haben. Kann Artikel sehen, Newsletter abonnieren. |
-|Kunde  |Kunde ist eingeloggt, dh hat sich ein Konto erstellt. Hat alle Rechte von "Gast", kann darüber hinaus noch Einkaufen, Retourfunktionen nutzen, Bewerten/Kommentieren, Profildaten ändern.  |
+|Gast  |Gäste sind Nutzer, die noch kein Konto erstellt haben. Kann Artikel sehen und im Warenkorb ablegen, Newsletter abonnieren/abbestellen, sich anmelden/registrieren. |
+|Kunde  |Kunde ist eingeloggt, dh hat sich ein Konto erstellt. Hat alle Rechte von "Gast", kann darüber hinaus noch Einkaufen, Retourfunktionen nutzen, Bewerten/Kommentieren, Profildaten ändern, Kunden werben.  |
 |Mitarbeiter  |Mitarbeiter kann Kommentare zensieren, Lagerbestand überprüfen, Sortiment einkaufen, Katalog bearbeiten. |
-|Administrator  |Administrator hat alle Rechte von Mitarbeiter, kann Personal/Benutzerkonten verwalten, Bilanzen einsehen. |
-|
-|…    |…            |
+|Administrator  |Administrator hat alle Rechte von "Mitarbeiter", kann Personal/Benutzerkonten verwalten, Bilanzen einsehen, Gewinnspiel auslösen. |
 |===
 
 === Anwendungsfallbeschreibungen
@@ -58,7 +57,31 @@ Die typischen Anwendungsfälle (Anlegen, Ändern, Löschen) können zu einem ein
 == Anforderungen
 
 === Muss-Kriterien
-Was das zu erstellende Programm auf alle Fälle leisten muss.
+    hat Sortimentverwaltung,
+    Katalog, Produkte, kundenmeinungen,
+    Abwicklung von kaeufen,
+    Rabatt und Retourbehandlung
+        retourgrund
+    Ermittlung des Geschaeftsergebnisses
+        Lager Festkosten
+        einkaufspreis
+        verkaufspreis
+        Monatliches intervall fuer billanz
+    Rollen
+        gast
+            Kann sortiment einsehen
+        kunde
+            Kann Bestellungen Taetigen
+            konto hat passwort vergessen funktion
+            daten aendern: email, name username addresse
+        mitarbeiter
+            lagerhaltung - einkauf
+            neue artikel hinzufuegen
+            artikel entfernen
+        admin (mindestens ein admin)
+            personalverwaltung
+            Werwaltet Geschaeftsergebnisse
+    Ermittlung der erfolgreichsten Werber
 
 === Kann-Kriterien
 Anforderungen die das Programm leisten können soll, aber für den korrekten Betrieb entbehrlich sind.
