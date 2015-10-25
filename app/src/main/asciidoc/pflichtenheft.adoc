@@ -2,11 +2,11 @@
 
 == Projektname
 
-__Version:__    *1.0*
+__Version:__    *0.1*
 
 __Status:__     *In Arbeit*
 
-__Stand:__      *Bearbeitungsdatum*
+__Stand:__      *25.10.2015*
 
 == Zusammenfassung
 Eine kurze Beschreibung des Dokuments. Wenige Absätze.
@@ -14,6 +14,8 @@ Eine kurze Beschreibung des Dokuments. Wenige Absätze.
 == Inhaltsverzeichnis
 
 == Aufgabenstellung und Zielsetzung
+Software für Onlineshop erstellen, mitunter Kundenlogin, Katalogverwaltung, Personalverwaltung, Lagerbestandsübersicht, Rabattsystem, Retourensystem, Gewinnspiel, Bilanzübersicht und Newsletter einfügen. Die Benutzer sind aufgeteilt in Gäste, Kunden, Mitarbeiter und Administratoren.
+
 Text aus Aufgabenstellung kopieren und ggfs. präzisieren.
 
 == Fachlicher Überblick
@@ -39,6 +41,11 @@ Akteure sind die Benutzer des Software-Systems oder Nachbarsysteme, welche darau
 [options="header"]
 |===
 |Name |Beschreibung |
+|Gast  |Gäste sind Nutzer, die noch kein Konto erstellt haben. Kann Artikel sehen, Newsletter abonnieren. |
+|Kunde  |Kunde ist eingeloggt, dh hat sich ein Konto erstellt. Hat alle Rechte von "Gast", kann darüber hinaus noch Einkaufen, Retourfunktionen nutzen, Bewerten/Kommentieren, Profildaten ändern.  |
+|Mitarbeiter  |Mitarbeiter kann Kommentare zensieren, Lagerbestand überprüfen, Sortiment einkaufen, Katalog bearbeiten. |
+|Administrator  |Administrator hat alle Rechte von Mitarbeiter, kann Personal/Benutzerkonten verwalten, Bilanzen einsehen. |
+|
 |…    |…            |
 |===
 
