@@ -35,7 +35,7 @@ image::Top-Level-Architecture_Diagramm.png[Top Level Architecture Diagramm]
 
 === Überblick Anwendungsfalldiagramm
 
-image::Use_Case_Diagram__Use-Case-Diagramm.png[Use Case Diagramm]
+image::Use-Case-Diagramm.png[Use Case Diagramm]
 
 // See http://asciidoctor.org/docs/user-manual/#tables
 [options="header"]
