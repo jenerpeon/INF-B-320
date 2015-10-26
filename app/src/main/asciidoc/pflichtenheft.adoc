@@ -4,11 +4,11 @@
 
 == Projektname
 
-__Version:__    *0.1*
+__Version:__    *0.1.1*
 
 __Status:__     *In Arbeit*
 
-__Stand:__      *25.10.2015*
+__Stand:__      *26.10.2015*
 
 == Zusammenfassung
 Eine kurze Beschreibung des Dokuments. Wenige Absätze.
