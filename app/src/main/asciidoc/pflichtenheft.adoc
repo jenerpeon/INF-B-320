@@ -40,11 +40,11 @@ image::Use_Case_Diagram__Use-Case-Diagramm.png[Use Case Diagramm]
 // See http://asciidoctor.org/docs/user-manual/#tables
 [options="header"]
 |===
-|Name |Beschreibung |
-|Gast  |Gäste sind Nutzer, die noch kein Konto erstellt haben. Kann Artikel sehen und im Warenkorb ablegen, Newsletter abonnieren/abbestellen, sich anmelden/registrieren. |
-|Kunde  |Kunde ist eingeloggt, dh hat sich ein Konto erstellt. Hat alle Rechte von "Gast", kann darüber hinaus noch Einkaufen, Retourfunktionen nutzen, Bewerten/Kommentieren, Profildaten ändern, Kunden werben.  |
-|Mitarbeiter  |Mitarbeiter kann Kommentare zensieren, Lagerbestand überprüfen, Sortiment einkaufen, Katalog bearbeiten. |
-|Administrator  |Administrator hat alle Rechte von "Mitarbeiter", kann Personal/Benutzerkonten verwalten, Bilanzen einsehen, Gewinnspiel auslösen. |
+|Name |Beschreibung 
+|Gast  |Gäste sind Nutzer, die noch kein Konto erstellt haben. Kann Artikel sehen und im Warenkorb ablegen, Newsletter abonnieren/abbestellen, sich anmelden/registrieren. 
+|Kunde  |Kunde ist eingeloggt, dh hat sich ein Konto erstellt. Hat alle Rechte von "Gast", kann darüber hinaus noch Einkaufen, Retourfunktionen nutzen, Bewerten/Kommentieren, Profildaten ändern, Kunden werben.  
+|Mitarbeiter  |Mitarbeiter kann Kommentare zensieren, Lagerbestand überprüfen, Sortiment einkaufen, Katalog bearbeiten. 
+|Administrator  |Administrator hat alle Rechte von "Mitarbeiter", kann Personal/Benutzerkonten verwalten, Bilanzen einsehen, Gewinnspiel auslösen. 
 |===
 
 === Anwendungsfallbeschreibungen
