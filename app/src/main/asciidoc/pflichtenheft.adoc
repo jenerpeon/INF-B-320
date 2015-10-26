@@ -1,3 +1,5 @@
+:imagesdir: ./Bilder
+
 = Pflichtenheft
 
 == Projektname
@@ -24,19 +26,16 @@ Einleitung für fachfremde Personen
 == Systemgrenze und Top-Level-Architektur
 
 === Kontextdiagramm
-Das Kontextdiagramm zeigt das geplante Software-System in seiner Umgebung. Zur Umgebung gehören alle Nutzergruppen des Systems und Nachbarsysteme. Die Grafik kann auch informell gehalten sein. Überlegen Sie sich dann geeignete Symbole. Die Grafik kann beispielsweise mit Visio erstellt werden. Wenn nötig, erläutern Sie diese Grafik.
+image::Component_Diagram__Kontextdiagramm.png[Kontextdiagramm]
 
 === Top-level architecture
-Dokumentieren Sie ihre Top-Level-Architektur mit Hilfe eines Komponentendiagramm.
+image::Top-Level-Architecture_Diagramm.png[Top Level Architecture Diagramm]
 
 == Anwendungsfälle
 
 === Überblick Anwendungsfalldiagramm
 
-Anwendungsfall-Diagramm, das alle Anwendungsfälle und alle Akteure darstellt
-=== Akteure
-
-Akteure sind die Benutzer des Software-Systems oder Nachbarsysteme, welche darauf zugreifen. Dokumentieren Sie die Akteure in einer Tabelle. Diese Tabelle gibt einen Überblick über die Akteure und beschreibt sie kurz. Die Tabelle hat also mindestens zwei Spalten (Akteur Name und Kommentar).
+image::Use_Case_Diagram__Use-Case-Diagramm.png[Use Case Diagramm]
 
 // See http://asciidoctor.org/docs/user-manual/#tables
 [options="header"]
@@ -49,10 +48,10 @@ Akteure sind die Benutzer des Software-Systems oder Nachbarsysteme, welche darau
 |===
 
 === Anwendungsfallbeschreibungen
-Dieser Unterabschnitt beschreibt die Anwendungsfälle. In dieser Beschreibung müssen noch nicht alle Sonderfälle und Varianten berücksichtigt werden. Schwerpunkt ist es, die wichtigsten Anwendungsfälle des Systems zu finden. Wichtig sind solche Anwendungsfälle, die für den Auftraggeber, den Nutzer den größten Nutzen bringen.
-Für komplexere Anwendungsfälle ein UML-Sequenzdiagramm ergänzen.
-Einfache Anwendungsfälle mit einem Absatz beschreiben.
-Die typischen Anwendungsfälle (Anlegen, Ändern, Löschen) können zu einem einzigen zusammengefasst werden.
+
+Die Anwendungen, welche im Use-Case-Diagramm dargestellt sind teilen sich in vier Gruppen nach den Akteuren ein. Diese sind Gast, Kunde, Mitarbeiter und Administrator. Der Kunde erbt dabei vom Gast und der Administrator vom Mitarbeiter. 
+Der Gast (ein Verbraucher ohne Login) hat die Möglichkeit den gesamten Katalog mit allen Artikeln einzusehen. Er kann Artikel in den Warenkorb legen, damit aber nicht zur Kasse gehen. Weiterhin kann er den Newsletter bestellen oder abbestellen. Letzendlich kann er sich registrieren und damit zum Kunden werden. Dieser hat darüber hinaus die Möglichkeit Artikel zu kaufen und zurückzugeben. Er kann Bewertungen abgeben, andere Kunden werben und seine Profildaten ändern. Dies gilt auch und insbesondere für das Passwort, welches dazu noch über eine Passwort-vergessen-Option geändert werden kann.
+Der Mitarbeiter erledigt die wichtigsten Aufgaben im Backend. Er ist für die Pflege und Bearbeitung des Katalogs zuständig. In diesem Zusammenhang kann er auch den Lagerbestand der Artikel prüfen und diese auch nach- oder neubestellen. Dies gilt insbesondere für Artikel mit niedrigem Warenbestand. Zuletzt kann er auch Bewertungen löschen. Der Administrator hat neben allen Möglichkeiten bzw. Aufgaben des Mitarbeiters darüber hinaus für die Personalverwaltung zu sorgen. Er kann die Geschäftsergebnisse und Bilanzen einsehen. Außerdem kann nur er das jährliche Gewinnspiel auslösen.
 
 == Anforderungen
 
