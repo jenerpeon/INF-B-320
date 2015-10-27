@@ -1,0 +1,11 @@
+2015-10-27 15:47:46,937 [Worker-11] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: de.tudresden.inf.st:guestbook:1.2.0-SNAPSHOT @ /home/lars/develop/Uni/swt_samples/guestbook/pom.xml.
+2015-10-27 15:47:51,697 [Worker-11] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /guestbook/src/main/java
+2015-10-27 15:47:51,698 [Worker-11] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /guestbook/src/main/resources
+2015-10-27 15:47:51,698 [Worker-11] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /guestbook/src/main/resources
+2015-10-27 15:47:51,699 [Worker-11] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /guestbook/src/test/java
+2015-10-27 15:47:51,849 [Worker-11] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 1 project(s) in 11 sec
+2015-10-27 15:47:55,142 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-10-27 15:47:55,148 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-10-27 15:47:55,191 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 5 resources
+2015-10-27 15:47:55,225 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-10-27 15:47:55,225 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/lars/develop/Uni/swt_samples/guestbook/src/test/resources
