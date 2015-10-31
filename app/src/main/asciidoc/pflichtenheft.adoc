@@ -117,5 +117,33 @@ Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Kl
 Mithilfe von Akzeptanztests wird geprüft, ob die Software die funktionalen Erwartungen und Anforderungen im Gebrauch erfüllt. Diese sollen und können aus den Anwendungsfallbeschreibungen und den UML-Sequenzdiagrammen abgeleitet werden. D.h., pro (komplexen) Anwendungsfall gibt es typischerweise mindestens ein Sequenzdiagramm (welches ein Szenarium beschreibt). Für jedes Szenarium sollte es einen Akzeptanztestfall geben. Listen Sie alle Akzeptanztestfälle in tabellarischer Form auf.
 Jeder Testfall soll mit einer ID versehen werde, um später zwischen den Dokumenten (z.B. im Test-Plan) referenzieren zu können.
 
+[options="header"]
+|===
+|ID|Szenario|Vorbedingung|Aktion|Nachbedingung
+|1.1|Nutzer-Regristrierung|Der Besucher ist noch nicht eingeloggt|Der Nutzer gibt seine Daten ein und klickt "Registrieren"|Ein Nutzer Account wurde angelegt. Rückkehr zum Welcome-Screen.
+|1.2|Nutzer-Regristrierung|Der Besucher ist noch nicht eingeloggt|Der Nutzer gibt unvollständige/bereits vorhandene Daten ein und klickt "Registrieren"|Es wird kein Account angelegt. Rückkehr zum Registrierungs-Screen.
+|2.1|Login|Der Besucher ist noch nicht eingeloggt|Der Besucher gibt seine korrekten Daten in das Login-Formular ein und klickt "Login"|Der Besucher wird eingeloggt. Rückkehr zum Welcome-Sreen
+|2.2|Login|Der Besucher ist noch nicht eingeloggt|Der Besucher gibt inkorrekte Daten in das Login-Formular ein und klickt "Login"|Der Besucher wird nicht eingeloggt. Rückkehr zum Login-Sreen
+|2.3|Passwort vergessen|Der Besucher ist noch nicht eingeloggt|Username eingeben. "Passwort vergessen" klicken|	Passwort-Mail wird versendet
+|3.1|Katalog|-|"Katalog"-Link klicken|Katalog wird angezeigt
+|4.1|Artikelansicht|-|Artikel anklicken|Artikelseite wird angezeigt
+|5.1|Warenkorb|Genug Artikel vorhanden|"Warenkorb hinzufügen-Button" wird geklickt|Der Artikel wird in den Warenkorb gelegt
+|5.2|Warenkorb|nicht genug Artikel vorhanden|"Warenkorb hinzufügen-Button" wird geklickt|Fehlermeldung: Lieferung derzeit nicht möglich
+|6.1|Artikel kaufen|Nutzer eingeloggt. Artikel im Warenkorb|"Kaufen"-Button klicken|Artikelmenge wird verringert. Nutzer erhält Bestätigungsmail. Verkauf in Bilanz
+|7.1|Artikel bewerten/kommentieren|Nutzer eingeloggt. Noch keine Bewertung|Bewertung wird abgegeben|Bewertung wird Mitarbeiter zur Prüfung vorgelegt
+|7.2|Artikel bewerten/kommentieren|Nutzer eingeloggt. Es wurde bereits eine Bewertung abgegeben|Bewertung wird abgegeben|Fehler: Nur eine Bewertung pro Kunde/Artikel
+|8.1|Profildaten ändern|Nutzer eingeloggt|Nutzer gibt neue Daten ein|Neue Daten werden in die Kundenliste übernommen
+|9.1|Lagerbestand einsehen|Mitarbeiter eingeloggt|Lager-Übersicht aufrufen|Der Lagerbestand wird aufgelistet
+|10.1|Sortiment einkaufen|Mitarbeiter eingeloggt|Anzahl und Artikel auswählen und Nachbestellung abschicken|Der Lagerbestand erhöht sich. Der Einkauf wird in der Bilanz verbucht
+|11.1|Katalog bearbeiten|Mitarbeiter eingeloggt|Formular mit Name, Beschreibung, Preis, Bild ausfüllen|Der Artikel erscheint im Katalog/Lager
+|11.2|Katalog bearbeiten|Mitarbeiter eingeloggt|Formular unvollständig ausfüllen|Fehler: Fehlerhafte Artikelbeschreibung
+|12.1|Bewertung ablehnen|Mitarbeiter eingeloggt|Nutzerkommentar wird per Button abgelehnt|Kommentar wird gelöscht
+|13.1|Personal verwalten|Admin eingeloggt|Mitarbeiterliste einsehen. Mitarbeiter/Admin anlegen/löschen|Mitarbeiter/Admin wird gespeichert/gelöscht.
+|13.2|Personal verwalten|Admin eingeloggt|Letzten Admin entfernen|Fehler: Ein Admin muss erhalten bleiben.
+|14.1|Gewinnspiel|Admin eingeloggt|"Gewinnspiel auslösen" Button klicken|Die 10% besten Werber werden ausgegeben
+|15.1|Kunden werben|Nutzer eingeloggt||
+|16.1|Rabattsystem|Verkauf liegt 30 Tage zurück|Rabattabrechnung |5% der Einkaufsumme der geworbenen Kunden wurden gutgeschrieben
+|16.2|Rabattsystem|Nutzer eingeloggt. Rabatt vorhanden|Nutzer kauft Artikel|Einkaufspreis wird um Rabatt (höchstens 20%) verringert
+|===
 == Offene Punkte
 Offene Punkte werden entweder direkt in der Spezifikation notiert. Wenn das Pflichtenheft  zum finalen Review vorgelegt wird, sollte es keine offenen Punkte mehr geben.
