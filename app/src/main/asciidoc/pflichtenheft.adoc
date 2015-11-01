@@ -107,31 +107,40 @@ Jeder Testfall soll mit einer ID versehen werde, um später zwischen den Dokumen
 
 [options="header"]
 |===
-|ID|Szenario|Vorbedingung|Aktion|Nachbedingung
-|1.1|Nutzer-Regristrierung|Der Besucher ist noch nicht eingeloggt|Der Nutzer gibt seine Daten ein und klickt "Registrieren"|Ein Nutzer Account wurde angelegt. Rückkehr zum Welcome-Screen.
-|1.2|Nutzer-Regristrierung|Der Besucher ist noch nicht eingeloggt|Der Nutzer gibt unvollständige/bereits vorhandene Daten ein und klickt "Registrieren"|Es wird kein Account angelegt. Rückkehr zum Registrierungs-Screen.
-|2.1|Login|Der Besucher ist noch nicht eingeloggt|Der Besucher gibt seine korrekten Daten in das Login-Formular ein und klickt "Login"|Der Besucher wird eingeloggt. Rückkehr zum Welcome-Sreen
-|2.2|Login|Der Besucher ist noch nicht eingeloggt|Der Besucher gibt inkorrekte Daten in das Login-Formular ein und klickt "Login"|Der Besucher wird nicht eingeloggt. Rückkehr zum Login-Sreen
-|2.3|Passwort vergessen|Der Besucher ist noch nicht eingeloggt|Username eingeben. "Passwort vergessen" klicken|	Passwort-Mail wird versendet
-|3.1|Katalog|-|"Katalog"-Link klicken|Katalog wird angezeigt
-|4.1|Artikelansicht|-|Artikel anklicken|Artikelseite wird angezeigt
-|5.1|Warenkorb|Genug Artikel vorhanden|"Warenkorb hinzufügen-Button" wird geklickt|Der Artikel wird in den Warenkorb gelegt
-|5.2|Warenkorb|nicht genug Artikel vorhanden|"Warenkorb hinzufügen-Button" wird geklickt|Fehlermeldung: Lieferung derzeit nicht möglich
-|6.1|Artikel kaufen|Nutzer eingeloggt. Artikel im Warenkorb|"Kaufen"-Button klicken|Artikelmenge wird verringert. Nutzer erhält Bestätigungsmail. Verkauf in Bilanz
-|7.1|Artikel bewerten/kommentieren|Nutzer eingeloggt. Noch keine Bewertung|Bewertung wird abgegeben|Bewertung wird Mitarbeiter zur Prüfung vorgelegt
-|7.2|Artikel bewerten/kommentieren|Nutzer eingeloggt. Es wurde bereits eine Bewertung abgegeben|Bewertung wird abgegeben|Fehler: Nur eine Bewertung pro Kunde/Artikel
-|8.1|Profildaten ändern|Nutzer eingeloggt|Nutzer gibt neue Daten ein|Neue Daten werden in die Kundenliste übernommen
-|9.1|Lagerbestand einsehen|Mitarbeiter eingeloggt|Lager-Übersicht aufrufen|Der Lagerbestand wird aufgelistet
-|10.1|Sortiment einkaufen|Mitarbeiter eingeloggt|Anzahl und Artikel auswählen und Nachbestellung abschicken|Der Lagerbestand erhöht sich. Der Einkauf wird in der Bilanz verbucht
-|11.1|Katalog bearbeiten|Mitarbeiter eingeloggt|Formular mit Name, Beschreibung, Preis, Bild ausfüllen|Der Artikel erscheint im Katalog/Lager
-|11.2|Katalog bearbeiten|Mitarbeiter eingeloggt|Formular unvollständig ausfüllen|Fehler: Fehlerhafte Artikelbeschreibung
+D|Szenario|Vorbedingung|Aktion|Nachbedingung
+|1.1|Nutzer-Registrierung|Gast hat das Registrierungsformular ausgefuellt, Email Addresse ist bereits registriert| Gast klickt "Registrieren"|Ein Dialog erscheint: Account mit dieser Addresse existiert bereits.\nAccount wird nicht angelegt. Redirect zu Passwort zuruecksetzen.
+|1.2|Nutzer-Registrierung|Gast hat das Registrierungsformular ausgefuellt, Daten sind unvollstaendig| Gast klickt "Registrieren"|Ein Dialog erscheint: Markierte Felder sind auszufuellen
+|1.3|Nutzer-Registrierung|Gast hat das Registrierungsformular ausgefuellt, Benutzername existiert bereits|Gast klickt "Registrieren"|Ein Dialog erscheint: Benutzername ist bereits vergeben , Redirect zu registrierungsformular
+|1.4|Nutzer-Registrierung|Gast hat Valide Daten 1* eingegeben, URL enthaelt assoziierten Account|Gast klickt "Registrieren"|Es wird kein Account angelegt.\nEs wird ein Aktivierungslink per Mail verschickt. Assoziierter Account wird in Feld: "geworben von" eingetragen. Redirect zum login-Screen.
+|1.5|Nutzer-Registrierung|Gast hat Valide Daten 1* eingegeben|Gast klickt "Registrieren"|Es wird kein Account angelegt.\nEs wird ein Aktivierungslink per Mail verschickt \nRedirect zum login-Screen.
+|2.1|Login|Gast hat korrekte Daten 2* in das Login-Formular eingegeben| Gast klickt "Login"|Gast wechselt Rolle zu Customer. Redirect zur Startseite
+|2.2|Login|Gast hat inkorrekte Daten in das Login-Formular eingegeben| Gast klickt "Login"|Gast wird nicht eingeloggt.\nDialog: "Nuzername oder Passwort falsch" erscheint \nRedirect zum Login-Sreen
+|2.3|Passwort vergessen|Gast hat Username eingeben|Gast klickt auf "Passwort vergessen"|Passwort-Mail wird versendet
+|3.1|Katalog anzeigen|Nutzer ist Gast oder Kunde|"Katalog"-Link klicken|Katalog wird angezeigt
+|4.1|Artikelansicht|Nutzer ist Gast oder Kunde |Artikel anklicken|Artikelseite wird angezeigt
+|5.1|Warenkorb|Gast oder Kunde hat valide *3 Produktanzahl eingegeben, genuegend Produkte im Lager|"Warenkorb hinzufügen-Button" wird geklickt|Der Artikel wird in den Warenkorb gelegt
+|5.2|Warenkorb|Gast oder Kunde hat keine valide Produktanzahl eingegeben|"Warenkorb hinzufügen-Button" wird geklickt|Dialog: Stueckzahl unzulaessig
+|5.3|Warenkorb|Gast oder Kunde hat valide Produktanzahl eingegeben, nicht genuegend Produkte im Lager|"Warenkorb hinzufügen-Button" wird geklickt|Dialog: Lieferung derzeit nicht möglich
+|6.1|Bestellen|Gast hat einen oder mehr Artikel im Warenkorb|"Kaufen"-Button klicken|Warenkorb wird gespeichert, redirect zum Login-screen
+|6.2|Bestellen|Kunde hat einen oder mehr Artikel im Warenkorb, Artikelanzahl Groesser als Bestand|"Kaufen"-Button klicken|Dialog: Ein anderer Kunde war schneller. Redirect zum Warenkorb, Artikelanzahl wird auf maximal verfuegbaren wert gesetzt und rot markiert.
+|6.3|Bestellen|Kunde hat einen oder mehr Artikel im Warenkorb, Artikelanzahl kleiner als Bestand, Rabattkontobetrag > 20% des Kaufpreises|"Kaufen"-Button klicken|Artikelmengen werden verringert. Nutzer erhält Bestätigungsmail. Bestellpreis wird um 20% verringert. Rabattpunkte werden dem Rabattkonto abgezogen. Verkauf in Bilanz. 5% des Kaufpreises werden Rabattkonto des Werbers gutgeschrieben. Score des Werbers erhoeht sich um selbigen Betrag. Redirect: Bezahlen
+|6.4|Bestellen|Kunde hat einen oder mehr Artikel im Warenkorb, Artikelanzahl kleiner als Bestand, Rabattkontobetrag < 20% des Kaufpreises|"Kaufen"-Button klicken|Artikelmengen werden verringert. Nutzer erhält Bestätigungsmail. Bestellpreis wird um die Anzahl der Rabattpunkte verringert. Rabattkonto wird auf 0 gesetzt. Verkauf in Bilanz. 5% des Kaufpreises werden dem Rabattkonto des Werbers gutgeschrieben. Score des Werbers erhoeht sich um selbigen Betrag. Redirect: Bezahlen
+|7.1|Artikel bewerten/kommentieren|Eingeloggter Kunde befindet sich auf Produktseite, Kunde hat diesen Artikel noch nicht bewertet, Kunde hat Bewertungsformular ausgefuellt |Kunde klickt "Bewertung abschicken"|Bewertung wird Mitarbeiter zur Prüfung vorgelegt
+|7.2|Artikel bewerten/kommentieren|Eingeloggter Kunde befindet sich auf Produktseite, Kunde hat diesen Artikel bereits bewertet| Kunde klickt: "Bewertung abschicken"|Dialog: Nur eine Bewertung pro Kunde/Artikel zulaessig
+|8.1|Profildaten ändern|Eingeloggter Kunde befindet sich auf seiner Profilseite, Kunde hat neue valide 2* Daten eingegeben| Kunde klickt: "Profil Speichern" |Neue Daten werden in die Kundenliste übernommen
+|8.2|Profildaten ändern|Eingeloggter Kunde befindet sich auf seiner Profilseite, Kunde hat neue nicht valide 2* Daten eingegeben| Kunde klickt: "Profil Speichern" |Dialog mit unzulaessigen Aenderungen erschient
+|9.1|Lagerbestand einsehen|eingeloggter Mitarbeiter befindet sich auf Startseite|Mitarbeiter Klickt: "Lageruebersicht einsehen"|Der Lagerbestand wird aufgelistet
+|10.1|Sortiment einkaufen|eingeloggter Mitarbeiter befindet sich in "Lagerbestand einsehen", Mitarbeiter hat valide Anzahl nachzubestellender Artikel eingegeben|Mitarbeiter klickt auf: "Nachbestellung abschicken"|Der Lagerbestand erhöht sich. Der Einkauf wird in der Bilanz verbucht
+|10.2|Sortiment einkaufen|eingeloggter Mitarbeiter befindet sich in "Lagerbestand einsehen", Mitarbeiter hat nicht valide Anzahl nachzubestellender Artikel eingegeben|Mitarbeiter klickt auf: "Nachbestellung abschicken"|Dialog: Bestellung unzulaessig, Redirect zu Lagerbestand einsehen
+|11.1|Artikel hinzufuegen|eingeloggter Mitarbeiter befindet sich auf Startseite, hat Artikel hinzufuegen ausgewaehlt und Artikelformular mit validen Daten ausgefuellt|Mitarbeiter klickt auf: "dem Sortiment hinzufuegen"|Der Artikel erscheint im Katalog/Lager mit einem Bestand von 0
+|11.2|Artikel hinzufuegen|eingeloggter Mitarbeiter befindet sich auf Startseite, hat Artikel hinzufuegen ausgewaehlt und Artikelformular mit nicht validen Daten ausgefuellt|Mitarbeiter klickt auf: "dem Sortiment hinzufuegen"|Dialog: Einige Angaben sind unzulaessig. redirect zu Produkt hinzufuegen, unzulaessige werte sind markiert.
+|11.3|Artikel entfernen|Eingeloggter Mitarbeiter befindet sich in "Lagerbestand einsehen"|Mitarbeiter klickt: "Produkt aus dem Lager entfernen"|Produkt wird geloescht
 |12.1|Bewertung ablehnen|Mitarbeiter eingeloggt|Nutzerkommentar wird per Button abgelehnt|Kommentar wird gelöscht
 |13.1|Personal verwalten|Admin eingeloggt|Mitarbeiterliste einsehen. Mitarbeiter/Admin anlegen/löschen|Mitarbeiter/Admin wird gespeichert/gelöscht.
-|13.2|Personal verwalten|Admin eingeloggt|Letzten Admin entfernen|Fehler: Ein Admin muss erhalten bleiben.
+|13.2|Personal verwalten|Admin eingeloggt|Letzten Admin entfernen|Fehler: Ein Admin muss erhalten bleiben. \\anmerkung: admins koennen sich nicht selbst loeschen. So ist sichergestellt, dass zumindest ein Admin im System bleibt
 |14.1|Gewinnspiel|Admin eingeloggt|"Gewinnspiel auslösen" Button klicken|Die 10% besten Werber werden ausgegeben
-|15.1|Kunden werben|Nutzer eingeloggt||
-|16.1|Rabattsystem|Verkauf liegt 30 Tage zurück|Rabattabrechnung |5% der Einkaufsumme der geworbenen Kunden wurden gutgeschrieben
-|16.2|Rabattsystem|Nutzer eingeloggt. Rabatt vorhanden|Nutzer kauft Artikel|Einkaufspreis wird um Rabatt (höchstens 20%) verringert
+|15.1|Kunden werben|eingeloggter Kunde hat Formular: "Kunde werben" ausgefuellt | Kunde klickt: "kunde werben" | Email mit Registrierungslink (verknuepfte Account ID) wird an geworbenen Kunden verschickt. 
+|16.1|Rabattsystem|Eingegangene Punkte sind vor >=30 Tagen eingegangen |Rabattabrechnung | Rabattpunkte werden dem Effektiven (dem Kunden sichtbaren Betrag) des Kontos gutgeschrieben
 |===
 == Offene Punkte
 Offene Punkte werden entweder direkt in der Spezifikation notiert. Wenn das Pflichtenheft  zum finalen Review vorgelegt wird, sollte es keine offenen Punkte mehr geben.
