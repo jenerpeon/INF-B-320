@@ -59,19 +59,32 @@ Der Mitarbeiter erledigt die wichtigsten Aufgaben im Backend. Er ist für die Pf
 
 === Muss-Kriterien
 Folgende Funktionalitäten gilt es in den Internet-Dienst von "Emma" einzubauen:
-Das Sortiment als Ansammlung verschiedener Produkte, die jeweils über ein Bild, Preis, Beschreibung und Bewerung verfügt. Es soll für Mitarbeiter die Möglichkeit bestehen, Produkte neu in das Sortiment einzufügen, zu verändern oder zu löschen.
-Das Sortiment wird in einem Katalog aufbereitet, um die Übersicht für den Nutzer zu verbessern. So werden im Katalog Produkte durch Produktkategorien gebündelt.
-Produkte können durch Kunden bewertet gekauft und ggf. reklamiert werden. Beim Kauf wird dem Kunde eine Bestätigungs-Mail zugesandt, die auch Produktinformationen enthält. Bei Reklamationen hat der Kunde einen Grund anzugeben.
-Durch ein Rabattsystem erhält der Kunde durch jeden geworbenen Kunden Rabatt-Punkte, die er bei seinem Einkauf einsetzen kann.
-Ein Gewinnspiel ermöglicht es den erfolgreichsten Werbern eine Kreuzfahrt zu gewinnen. 
-Der Nachkauf von Produkten aus dem Lager erfolgt vom Mitarbeiter. Desweiteren sind Mitarbeiter in der Lage einen selbst verfassten Newsletter an Kunden zu verschicken.
-Die Bilanzen können vom Admin eingesehen werden. Sie zeigen, wie viele Produkte zu welchem Preis aus dem Lager eingekauft und an Kunden verkauft wurden. Monatlich wird eine neue Bilanz erstellt.
-Die Rollen: Gast, Kunde, Mitarbeiter und Admin besitzen verschiedene Zugriffsrechte auf Funktionalitäten.
+[options="header"]
+|===
+|Kriterium |Beschreibung |
+|Produkt |Zu jedem Produkt gibt es ein Bild, Beschreibung, Preis und Kunden-Bewertungen.|
+|Sortiment| Ansammlung verschiedener Produkte. Kann durch Mitarbeiter erweitert, aktualisiert oder verkleinert werden. |
+|Katalog | Im Katalog werden Produkte aud dem Sortiment kategorisiert und geordnet.|
+|Warenkorb| Gäste und Kunden können Produkte im Katalog auswählen und in ihrem Warenkorb aufbewahren. Der Warenkorb kann angezeigt werden.|
+|Einkauf| Kunden können die Produkte aus dem Warenkorb kaufen. Nach Kaufbestätigung wird dem Kunde eine Bestätigungs-Mail zugesandt.|
+|Rabattsystem| Das Rabattkonto des Kunden wird gefüllt, wenn ein geworbener Kunde einen einkauf tätigt. Rabatte vom Rabattkonto können auf den Kaufpreis von Produkten angerechnet werden.|
+|Reklamation| Ein Kunde kann einen gekauftes Produkt reklamieren. Ein Grund ist anzugeben.|
+| Gewinnspiel| Die erfolgreichsten Werber haben die Möglichkeit eine Kreuzfahrt zu gewinnen. |
+|Lager| Mitarbeiter kaufen Waren aus dem Lager nach. Dadurch wird der Bestand im sortiment erhöht.|
+|Newsletter|Mitarbeiter verschicken selbst verfasste Newsletter per Mail an die Kunden.|
+|Bilanzen| Der Admin erhält monatlich eine aktualisierte Bilanz. Sie zeigt, wie viele Produkte zu welchem Preis aus dem Lager eingekauft und an Kunden verkauft wurden. Monatlich wird eine neue Bilanz erstellt. |
+|Rollen| Gast, Kunde, Mitarbeiter und Admin besitzen verschiedene Zugriffsrechte auf Funktionalitäten.|
+|===
 
 === Kann-Kriterien
 Folgende Funktionalitäten können den Internetdienst von "Emma" zusätzlich versessern:
-Bei Reklamation eines Produktes durch einen Kunden wird automatisch ein Lieferschein für die Rücksendung generiert.
-Hinzu kommt, dass der Kunde eine anonyme Produktbewertung vornehmen kann.
+[options="header"]
+|===
+|Kriterium |Beschreibung |
+|Retour-Schein|Bei Reklamation eines Produktes durch einen Kunden wird automatisch ein Lieferschein für die Rücksendung generiert. |
+|Anonyme Produktbewertung| Der Kunde kann eine anonyme Produktbewertung abgeben|
+|===
+
 
 == GUI Prototyp
 
@@ -107,7 +120,7 @@ Jeder Testfall soll mit einer ID versehen werde, um später zwischen den Dokumen
 
 [options="header"]
 |===
-D|Szenario|Vorbedingung|Aktion|Nachbedingung
+|ID|Szenario|Vorbedingung|Aktion|Nachbedingung
 |1.1|Nutzer-Registrierung|Gast hat das Registrierungsformular ausgefuellt, Email Addresse ist bereits registriert| Gast klickt "Registrieren"|Ein Dialog erscheint: Account mit dieser Addresse existiert bereits.\nAccount wird nicht angelegt. Redirect zu Passwort zuruecksetzen.
 |1.2|Nutzer-Registrierung|Gast hat das Registrierungsformular ausgefuellt, Daten sind unvollstaendig| Gast klickt "Registrieren"|Ein Dialog erscheint: Markierte Felder sind auszufuellen
 |1.3|Nutzer-Registrierung|Gast hat das Registrierungsformular ausgefuellt, Benutzername existiert bereits|Gast klickt "Registrieren"|Ein Dialog erscheint: Benutzername ist bereits vergeben , Redirect zu registrierungsformular
@@ -115,7 +128,8 @@ D|Szenario|Vorbedingung|Aktion|Nachbedingung
 |1.5|Nutzer-Registrierung|Gast hat Valide Daten 1* eingegeben|Gast klickt "Registrieren"|Es wird kein Account angelegt.\nEs wird ein Aktivierungslink per Mail verschickt \nRedirect zum login-Screen.
 |2.1|Login|Gast hat korrekte Daten 2* in das Login-Formular eingegeben| Gast klickt "Login"|Gast wechselt Rolle zu Customer. Redirect zur Startseite
 |2.2|Login|Gast hat inkorrekte Daten in das Login-Formular eingegeben| Gast klickt "Login"|Gast wird nicht eingeloggt.\nDialog: "Nuzername oder Passwort falsch" erscheint \nRedirect zum Login-Sreen
-|2.3|Passwort vergessen|Gast hat Username eingeben|Gast klickt auf "Passwort vergessen"|Passwort-Mail wird versendet
+|2.3|Logout|Kunde, Mitarbeiter, Admin eingeloggt|Logout-Button klicken|Rolle wird zu Gast
+|2.4|Passwort vergessen|Gast hat Username eingeben|Gast klickt auf "Passwort vergessen"|Passwort-Mail wird versendet
 |3.1|Katalog anzeigen|Nutzer ist Gast oder Kunde|"Katalog"-Link klicken|Katalog wird angezeigt
 |4.1|Artikelansicht|Nutzer ist Gast oder Kunde |Artikel anklicken|Artikelseite wird angezeigt
 |5.1|Warenkorb|Gast oder Kunde hat valide *3 Produktanzahl eingegeben, genuegend Produkte im Lager|"Warenkorb hinzufügen-Button" wird geklickt|Der Artikel wird in den Warenkorb gelegt
@@ -142,5 +156,11 @@ D|Szenario|Vorbedingung|Aktion|Nachbedingung
 |15.1|Kunden werben|eingeloggter Kunde hat Formular: "Kunde werben" ausgefuellt | Kunde klickt: "kunde werben" | Email mit Registrierungslink (verknuepfte Account ID) wird an geworbenen Kunden verschickt. 
 |16.1|Rabattsystem|Eingegangene Punkte sind vor >=30 Tagen eingegangen |Rabattabrechnung | Rabattpunkte werden dem Effektiven (dem Kunden sichtbaren Betrag) des Kontos gutgeschrieben
 |===
+*1 Name, Vorname, Straße, Hausnr., Postleitzahl, Ort
+
+*2 Benutzername, Passwort
+
+*3 numerischer Wert zwischen 0 und 5 (max. Bestellanzal) 
+
 == Offene Punkte
 Offene Punkte werden entweder direkt in der Spezifikation notiert. Wenn das Pflichtenheft  zum finalen Review vorgelegt wird, sollte es keine offenen Punkte mehr geben.
