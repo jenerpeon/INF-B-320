@@ -142,5 +142,11 @@ D|Szenario|Vorbedingung|Aktion|Nachbedingung
 |15.1|Kunden werben|eingeloggter Kunde hat Formular: "Kunde werben" ausgefuellt | Kunde klickt: "kunde werben" | Email mit Registrierungslink (verknuepfte Account ID) wird an geworbenen Kunden verschickt. 
 |16.1|Rabattsystem|Eingegangene Punkte sind vor >=30 Tagen eingegangen |Rabattabrechnung | Rabattpunkte werden dem Effektiven (dem Kunden sichtbaren Betrag) des Kontos gutgeschrieben
 |===
+*1 Name, Vorname, Straße, Hausnr., Postleitzahl, Ort
+
+*2 Benutzername, Passwort
+
+*3 numerischer Wert zwischen 0 und 5 (max. Bestellanzal) 
+
 == Offene Punkte
 Offene Punkte werden entweder direkt in der Spezifikation notiert. Wenn das Pflichtenheft  zum finalen Review vorgelegt wird, sollte es keine offenen Punkte mehr geben.
