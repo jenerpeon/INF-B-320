@@ -107,7 +107,7 @@ Jeder Testfall soll mit einer ID versehen werde, um später zwischen den Dokumen
 
 [options="header"]
 |===
-D|Szenario|Vorbedingung|Aktion|Nachbedingung
+|ID|Szenario|Vorbedingung|Aktion|Nachbedingung
 |1.1|Nutzer-Registrierung|Gast hat das Registrierungsformular ausgefuellt, Email Addresse ist bereits registriert| Gast klickt "Registrieren"|Ein Dialog erscheint: Account mit dieser Addresse existiert bereits.\nAccount wird nicht angelegt. Redirect zu Passwort zuruecksetzen.
 |1.2|Nutzer-Registrierung|Gast hat das Registrierungsformular ausgefuellt, Daten sind unvollstaendig| Gast klickt "Registrieren"|Ein Dialog erscheint: Markierte Felder sind auszufuellen
 |1.3|Nutzer-Registrierung|Gast hat das Registrierungsformular ausgefuellt, Benutzername existiert bereits|Gast klickt "Registrieren"|Ein Dialog erscheint: Benutzername ist bereits vergeben , Redirect zu registrierungsformular
