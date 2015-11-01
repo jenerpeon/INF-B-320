@@ -115,7 +115,8 @@ D|Szenario|Vorbedingung|Aktion|Nachbedingung
 |1.5|Nutzer-Registrierung|Gast hat Valide Daten 1* eingegeben|Gast klickt "Registrieren"|Es wird kein Account angelegt.\nEs wird ein Aktivierungslink per Mail verschickt \nRedirect zum login-Screen.
 |2.1|Login|Gast hat korrekte Daten 2* in das Login-Formular eingegeben| Gast klickt "Login"|Gast wechselt Rolle zu Customer. Redirect zur Startseite
 |2.2|Login|Gast hat inkorrekte Daten in das Login-Formular eingegeben| Gast klickt "Login"|Gast wird nicht eingeloggt.\nDialog: "Nuzername oder Passwort falsch" erscheint \nRedirect zum Login-Sreen
-|2.3|Passwort vergessen|Gast hat Username eingeben|Gast klickt auf "Passwort vergessen"|Passwort-Mail wird versendet
+|2.3|Logout|Kunde, Mitarbeiter, Admin eingeloggt|Logout-Button klicken|Rolle wird zu Gast
+|2.4|Passwort vergessen|Gast hat Username eingeben|Gast klickt auf "Passwort vergessen"|Passwort-Mail wird versendet
 |3.1|Katalog anzeigen|Nutzer ist Gast oder Kunde|"Katalog"-Link klicken|Katalog wird angezeigt
 |4.1|Artikelansicht|Nutzer ist Gast oder Kunde |Artikel anklicken|Artikelseite wird angezeigt
 |5.1|Warenkorb|Gast oder Kunde hat valide *3 Produktanzahl eingegeben, genuegend Produkte im Lager|"Warenkorb hinzufügen-Button" wird geklickt|Der Artikel wird in den Warenkorb gelegt
