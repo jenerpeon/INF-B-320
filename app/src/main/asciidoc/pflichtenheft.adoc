@@ -61,7 +61,7 @@ Der Mitarbeiter erledigt die wichtigsten Aufgaben im Backend. Er ist für die Pf
 Folgende Funktionalitäten gilt es in den Internet-Dienst von "Emma" einzubauen:
 [options="header"]
 |===
-|Klasse/Enumeration |Beschreibung |
+|Kriterium |Beschreibung |
 |Produkt |Zu jedem Produkt gibt es ein Bild, Beschreibung, Preis und Kunden-Bewertungen.|
 |Sortiment| Ansammlung verschiedener Produkte. Kann durch Mitarbeiter erweitert, aktualisiert oder verkleinert werden. |
 |Katalog | Im Katalog werden Produkte aud dem Sortiment kategorisiert und geordnet.|
@@ -80,6 +80,7 @@ Folgende Funktionalitäten gilt es in den Internet-Dienst von "Emma" einzubauen:
 Folgende Funktionalitäten können den Internetdienst von "Emma" zusätzlich versessern:
 [options="header"]
 |===
+|Kriterium |Beschreibung |
 |Retour-Schein|Bei Reklamation eines Produktes durch einen Kunden wird automatisch ein Lieferschein für die Rücksendung generiert. |
 |Anonyme Produktbewertung| Der Kunde kann eine anonyme Produktbewertung abgeben|
 |===
