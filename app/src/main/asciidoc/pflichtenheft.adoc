@@ -4,14 +4,15 @@
 
 == Projektname
 
-__Version:__    *0.1.1*
+__Version:__    *0.1.2*
 
 __Status:__     *In Arbeit*
 
-__Stand:__      *26.10.2015*
+__Stand:__      *1.11.2015*
 
 == Zusammenfassung
-Eine kurze Beschreibung des Dokuments. Wenige Absätze.
+Das vorliegende Dokument enthält einen Plan zur Erstellung eines Internet-Einkaufsdienstes für das Warenhaus "Emma".
+Neben den geforderten Funktionalitäten und Nutzerrollen, werden Programmabläufe und -strukturen visuell und textuell dargestellt. Auch ein GUI-Prototyp für die Web-Oberfläche liegt bei.
 
 == Inhaltsverzeichnis
 
@@ -21,7 +22,8 @@ Software für Onlineshop erstellen, mitunter Kundenlogin, Katalogverwaltung, Per
 Text aus Aufgabenstellung kopieren und ggfs. präzisieren.
 
 == Fachlicher Überblick
-Einleitung für fachfremde Personen
+Im folgenden Kapitel werden Arbeitsabläufe und Attribute von Programm-Modulen erläutert. Die verschiedenen Nutzerrollen werden erklärt.
+Im Pflichtenheft befinden sich die vertraglich Vereinbarten Funktionalitäten.
 
 == Systemgrenze und Top-Level-Architektur
 
@@ -56,34 +58,20 @@ Der Mitarbeiter erledigt die wichtigsten Aufgaben im Backend. Er ist für die Pf
 == Anforderungen
 
 === Muss-Kriterien
-    hat Sortimentverwaltung,
-    Katalog, Produkte, kundenmeinungen,
-    Abwicklung von kaeufen,
-    Rabatt und Retourbehandlung
-        retourgrund
-    Ermittlung des Geschaeftsergebnisses
-        Lager Festkosten
-        einkaufspreis
-        verkaufspreis
-        Monatliches intervall fuer billanz
-    Rollen
-        gast
-            Kann sortiment einsehen
-        kunde
-            Kann Bestellungen Taetigen
-            konto hat passwort vergessen funktion
-            daten aendern: email, name username addresse
-        mitarbeiter
-            lagerhaltung - einkauf
-            neue artikel hinzufuegen
-            artikel entfernen
-        admin (mindestens ein admin)
-            personalverwaltung
-            Werwaltet Geschaeftsergebnisse
-    Ermittlung der erfolgreichsten Werber
+Folgende Funktionalitäten gilt es in den Internet-Dienst von "Emma" einzubauen:
+Das Sortiment als Ansammlung verschiedener Produkte, die jeweils über ein Bild, Preis, Beschreibung und Bewerung verfügt. Es soll für Mitarbeiter die Möglichkeit bestehen, Produkte neu in das Sortiment einzufügen, zu verändern oder zu löschen.
+Das Sortiment wird in einem Katalog aufbereitet, um die Übersicht für den Nutzer zu verbessern. So werden im Katalog Produkte durch Produktkategorien gebündelt.
+Produkte können durch Kunden bewertet gekauft und ggf. reklamiert werden. Beim Kauf wird dem Kunde eine Bestätigungs-Mail zugesandt, die auch Produktinformationen enthält. Bei Reklamationen hat der Kunde einen Grund anzugeben.
+Durch ein Rabattsystem erhält der Kunde durch jeden geworbenen Kunden Rabatt-Punkte, die er bei seinem Einkauf einsetzen kann.
+Ein Gewinnspiel ermöglicht es den erfolgreichsten Werbern eine Kreuzfahrt zu gewinnen. 
+Der Nachkauf von Produkten aus dem Lager erfolgt vom Mitarbeiter. Desweiteren sind Mitarbeiter in der Lage einen selbst verfassten Newsletter an Kunden zu verschicken.
+Die Bilanzen können vom Admin eingesehen werden. Sie zeigen, wie viele Produkte zu welchem Preis aus dem Lager eingekauft und an Kunden verkauft wurden. Monatlich wird eine neue Bilanz erstellt.
+Die Rollen: Gast, Kunde, Mitarbeiter und Admin besitzen verschiedene Zugriffsrechte auf Funktionalitäten.
 
 === Kann-Kriterien
-Anforderungen die das Programm leisten können soll, aber für den korrekten Betrieb entbehrlich sind.
+Folgende Funktionalitäten können den Internetdienst von "Emma" zusätzlich versessern:
+Bei Reklamation eines Produktes durch einen Kunden wird automatisch ein Lieferschein für die Rücksendung generiert.
+Hinzu kommt, dass der Kunde eine anonyme Produktbewertung vornehmen kann.
 
 == GUI Prototyp
 
