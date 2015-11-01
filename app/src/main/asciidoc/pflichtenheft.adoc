@@ -59,19 +59,31 @@ Der Mitarbeiter erledigt die wichtigsten Aufgaben im Backend. Er ist für die Pf
 
 === Muss-Kriterien
 Folgende Funktionalitäten gilt es in den Internet-Dienst von "Emma" einzubauen:
-Das Sortiment als Ansammlung verschiedener Produkte, die jeweils über ein Bild, Preis, Beschreibung und Bewerung verfügt. Es soll für Mitarbeiter die Möglichkeit bestehen, Produkte neu in das Sortiment einzufügen, zu verändern oder zu löschen.
-Das Sortiment wird in einem Katalog aufbereitet, um die Übersicht für den Nutzer zu verbessern. So werden im Katalog Produkte durch Produktkategorien gebündelt.
-Produkte können durch Kunden bewertet gekauft und ggf. reklamiert werden. Beim Kauf wird dem Kunde eine Bestätigungs-Mail zugesandt, die auch Produktinformationen enthält. Bei Reklamationen hat der Kunde einen Grund anzugeben.
-Durch ein Rabattsystem erhält der Kunde durch jeden geworbenen Kunden Rabatt-Punkte, die er bei seinem Einkauf einsetzen kann.
-Ein Gewinnspiel ermöglicht es den erfolgreichsten Werbern eine Kreuzfahrt zu gewinnen. 
-Der Nachkauf von Produkten aus dem Lager erfolgt vom Mitarbeiter. Desweiteren sind Mitarbeiter in der Lage einen selbst verfassten Newsletter an Kunden zu verschicken.
-Die Bilanzen können vom Admin eingesehen werden. Sie zeigen, wie viele Produkte zu welchem Preis aus dem Lager eingekauft und an Kunden verkauft wurden. Monatlich wird eine neue Bilanz erstellt.
-Die Rollen: Gast, Kunde, Mitarbeiter und Admin besitzen verschiedene Zugriffsrechte auf Funktionalitäten.
+[options="header"]
+|===
+|Klasse/Enumeration |Beschreibung |
+|Produkt |Zu jedem Produkt gibt es ein Bild, Beschreibung, Preis und Kunden-Bewertungen.|
+|Sortiment| Ansammlung verschiedener Produkte. Kann durch Mitarbeiter erweitert, aktualisiert oder verkleinert werden. |
+|Katalog | Im Katalog werden Produkte aud dem Sortiment kategorisiert und geordnet.|
+|Warenkorb| Gäste und Kunden können Produkte im Katalog auswählen und in ihrem Warenkorb aufbewahren. Der Warenkorb kann angezeigt werden.|
+|Einkauf| Kunden können die Produkte aus dem Warenkorb kaufen. Nach Kaufbestätigung wird dem Kunde eine Bestätigungs-Mail zugesandt.|
+|Rabattsystem| Das Rabattkonto des Kunden wird gefüllt, wenn ein geworbener Kunde einen einkauf tätigt. Rabatte vom Rabattkonto können auf den Kaufpreis von Produkten angerechnet werden.|
+|Reklamation| Ein Kunde kann einen gekauftes Produkt reklamieren. Ein Grund ist anzugeben.|
+| Gewinnspiel| Die erfolgreichsten Werber haben die Möglichkeit eine Kreuzfahrt zu gewinnen. |
+|Lager| Mitarbeiter kaufen Waren aus dem Lager nach. Dadurch wird der Bestand im sortiment erhöht.|
+|Newsletter|Mitarbeiter verschicken selbst verfasste Newsletter per Mail an die Kunden.|
+|Bilanzen| Der Admin erhält monatlich eine aktualisierte Bilanz. Sie zeigt, wie viele Produkte zu welchem Preis aus dem Lager eingekauft und an Kunden verkauft wurden. Monatlich wird eine neue Bilanz erstellt. |
+|Rollen| Gast, Kunde, Mitarbeiter und Admin besitzen verschiedene Zugriffsrechte auf Funktionalitäten.|
+|===
 
 === Kann-Kriterien
 Folgende Funktionalitäten können den Internetdienst von "Emma" zusätzlich versessern:
-Bei Reklamation eines Produktes durch einen Kunden wird automatisch ein Lieferschein für die Rücksendung generiert.
-Hinzu kommt, dass der Kunde eine anonyme Produktbewertung vornehmen kann.
+[options="header"]
+|===
+|Retour-Schein|Bei Reklamation eines Produktes durch einen Kunden wird automatisch ein Lieferschein für die Rücksendung generiert. |
+|Anonyme Produktbewertung| Der Kunde kann eine anonyme Produktbewertung abgeben|
+|===
+
 
 == GUI Prototyp
 
