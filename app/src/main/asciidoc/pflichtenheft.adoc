@@ -4,11 +4,11 @@
 
 == Projektname
 
-__Version:__    *0.1.2*
+__Version:__    *1.0.0*
 
-__Status:__     *In Arbeit*
+__Status:__     *Fertig*
 
-__Stand:__      *1.11.2015*
+__Stand:__      *2.11.2015 (3.11.2015)*
 
 == Zusammenfassung
 Das vorliegende Dokument enthält einen Plan zur Erstellung eines Internet-Einkaufsdienstes für das Warenhaus "Emma".
@@ -92,7 +92,8 @@ image::Dialogpinnwand.png[GUI-Prototype]
 
 
 === Dialogbeschreibung
-Für jeden Dialog:
+Nachdem sich der Gast eingeloggt hat, können zu jedem Zeitpinkt alle Funktionalitäten der jeweiligen Rolle über eine Seitenleiste erreicht werden.
+Eingabe-Felder sind für Such-, Werbe-, Newsletter- und Bewertungsfunktionen bereitgestellt. Die horizontale Leiste am Seitenanfang bietet ständigen Zugriff auf Waren aus dem Produktkatalog.
 
 == Datenmodell
 
