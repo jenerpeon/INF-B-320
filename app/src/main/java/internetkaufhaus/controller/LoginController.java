@@ -48,5 +48,10 @@ public class LoginController {
 					logout().logoutUrl("/logout").logoutSuccessUrl("/");
 		}
 	}
+	@RequestMapping(value={"/register"})
+	public String register(){
+	    return "register";
+	}
 
 }
+
