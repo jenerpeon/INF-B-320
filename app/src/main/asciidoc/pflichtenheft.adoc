@@ -111,7 +111,25 @@ Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Kl
 [options="header"]
 |===
 |Klasse/Enumeration |Beschreibung |
-|…                  |…            |
+|AccountancyEntry|Enthält Geldeingang mit Beschreibungen. Für die Bilanzübersicht notwendig.|
+|AuthenticationManager|Überprüft Nutzerpasswort|
+|Balance| Individuelles Rabattkonto für jeden Nutzer|
+|Catalog|Beinhaltet Liste mit Produkten|
+|ConcreteCart|Warenkorb beinhaltet ausgewählte Produkte eines eindeutig zugehörigen Kundens|
+|ConcreteCatalog| Katalog, der ConcreteProducts enthält und verwaltet|
+|ConcreteOrder| Beinhaltet einen Warenkorb und die Zahlungsmethode|
+|ConcreteProduct| Produkt, welches einen Name, Bild, Beschreibung und Bewertung besitzt.|
+|ConcreteUserAccount| Beinhaltet User-Informationen wie Name, Adresse, ID, Rabattkonto|
+|Guest| Nicht angemeldeter Nutzer |
+|Inventory|Liste von Produkten|
+|InventoryItem|Beinhaltet Produkt und Produktanzahl|
+|Order|Enthält Kunden-Account vom Kunden, der Auftrag gegeben hat und seine Bezahlmethode|
+|orderManager|Order-Liste, auf die verschiedene Operationen auf die Order angewandt werden können|
+|Password|Speichert und verschlüsselt Nutzerpasswort|
+|PaymentMethod|Enthält Beschreibung zur Bezahlmethode|
+|Product|Beinhaltet Name und Preis und Maßeinheit|
+|Role|Enthält Rollenname, ist final|
+|UserAccountManager|Erstellt, findet, speichert Nutzer-Konten|
 |===
 
 == Aktzeptanztestfälle
