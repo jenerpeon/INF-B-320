@@ -2,7 +2,7 @@
 
 = Pflichtenheft
 
-== Projektname
+== Internet-Einkaufsdienst Emma
 
 __Version:__    *1.0.0*
 
