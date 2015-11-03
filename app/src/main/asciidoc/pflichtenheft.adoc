@@ -2,13 +2,13 @@
 
 = Pflichtenheft
 
-== Projektname
+== Internet-Einkaufsdienst Emma
 
-__Version:__    *0.1.2*
+__Version:__    *1.0.0*
 
-__Status:__     *In Arbeit*
+__Status:__     *Fertig*
 
-__Stand:__      *1.11.2015*
+__Stand:__      *2.11.2015 (3.11.2015)*
 
 == Zusammenfassung
 Das vorliegende Dokument enthält einen Plan zur Erstellung eines Internet-Einkaufsdienstes für das Warenhaus "Emma".
@@ -87,22 +87,18 @@ Folgende Funktionalitäten können den Internetdienst von "Emma" zusätzlich ver
 
 
 == GUI Prototyp
-
 === Überblick: Dialoglandkarte
-Erstellen Sie ein Übersichtsdiagramm, das das Zusammenspiel Ihrer Masken zur Laufzeit darstellt. Also mit welchen Aktionen zwischen den Masken navigiert wird. Die nachfolgende Abbildung zeigt eine an die Pinnwand gezeichnete Dialoglandkarte. Ihre Karte sollte zusätzlich die Buttons/Funktionen darstellen, mit deren Hilfe Sie zwischen den Masken navigieren.
+image::Dialogpinnwand.png[GUI-Prototype]
+
 
 === Dialogbeschreibung
-Für jeden Dialog:
-
-1. Kurze textuelle Dialogbeschreibung eingefügt: Was soll der jeweilige Dialog? Was kann man damit tun? Überblick?
-2. Maskenentwürfe (Screenshot, Mockup)
-3. Maskenelemente (Ein/Ausgabefelder, Aktionen wie Buttons, Listen, …)
-4. Evtl. Maskendetails, spezielle Widgets
+Nachdem sich der Gast eingeloggt hat, können zu jedem Zeitpinkt alle Funktionalitäten der jeweiligen Rolle über eine Seitenleiste erreicht werden.
+Eingabe-Felder sind für Such-, Werbe-, Newsletter- und Bewertungsfunktionen bereitgestellt. Die horizontale Leiste am Seitenanfang bietet ständigen Zugriff auf Waren aus dem Produktkatalog.
 
 == Datenmodell
 
 === Überblick: Klassendiagramm
-UML-Analyseklassendiagramm
+image::Class_Diagram.png[Analysis Class Diagramm]
 
 === Klassen und Enumerationen
 Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Klassen/Enumerationen dar. Jede Klasse und Enumeration wird in Form eines Glossars textuell beschrieben. Zusätzlich werden eventuellen Konsistenz- und Formatierungsregeln aufgeführt.
@@ -111,7 +107,25 @@ Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Kl
 [options="header"]
 |===
 |Klasse/Enumeration |Beschreibung |
-|…                  |…            |
+|AccountancyEntry|Enthält Geldeingang mit Beschreibungen. Für die Bilanzübersicht notwendig.|
+|AuthenticationManager|Überprüft Nutzerpasswort|
+|Balance| Individuelles Rabattkonto für jeden Nutzer|
+|Catalog|Beinhaltet Liste mit Produkten|
+|ConcreteCart|Warenkorb beinhaltet ausgewählte Produkte eines eindeutig zugehörigen Kundens|
+|ConcreteCatalog| Katalog, der ConcreteProducts enthält und verwaltet|
+|ConcreteOrder| Beinhaltet einen Warenkorb und die Zahlungsmethode|
+|ConcreteProduct| Produkt, welches einen Name, Bild, Beschreibung und Bewertung besitzt.|
+|ConcreteUserAccount| Beinhaltet User-Informationen wie Name, Adresse, ID, Rabattkonto|
+|Guest| Nicht angemeldeter Nutzer |
+|Inventory|Liste von Produkten|
+|InventoryItem|Beinhaltet Produkt und Produktanzahl|
+|Order|Enthält Kunden-Account vom Kunden, der Auftrag gegeben hat und seine Bezahlmethode|
+|orderManager|Order-Liste, auf die verschiedene Operationen auf die Order angewandt werden können|
+|Password|Speichert und verschlüsselt Nutzerpasswort|
+|PaymentMethod|Enthält Beschreibung zur Bezahlmethode|
+|Product|Beinhaltet Name und Preis und Maßeinheit|
+|Role|Enthält Rollenname, ist final|
+|UserAccountManager|Erstellt, findet, speichert Nutzer-Konten|
 |===
 
 == Aktzeptanztestfälle
@@ -161,6 +175,3 @@ Jeder Testfall soll mit einer ID versehen werde, um später zwischen den Dokumen
 *2 Benutzername, Passwort
 
 *3 numerischer Wert zwischen 0 und 5 (max. Bestellanzal) 
-
-== Offene Punkte
-Offene Punkte werden entweder direkt in der Spezifikation notiert. Wenn das Pflichtenheft  zum finalen Review vorgelegt wird, sollte es keine offenen Punkte mehr geben.
