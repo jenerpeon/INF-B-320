@@ -175,6 +175,3 @@ Jeder Testfall soll mit einer ID versehen werde, um später zwischen den Dokumen
 *2 Benutzername, Passwort
 
 *3 numerischer Wert zwischen 0 und 5 (max. Bestellanzal) 
-
-== Offene Punkte
-Offene Punkte werden entweder direkt in der Spezifikation notiert. Wenn das Pflichtenheft  zum finalen Review vorgelegt wird, sollte es keine offenen Punkte mehr geben.
