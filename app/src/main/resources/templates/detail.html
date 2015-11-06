@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+ 
+ <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title th:text="${concreteproduct.identifier}">1</title>
+
+    <!-- Bootstrap -->
+    <link href="../static/resources/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+
+<div class="all">
+		<header>
+			<h1 th:text="${concreteproduct.name}">Last Action Hero</h1>
+		</header>
+		<nav th:include="navigation :: navigation" ></nav>
+		
+		
+		<div class="content">
+			<div class="detailImg">
+				<img th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}" src="../resources/img/evil_newton.jpg" alt="" />
+			</div>
+		
+			<div class="detailDescription">
+				<h2 th:text="${concreteproduct.name}">Artikle</h2>
+				<p>Preis:</p><p th:text="${concreteproduct.price}">9.99€</p><br />
+				
+				<p>Vorrat:</p><p th:text="${quantity}">10 Stück</p><br />  
+				<form method="post" action="" th:if="${orderable}">
+					<label for="number">Anzahl</label>	
+  					<select name="dropDown" size="1">
+  						<option>1</option>
+  						<option>2</option>
+  						<option>3</option>
+  						<option>4</option>
+  						<option>5</option>
+  					</select>
+					
+					<input	type="submit" value="Zum Warenkorb hinzufügen" />
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

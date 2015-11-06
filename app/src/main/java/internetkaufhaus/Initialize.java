@@ -49,9 +49,9 @@ public class Initialize implements DataInitializer{
         	return;
         }
      
-        ConcreteProduct p1 = new ConcreteProduct("awesome_bhaskara", Money.of(0.99, EURO), ProdType.Fuzz);		
-        ConcreteProduct p2 = new ConcreteProduct("evil_newton", Money.of(0.99, EURO), ProdType.Fuzz);
-        ConcreteProduct p3 = new ConcreteProduct("trusting_babbage", Money.of(0.99, EURO), ProdType.Fuzz);
+        ConcreteProduct p1 = new ConcreteProduct("awesome_bhaskara", Money.of(0.99, EURO), ProdType.Fuzz, "https://eng.wikipedia.org/wiki/Fuzz");		
+        ConcreteProduct p2 = new ConcreteProduct("evil_newton", Money.of(0.99, EURO), ProdType.Fuzz,"https://eng.wikipedia.org/wiki/Fuzz");
+        ConcreteProduct p3 = new ConcreteProduct("trusting_babbage", Money.of(0.99, EURO), ProdType.Fuzz,"https://eng.wikipedia.org/wiki/Fuzz");
         
         productCatalog.save(p1);
         productCatalog.save(p2);
