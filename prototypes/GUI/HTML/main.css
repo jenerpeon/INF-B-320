@@ -1,7 +1,10 @@
 @charset "utf-8";
+
 tr td #logo {
 	font-family: clara;
 	font-size: 35px;
+	font-style: normal;
+	font-weight: 400;
 }
 header #header-row1  {
 	position: static;
@@ -24,10 +27,17 @@ header #header-row1  {
 
 #wrapper #navigation {
 	background-color: #E1E1E1;
-	z-index: 1;
 	-webkit-box-shadow: inset 0px 20px 20px -20px;
 	box-shadow: inset 0px 20px 20px -20px;
+	height: 54px;
 }
+body {
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+}
+
 tr td a {
 	text-align: center;
 	text-decoration: none;
@@ -83,8 +93,6 @@ header #header-row2 table {
 
 #footer footer tbody td tbody tr td {
 	white-space: nowrap;
-}
-#footer footer hr {
 }
 .enclosingline   {
 	margin-top: 0px;
@@ -153,11 +161,6 @@ td #header-row1 li {
 
 
 }
-tr td .navitem:hover  {
-	background-color: #FFFFFF;
-	text-decoration: none;
-	color: #000000;
-}
 td #cart-text-list li {
 	text-align: right;
 }
@@ -177,4 +180,156 @@ footer #bottemline2 {
 	width: 1000px;
 	margin-left: auto;
 	margin-right: auto;
+}
+footer #bottomline hr {
+	margin-left: 30px;
+
+}
+#wrapper main #pointsandpersonal {
+	width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+}
+tr td #ranking {
+	width: 450px;
+	height: 400px;
+	background-image: url(Bilder/ranking.png);
+	background-size: contain;
+}
+tr td #personal {
+	width: 450px;
+	height: 400px;
+}
+#ranking tbody tr td {
+	text-align: center;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 16px;
+}
+h3 {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+}
+#ranking tbody tr th {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+}
+#wrapper main #offers {
+	width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+	height: 1000px;
+}
+.nav a { text-decoration: none; }
+
+.nav li { list-style: none; }
+.nav {
+	display: inline-block;
+	position: relative;
+	cursor: default;
+	z-index: 500;
+	margin-top: 0px;
+}
+.nav > li {
+	display: block;
+	float: left;
+}
+.nav > li > a {
+	position: relative;
+	display: inline-block;
+	z-index: 510;
+	height: 54px;
+	padding: 0 20px;
+	line-height: 54px;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 16px;
+	color: #000000;
+	background-color: #E1E1E1;
+	-webkit-transition: all .3s ease;
+	-moz-transition: all .3s ease;
+	-o-transition: all .3s ease;
+	-ms-transition: all .3s ease;
+	transition: all .3s ease;
+	-webkit-box-shadow: inset 0px 20px 20px -20px;
+	box-shadow: inset 0px 20px 20px -20px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.nav > li:hover > a {
+	background: #ffffff;
+	/* [disabled]border-left: 1px solid #000000; */
+	/* [disabled]border-right: 1px solid #000000; */
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.nav > li > div {
+	position: absolute;
+	display: block;
+	left: 0px;
+	opacity: 0;
+	visibility: hidden;
+	overflow: hidden;
+	background: #ffffff;
+	-webkit-transition: all .3s ease .15s;
+	-moz-transition: all .3s ease .15s;
+	-o-transition: all .3s ease .15s;
+	-ms-transition: all .3s ease .15s;
+	transition: all .3s ease .15s;
+	padding-left: 0px;
+	top: 0px;
+	padding-top: 0px;
+	padding-right: 0px;
+	margin-top: 20px;
+	width: 93%;
+	padding-bottom: 0px;
+	margin-left: 55px;
+	border-left: 1px solid #B8B8B8;
+	border-bottom: 1px solid #B8B8B8;
+	border-right: 1px solid #B8B8B8;
+	-webkit-box-shadow: 5px 5px 5px -5px #E1E1E1;
+	box-shadow: 5px 5px 5px -5px #E1E1E1;
+}
+.nav > li:hover > div {
+	opacity: 1;
+	visibility: visible;
+	overflow: visible;
+	padding-left: 0px;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+}
+
+/* Menu Content Styles */
+.nav .nav-column {
+	float: left;
+	width: 20%;
+	padding-top: 2.5%;
+	padding-right: 2.5%;
+	padding-bottom: 2.5%;
+	padding-left: 2.5%;
+}
+
+.nav .nav-column h3 {
+	margin: 20px 0 10px 0;
+	line-height: 18px;
+}
+.nav .nav-column li a {
+	display: block;
+	line-height: 26px;
+	text-align: left;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 11px;
+	color: #000000;
+}
+
+.nav .nav-column li a:hover { color: #666666; }
+.nav .nav-column li a:hover:before{content:"> ";color:#666666;}
+a {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
 }
