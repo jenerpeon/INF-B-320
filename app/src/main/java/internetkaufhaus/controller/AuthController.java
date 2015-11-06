@@ -1,31 +1,30 @@
-/*
- * Copyright 2014-201/5 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package internetkaufhaus.controller;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.salespointframework.SalespointSecurityConfiguration;
 import org.salespointframework.SalespointWebConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.validation.*;
+import internetkaufhaus.forms.*;
+import internetkaufhaus.model.*;
+import org.salespointframework.useraccount.*; 
+import javax.validation.*;
+import org.springframework.beans.factory.annotation.*;
 
 @Controller
-public class LoginController {
+public class AuthController {
+
     private static final String LOGIN_ROUTE = "/login";
+	private final UserAccountManager userAccountManager;
+	
+	@Autowired
+    public AuthController(UserAccountManager userAccountManager){
+		this.userAccountManager = userAccountManager;
+	}
 
 	@Configuration
 	static class PeonWebConfiguration extends SalespointWebConfiguration {
@@ -48,10 +47,21 @@ public class LoginController {
 					logout().logoutUrl("/logout").logoutSuccessUrl("/");
 		}
 	}
+
 	@RequestMapping(value={"/register"})
 	public String register(){
 	    return "register";
 	}
 
-}
+	@RequestMapping("/registerNew")
+	public String registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm,	BindingResult result) {
+		if (result.hasErrors()) {
+			return "register";
+		}
 
+		UserAccount customer = userAccountManager.create(registrationForm.getName(), registrationForm.getPassword(), Role.of("CUSTOMER"));
+		userAccountManager.save(customer);
+
+		return "redirect:/";
+    }
+}
