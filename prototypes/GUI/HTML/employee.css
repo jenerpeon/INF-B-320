@@ -25,7 +25,8 @@ td #options ul {
 	padding-bottom: 65px;
 	height: 300px;
 	margin-left: auto;
-	margin-right: 250px;
+	margin-right: auto;
+	padding-right: 85px;
 }
 ul li .activeoption {
 	font-weight: bold;
