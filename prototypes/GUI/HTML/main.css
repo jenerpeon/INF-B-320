@@ -232,6 +232,8 @@ h3 {
 	cursor: default;
 	z-index: 500;
 	margin-top: 0px;
+	min-width: 1000px;
+	padding-left: 75px;
 }
 .nav > li {
 	display: block;
@@ -242,7 +244,10 @@ h3 {
 	display: inline-block;
 	z-index: 510;
 	height: 54px;
-	padding: 0 20px;
+	padding-top: 0;
+	padding-right: 14px;
+	padding-left: 14px;
+	padding-bottom: 0;
 	line-height: 54px;
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
 	font-size: 16px;
@@ -286,9 +291,9 @@ h3 {
 	padding-top: 0px;
 	padding-right: 0px;
 	margin-top: 20px;
-	width: 93%;
+	width: 960px;
 	padding-bottom: 0px;
-	margin-left: 55px;
+	margin-left: 75px;
 	border-left: 1px solid #B8B8B8;
 	border-bottom: 1px solid #B8B8B8;
 	border-right: 1px solid #B8B8B8;
