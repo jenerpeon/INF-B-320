@@ -2,11 +2,11 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
  
  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title th:text="${concreteproduct.identifier}">1</title>
+    <title>Bootstrap 101 Template</title>
 
     <!-- Bootstrap -->
     <link href="../static/resources/css/bootstrap.min.css" rel="stylesheet" />
@@ -15,7 +15,7 @@
 
 <div class="all">
 		<header>
-			<h1 th:text="${concreteproduct.name}">Last Action Hero</h1>
+			<h1 th:text="${title}">Last Action Hero</h1>
 		</header>
 		<nav th:include="navigation :: navigation" ></nav>
 		
@@ -44,6 +44,18 @@
 				</form>
 			</div>
 		</div>
+		<div class="salespoint">
+				<form method="post" action="/comment">
+					<fieldset>
+						<legend>Kommentar hinzufügen</legend>
+						<input type="hidden" name="" value="0" th:value="${concreteproduct.identifier}" />
+						<textarea name="comment" cols="40" rows="5"></textarea><br />
+						<label for="rating">Bewertung</label>
+						<input id="rating" type="text" name="rating" value="5" /> 
+						<input type="submit" value="Senden" />
+					</fieldset>
+				</form>
+			</div>
 	</div>
 </body>
 </html>
