@@ -24,10 +24,10 @@
 			
 			<div class="catalog" th:remove="all-but-first">
 
-				<a th:each="concreteproduct : ${catalog}" th:href="@{'/detail/'+${concreteproduct.identifier}}" href="detail.html">
+				<a th:each="concreteproduct : ${catagory}" th:href="@{'/detail/'+${concreteproduct.identifier}}" href="detail.html">
 					<div class="products">  
 						<h4 th:text="${concreteproduct.name}" class="name">Last Action Hero</h4>
-						<img th:src="@{'/src/main/resources/static/resources/img/'${concreteproduct.name} + '.jpg'}" class="thumbnail" src="../resources/img/evil_newton.jpg"/>
+						<img th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}" src="../resources/img/evil_newton.jpg" alt="" />
 						<p th:text="${concreteproduct.price}" class="price">9.99 €</p>
 						<!--<a th:text="Herstellerlink" class="link" href="${concreteproduct.webLink}">www.blablab.de</a> HerstellerLink einbinden-->
 					
