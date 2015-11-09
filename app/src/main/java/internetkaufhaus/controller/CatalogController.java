@@ -32,8 +32,7 @@ public class CatalogController {
     private final ProductCatalog catalog;
     private final Inventory<InventoryItem> inventory;
     private Map<ProdType, ArrayList<ConcreteProduct> > searchType = new HashMap<ProdType, ArrayList<ConcreteProduct> > ();
-    private List<ConcreteProduct> prods = new ArrayList<ConcreteProduct> ();
-
+    
     @Autowired
     public CatalogController(ProductCatalog catalog, Inventory<InventoryItem> inventory){
     	this.catalog = catalog;
@@ -41,12 +40,30 @@ public class CatalogController {
     	
         for(ConcreteProduct prod : this.catalog.findAll()){
             ProdType type = prod.getType();
-            ArrayList<ConcreteProduct> cache;
             if(!this.searchType.containsKey(type))
                this.searchType.put(type, new ArrayList<ConcreteProduct> ());
             this.searchType.get(type).add(prod);
+   
         }
+     
     }
+    
+    
+    @RequestMapping("/{type}")
+    public String category(@PathVariable("type") ProdType type, ModelMap model ) {
+    	for(ConcreteProduct prod : catalog.findAll()) {
+    		ProdType t = prod.getType();
+    		if(! searchType.containsKey(t)){
+    			searchType.put(t, new ArrayList<ConcreteProduct>());
+    		}	
+    		if(!searchType.get(t).contains(prod)){
+    			searchType.get(t).add(prod);
+    		}
+    	}
+    	model.addAttribute("catagory", searchType.get(type));
+    	return "catalog";	
+    }
+    
     
     @RequestMapping("/detail/{prodId}")
 	public String detail(@PathVariable("prodId") ConcreteProduct prod, Model model) {
@@ -55,7 +72,7 @@ public class CatalogController {
 		Quantity quantity = item.map(InventoryItem::getQuantity).orElse(NONE);
 		System.out.println(prod);		
 
-		model.addAttribute("concreteproduct", catalog.findOne(prod.getIdentifier()));
+		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("quantity", quantity);
 		model.addAttribute("orderable", quantity.isGreaterThan(NONE));
 		
