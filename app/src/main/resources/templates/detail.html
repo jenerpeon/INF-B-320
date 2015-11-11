@@ -3,13 +3,7 @@
  
  <head>
     <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Bootstrap 101 Template</title>
-
-    <!-- Bootstrap -->
-    <link href="../static/resources/css/bootstrap.min.css" rel="stylesheet" />
+ 
 </head>
 <body>
 
@@ -30,27 +24,27 @@
 				<p>Preis:</p><p th:text="${concreteproduct.price}">9.99€</p><br />
 				
 				<p>Vorrat:</p><p th:text="${quantity}">10 Stück</p><br />  
-				<form method="post" action="" th:if="${orderable}">
+				<form method="post" action="/cart" th:if="${orderable}">
 					<label for="number">Anzahl</label>	
-  					<select name="dropDown" size="1">
+  					<select name="dropdown" id ="dropdown" size="1">
   						<option>1</option>
   						<option>2</option>
   						<option>3</option>
   						<option>4</option>
   						<option>5</option>
   					</select>
-					
+					<input type="hidden" name="pid" value="0" th:value="${concreteproduct.identifier}" />
 					<input	type="submit" value="Zum Warenkorb hinzufügen" />
 				</form>
 			</div>
-			<br>
-			<br>
+	   		<br />
+			<br />
 		</div>
 		<div class="salespoint">
 				<form method="post" action="/comment">
 					<fieldset>
 						<legend>Kommentar hinzufügen</legend>
-						<input type="hidden" name="" value="0" th:value="${concreteproduct.identifier}" />
+						
 						<textarea name="comment" cols="40" rows="5"></textarea><br />
 						<label for="rating">Bewertung</label>
 						<input id="rating" type="text" name="rating" value="5" /> 

@@ -49,7 +49,7 @@ public class CatalogController {
     }
     
     
-    @RequestMapping("/{type}")
+    @RequestMapping("/catalog/{type}")
     public String category(@PathVariable("type") ProdType type, ModelMap model ) {
     	for(ConcreteProduct prod : catalog.findAll()) {
     		ProdType t = prod.getType();
