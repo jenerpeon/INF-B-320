@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.salespointframework.catalog.Product;
 import org.salespointframework.core.AbstractEntity;
 import org.salespointframework.order.Cart;
+import org.salespointframework.order.CartItem;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
 import org.salespointframework.payment.Cash;
@@ -81,12 +82,25 @@ class CartController {
 			cart.clear();
 			return "redirect:/cart";
 
-	}
-	
+	}	
 	@RequestMapping(value = "/deleteItem", method = RequestMethod.POST)
 	public String deleteItem(@ModelAttribute Cart cart, @RequestParam("cid") String identifier)
 	{
 		cart.removeItem(identifier);
+		return "redirect:/cart";
+	}
+	@RequestMapping(value ="/changeAmount", method = RequestMethod.POST)
+	public String changeAmount(@ModelAttribute Cart cart, @RequestParam("cid") String identifier, @RequestParam("amount") int amount )
+	{
+		Product product;
+		Optional <CartItem> cartitem = cart.getItem(identifier);		
+		if(!cartitem.isPresent())
+		{
+			return "redirect:/cart";
+		}
+		cart.removeItem(identifier);
+		product = cartitem.get().getProduct();
+		cart.addOrUpdateItem(product, Quantity.of(amount));
 		return "redirect:/cart";
 	}
 }

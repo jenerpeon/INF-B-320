@@ -14,6 +14,7 @@
 				<th>Name</th>
 				<th>Anzahl</th>
 				<th>Preis</th>
+				<th>Anzahl ändern</th>
 				<th>Entfernen</th>
 			</tr>
 		</thead>
@@ -22,6 +23,19 @@
 				<td th:text="${item.productName}">Name</td>
 				<td th:text="${item.quantity}">Anzahl</td>
 				<td th:text="${item.price}">Preis</td>
+				<td>
+					<form action="changeAmount" method="post">
+						<input type ="hidden" name="cid" th:value="${item.identifier}" />	
+  						<select name="amount" id ="dropdown" size="1">
+  							<option>1</option>
+  							<option>2</option>
+  							<option>3</option>
+  							<option>4</option>
+  							<option>5</option>
+  						</select>
+						<input type="submit" value="Anzahl ändern" />
+					</form>
+				</td>
 				<td>
 					<form action="deleteItem" method="post">
 						<input type ="hidden" name="cid" th:value="${item.identifier}" />
