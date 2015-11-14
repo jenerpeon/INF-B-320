@@ -45,8 +45,7 @@ class CartController {
 
 	@RequestMapping(value = "/cart", method = RequestMethod.POST)
 	public String addProduct(@RequestParam("pid") ConcreteProduct concreteproduct, 
-			@RequestParam("dropdown") int number,
-			@ModelAttribute Cart cart) {
+			@RequestParam("dropdown") int number, @ModelAttribute Cart cart) {
 
 		int amount;	
 		if(number < 0 || number > 5)
@@ -82,5 +81,12 @@ class CartController {
 			cart.clear();
 			return "redirect:/cart";
 
+	}
+	
+	@RequestMapping(value = "/deleteItem", method = RequestMethod.POST)
+	public String deleteItem(@ModelAttribute Cart cart, @RequestParam("cid") String identifier)
+	{
+		cart.removeItem(identifier);
+		return "redirect:/cart";
 	}
 }
