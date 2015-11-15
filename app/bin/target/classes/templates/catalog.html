@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+ 
+ <head>
+    <meta charset="utf-8"/>
+</head>
+
+<body>
+		<div class="all">
+		<header>
+			<h1 th:text="${title}">Katalog</h1>
+		</header>
+		<nav th:include="navigation :: navigation">
+
+		</nav>
+		
+			
+			<div class="catalog" th:remove="all-but-first">
+
+				<a th:each="concreteproduct : ${catagory}" th:href="@{'/detail/'+${concreteproduct.identifier}}" href="detail.html">
+					<div class="products">  
+						<h4 th:text="${concreteproduct.name}" class="name">Last Action Hero</h4>
+						<img th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}" src="../resources/img/evil_newton.jpg" alt="" />
+						<p th:text="${concreteproduct.price}" class="price">9.99 €</p>
+						<!--<a th:text="Herstellerlink" class="link" href="${concreteproduct.webLink}">www.blablab.de</a> HerstellerLink einbinden-->
+					
+					</div>
+				</a>
+				
+				
+					<div class="products">  
+						<h4>Artikel</h4>
+						<img class="thumbnail" src="../resources/img/evil_newton.jpg" alt="" />
+						<p class="price">9.99 €</p>
+					</div>
+				
+				
+					<div class="products">  
+						<h4>Artikel</h4>
+						<img class="thumbnail" src="../resources/img/evil_newton.jpg" alt="" />
+						<p class="price">9.99 €</p>
+					</div>
+				
+			</div>
+		</div>
+</body>
+</html>

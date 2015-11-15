@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+ 
+ <head>
+    <meta charset="utf-8"/>
+ 
+</head>
+<body>
+
+<div class="all">
+		<header>
+			<h1 th:text="${title}">Produkt</h1>
+		</header>
+		<nav th:include="navigation :: navigation" ></nav>
+		
+		
+		<div class="content">
+			<div class="detailImg">
+				<img th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}" src="../resources/img/evil_newton.jpg" alt="" />
+			</div>
+		
+			<div class="detailDescription">
+				<h2 th:text="${concreteproduct.name}">Artikle</h2>
+				<p>Preis:</p><p th:text="${concreteproduct.price}">9.99€</p><br />
+				
+				<p>Vorrat:</p><p th:text="${quantity}">10 Stück</p><br />  
+				<form method="post" action="/cart" th:if="${orderable}">
+
+				<input type="hidden" name="prodId" value="0" th:value="${concreteproduct.identifier}" /> 
+					<label for="number">Anzahl</label>	
+  					<select  name="dropDown" size="1">
+  						<option>1</option>
+  						<option>2</option>
+  						<option>3</option>
+  						<option>4</option>
+  						<option>5</option>
+  					</select>
+					<input	type="submit" value="Zum Warenkorb hinzufügen" />
+				</form>
+			</div>
+			
+			<div th:each="comment : ${comments}" class="comments">
+  				<p>Kundenmeinungen:</p><span th:text="${comment.text}" ></span>
+  				<p>Zeit:</p><span th:text="${comment.formatedDate}">13 February 2011</span>
+  				<p>Sterne:</p><span th:text="${comment.rating}"> </span>
+  				
+  			</div>	
+			<br/>
+			<br/>
+		</div>
+		<div class="salespoint">
+				<form method="post" action="/comment">
+					<fieldset>
+						<legend>Kommentar hinzufügen</legend>
+						
+						<input type="hidden" name="prodId" value="0" th:value="${concreteproduct.identifier}" />
+						<textarea name="comment" cols="40" rows="5"></textarea><br />
+						<label for="rating">Bewertung</label>
+						<input id="rating" type="text" name="rating" value="5" /> 
+						<input type="submit" value="Senden" />
+					</fieldset>
+				</form>
+			</div>
+	</div>
+</body>
+</html>
