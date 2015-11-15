@@ -1,0 +1,141 @@
+@charset "utf-8";
+
+td #mainframe h3 {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 40px;
+}
+td #options ul {
+	list-style-type: none;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+}
+#options ul li {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+#optionscolumn    {
+	border-right: 4px solid #BEBEBE;
+}
+
+
+#wrapper main #workframe {
+	width: 1000px;
+	padding-bottom: 65px;
+	height: 300px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-right: 85px;
+}
+ul li .activeoption {
+	font-weight: bold;
+}
+.nav li .active {
+	background-color: #FFFFFF;
+}
+.mainframecontent tbody tr td  {
+	height: 40px;
+
+
+}
+
+
+
+#mainframe #catalogheader  {
+	background-color: #E1E1E1;
+	/* [disabled]-webkit-box-shadow: inset 0px 20px 20px -20px; */
+	/* [disabled]box-shadow: inset 0px 20px 20px -20px; */
+	height: 30px;
+	padding-left: 0px;
+	padding-right: 38px;
+	z-index: 575;
+}
+.mainframecontent {
+	border-left: 1px solid #B8B8B8;
+	border-right: 1px solid #B8B8B8;
+	border-bottom: 1px solid #B8B8B8;
+	padding-right: 10px;
+	width: 700px;
+}
+.mainframecontent tbody tr td {
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+}
+
+
+
+#workframe ul {
+	list-style-type: none;
+	display: inline;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+}
+#platzhalter {
+	width: 188px;
+}
+
+#optionscolumn ul {
+	display: block;
+	margin-top: auto;
+	margin-bottom: auto;
+	text-align: center;
+}
+#optionscolumn {
+
+}
+
+
+#optionscolumn ul li  {
+	margin-top: 25px;
+	margin-bottom: 25px;
+
+}
+
+
+#catalogheader .nav li a {
+	height: 30px;
+	line-height: 30px;
+	opacity: 1;
+	-webkit-box-shadow: 0px 0px;
+	box-shadow: 0px 0px;
+	border-top: 2px solid #E1E1E1;
+}
+#catalogheader .nav {
+	position: absolute;
+	left: 140px;
+	z-index: 400;
+
+
+
+
+}
+
+main #workframe #optionscolumn {
+	width: 300px;
+	position: absolute;
+}
+#mainframe {
+	position: absolute;
+	width: 700px;
+	margin-left: 350px;
+
+}
+#categorylist li div {
+	list-style-type: none;
+	display: inline;
+	float: left;
+}
+.mainframecontent h2 {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+}

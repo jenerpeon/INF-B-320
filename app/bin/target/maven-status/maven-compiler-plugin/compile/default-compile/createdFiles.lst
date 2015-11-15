@@ -1,0 +1,15 @@
+internetkaufhaus/controller/CatalogController.class
+internetkaufhaus/Application.class
+internetkaufhaus/controller/CartController.class
+internetkaufhaus/model/Comment.class
+internetkaufhaus/model/ConcreteProduct$ProdType.class
+internetkaufhaus/model/ProductCatalog.class
+internetkaufhaus/controller/ShopController.class
+internetkaufhaus/Initialize.class
+internetkaufhaus/controller/TestController.class
+internetkaufhaus/controller/CartController$1.class
+internetkaufhaus/controller/AuthController$WebSecurityConfiguration.class
+internetkaufhaus/controller/AuthController.class
+internetkaufhaus/controller/AuthController$PeonWebConfiguration.class
+internetkaufhaus/model/ConcreteProduct.class
+internetkaufhaus/forms/RegistrationForm.class
