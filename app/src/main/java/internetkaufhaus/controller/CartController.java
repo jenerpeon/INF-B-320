@@ -45,8 +45,8 @@ class CartController {
 	}
 
 	@RequestMapping(value = "/cart", method = RequestMethod.POST)
-	public String addProduct(@RequestParam("pid") ConcreteProduct concreteproduct, 
-			@RequestParam("dropdown") int number, @ModelAttribute Cart cart) {
+	public String addProduct(@RequestParam("prodId") ConcreteProduct concreteproduct, 
+			@RequestParam("dropDown") int number, @ModelAttribute Cart cart) {
 
 		int amount;	
 		if(number < 0 || number > 5)
