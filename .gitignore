@@ -9,3 +9,4 @@
 #ignore vagrant meta files
 /boxes/vagrant/swt-group22/.vagrant
 /boxes/vagrang/data/packages/*
+/app/target/*
