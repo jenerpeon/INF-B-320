@@ -85,19 +85,6 @@ footer #bottomline hr {
 	margin-left: 30px;
 
 }
-<<<<<<< HEAD
-=======
-tr td #ranking {
-	width: 450px;
-	height: 400px;
-	background-image: url(Bilder/ranking.png);
-	background-size: contain;
-}
-tr td #personal {
-	width: 450px;
-	height: 400px;
-}
->>>>>>> origin/HTML-Prototype
 #ranking tbody tr td {
 	text-align: center;
 	padding-top: 0px;
@@ -230,50 +217,26 @@ a {
 
 
 #wrapper #header {
-<<<<<<< HEAD
-=======
-	position: static;
->>>>>>> origin/HTML-Prototype
 	padding-top: 0px;
 	z-index: 2;
 }
 
 
-<<<<<<< HEAD
-=======
-header #header-row1  {
-	position: static;
-	margin-left: auto;
-	margin-right: auto;
-	background-color: #000000;
-	width: 1000px;
-
-}
-
-
->>>>>>> origin/HTML-Prototype
 
 #wrapper #navigation {
 	background-color: #E1E1E1;
 	-webkit-box-shadow: inset 0px 20px 20px -20px;
 	box-shadow: inset 0px 20px 20px -20px;
 	height: 54px;
-<<<<<<< HEAD
 	width: 100%;
 	text-align: center;
-=======
->>>>>>> origin/HTML-Prototype
 }
 
 
 
 tr td #logo {
 	font-family: clara;
-<<<<<<< HEAD
 	font-size: 33px;
-=======
-	font-size: 35px;
->>>>>>> origin/HTML-Prototype
 	font-style: normal;
 	font-weight: 400;
 }
@@ -283,7 +246,6 @@ tr td #logo {
 	background-color: #E1E1E1;
 	-webkit-box-shadow: inset 0 20px 20px -20px;
 	box-shadow: inset 0 20px 20px -20px;
-<<<<<<< HEAD
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
@@ -409,6 +371,4 @@ tr td #logo {
 }
 table   {
 	border: 0;
-=======
->>>>>>> origin/HTML-Prototype
 }
