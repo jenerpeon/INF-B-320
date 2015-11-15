@@ -5,7 +5,7 @@
 #ignore java builds files
 *.jar
 *.war
-
+*.swo
 #ignore vagrant meta files
 /boxes/vagrant/swt-group22/.vagrant
 /boxes/vagrang/data/packages/*
