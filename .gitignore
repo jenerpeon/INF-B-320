@@ -10,3 +10,4 @@
 /boxes/vagrant/swt-group22/.vagrant
 /boxes/vagrang/data/packages/*
 /app/target/*
+/app/bin/*
