@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="utf-8"/>
@@ -47,11 +47,15 @@
 	</table>
 	<div th:text="'Summe: ' + ${cart.price}">Summe</div>
 	<div th:if ="${cart.empty}">Leer</div>
-
-</body>
-<div>
+	<div>
+		<form method="post" action="checkout" sec:authorize="hasRole('ROLE_CUSTOMER')" >
+			<input type="submit" value="Kaufen" />
+		</form>
+	</div>
+	<div>
 	<form action="clearCart" method ="post">
 		<input type="submit" value="Warenkorb leeren" />
 	</form>
 </div>
+</body>
 </html>
