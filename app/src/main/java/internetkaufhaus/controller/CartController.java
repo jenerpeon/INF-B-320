@@ -48,21 +48,14 @@ class CartController {
 	public String addProduct(@RequestParam("prodId") ConcreteProduct concreteproduct, 
 			@RequestParam("dropDown") int number, @ModelAttribute Cart cart) {
 
-		int amount;	
+		int amount = number;	
+
 		if(number < 0 || number > 5)
-		{
 			amount = 1;
-		}
-		else
-		{
-			amount = number;
-		}
 
 		cart.addOrUpdateItem(concreteproduct, Quantity.of(amount));
 		// get first Category of product and redirect to associated catalog search
-		String category = concreteproduct.getCategories().iterator().next();
-		System.out.println(category);
-        return "redirect:catalog/"+category;
+    return "redirect:catalog/"+concreteproduct.getCategories().iterator().next();
 
 	}
 
@@ -88,15 +81,14 @@ class CartController {
 	@RequestMapping(value ="/changeAmount", method = RequestMethod.POST)
 	public String changeAmount(@ModelAttribute Cart cart, @RequestParam("cid") String identifier, @RequestParam("amount") int amount )
 	{
-		Product product;
 		Optional <CartItem> cartitem = cart.getItem(identifier);		
+
 		if(!cartitem.isPresent())
-		{
 			return "redirect:/cart";
-		}
+
 		cart.removeItem(identifier);
-		product = cartitem.get().getProduct();
-		cart.addOrUpdateItem(product, Quantity.of(amount));
+		cart.addOrUpdateItem(cartitem.get().getProduct(), Quantity.of(amount));
+
 		return "redirect:/cart";
 	}
 	

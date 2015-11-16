@@ -20,6 +20,10 @@ public class search implements Serializable{
     public HashMap<String, ArrayList<ConcreteProduct> > getsearchTypes() {
     	return this.searchType;
     }
+    
+    public Iterable<String> getCagegories(){
+      return searchType.keySet();
+    }
     public Iterable<ConcreteProduct> getCategory(String cat){
     	return searchType.get(cat);
     }
