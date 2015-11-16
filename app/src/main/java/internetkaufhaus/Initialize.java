@@ -2,10 +2,6 @@ package internetkaufhaus;
 
 import static org.salespointframework.core.Currencies.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
