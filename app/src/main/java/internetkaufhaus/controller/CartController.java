@@ -60,7 +60,10 @@ class CartController {
 
 		cart.addOrUpdateItem(concreteproduct, Quantity.of(amount));
 		// get first Category of product and redirect to associated catalog search
-        return "redirect:catalog"+concreteproduct.getCategories().iterator().next();
+		String category = concreteproduct.getCategories().iterator().next();
+		System.out.println(category);
+        return "redirect:catalog/"+category;
+
 	}
 
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
