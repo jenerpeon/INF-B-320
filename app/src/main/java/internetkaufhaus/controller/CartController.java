@@ -2,7 +2,7 @@
 package internetkaufhaus.controller;
 
 import internetkaufhaus.model.ConcreteProduct;
-
+import internetkaufhaus.model.mailSender;
 import java.util.Optional;
 
 import org.salespointframework.catalog.Product;
@@ -95,5 +95,26 @@ class CartController {
 		product = cartitem.get().getProduct();
 		cart.addOrUpdateItem(product, Quantity.of(amount));
 		return "redirect:/cart";
+	}
+	
+	@RequestMapping(value = "/pay", method = RequestMethod.POST)
+	public String pay(@ModelAttribute Cart cart, @LoggedIn Optional<UserAccount> userAccount) {
+		
+		//return userAccount.map(account -> {
+
+			//Order order = new Order(account, Cash.CASH);
+			
+			mailSender mailsender = new mailSender("steveJobs@heaven.com", "me@web.de", "Greetings from earth!", "Hello Steve.");
+			
+			//cart.addItemsTo(order);
+
+			//orderManager.payOrder(order);
+			mailsender.sendMail();
+			//orderManager.completeOrder(order);
+
+			cart.clear();
+
+			return "redirect:/";
+		//}).orElse("redirect:/cart");
 	}
 }
