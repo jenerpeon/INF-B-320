@@ -1,3 +1,5 @@
+:imagesdir: ./Bilder
+
 = Entwicklerdokumentation
 
 == Einführung und Ziele
