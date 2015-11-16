@@ -59,15 +59,8 @@ class CartController {
 		}
 
 		cart.addOrUpdateItem(concreteproduct, Quantity.of(amount));
-
-		switch (concreteproduct.getType()) {
-			case Fuzz:
-				return "redirect:catalog/Fuzz";
-			case Trash:
-				return "redirect:catalog/Trash";
-			default:
-				return "redirect:catalog/Garbage";
-		}
+		// get first Category of product and redirect to associated catalog search
+        return "redirect:catalog"+concreteproduct.getCategories().iterator().next();
 	}
 
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)

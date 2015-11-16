@@ -8,15 +8,15 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import internetkaufhaus.model.*;
 import org.salespointframework.useraccount.*;
-
+import org.salespointframework.catalog.Catalog;
 @Controller
 public class ShopController {
 
-	private final ProductCatalog catalog;
+	private final Catalog<ConcreteProduct> catalog;
 	private final UserAccountManager userAccountManager;
 
 	@Autowired
-	public ShopController(UserAccountManager userAccountManager, ProductCatalog catalog) {
+	public ShopController(UserAccountManager userAccountManager, Catalog<ConcreteProduct> catalog) {
 
 		this.userAccountManager = userAccountManager;
 		this.catalog = catalog;

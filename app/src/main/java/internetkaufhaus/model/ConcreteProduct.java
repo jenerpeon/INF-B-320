@@ -18,11 +18,6 @@ import internetkaufhaus.model.Comment;
 public class ConcreteProduct extends Product {
 	private static final long serialVersionUID = 3602164805477720501L;
 
-	public static enum ProdType{
-		Fuzz, Trash, Garbage;
-	}
-
-	private ProdType type;
 	
 	private String webLink;
 
@@ -31,26 +26,17 @@ public class ConcreteProduct extends Product {
     @SuppressWarnings("unused")
 	private ConcreteProduct(){}
     
-	public ConcreteProduct(String name, Money price, ProdType type, String webLink){
+	public ConcreteProduct(String name, Money price, String category, String webLink){
         super(name, price);
-		this.type=type;
+		this.addCategory(category);
 		this.webLink=webLink;
+
 	}
 
 	public String getWebLink() {
 		return webLink;
 	}
 
-	
-
-	public ProdType getType() {
-		return type;
-	}
-
-	public void setType(ProdType type) {
-		this.type = type;
-	}
-	
 	public Iterable<Comment> getComments() {
 		return comments;
 	}

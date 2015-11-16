@@ -1,6 +1,11 @@
 package internetkaufhaus;
 
 import static org.salespointframework.core.Currencies.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
@@ -10,26 +15,26 @@ import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
+import org.salespointframework.catalog.*;
 
 import org.javamoney.moneta.*;
 
-import internetkaufhaus.model.ProductCatalog;
 import internetkaufhaus.model.ConcreteProduct;
-import internetkaufhaus.model.ConcreteProduct.ProdType;
+import internetkaufhaus.model.search;
 
 @Component
 public class Initialize implements DataInitializer{
 	private final UserAccountManager userAccountManager;
     private final Inventory<InventoryItem> inventory;
-    private final ProductCatalog productCatalog;
-    
+    private final Catalog<ConcreteProduct> productCatalog;
+    private final search productSearch;   
     
 	@Autowired
-	public Initialize(ProductCatalog productCatalog, UserAccountManager userAccountManager, Inventory<InventoryItem> inventory) {
+	public Initialize(Catalog<ConcreteProduct> productCatalog, UserAccountManager userAccountManager, Inventory<InventoryItem> inventory, search productSearch) {
         this.inventory = inventory;
 		this.userAccountManager = userAccountManager;
 		this.productCatalog = productCatalog;
+		this.productSearch = productSearch;
 	}
 
 	@Override
@@ -37,29 +42,31 @@ public class Initialize implements DataInitializer{
 		//fill the user database
 		initializeUsers(userAccountManager);
 		//fill the Catalog with Items
-		initializeCatalog(productCatalog, inventory);
+		initializeCatalog(productCatalog, inventory, productSearch);
 		//fill inventory with Inventory items
 		//Inventory Items consist of one ConcreteProduct and a number representing the stock
 		initializeInventory(productCatalog,inventory);
 	}
 
-	private void initializeCatalog(ProductCatalog productCatalog, Inventory<InventoryItem> inventory){
+	private void initializeCatalog(Catalog<ConcreteProduct> productCatalog, Inventory<InventoryItem> inventory, search productSearch){
 		//prevents the Initializer to run in case of data persistance
         if(productCatalog.count()>0){
         	return;
         }
      
-        ConcreteProduct p1 = new ConcreteProduct("awesome_bhaskara", Money.of(0.99, EURO), ProdType.Fuzz, "https://eng.wikipedia.org/wiki/Fuzz");		
-        ConcreteProduct p2 = new ConcreteProduct("evil_newton", Money.of(0.99, EURO), ProdType.Garbage,"https://eng.wikipedia.org/wiki/Fuzz");
-        ConcreteProduct p3 = new ConcreteProduct("trusting_babbage", Money.of(0.99, EURO), ProdType.Trash,"https://eng.wikipedia.org/wiki/Fuzz");
+        ConcreteProduct p1 = new ConcreteProduct("awesome_bhaskara", Money.of(0.99, EURO), "Fuzz", "https://eng.wikipedia.org/wiki/Fuzz");		
+        ConcreteProduct p2 = new ConcreteProduct("evil_newton", Money.of(0.99, EURO), "Garbage","https://eng.wikipedia.org/wiki/Fuzz");
+        ConcreteProduct p3 = new ConcreteProduct("trusting_babbage", Money.of(0.99, EURO), "Trash","https://eng.wikipedia.org/wiki/Fuzz");
         
         productCatalog.save(p1);
         productCatalog.save(p2);
         productCatalog.save(p3);
 
+        productSearch.addProds(productCatalog.findAll());
+
 	}
 
-	private void initializeInventory(ProductCatalog productCatalog, Inventory<InventoryItem> inventory){
+	private void initializeInventory(Catalog<ConcreteProduct> productCatalog, Inventory<InventoryItem> inventory){
  		//prevents the Initializer to run in case of data persistance
  		  
         for (ConcreteProduct prod : productCatalog.findAll()) {
