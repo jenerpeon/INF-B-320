@@ -252,6 +252,8 @@ tr td #logo {
 	padding-left: auto;
 	padding-right: auto;
 	text-align: center;
+	float: left;
+	margin-top: 20px;
 }
 #searchcolumn * {
 	height: 28px;
@@ -371,4 +373,10 @@ tr td #logo {
 }
 table   {
 	border: 0;
+}
+#wrapper main #main-wrapper {
+	width: 950px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 50px;
 }
