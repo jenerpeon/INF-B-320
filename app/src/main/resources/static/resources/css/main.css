@@ -217,10 +217,19 @@ a {
 
 
 #wrapper #header {
+	margin: auto;
+	margin-bottom: 15px;
 	padding-top: 0px;
 	z-index: 2;
+	text-align: center;
+	width: 80%;
+    
 }
-
+#main-wrapper {
+	margin: auto;
+	z-index:2;
+	width:70%;
+}
 
 
 #wrapper #navigation {
@@ -243,10 +252,12 @@ tr td #logo {
 
 
 #wrapper #footer {
+	margin: auto;
 	background-color: #E1E1E1;
 	-webkit-box-shadow: inset 0 20px 20px -20px;
 	box-shadow: inset 0 20px 20px -20px;
-	width: 100%;
+	width: 80%;
+	margin-top: 15px;
 	margin-left: auto;
 	margin-right: auto;
 	padding-left: auto;

@@ -46,8 +46,11 @@ public class CatalogController {
     
     @RequestMapping("/catalog/{type}")
     public String category(@PathVariable("type") String category, ModelMap model ) {
-      model.addAttribute("category", category);
+      model.addAttribute("category", category);  	
+      model.addAttribute("categories",prodSearch.getCagegories());
     	model.addAttribute("ProdsOfCategory", prodSearch.getProdsByCategory(category));
+    	System.out.println(category);
+    	System.out.println(prodSearch.getProdsByCategory(category));
     	return "catalog";	
     }
     
@@ -57,6 +60,7 @@ public class CatalogController {
 		Optional<InventoryItem> item = inventory.findByProductIdentifier(prod.getIdentifier());
 		Quantity quantity = item.map(InventoryItem::getQuantity).orElse(NONE);
 				
+		model.addAttribute("categories",prodSearch.getCagegories());
 		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("quantity", quantity);
 		model.addAttribute("orderable", quantity.isGreaterThan(NONE));
