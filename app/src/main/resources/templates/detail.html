@@ -30,7 +30,7 @@
 		
 		<div class="content">
 			<div class="detailImg">
-				<img th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}" src="../resources/img/evil_newton.jpg" alt="" />
+				<img th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}" src="../resources/img/evil_newton.jpg" height=150 alt="" />
 			</div>
 		
 			<div class="detailDescription">
@@ -76,5 +76,9 @@
 				</form>
 			</div>
 	</div>
+
+	<div id="wrapper">
+		<nav th:include="footer :: footer" ></nav>
+		</div>
 </body>
 </html>

@@ -24,7 +24,7 @@ public class search implements Serializable{
     public Iterable<String> getCagegories(){
       return searchType.keySet();
     }
-    public Iterable<ConcreteProduct> getCategory(String cat){
+    public Iterable<ConcreteProduct> getProdsByCategory(String cat){
     	return searchType.get(cat);
     }
     public void addProds(Iterable<ConcreteProduct> iterable){

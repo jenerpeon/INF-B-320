@@ -46,7 +46,8 @@ public class CatalogController {
     
     @RequestMapping("/catalog/{type}")
     public String category(@PathVariable("type") String category, ModelMap model ) {
-    	model.addAttribute("catagory", prodSearch.getCategory(category));
+      model.addAttribute("category", category);
+    	model.addAttribute("ProdsOfCategory", prodSearch.getProdsByCategory(category));
     	return "catalog";	
     }
     

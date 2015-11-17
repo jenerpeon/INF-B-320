@@ -2,6 +2,9 @@ package internetkaufhaus;
 
 import static org.salespointframework.core.Currencies.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
@@ -16,18 +19,22 @@ import org.salespointframework.catalog.*;
 import org.javamoney.moneta.*;
 
 import internetkaufhaus.model.ConcreteProduct;
+import internetkaufhaus.model.ConcreteUserAccount;
 import internetkaufhaus.model.search;
+import internetkaufhaus.model.ConcreteUserAccountRepository;
 
 @Component
 public class Initialize implements DataInitializer{
+	private final ConcreteUserAccountRepository ConcreteUserAccountManager;
 	private final UserAccountManager userAccountManager;
-    private final Inventory<InventoryItem> inventory;
-    private final Catalog<ConcreteProduct> productCatalog;
-    private final search productSearch;   
+  private final Inventory<InventoryItem> inventory;
+  private final Catalog<ConcreteProduct> productCatalog;
+  private final search productSearch;   
     
 	@Autowired
-	public Initialize(Catalog<ConcreteProduct> productCatalog, UserAccountManager userAccountManager, Inventory<InventoryItem> inventory, search productSearch) {
-        this.inventory = inventory;
+	public Initialize(Catalog<ConcreteProduct> productCatalog,UserAccountManager userAccountManager, ConcreteUserAccountRepository ConcreteUserAccountManager, Inventory<InventoryItem> inventory, search productSearch) {
+    this.inventory = inventory;
+		this.ConcreteUserAccountManager = ConcreteUserAccountManager;
 		this.userAccountManager = userAccountManager;
 		this.productCatalog = productCatalog;
 		this.productSearch = productSearch;
@@ -36,7 +43,7 @@ public class Initialize implements DataInitializer{
 	@Override
 	public void initialize() {
 		//fill the user database
-		initializeUsers(userAccountManager);
+		initializeUsers(userAccountManager, ConcreteUserAccountManager);
 		//fill the Catalog with Items
 		initializeCatalog(productCatalog, inventory, productSearch);
 		//fill inventory with Inventory items
@@ -59,35 +66,35 @@ public class Initialize implements DataInitializer{
         productCatalog.save(p3);
 
         productSearch.addProds(productCatalog.findAll());
-
 	}
 
 	private void initializeInventory(Catalog<ConcreteProduct> productCatalog, Inventory<InventoryItem> inventory){
  		//prevents the Initializer to run in case of data persistance
- 		  
         for (ConcreteProduct prod : productCatalog.findAll()) {
 		    InventoryItem inventoryItem = new InventoryItem(prod, Quantity.of(10));
 		    inventory.save(inventoryItem);
 		}
 	}
 
-	private void initializeUsers(UserAccountManager userAccountManager) {
+	private void initializeUsers(UserAccountManager userAccountManager, ConcreteUserAccountRepository ConcreteUserAccountManager) {
 		//prevents the Initializer to run in case of data persistance
 		if (userAccountManager.findByUsername("peon").isPresent()) {
 			return;
 		}
 
-        final Role adminRole = Role.of("ROLE_ADMIN");
-        final Role customerRole = Role.of("ROLE_CUSTOMER");
-		final Role employeeRole = Role.of("ROLE_EMPLOYEE");
-		
-		
-		UserAccount a1 = userAccountManager.create("peon","peon", adminRole);
-		UserAccount e1 = userAccountManager.create("saul", "saul", employeeRole);
-		UserAccount u1 = userAccountManager.create("admin", "admin", customerRole);
-      
-		userAccountManager.save(a1);
-        userAccountManager.save(e1);
-		userAccountManager.save(u1);
+    final Role adminRole = Role.of("ROLE_ADMIN");
+    final Role customerRole = Role.of("ROLE_CUSTOMER");
+   	final Role employeeRole = Role.of("ROLE_EMPLOYEE");
+
+		List<ConcreteUserAccount>  userAccounts= new ArrayList<ConcreteUserAccount>();
+		userAccounts.add(new ConcreteUserAccount("peon","peon", adminRole,userAccountManager));
+		userAccounts.add(new ConcreteUserAccount("saul", "saul", employeeRole, userAccountManager));
+	  userAccounts.add(new ConcreteUserAccount("admin", "admin", customerRole, userAccountManager));
+    userAccounts.add(new ConcreteUserAccount("darth@vader.dark", "Anikan", "Skywalker", "Tatooine Outa RIM", "dark",adminRole, userAccountManager));
+  
+	  for(ConcreteUserAccount acc : userAccounts){
+    		userAccountManager.save(acc.getUserAccount());
+		    ConcreteUserAccountManager.save(acc);
+	  }	
 	}
 }
