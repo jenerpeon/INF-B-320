@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.Map;
 import java.util.HashMap;
 
-
+import org.salespointframework.catalog.Catalog;
 import org.salespointframework.inventory.*;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.time.BusinessTime;
@@ -28,48 +28,27 @@ import org.salespointframework.time.BusinessTime;
 
 import internetkaufhaus.model.Comment;
 import internetkaufhaus.model.ConcreteProduct;
-import internetkaufhaus.model.ConcreteProduct.ProdType;
-import internetkaufhaus.model.ProductCatalog;
-
+import internetkaufhaus.model.search;
 
 @Controller
 public class CatalogController {
 	private static final Quantity NONE = Quantity.of(0);
-    private final ProductCatalog catalog;
+    private final Catalog<ConcreteProduct> catalog;
     private final Inventory<InventoryItem> inventory;
-    private Map<ProdType, ArrayList<ConcreteProduct> > searchType = new HashMap<ProdType, ArrayList<ConcreteProduct> > ();
-    
+    private final search prodSearch;
+
     @Autowired
-    public CatalogController(ProductCatalog catalog, Inventory<InventoryItem> inventory){
+    public CatalogController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory,search prodSearch){
     	this.catalog = catalog;
     	this.inventory = inventory;
-    	
-        for(ConcreteProduct prod : this.catalog.findAll()){
-            ProdType type = prod.getType();
-            if(!this.searchType.containsKey(type))
-               this.searchType.put(type, new ArrayList<ConcreteProduct> ());
-            this.searchType.get(type).add(prod);
-   
-        }
-     
+        this.prodSearch = prodSearch; 
     }
     
-    
-    @RequestMapping("/{type}")
-    public String category(@PathVariable("type") ProdType type, ModelMap model ) {
-    	for(ConcreteProduct prod : catalog.findAll()) {
-    		ProdType t = prod.getType();
-    		if(! searchType.containsKey(t)){
-    			searchType.put(t, new ArrayList<ConcreteProduct>());
-    		}	
-    		if(!searchType.get(t).contains(prod)){
-    			searchType.get(t).add(prod);
-    		}
-    	}
-    	model.addAttribute("catagory", searchType.get(type));
+    @RequestMapping("/catalog/{type}")
+    public String category(@PathVariable("type") String category, ModelMap model ) {
+    	model.addAttribute("catagory", prodSearch.getCategory(category));
     	return "catalog";	
     }
-    
     
     @RequestMapping("/detail/{prodId}")
 	public String detail(@PathVariable("prodId") ConcreteProduct prod, Model model) {
@@ -77,14 +56,11 @@ public class CatalogController {
 		Optional<InventoryItem> item = inventory.findByProductIdentifier(prod.getIdentifier());
 		Quantity quantity = item.map(InventoryItem::getQuantity).orElse(NONE);
 				
-
 		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("quantity", quantity);
 		model.addAttribute("orderable", quantity.isGreaterThan(NONE));
 		model.addAttribute("comments", prod.getComments());
 		
-		
-
 		return "detail";
 	}
     
@@ -93,14 +69,11 @@ public class CatalogController {
 			@RequestParam("rating") int rating, Model model) {
 		Comment c= new Comment(comment, rating, new Date(),"");
 		if(! (comment=="")){
-			
 			prod.addComment(c);
 			c.setFormatedDate(c.getDate());
 			catalog.save(prod);
 			model.addAttribute("time", c.getFormatedDate());
 		}
-
-		
 		return "redirect:detail/" + prod.getIdentifier();
 		
 	}

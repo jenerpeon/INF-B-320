@@ -1,0 +1,11 @@
+internetkaufhaus/model/ProductCatalog.class
+internetkaufhaus/controller/CatalogController.class
+internetkaufhaus/controller/ShopController.class
+internetkaufhaus/Initialize.class
+internetkaufhaus/Application.class
+internetkaufhaus/controller/AuthController$WebSecurityConfiguration.class
+internetkaufhaus/controller/AuthController.class
+internetkaufhaus/model/ConcreteProduct$ProdType.class
+internetkaufhaus/controller/AuthController$PeonWebConfiguration.class
+internetkaufhaus/model/ConcreteProduct.class
+internetkaufhaus/forms/RegistrationForm.class
