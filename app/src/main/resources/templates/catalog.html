@@ -25,23 +25,31 @@
 			<div id="main-wrapper">
 				<a>Home &gt; Kategorie</a> <br />
 				<div id="catalognavigaton">
-					<h1>Unterkategorie 1</h1>
-					<h1>Unterkategorie 2</h1>
-					<h1>Unterkategorie 3</h1>
+					<a th:each="category: ${allCategory}" th:href="@{'/catalog/'+${category}}"> 
+					<h1 th:text="${category}" ></h1>
+					</a>
+					<!---<h1 th:href="@{'/catalog/'Fuzz}">Unterkategorie 1</h1>
+					<h1 th:href="@{'/catalog/'Trash}">Unterkategorie 2</h1>
+					<h1 th:href="@{'/catalog/'Fuzz}">Unterkategorie 3</h1> --->
 				</div>
 				<div id="catalogview">
+					
 					<ul id="ariclelist">
-						<li class="article" th:each="concreteproduct : ${catagory}">
-							<h1 th:text="${concreteproduct.name}" class="name"
-								th:href="@{'/detail/'+${concreteproduct.identifier}}"></h1> <img
-							class="picture"
-							th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}"
-							height="150" /> <a class="description"
-							th:text="${concreteproduct.price}" /> <a
-							th:href="@{'/detail/'+${concreteproduct.identifier}}">details</a>
+						<li class="article" th:each="concreteproduct : ${prod50}">
+							<a th:href="@{'/detail/'+${concreteproduct.identifier}}">
+							<h1 th:text="${concreteproduct.name}" class="name" ></h1> 
+							<img class="picture" th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}" height="150"></img> 
+							</a>
 						</li>
-
+						<table>
+							<tr>
+								<td th:each="number:${numbers}" >
+								<a th:text="${number}" th:href="@{/'+${number}}"></a>
+								</td>
+							</tr>
+						</table>
 					</ul>
+					
 				</div>
 			</div>
 			</main>

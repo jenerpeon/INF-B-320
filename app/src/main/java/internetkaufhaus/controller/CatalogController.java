@@ -43,12 +43,33 @@ public class CatalogController {
     	this.inventory = inventory;
         this.prodSearch = prodSearch; 
     }
-    
+    /*
     @RequestMapping("/catalog/{type}")
     public String category(@PathVariable("type") String category, ModelMap model ) {
-    	model.addAttribute("catagory", prodSearch.getCategory(category));
+    	
+    	
+    	model.addAttribute("category", prodSearch.list50(category).get(0));
+    	model.addAttribute("allcategory", prodSearch.getCagegories());
+    	model.addAttribute("numbers", prodSearch.numbers(category));
+    	System.out.println(prodSearch.list50(category).get(0));
     	return "catalog";	
     }
+    */
+    
+   @RequestMapping("/catalog/{type}/{pagenumber}")
+    public String list50( @PathVariable("type") String category, @PathVariable("pagenumber") String number, ModelMap model) {
+    	
+    	List<List<ConcreteProduct>> list50 = prodSearch.list50(category);
+    	int i= new Integer(number);
+    	
+    	model.addAttribute("prod50", list50.get(i-1));
+    	model.addAttribute("numbers", prodSearch.numbers(category));
+    	return "catalog";
+    }
+    
+    
+    
+    
     
     @RequestMapping("/detail/{prodId}")
 	public String detail(@PathVariable("prodId") ConcreteProduct prod, Model model) {
@@ -77,4 +98,6 @@ public class CatalogController {
 		return "redirect:detail/" + prod.getIdentifier();
 		
 	}
+	
+	
 }
