@@ -19,6 +19,7 @@
 
 <main>
 <div id="main-wrapper">
+		  <div th:include="caroussel :: caroussel"></div>
 <a th:text="@{'Home'+ '->' +${category}}">Home &gt; "${category}"</a>
 <!--			<div id="catalognavigaton">
 					<h1><a th:href="@{/catalog/Fuzz}" text="Fuzz"/>Fuzz</h1>

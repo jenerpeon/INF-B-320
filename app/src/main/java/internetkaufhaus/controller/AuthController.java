@@ -18,12 +18,14 @@ import org.springframework.beans.factory.annotation.*;
 @Controller
 public class AuthController {
 
-    private static final String LOGIN_ROUTE = "/login";
+  private static final String LOGIN_ROUTE = "/login";
 	private final UserAccountManager userAccountManager;
+	private final ConcreteUserAccountRepository concreteUserAccountManager;
 	
 	@Autowired
-    public AuthController(UserAccountManager userAccountManager){
-		this.userAccountManager = userAccountManager;
+  public AuthController(UserAccountManager userAccountManager, ConcreteUserAccountRepository concreteUserAccountManager){
+	this.userAccountManager = userAccountManager;
+	this.concreteUserAccountManager = concreteUserAccountManager;
 	}
 
 	@Configuration
@@ -59,9 +61,10 @@ public class AuthController {
 			return "register";
 		}
 
-		UserAccount customer = userAccountManager.create(registrationForm.getName(), registrationForm.getPassword(), Role.of("CUSTOMER"));
-		userAccountManager.save(customer);
-
+		ConcreteUserAccount user = new ConcreteUserAccount(registrationForm.getName(), registrationForm.getPassword(), Role.of("ROLE_CUSTOMER"), userAccountManager);
+		concreteUserAccountManager.save(user);
+    userAccountManager.save(user.getUserAccount());
+    
 		return "redirect:/";
     }
 }

@@ -2,6 +2,7 @@ package internetkaufhaus;
 
 import static org.salespointframework.core.Currencies.*;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,8 @@ import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.salespointframework.catalog.*;
-
+import org.salespointframework.order.*;
+import org.salespointframework.order.OrderManager;
 import org.javamoney.moneta.*;
 
 import internetkaufhaus.model.ConcreteProduct;
@@ -29,15 +31,20 @@ public class Initialize implements DataInitializer{
 	private final UserAccountManager userAccountManager;
   private final Inventory<InventoryItem> inventory;
   private final Catalog<ConcreteProduct> productCatalog;
+  private final OrderManager<Order> orderManager;
+
   private final search productSearch;   
     
 	@Autowired
-	public Initialize(Catalog<ConcreteProduct> productCatalog,UserAccountManager userAccountManager, ConcreteUserAccountRepository ConcreteUserAccountManager, Inventory<InventoryItem> inventory, search productSearch) {
+	public Initialize(Catalog<ConcreteProduct> productCatalog,UserAccountManager userAccountManager, 
+	        ConcreteUserAccountRepository ConcreteUserAccountManager, Inventory<InventoryItem> inventory, 
+	        OrderManager<Order> orderManager, search productSearch) {
     this.inventory = inventory;
 		this.ConcreteUserAccountManager = ConcreteUserAccountManager;
 		this.userAccountManager = userAccountManager;
 		this.productCatalog = productCatalog;
 		this.productSearch = productSearch;
+		this.orderManager = orderManager;
 	}
 
 	@Override
@@ -49,6 +56,7 @@ public class Initialize implements DataInitializer{
 		//fill inventory with Inventory items
 		//Inventory Items consist of one ConcreteProduct and a number representing the stock
 		initializeInventory(productCatalog,inventory);
+
 	}
 
 	private void initializeCatalog(Catalog<ConcreteProduct> productCatalog, Inventory<InventoryItem> inventory, search productSearch){

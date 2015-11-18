@@ -2,11 +2,13 @@
 package internetkaufhaus.controller;
 
 import internetkaufhaus.model.ConcreteProduct;
+import internetkaufhaus.model.ConcreteUserAccount;
+
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import internetkaufhaus.model.mailSender;
 import java.util.Optional;
-
+import org.salespointframework.order.*;
 import org.salespointframework.catalog.Product;
 import org.salespointframework.core.AbstractEntity;
 import org.salespointframework.order.Cart;
@@ -53,7 +55,6 @@ class CartController {
 			@RequestParam("dropDown") int number, @ModelAttribute Cart cart) {
 
 		int amount = number;	
-
 		if(number < 0 || number > 5)
 			amount = 1;
 
@@ -67,6 +68,11 @@ class CartController {
 	public String cartRedirect(Model model) {
 	    model.addAttribute("categories", prodSearch.getCagegories());
 		return "cart";
+	}
+	
+	@ModelAttribute("cart")
+	public Cart getCart(){
+	   return new Cart(); 
 	}
 
 	
@@ -100,21 +106,20 @@ class CartController {
 	@RequestMapping(value = "/pay", method = RequestMethod.POST)
 	public String pay(@ModelAttribute Cart cart, @LoggedIn Optional<UserAccount> userAccount) {
 		
-		//return userAccount.map(account -> {
+		return userAccount.map(account -> {
 
-			//Order order = new Order(account, Cash.CASH);
-			
-			mailSender mailsender = new mailSender("steveJobs@heaven.com", "me@web.de", "Greetings from earth!", "Hello Steve.");
-			
-			//cart.addItemsTo(order);
+			Order order = new Order(account,Cash.CASH);
+			cart.addItemsTo(order);
 
-			//orderManager.payOrder(order);
-			mailsender.sendMail();
-			//orderManager.completeOrder(order);
+			orderManager.payOrder(order);
+			orderManager.completeOrder(order);
 
 			cart.clear();
 
+//			mailSender mailsender = new mailSender("steveJobs@heaven.com", "me@web.de", "Greetings from earth!", "Hello Steve.");
+	//		mailsender.sendMail();
+		//	orderManager.save(order);
 			return "redirect:/";
-		//}).orElse("redirect:/cart");
+		}).orElse("redirect:/login");
 	}
 }

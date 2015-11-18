@@ -12,18 +12,26 @@
   <script src="http://use.edgefonts.net/clara:n4:default.js" type="text/javascript"></script>
 
 </head>
+<li sec:authorize="!isAuthenticated()" class="loginlogout"><a th:href="@{/login}" th:text="#{nav.login}">Login</a></li>
 
+			<li sec:authorize="isAuthenticated()" class="loginlogout">
+				<form th:action="@{/logout}" method="post">
+					<input type="submit" value="Logout" th:value="#{nav.logout}" />
+				</form>
+			</li>
 <body th:fragment="navigation">
 
 	<div id="header">
 		<header>
 			<div id="header-row1">
 				<ul>
-					<li><a>Herzlich Willkommen</a></li>
-					<li><a th:href="@{'/login'}">Anmelden</a></li>
-					<li><a>Service</a></li>
-					<li><a>Punktestand</a></li>
-					<li><a th:href="@{'/login'}">Mein Konto</a></li>
+					<li sec:authorize="isAuthenticated()"><a>Herzlich Willkommen</a></li>
+					<li sec:authorize="isAuthenticated()"><a th:href="@{'/logout'}">Ausloggen</a></li>
+					<li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Anmelden</a></li>
+					<li sec:authorize="!isAuthenticated()"><a th:href="@{/registerNew}">Registrieren</a></li>
+					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a>Service</a></li>
+					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a>Punktestand</a></li>
+					<li sec:authorize="isAuthenticated()"><a th:href="@{'/login'}">Mein Konto</a></li>
 				</ul>
 			</div>
 
@@ -31,7 +39,7 @@
 				<table id="header-row2-table">
 					<tbody>
 						<tr>
-							<td><a id="logo">Woods Super Dooper Shop</a></td>
+							<td><a th:href="@{'/'}" id="logo">Woods Super Dooper Shop</a></td>
 							<td>
 								<div id="searchfield">
 									<form id="search">
@@ -56,9 +64,9 @@
 												height="50" alt="" /></a></td>
 											<td>
 												<ul id="cart-text-list">
-													<li><a>0 Artikel</a></li>
-													<li><a th:href="@{'/catalog/default'}">Summe</a></li>
-													<li><a th:href="@{'/cart'}">Zum Warenkorb</a></li>
+													<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a>0 Artikel</a></li>
+													<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a th:href="@{'/catalog/default'}">Summe</a></li>
+													<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a th:href="@{'/cart'}">Zum Warenkorb</a></li>
 												</ul>
 											</td>
 										</tr>
