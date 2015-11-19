@@ -2,7 +2,7 @@
 
 #catalognavigaton {
 	width: 200px;
-	height: 800px;
+	height: 850px;
 	border-right: 1px solid #000000;
 	float: left;
 }
@@ -14,7 +14,7 @@
 }
 #catalogview {
 	width: 720px;
-	height: 800px;
+	height: 850px;
 	float: left;
 	padding-left: 20px;
 	overflow: auto;
@@ -36,4 +36,12 @@
 }
 #ariclelist .article {
 	padding-bottom: 25px;
+}
+
+#pageControl {
+	padding-left: 260px;
+}
+
+#pageControl a{
+	font-size: 16px;	
 }

@@ -39,16 +39,16 @@
 
 			
 						</li>
-						<table>
+					</ul>
+	
+				</div>
+				<table id="pageControl">
 							<tr>
 								<td th:each="number:${numbers}" >
 								<a th:text="${number}" th:href="@{'/catalog/'+${category}+'/'+${number}}"></a>
 								</td>
 							</tr>
 						</table>
-					</ul>
-	
-				</div>
 			</div>
 		
 			</main>  	
