@@ -438,3 +438,15 @@ table   {
 #main-wrapper a {
 	font-size: 14px;
 }
+
+#registration-modal label {
+	float: left;
+	width: 25%;
+	margin-right:0.5em;
+    padding-top:0.2em;
+  	text-align:right;
+}
+
+#registration-modal > div {
+	width: 500px;
+}

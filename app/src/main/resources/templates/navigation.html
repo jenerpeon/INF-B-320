@@ -26,25 +26,15 @@
 				<ul>
 					<li sec:authorize="isAuthenticated()"><a>Herzlich Willkommen</a></li>
 					<li sec:authorize="!isAuthenticated()"><a href="#login-modal">Anmelden</a></li>
-					<li sec:authorize="!isAuthenticated()"><a th:href="@{/registerNew}">Registrieren</a></li>
+					<li sec:authorize="!isAuthenticated()"><a href="#registration-modal">Registrieren</a></li>
 					<li sec:authorize="isAuthenticated()"><a th:href="@{'/logout'}">Ausloggen</a></li>
 					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a>Service</a></li>
 					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a>Punktestand</a></li>
+					<li sec:authorize="hasRole('ROLE_EMPLOYEE')"><a th:href="@{/employee}">Mitarbeiterportal</a></li>
 					<li sec:authorize="isAuthenticated()"><a th:href="@{'/login'}">Mein Konto</a></li>
 				</ul>
 			</div>
-				 <!--   <form th:action="@{/login}" method="post">
-	            <label for="username">Username</label>:
-	            <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
-	            <label for="password">Password</label>:
-	            <input type="password" id="password" name="password" /> <br />
-	            <input type="submit" value="Log in" />
-	        </form>
-	        		    <form th:action="@{/NewPass}" method="post">
-	            <label for="password">Password</label>:
-	            <input type="password" id="password" name="password" /> <br />
-	            <input type="submit" value="change pass" />
-	        </form>-->	
+				
 			<div id="login-modal" class="modalDialog">
   				<div>
     				<a href="#close" title="Close" class="close">X</a>
@@ -57,6 +47,28 @@
 							<input type="password" id="password" name="password" value="" /><br/>
 							<input type="submit" value="Anmelden" />
 							<a href="#"><label for="login-password">Passwort vergessen?</label></a>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+			
+			<div id="registration-modal" class="modalDialog">
+  				<div>
+    				<a href="#close" title="Close" class="close">X</a>
+  					<h2>Registrierung</h2>
+					<form method="post" th:action="@{/registerNew}">
+						<fieldset>
+							<label for="name">Name:</label>
+							<input type="text" id="name" name="name" value="" /><br/>
+							<label for="adress1">Adresszeile 1:</label>
+							<input type="text" id="adress1" name="adress1" value="" /><br/>
+							<label for="adress2">Adresszeile 2:</label>
+							<input type="text" id="adress2" name="adress2" value="" /><br/>
+							<label for="login-name">E-Mail Adresse:</label>
+							<input type="text" id="username" name="username" value="" /><br/>
+							<label for="login-password">Passwort:</label>
+							<input type="password" id="password" name="password" value="" /><br/>
+							<input type="submit" value="Registrieren" />
 						</fieldset>
 					</form>
 				</div>
