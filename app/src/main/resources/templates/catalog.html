@@ -26,7 +26,7 @@
 				<a>Home &gt; Kategorie</a> <br />
 				<div id="catalognavigaton">
 					<a th:each="category: ${allCategory}" th:href="@{'/catalog/'+${category}}"> 
-					<h1 th:text="${category}" ></h1>
+					<h1 th:text="${category}"></h1>
 					</a>
 					<!---<h1 th:href="@{'/catalog/'Fuzz}">Unterkategorie 1</h1>
 					<h1 th:href="@{'/catalog/'Trash}">Unterkategorie 2</h1>
@@ -38,13 +38,14 @@
 						<li class="article" th:each="concreteproduct : ${prod50}">
 							<a th:href="@{'/detail/'+${concreteproduct.identifier}}">
 							<h1 th:text="${concreteproduct.name}" class="name" ></h1> 
+							
 							<img class="picture" th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}" height="150"></img> 
 							</a>
 						</li>
 						<table>
 							<tr>
 								<td th:each="number:${numbers}" >
-								<a th:text="${number}" th:href="@{/'+${number}}"></a>
+								<a th:text="${number}" th:href="@{${number}}"> </a>
 								</td>
 							</tr>
 						</table>

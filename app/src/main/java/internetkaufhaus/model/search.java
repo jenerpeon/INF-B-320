@@ -34,6 +34,7 @@ public class search implements Serializable{
     public List<List<ConcreteProduct>> list50 (String cat){
     	List<List<ConcreteProduct>> list= new ArrayList<List<ConcreteProduct>>();
     	List<ConcreteProduct> init = new ArrayList<ConcreteProduct>();
+    	list.add(init);
     	for( ConcreteProduct p: getCategory(cat)){
     		if(init.size()>=4){
     			init = new ArrayList<ConcreteProduct>();	
@@ -60,6 +61,7 @@ public class search implements Serializable{
     			k=0;
     		}
     	}
+    	if(k>0) numbers.add(i);
     	return numbers;
     }
  

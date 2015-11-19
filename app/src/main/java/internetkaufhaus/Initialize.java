@@ -50,29 +50,29 @@ public class Initialize implements DataInitializer{
         	return;
         }
      
-        ConcreteProduct p1 = new ConcreteProduct("awesome_bhaskara", Money.of(0.99, EURO), "Fuzz", "https://eng.wikipedia.org/wiki/Fuzz");		
-        ConcreteProduct p2 = new ConcreteProduct("evil_newton", Money.of(0.99, EURO), "Garbage","https://eng.wikipedia.org/wiki/Fuzz");
-        ConcreteProduct p3 = new ConcreteProduct("trusting_babbage", Money.of(0.99, EURO), "Trash","https://eng.wikipedia.org/wiki/Fuzz");
-        ConcreteProduct p4 = new ConcreteProduct("awesome_bhaskara", Money.of(0.99, EURO), "Fuzz", "https://eng.wikipedia.org/wiki/Fuzz");		
-        ConcreteProduct p5 = new ConcreteProduct("evil_newton", Money.of(0.99, EURO), "Garbage","https://eng.wikipedia.org/wiki/Fuzz");
-        ConcreteProduct p6 = new ConcreteProduct("trusting_babbage", Money.of(0.99, EURO), "Trash","https://eng.wikipedia.org/wiki/Fuzz");
-        ConcreteProduct p7 = new ConcreteProduct("awesome_bhaskara", Money.of(0.99, EURO), "Fuzz", "https://eng.wikipedia.org/wiki/Fuzz");		
-        ConcreteProduct p8 = new ConcreteProduct("evil_newton", Money.of(0.99, EURO), "Garbage","https://eng.wikipedia.org/wiki/Fuzz");
-        ConcreteProduct p9 = new ConcreteProduct("trusting_babbage", Money.of(0.99, EURO), "Trash","https://eng.wikipedia.org/wiki/Fuzz");
-        ConcreteProduct p10 = new ConcreteProduct("awesome_bhaskara", Money.of(0.99, EURO), "Fuzz", "https://eng.wikipedia.org/wiki/Fuzz");		
-        ConcreteProduct p12 = new ConcreteProduct("evil_newton", Money.of(0.99, EURO), "Garbage","https://eng.wikipedia.org/wiki/Fuzz");
-        ConcreteProduct p13 = new ConcreteProduct("trusting_babbage", Money.of(0.99, EURO), "Trash","https://eng.wikipedia.org/wiki/Fuzz");
-        ConcreteProduct p14 = new ConcreteProduct("awesome_bhaskara", Money.of(0.99, EURO), "Fuzz", "https://eng.wikipedia.org/wiki/Fuzz");		
-        ConcreteProduct p15 = new ConcreteProduct("evil_newton", Money.of(0.99, EURO), "Garbage","https://eng.wikipedia.org/wiki/Fuzz");
-        ConcreteProduct p16 = new ConcreteProduct("trusting_babbage", Money.of(0.99, EURO), "Trash","https://eng.wikipedia.org/wiki/Fuzz");
-        ConcreteProduct p17 = new ConcreteProduct("awesome_bhaskara", Money.of(0.99, EURO), "Fuzz", "https://eng.wikipedia.org/wiki/Fuzz");		
-        ConcreteProduct p18 = new ConcreteProduct("evil_newton", Money.of(0.99, EURO), "Garbage","https://eng.wikipedia.org/wiki/Fuzz");
-        ConcreteProduct p19 = new ConcreteProduct("trusting_babbage", Money.of(0.99, EURO), "Trash","https://eng.wikipedia.org/wiki/Fuzz");
-        ConcreteProduct p20 = new ConcreteProduct("awesome_bhaskara", Money.of(0.99, EURO), "Fuzz", "https://eng.wikipedia.org/wiki/Fuzz");		
-        ConcreteProduct p21 = new ConcreteProduct("evil_newton", Money.of(0.99, EURO), "Garbage","https://eng.wikipedia.org/wiki/Fuzz");
-        ConcreteProduct p22 = new ConcreteProduct("trusting_babbage", Money.of(0.99, EURO), "Trash","https://eng.wikipedia.org/wiki/Fuzz");
-        ConcreteProduct p23 = new ConcreteProduct("awesome_bhaskara", Money.of(0.99, EURO), "Fuzz", "https://eng.wikipedia.org/wiki/Fuzz");		
-        ConcreteProduct p24 = new ConcreteProduct("evil_newton", Money.of(0.99, EURO), "Garbage","https://eng.wikipedia.org/wiki/Fuzz");
+        ConcreteProduct p1 = new ConcreteProduct("1awesome_bhaskara", Money.of(0.99, EURO), "Fuzz", "https://eng.wikipedia.org/wiki/Fuzz");		
+        ConcreteProduct p2 = new ConcreteProduct("1evil_newton", Money.of(0.99, EURO), "Garbage","https://eng.wikipedia.org/wiki/Fuzz");
+        ConcreteProduct p3 = new ConcreteProduct("1trusting_babbage", Money.of(0.99, EURO), "Trash","https://eng.wikipedia.org/wiki/Fuzz");
+        ConcreteProduct p4 = new ConcreteProduct("2awesome_bhaskara", Money.of(0.99, EURO), "Fuzz", "https://eng.wikipedia.org/wiki/Fuzz");		
+        ConcreteProduct p5 = new ConcreteProduct("2evil_newton", Money.of(0.99, EURO), "Garbage","https://eng.wikipedia.org/wiki/Fuzz");
+        ConcreteProduct p6 = new ConcreteProduct("2trusting_babbage", Money.of(0.99, EURO), "Trash","https://eng.wikipedia.org/wiki/Fuzz");
+        ConcreteProduct p7 = new ConcreteProduct("3awesome_bhaskara", Money.of(0.99, EURO), "Fuzz", "https://eng.wikipedia.org/wiki/Fuzz");		
+        ConcreteProduct p8 = new ConcreteProduct("3evil_newton", Money.of(0.99, EURO), "Garbage","https://eng.wikipedia.org/wiki/Fuzz");
+        ConcreteProduct p9 = new ConcreteProduct("3trusting_babbage", Money.of(0.99, EURO), "Trash","https://eng.wikipedia.org/wiki/Fuzz");
+        ConcreteProduct p10 = new ConcreteProduct("4awesome_bhaskara", Money.of(0.99, EURO), "Fuzz", "https://eng.wikipedia.org/wiki/Fuzz");		
+        ConcreteProduct p12 = new ConcreteProduct("4evil_newton", Money.of(0.99, EURO), "Garbage","https://eng.wikipedia.org/wiki/Fuzz");
+        ConcreteProduct p13 = new ConcreteProduct("4trusting_babbage", Money.of(0.99, EURO), "Trash","https://eng.wikipedia.org/wiki/Fuzz");
+        ConcreteProduct p14 = new ConcreteProduct("5awesome_bhaskara", Money.of(0.99, EURO), "Fuzz", "https://eng.wikipedia.org/wiki/Fuzz");		
+        ConcreteProduct p15 = new ConcreteProduct("5evil_newton", Money.of(0.99, EURO), "Garbage","https://eng.wikipedia.org/wiki/Fuzz");
+        ConcreteProduct p16 = new ConcreteProduct("5trusting_babbage", Money.of(0.99, EURO), "Trash","https://eng.wikipedia.org/wiki/Fuzz");
+        ConcreteProduct p17 = new ConcreteProduct("6awesome_bhaskara", Money.of(0.99, EURO), "Fuzz", "https://eng.wikipedia.org/wiki/Fuzz");		
+        ConcreteProduct p18 = new ConcreteProduct("6evil_newton", Money.of(0.99, EURO), "Garbage","https://eng.wikipedia.org/wiki/Fuzz");
+        ConcreteProduct p19 = new ConcreteProduct("6trusting_babbage", Money.of(0.99, EURO), "Trash","https://eng.wikipedia.org/wiki/Fuzz");
+        ConcreteProduct p20 = new ConcreteProduct("7awesome_bhaskara", Money.of(0.99, EURO), "Fuzz", "https://eng.wikipedia.org/wiki/Fuzz");		
+        ConcreteProduct p21 = new ConcreteProduct("7evil_newton", Money.of(0.99, EURO), "Garbage","https://eng.wikipedia.org/wiki/Fuzz");
+        ConcreteProduct p22 = new ConcreteProduct("7trusting_babbage", Money.of(0.99, EURO), "Trash","https://eng.wikipedia.org/wiki/Fuzz");
+        ConcreteProduct p23 = new ConcreteProduct("8awesome_bhaskara", Money.of(0.99, EURO), "Fuzz", "https://eng.wikipedia.org/wiki/Fuzz");		
+        ConcreteProduct p24 = new ConcreteProduct("8evil_newton", Money.of(0.99, EURO), "Garbage","https://eng.wikipedia.org/wiki/Fuzz");
         
        
         

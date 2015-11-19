@@ -22,6 +22,9 @@ public class ConcreteProduct extends Product {
 	private String webLink;
 
 	@OneToMany(cascade = CascadeType.ALL) private List<Comment> comments = new LinkedList<Comment>();
+
+
+	public String category;
 		
     @SuppressWarnings("unused")
 	private ConcreteProduct(){}

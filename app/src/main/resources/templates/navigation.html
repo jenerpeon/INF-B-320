@@ -83,7 +83,7 @@
 	<div id="navigation">
 		<ul class="nav">
 			<li th:each="c : ${categories}">
-			  <a th:href="@{/catalog/'+${c}/'1}" th:text="${c}">test</a>
+			  <a th:href="@{/catalog/{category}/1(category=${c})}" th:text="${c}" name="">test</a>
 			  
 				<div></div></li>
 				<!--			<li><a href="#">Wein und Gourmet</a>
