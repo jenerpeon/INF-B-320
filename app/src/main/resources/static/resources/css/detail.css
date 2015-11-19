@@ -1,7 +1,6 @@
 @charset "utf-8";
 
 .content table {
-	border: 1;
 	width: 600px;
 }
 
@@ -10,7 +9,7 @@
 }
 
 #comments {
-	border: 1px;
+	border: 1;
 }
 
 #comments td {

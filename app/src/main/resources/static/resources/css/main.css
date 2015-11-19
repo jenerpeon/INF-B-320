@@ -434,3 +434,7 @@ table   {
 }
 
 .close:hover { background: #00d9ff; }
+
+#main-wrapper a {
+	font-size: 14px;
+}
