@@ -9,8 +9,7 @@
 	type="text/javascript"></script>
 <script src="/resources/script/bootstrap.min.js" type="text/javascript"></script>
 <link href="/resources/css/main.css" rel="stylesheet" type=text/css>
-<link href="/resources/css/bootstrap.min.css" rel="stylesheet"
-	type="text/css">
+<link href="/resources/css/detail.css" rel="stylesheet" type=text/css>
 <script src="http://use.edgefonts.net/clara:n4:default.js"
 	type="text/javascript"></script>
 
@@ -19,17 +18,19 @@
 	<div id="wrapper">
 		<div id="header" th:include="navigation :: navigation"></div>
 	<main>
-		<div id="main-wrapper">		<div class="content">
-
-			<div class="detailImg">
-				<img th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}" src="../resources/img/evil_newton.jpg" height=150 alt="" />
-			</div>
-		
-			<div class="detailDescription">
-				<h2 th:text="${concreteproduct.name}">Artikle</h2>
-				<p>Preis:</p><p th:text="${concreteproduct.price}">9.99€</p><br />
-				
-				<p>Vorrat:</p><p th:text="${quantity}">10 Stück</p><br />  
+		<div id="main-wrapper">		
+		<div class="content">
+			<h2 th:text="${concreteproduct.name}">Artikle</h2>
+			<table>
+				<tr>
+					<td><img class="picture" th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}" height="150" /></td>
+					<td><a class="description" th:text="${concreteproduct.description}">Beschreibung</a></td>
+				</tr>
+			</table>
+			<br/>
+			<a>Preis: </a><a class="price" th:text="${concreteproduct.price}">1 Euro</a><br/>
+			<a>Vorrat: </a><a th:text="${quantity}">10 Stück</a><br />
+  
 				<form method="post" action="/cart" th:if="${orderable}">
 
 				<input type="hidden" name="prodId" value="0" th:value="${concreteproduct.identifier}" /> 
@@ -45,17 +46,23 @@
 				</form>
 			</div>
 			
-			<div th:each="comment : ${comments}" class="comments">
-  				<p>Kundenmeinungen:</p><span th:text="${comment.text}" ></span>
-  				<p>Zeit:</p><span th:text="${comment.formatedDate}">13 February 2011</span>
-  				<p>Sterne:</p><span th:text="${comment.rating}"> </span>
-  				
-  			</div>	
+			<table id="comments">
+				<tr>
+					<th id="comment">Kommentar</th>
+					<th id="rating">Bewertung</th>
+					<th id="time">Zeit</th>
+				</tr>
+				<tr th:each="comment : ${comments}">
+					<td><a th:text="${comment.text}">Kommentar</a></td>
+					<td><a th:text="${comment.rating}">5 Sterne</a></td>
+					<td><a th:text="${comment.formatedDate}">Zeitpunkt</a></td>
+				</tr>
+			</table>
+	
 			<br/>
 			<br/>
-		</div>
-		<div class="salespoint">
-				<form method="post" action="/comment">
+			
+			<form method="post" action="/comment">
 					<fieldset>
 						<legend>Kommentar hinzufügen</legend>
 						
@@ -66,9 +73,10 @@
 						<input type="submit" value="Senden" />
 					</fieldset>
 				</form>
+		</div>
 	
 </main>  	
-		<nav th:include="footer :: footer"></nav>
+		<div id="footer" th:include="footer :: footer"></div>
 	</div>
 
 </body>
