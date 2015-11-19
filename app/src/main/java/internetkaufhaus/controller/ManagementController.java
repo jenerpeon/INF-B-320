@@ -8,7 +8,6 @@ import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Role;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -42,14 +41,14 @@ public class ManagementController {
 	}
 
 	@RequestMapping("/management/addArticle")
-	public String addArticle( Optional<UserAccount> userAccount, ModelMap model) {
-		
+	public String addArticle(Optional<UserAccount> userAccount, ModelMap model) {
+
+		model.addAttribute("categories", prodSearch.getCagegories());
 		return "changecatalognewitem";
 	}
-	
+
 	@RequestMapping("/management/editArticle/{prodId}")
 	public String editArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
-		
 
 		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("concreteproduct", prod);
@@ -57,5 +56,13 @@ public class ManagementController {
 
 		return "changecatalogchangeitem";
 	}
-	
+
+	public Inventory<InventoryItem> getInventory() {
+		return inventory;
+	}
+
+	public static Quantity getNone() {
+		return NONE;
+	}
+
 }

@@ -4,21 +4,19 @@
 <meta charset="utf-8">
 <title>Unbenanntes Dokument</title>
 <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
-<link href="/resources/css/employee.css" rel="stylesheet"
-	type="text/css">
+<link href="/resources/css/employee.css" rel="stylesheet" type="text/css">
 <!--The following script tag downloads a font from the Adobe Edge Web Fonts server for use within the web page. We recommend that you do not modify it.-->
 <script>
 	var __adobewebfontsappname__ = "dreamweaver"
 </script>
-<script src="http://use.edgefonts.net/clara:n4:default.js"
-	type="text/javascript"></script>
-	<style type="text/css">
-		a.button {
-			-webkit-appearance: button;
-			-moz-appearance: button;
-			appearance: button;
-		}
-	</style>
+<script src="http://use.edgefonts.net/clara:n4:default.js" type="text/javascript"></script>
+<style type="text/css">
+a.button {
+	-webkit-appearance: button;
+	-moz-appearance: button;
+	appearance: button;
+}
+</style>
 </head>
 
 <body>
@@ -46,10 +44,8 @@
 											<table>
 												<tbody>
 													<tr id="searchcolumn">
-														<td><input type="search" id="searchword"
-															value="Suchbegriff" /></td>
-														<td><input type="image"
-															src="/resources/Bilder/search.png" alt="Suche_Icon" /></td>
+														<td><input type="search" id="searchword" value="Suchbegriff" /></td>
+														<td><input type="image" src="/resources/Bilder/search.png" alt="Suche_Icon" /></td>
 													</tr>
 												</tbody>
 											</table>
@@ -60,9 +56,7 @@
 									<table>
 										<tbody>
 											<tr>
-												<td><img
-													src="/resources/Bilder/warenkorb_icon_dark.png" height="50"
-													alt="" /></td>
+												<td><img src="/resources/Bilder/warenkorb_icon_dark.png" height="50" alt="" /></td>
 												<td>
 													<ul id="cart-text-list">
 														<li><a>0 Artikel</a></li>
@@ -222,27 +216,28 @@
 			<ul>
 				<li><div id="optionscolumn">
 						<ul>
-							<li><a class="active">Katalog bearbeiten</a></li>
-							<li><a>Lagerbestand</a></li>
-							<li><a>Bewertungen</a></li>
+							<li><a th:href="@{'/management'}" class="activeoption">Katalog bearbeiten</a></li>
+							<li><a th:href="@{'/management/stock'}">Lagerbestand</a></li>
+							<li><a th:href="@{'/management/ratings'}">Bewertungen</a></li>
 						</ul>
 					</div></li>
 				<li><div id="mainframe">
 						<div id="catalogheader">
 							<table>
-							<tbody class="nav">
-								<tr class="article" th:each="concreteproduct : ${prod50}">
-									<td><a th:text="${concreteproduct.name}" class="name" title="Artikel in Katalog anzeigen" th:href="@{'/detail/'+${concreteproduct.identifier}}"></a></td>
-									<td><img class="picture" th:href="@{'/detail/'+${concreteproduct.identifier}}" th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}" height="30" /></td>
-									<td><p class="price" th:text="${concreteproduct.price}" /></td>
-									<td><a th:href="@{'management/editArticle/'+${concreteproduct.identifier}}" class="button">bearbeiten</a></td>
-								</tr>
-								<tr><a th:href="@{'/management/addArticle'}">Artikel hinzufügen</a></tr>
-							</tbody>
+								<tbody class="nav">
+									<tr class="article" th:each="concreteproduct : ${prod50}">
+										<td><a th:text="${concreteproduct.name}" class="name" title="Artikel in Katalog anzeigen" th:href="@{'/detail/'+${concreteproduct.identifier}}"></a></td>
+										<td><img class="picture" th:href="@{'/detail/'+${concreteproduct.identifier}}" th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}" height="30" /></td>
+										<td><p class="price" th:text="${concreteproduct.price}" /></td>
+										<td><a th:href="@{'management/editArticle/'+${concreteproduct.identifier}}" class="button">bearbeiten</a></td>
+									</tr>
+									<tr>
+										<a th:href="@{'/management/addArticle'}">Artikel hinzufügen</a>
+									</tr>
+								</tbody>
 							</table>
 						</div>
-					</div>
-				</li>
+					</div></li>
 			</ul>
 		</div>
 		</main>
@@ -298,18 +293,14 @@
 							<hr />
 							<ul>
 								<li><a>Trends, Aktionen, Angebote und mehr.</a></li>
-								<li><a>Die Abmeldung ist jederzeit am Ende jeder E-Mail
-										möglich.</a></li>
+								<li><a>Die Abmeldung ist jederzeit am Ende jeder E-Mail möglich.</a></li>
 								<li><br>
 									<form id="newsletter">
 										<table>
 											<tbody>
 												<tr id="newslettercolumn">
-													<td><input type="email" id="newslettermail"
-														value="E-Mail Adresse" size="15" /></td>
-													<td><input type="image"
-														src="/resources/Bilder/newsletter.png"
-														alt="Newsletter_Icon" /></td>
+													<td><input type="email" id="newslettermail" value="E-Mail Adresse" size="15" /></td>
+													<td><input type="image" src="/resources/Bilder/newsletter.png" alt="Newsletter_Icon" /></td>
 												</tr>
 											</tbody>
 										</table>
@@ -326,8 +317,7 @@
 							<ul>
 								<li><a>Wir freuen uns auf ihren Anruf</a></li>
 								<li><a id="phone">0351/12345678</a></li>
-								<li><a>Service Hotline, erreichbar 24 Stunden täglich,
-										356 Tage im Jahr</a></li>
+								<li><a>Service Hotline, erreichbar 24 Stunden täglich, 356 Tage im Jahr</a></li>
 							</ul>
 						</div>
 					</li>
@@ -336,12 +326,9 @@
 							<h2>Zahlungsmöglichkeiten</h2>
 							<hr />
 							<ul>
-								<li><a>Zahlung per Paypal, Kreditkarte, Giropay,
-										Rechnung, Komfortkauf und Vorkasse möglich.</a><br>
-								<br></li>
+								<li><a>Zahlung per Paypal, Kreditkarte, Giropay, Rechnung, Komfortkauf und Vorkasse möglich.</a><br> <br></li>
 								<li><div id="payment-options">
-										<img src="/resources/Bilder/Zahlung_logo.png" height="40"
-											alt="" />
+										<img src="/resources/Bilder/Zahlung_logo.png" height="40" alt="" />
 									</div></li>
 							</ul>
 						</div>
@@ -351,9 +338,7 @@
 							<h2>Geschenk-Karten</h2>
 							<hr />
 							<ul>
-								<li><a>Immer die perfekte Geschenkidee im Wert von 25,
-										50 oder 100 Euro.<br />
-									<br />
+								<li><a>Immer die perfekte Geschenkidee im Wert von 25, 50 oder 100 Euro.<br /> <br />
 								</a></li>
 								<li><a>Zu den Geschenk-Karten &gt; </a></li>
 							</ul>
@@ -364,9 +349,7 @@
 							<h2>Jobs und Karriere</h2>
 							<hr />
 							<ul>
-								<li><a>Wir bieten interessante Perspektiven für Ihre
-										berufliche Zukunft.<br>
-									<br>
+								<li><a>Wir bieten interessante Perspektiven für Ihre berufliche Zukunft.<br> <br>
 								</a></li>
 								<li><a>Mehr Informationen &gt; </a></li>
 							</ul>
@@ -387,12 +370,9 @@
 					<hr class="bottomline-line" />
 				</div>
 				<div id="bottemline2">
-					<a
-						style="font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif">Preisangaben
-						inkl. gesetzlicher MwSt. zzgl. Versandkosten</a>
+					<a style="font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif">Preisangaben inkl. gesetzlicher MwSt. zzgl. Versandkosten</a>
 				</div>
-				<br>
-				<br>
+				<br> <br>
 			</footer>
 		</div>
 	</div>

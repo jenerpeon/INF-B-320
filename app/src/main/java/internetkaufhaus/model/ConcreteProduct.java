@@ -10,8 +10,6 @@ import javax.persistence.OneToMany;
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Product;
 
-import internetkaufhaus.model.Comment;
-
 
 
 @Entity
@@ -23,7 +21,7 @@ public class ConcreteProduct extends Product {
 
 	@OneToMany(cascade = CascadeType.ALL) private List<Comment> comments = new LinkedList<Comment>();
 		
-    @SuppressWarnings("unused")
+    @SuppressWarnings({ "unused", "deprecation" })
 	private ConcreteProduct(){}
     
 	public ConcreteProduct(String name, Money price, String category, String description, String webLink){
