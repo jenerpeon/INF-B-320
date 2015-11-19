@@ -17,9 +17,31 @@
 	<div id="wrapper">
 		<div id="header" th:include="navigation :: navigation"></div>
 		<main>
+		<div id="main-wrapper">
+			<h1>Anmeldung</h1>
+		    <form th:action="@{/login}" method="post">
+	            <label for="username">Username</label>:
+	            <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
+	            <label for="password">Password</label>:
+	            <input type="password" id="password" name="password" /> <br />
+	            <input type="submit" value="Log in" />
+	        </form>
+<!--  		<form>
+				<input type="text" value="Benutzername"> <input type="text"
+					value="Passwort"> <input type="button"
+					value="Anmelden &gt;">
+			</form>
+			<br />
+			<form>
+				<input type="button" value="Passwort vergessen?"> <input
+					type="button" value="Jetzt registrieren">
+			</form>-->	
+		</div>
+
 		</main>
+
+		<br>
 		<div id="footer" th:include="footer :: footer"></div>
 	</div>
 </body>
 </html>
-

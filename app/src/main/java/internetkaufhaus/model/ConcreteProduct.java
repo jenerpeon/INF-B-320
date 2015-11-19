@@ -18,7 +18,7 @@ import internetkaufhaus.model.Comment;
 public class ConcreteProduct extends Product {
 	private static final long serialVersionUID = 3602164805477720501L;
 
-	
+	private String description;
 	private String webLink;
 
 	@OneToMany(cascade = CascadeType.ALL) private List<Comment> comments = new LinkedList<Comment>();
@@ -26,13 +26,18 @@ public class ConcreteProduct extends Product {
     @SuppressWarnings("unused")
 	private ConcreteProduct(){}
     
-	public ConcreteProduct(String name, Money price, String category, String webLink){
+	public ConcreteProduct(String name, Money price, String category, String description, String webLink){
         super(name, price);
 		this.addCategory(category);
+		this.description=description;
 		this.webLink=webLink;
 
 	}
 
+	public String getDescription() {
+		return description;
+	}
+	
 	public String getWebLink() {
 		return webLink;
 	}
