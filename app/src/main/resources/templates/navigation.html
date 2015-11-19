@@ -33,7 +33,18 @@
 					<li sec:authorize="isAuthenticated()"><a th:href="@{'/login'}">Mein Konto</a></li>
 				</ul>
 			</div>
-			
+				 <!--   <form th:action="@{/login}" method="post">
+	            <label for="username">Username</label>:
+	            <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
+	            <label for="password">Password</label>:
+	            <input type="password" id="password" name="password" /> <br />
+	            <input type="submit" value="Log in" />
+	        </form>
+	        		    <form th:action="@{/NewPass}" method="post">
+	            <label for="password">Password</label>:
+	            <input type="password" id="password" name="password" /> <br />
+	            <input type="submit" value="change pass" />
+	        </form>-->	
 			<div id="login-modal" class="modalDialog">
   				<div>
     				<a href="#close" title="Close" class="close">X</a>
@@ -41,9 +52,9 @@
 					<form method="post" th:action="@{/login}">
 						<fieldset>
 							<label for="login-name">E-Mail Adresse:</label><br/>
-							<input type="text" name="login-name" value="" /><br/>
+							<input type="text" id="username" name="username" value="" /><br/>
 							<label for="login-password">Passwort:</label><br/>
-							<input type="password" name="login-password" value="" /><br/>
+							<input type="password" id="password" name="password" value="" /><br/>
 							<input type="submit" value="Anmelden" />
 						</fieldset>
 					</form>

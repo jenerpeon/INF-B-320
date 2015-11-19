@@ -48,8 +48,8 @@ public class CatalogController {
     public String category(@PathVariable("type") String category, ModelMap model ) {
       model.addAttribute("category", category);  	
       model.addAttribute("categories",prodSearch.getCagegories());
+
     	model.addAttribute("ProdsOfCategory", prodSearch.getProdsByCategory(category));
-    	System.out.println(category);
     	System.out.println(prodSearch.getProdsByCategory(category));
     	return "catalog";	
     }

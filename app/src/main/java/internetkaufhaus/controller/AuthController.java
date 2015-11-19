@@ -50,7 +50,7 @@ public class AuthController extends SalespointSecurityConfiguration{
 
   @RequestMapping(value="/NewPass",method = RequestMethod.POST)
   public String newPass(@RequestParam("password") String pass, @LoggedIn Optional<UserAccount> userAccount){
-    String key = this.accountAdministration.requestPass(pass,userAccount.get());
+    this.accountAdministration.requestPass(pass,userAccount.get());
     return "redirect:/login";
   }
   
