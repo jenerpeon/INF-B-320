@@ -224,8 +224,8 @@ a {
 
 
 tr td #logo {
-	font-family: clara;
-	font-size: 33px;
+	
+	font-size: 25px;
 	font-style: normal;
 	font-weight: 400;
 	color: #000000;
@@ -426,5 +426,3 @@ table   {
 }
 
 .close:hover { background: #00d9ff; }
-
-
