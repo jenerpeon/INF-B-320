@@ -2,15 +2,9 @@
 package internetkaufhaus.controller;
 
 import internetkaufhaus.model.ConcreteProduct;
-import internetkaufhaus.model.ConcreteUserAccount;
 
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import internetkaufhaus.model.mailSender;
 import java.util.Optional;
-import org.salespointframework.order.*;
-import org.salespointframework.catalog.Product;
-import org.salespointframework.core.AbstractEntity;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.CartItem;
 import org.salespointframework.order.Order;
@@ -20,6 +14,7 @@ import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -30,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import internetkaufhaus.model.search;
 @Controller
-//@PreAuthorize("isAuthenticated()")
+@PreAuthorize("isAuthenticated()")
 @SessionAttributes("cart")
 class CartController {
 

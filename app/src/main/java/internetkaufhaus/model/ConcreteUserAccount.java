@@ -1,6 +1,7 @@
 package internetkaufhaus.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import javax.crypto.KeyGenerator;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
@@ -12,10 +13,9 @@ import org.salespointframework.useraccount.*;
 
 @Entity
 public class ConcreteUserAccount{
-
     private @Id @GeneratedValue long id;
     private String address;
-    
+ 
     @OneToOne private UserAccount userAccount;
 
     public ConcreteUserAccount(String username, String password, Role role, UserAccountManager u){
@@ -32,8 +32,7 @@ public class ConcreteUserAccount{
     public UserAccount getUserAccount(){
         return this.userAccount; 
     }
-    
-    
+
     
 
     

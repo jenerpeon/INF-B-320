@@ -1,54 +1,64 @@
 package internetkaufhaus.controller;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.salespointframework.SalespointSecurityConfiguration;
-import org.salespointframework.SalespointWebConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.validation.*;
 import internetkaufhaus.forms.*;
 import internetkaufhaus.model.*;
-import org.salespointframework.useraccount.*; 
+import org.salespointframework.useraccount.*;
+import org.salespointframework.useraccount.web.LoggedIn;
+
+import java.util.Optional;
+
 import javax.validation.*;
 import org.springframework.beans.factory.annotation.*;
 
 @Controller
-public class AuthController {
+public class AuthController extends SalespointSecurityConfiguration{
 
   private static final String LOGIN_ROUTE = "/login";
 	private final UserAccountManager userAccountManager;
 	private final ConcreteUserAccountRepository concreteUserAccountManager;
-	
+  private final AccountAdministration accountAdministration;	
+
 	@Autowired
-  public AuthController(UserAccountManager userAccountManager, ConcreteUserAccountRepository concreteUserAccountManager){
+  public AuthController(AccountAdministration accountAdministration, UserAccountManager userAccountManager, ConcreteUserAccountRepository concreteUserAccountManager){
 	this.userAccountManager = userAccountManager;
 	this.concreteUserAccountManager = concreteUserAccountManager;
+	this.accountAdministration = accountAdministration;
 	}
 
-	@Configuration
-	static class PeonWebConfiguration extends SalespointWebConfiguration {
 
-		@Override
-		public void addViewControllers(ViewControllerRegistry registry) {
-			registry.addViewController(LOGIN_ROUTE).setViewName("login");
-		}
-	}
-	@Configuration
-	static class WebSecurityConfiguration extends SalespointSecurityConfiguration {
+	@Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.csrf().disable();
+    http.authorizeRequests().antMatchers("/**").permitAll().and().//
+        formLogin().loginPage(LOGIN_ROUTE).loginProcessingUrl(LOGIN_ROUTE).and(). //
+        logout().logoutUrl("/logout").logoutSuccessUrl("/");
+  }
 
-		@Override
-		protected void configure(HttpSecurity http) throws Exception {
+  @RequestMapping(value="/login")
+  public String login(){
+     return "login";
+  }
 
-			http.csrf().disable();
-
-			http.authorizeRequests().antMatchers("/**").permitAll().and().//
-					formLogin().loginPage(LOGIN_ROUTE).loginProcessingUrl(LOGIN_ROUTE).and(). //
-					logout().logoutUrl("/logout").logoutSuccessUrl("/");
-		}
-	}
+  @RequestMapping(value="/NewPass",method = RequestMethod.POST)
+  public String newPass(@RequestParam("password") String pass, @LoggedIn Optional<UserAccount> userAccount){
+    String key = this.accountAdministration.requestPass(pass,userAccount.get());
+    return "redirect:/login";
+  }
+  
+  @RequestMapping(value="/NewPass/{key}")
+  public String changepassword(@PathVariable("key") String key){
+      this.accountAdministration.verifyPass(key); 
+      return "redirect:/login"; 
+  }
 
 	@RequestMapping(value={"/register"})
 	public String register(){

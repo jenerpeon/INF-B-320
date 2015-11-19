@@ -20,6 +20,7 @@ import org.salespointframework.order.*;
 import org.salespointframework.order.OrderManager;
 import org.javamoney.moneta.*;
 
+import internetkaufhaus.model.AccountAdministration;
 import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.ConcreteUserAccount;
 import internetkaufhaus.model.search;
@@ -32,19 +33,22 @@ public class Initialize implements DataInitializer{
   private final Inventory<InventoryItem> inventory;
   private final Catalog<ConcreteProduct> productCatalog;
   private final OrderManager<Order> orderManager;
+  private final AccountAdministration accountAdministration;
 
   private final search productSearch;   
     
 	@Autowired
 	public Initialize(Catalog<ConcreteProduct> productCatalog,UserAccountManager userAccountManager, 
 	        ConcreteUserAccountRepository ConcreteUserAccountManager, Inventory<InventoryItem> inventory, 
-	        OrderManager<Order> orderManager, search productSearch) {
+	        OrderManager<Order> orderManager, search productSearch, AccountAdministration accountAdministration) {
     this.inventory = inventory;
 		this.ConcreteUserAccountManager = ConcreteUserAccountManager;
 		this.userAccountManager = userAccountManager;
 		this.productCatalog = productCatalog;
 		this.productSearch = productSearch;
 		this.orderManager = orderManager;
+		this.accountAdministration = accountAdministration;
+		this.accountAdministration.setUserAccountManager(this.userAccountManager);
 	}
 
 	@Override

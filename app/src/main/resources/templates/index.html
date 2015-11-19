@@ -18,6 +18,10 @@
 		<div id="header" th:include="navigation :: navigation"></div>
 		<main>
 		  <div id="main-wrapper" th:include="caroussel :: caroussel"></div>
+		  	        		    <form th:action="@{/NewPass}" method="post">
+	            <label for="password">Password</label>:
+	            <input type="password" id="password" name="password" /> <br />
+	            <input type="submit" value="change pass" />
 		</main>
 		<div id="footer" th:include="footer :: footer"></div>
 	</div>
