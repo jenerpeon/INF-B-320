@@ -31,6 +31,7 @@
 					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a>Service</a></li>
 					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a>Punktestand</a></li>
 					<li sec:authorize="isAuthenticated()"><a th:href="@{'/login'}">Mein Konto</a></li>
+					<li sec:authorize="hasRole('ROLE_EMPLOYEE')"><a th:href="@{'/management'}">Management</a></li>
 				</ul>
 			</div>
 				 <!--   <form th:action="@{/login}" method="post">
@@ -74,7 +75,7 @@
 											<tbody>
 												<tr id="searchcolumn">
 													<td><input type="search" id="searchword"
-														value="Suchbegriff" /></td>
+														placeholder="Suchbegriff" /></td>
 													<td><input type="image"
 														src="/resources/Bilder/search.png" alt="Suche_Icon" /></td>
 												</tr>
