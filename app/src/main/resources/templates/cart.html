@@ -8,6 +8,7 @@
   <script src="/resources/script/jquery-1.11.2.min.js" type="text/javascript"></script>
   <script src="/resources/script/bootstrap.min.js" type="text/javascript"></script>
   <link href="/resources/css/main.css" rel="stylesheet" type=text/css>
+  <link href="/resources/css/cart.css" rel="stylesheet" type=text/css>
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <script src="http://use.edgefonts.net/clara:n4:default.js" type="text/javascript"></script>
 
@@ -18,10 +19,11 @@
 		<div id="header" th:include="navigation :: navigation"></div>
 		<main>
 
-<div id="main-wrapper">	<table th:unless ="${cart.empty}">
-
+<div id="main-wrapper">
+	<table th:unless ="${cart.empty}">
 		<thead>
 			<tr>
+				<th></th>
 				<th>Name</th>
 				<th>Anzahl</th>
 				<th>Preis</th>
@@ -31,6 +33,7 @@
 		</thead>
 		<tbody th:remove="all-but-first">
 			<tr th:each="item : ${cart} ">
+				<td><input type="checkbox"/></td>
 				<td th:text="${item.productName}">Name</td>
 				<td th:text="${item.quantity}">Anzahl</td>
 				<td th:text="${item.price}">Preis</td>
@@ -56,24 +59,26 @@
 			</tr>
 		</tbody>
 	</table>
+	<br/>
 	<div th:text="'Summe: ' + ${cart.price}">Summe</div>
 	<div th:if ="${cart.empty}">Leer</div>
+	<br/>
 	<div>
-		<form method="post" action="checkout" sec:authorize="hasRole('ROLE_CUSTOMER')" >
+		<form class="form" method="post" action="checkout" sec:authorize="hasRole('ROLE_CUSTOMER')" >
 			<input type="submit" value="Kaufen" />
 		</form>
 	</div>
 	
 	<div>
-	<form method="post" action="pay">
+		<form class="form" method="post" action="pay">
 			<input type="submit" th:value="Bezahlen" value="kaufen" />
-	</form>
+		</form>
 	</div>
 	<div>
-	<form action="clearCart" method ="post">
-		<input type="submit" value="Warenkorb leeren" />
-	</form>
-</div>
+		<form class="form" action="clearCart" method ="post">
+			<input type="submit" value="Warenkorb leeren" />
+		</form>
+	</div>
 </div>
 		</main>
 		<div id="footer" th:include="footer :: footer"></div>
