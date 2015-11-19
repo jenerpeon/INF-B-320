@@ -202,6 +202,14 @@ h3 {
 a {
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
 	text-decoration: none;
+	font-weight: normal;
+	color: #000000;
+}
+
+p {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	text-decoration: none;
+	font-weight: normal;
 	color: #000000;
 }
 
