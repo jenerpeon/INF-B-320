@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Role;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import internetkaufhaus.model.ConcreteProduct;
@@ -35,8 +36,8 @@ public class ManagementController {
 	}
 
 	@RequestMapping("/management")
-	public String articleManagement( Optional<UserAccount> userAccount, ModelMap model) {
-		
+	public String articleManagement(Optional<UserAccount> userAccount, ModelMap model) {
+		model.addAttribute("prod50", catalog.findAll());
 		return "changecatalog";
 	}
 
@@ -44,6 +45,17 @@ public class ManagementController {
 	public String addArticle( Optional<UserAccount> userAccount, ModelMap model) {
 		
 		return "changecatalognewitem";
+	}
+	
+	@RequestMapping("/management/editArticle/{prodId}")
+	public String editArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
+		
+
+		model.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("concreteproduct", prod);
+		model.addAttribute("price", prod.getPrice().getNumber());
+
+		return "changecatalogchangeitem";
 	}
 	
 }
