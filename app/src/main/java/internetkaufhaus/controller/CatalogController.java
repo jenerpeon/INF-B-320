@@ -17,6 +17,8 @@ import java.util.List;
 
 
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -42,6 +44,7 @@ public class CatalogController {
     	this.catalog = catalog;
     	this.inventory = inventory;
         this.prodSearch = prodSearch; 
+  
     }
     
     @RequestMapping("/catalog/{type}")
@@ -51,8 +54,35 @@ public class CatalogController {
 
     	model.addAttribute("ProdsOfCategory", prodSearch.getProdsByCategory(category));
     	System.out.println(prodSearch.getProdsByCategory(category));
+/*=======
+    	
+    	
+    	model.addAttribute("category", prodSearch.list50(category).get(0));
+    	model.addAttribute("allcategory", prodSearch.getCagegories());
+    	model.addAttribute("numbers", prodSearch.numbers(category));
+    	System.out.println(prodSearch.list50(category).get(0));
+//>>>>>>> Katalog*/
     	return "catalog";	
     }
+    
+    
+   @RequestMapping(path = "/catalog/{type}/{pagenumber}")
+    public String list50( @PathVariable("type") String category, @PathVariable("pagenumber") int number, ModelMap model) {
+      int max_number = prodSearch.list50(category).size()+1; 
+      model.addAttribute("category", category);   
+      model.addAttribute("categories",prodSearch.getCagegories());	
+    	
+      System.out.print(prodSearch.list50(category).toString());
+   
+    	model.addAttribute("prod50", prodSearch.list50(category).get(number-1));
+      //model.addAttribute("prod50", prodSearch.getProdsByCategory(category));
+      model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
+    	return "catalog";
+    }
+    
+    
+    
+    
     
     @RequestMapping("/detail/{prodId}")
 	public String detail(@PathVariable("prodId") ConcreteProduct prod, Model model) {
@@ -82,4 +112,6 @@ public class CatalogController {
 		return "redirect:detail/" + prod.getIdentifier();
 		
 	}
+	
+	
 }

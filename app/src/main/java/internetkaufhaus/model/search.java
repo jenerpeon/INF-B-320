@@ -2,7 +2,10 @@ package internetkaufhaus.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
@@ -27,7 +30,23 @@ public class search implements Serializable{
     public Iterable<ConcreteProduct> getProdsByCategory(String cat){
     	return searchType.get(cat);
     }
-    public void addProds(Iterable<ConcreteProduct> iterable){
+    
+    public List<List<ConcreteProduct>> list50 (String cat){
+      List<List<ConcreteProduct>> list50 = new ArrayList<List<ConcreteProduct>>();
+    	List<ConcreteProduct> init = new ArrayList<ConcreteProduct>();
+    	for( ConcreteProduct p: getProdsByCategory(cat)){
+    		if(init.size()>=2){
+    			list50.add(init);
+    			init = new ArrayList<ConcreteProduct>();	
+    		}
+      		init.add(p);
+    	}
+    	list50.add(init);
+		return list50;
+    	
+    }
+  
+      public void addProds(Iterable<ConcreteProduct> iterable){
         for(ConcreteProduct prod : iterable){
             for(String cat : prod.getCategories()){
             	System.out.println(cat);

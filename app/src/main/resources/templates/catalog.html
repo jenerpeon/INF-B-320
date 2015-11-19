@@ -15,22 +15,39 @@
 
 <body>
 	<div id="wrapper">
-		<div id="header" th:include="navigation :: navigation"></div>
 
-<main>
-<div id="main-wrapper">
+		<div id="header">
+			<div id="header" th:include="navigation :: navigation"></div>
+			<main>
+			<div id="main-wrapper">
     <p th:text="@{'Home'+ ' > ' +${category}}">Home &gt; "${category}"</p>
+				<div id="catalognavigaton">
+					<a th:each="category: ${allCategory}" th:href="@{'/catalog/'+${category}}">
+					<h1 th:text="${category}" ></h1>
+					</a>
+				</div>
 				<div id="catalogview">
+					
 					<ul id="ariclelist">
-						<li class="article" th:each="concreteproduct : ${ProdsOfCategory}">
+
+						<li class="article" th:each="concreteproduct : ${prod50}">
 							<h1 th:text="${concreteproduct.name}" class="name"></h1> 
 							<img class="picture" th:href="@{'/detail/'+${concreteproduct.identifier}}" th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}" height="150" /> 
 							<a class="description" th:text="${concreteproduct.description}">Beschreibung</a>
 							<a th:href="@{'/detail/'+${concreteproduct.identifier}}">Details</a><br/>
-							<p class="price" th:text="${concreteproduct.price}" />
-						</li>
+							<p class="price" th:text="${concreteproduct.price}" />	
 
+			
+						</li>
+						<table>
+							<tr>
+								<td th:each="number:${numbers}" >
+								<a th:text="${number}" th:href="@{'/catalog/'+${category}+'/'+${number}}"></a>
+								</td>
+							</tr>
+						</table>
 					</ul>
+	
 				</div>
 			</div>
 		
