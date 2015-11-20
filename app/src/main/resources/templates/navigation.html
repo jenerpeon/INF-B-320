@@ -58,16 +58,53 @@
   					<h2>Registrierung</h2>
 					<form method="post" th:action="@{/registerNew}">
 						<fieldset>
-							<label for="name">Name:</label>
-							<input type="text" id="name" name="name" value="" /><br/>
-							<label for="adress1">Adresszeile 1:</label>
-							<input type="text" id="adress1" name="adress1" value="" /><br/>
-							<label for="adress2">Adresszeile 2:</label>
-							<input type="text" id="adress2" name="adress2" value="" /><br/>
-							<label for="login-name">E-Mail Adresse:</label>
-							<input type="text" id="username" name="username" value="" /><br/>
-							<label for="login-password">Passwort:</label>
-							<input type="password" id="password" name="password" value="" /><br/>
+							<legend><span>Kontaktdetails</span></legend>
+							<ol>
+								<li>
+									<label for="name">Name:</label>
+									<input type="text" id="name" name="name" value="" />
+								</li>
+								<li>
+									<label for="login-name">E-Mail Adresse:</label>
+									<input type="text" id="username" name="username" value="" />
+								</li>
+							</ol>
+						</fieldset>
+						<fieldset>
+							<legend><span>Login Daten</span></legend>
+							<ol>
+								<li>
+									<label for="login-password">Passwort:</label>
+									<input type="password" id="password" name="password" value="" />
+								</li>
+								<li>
+									<label for="login-password-repeat">Passwort:</label>
+									<input type="password" id="password-repeat" name="password-repeat" value="" />
+								</li>
+							</ol>
+						</fieldset>
+						<fieldset>
+							<legend><span>Adresse</span></legend>
+							<ol>
+								<li>
+									<label for="adress1">Adresszeile 1:</label>
+									<input type="text" id="adress1" name="adress1" value="" />
+								</li>
+								<li>
+									<label for="adress2">Adresszeile 2:</label>
+									<input type="text" id="adress2" name="adress2" value="" />
+								</li>
+								<li>
+									<label for="town">Stadt:</label>
+									<input type="text" id="town" name="town" value="" />
+								</li>
+								<li>
+									<label for="postcode">Postleitzahl:</label>
+									<input type="text" id="postcode" name="postcode" value="" />
+								</li>
+							</ol>
+						</fieldset>
+						<fieldset class="submit">
 							<input type="submit" value="Registrieren" />
 						</fieldset>
 					</form>

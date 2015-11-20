@@ -384,7 +384,7 @@ table   {
 
 .modalDialog {
 	position: fixed;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
 	top: 0;
 	right: 0;
 	bottom: 0;
@@ -441,14 +441,59 @@ table   {
 	font-size: 14px;
 }
 
+#registration-modal fieldset {
+	float: left;      
+	clear: both;      
+	width: 100%;      
+	margin: 0 0 -1em 0;      
+	padding: 0 0 1em 0;      
+	border-style: none;      
+	border-top: 1px solid #BFBAB0;     
+	/*background-color: #F2EFE9;*/
+}
+
+#registration-modal legend {      
+	padding: 0;      
+	color: black;           
+}
+
+#registration-modal legend span {      
+	position: absolute;
+	left: 1em;            
+	margin-top: 0.5em; 
+	margin-bottom: 0.5em;     
+	font-size: 18px;     
+}
+
 #registration-modal label {
 	float: left;
-	width: 25%;
+	width: 30%;
 	margin-right:0.5em;
     padding-top:0.2em;
-  	text-align:right;
+  	text-align:left;
+}
+
+#registration-modal fieldset ol {   
+	padding: 1.5em 1em 0 1em;   
+	list-style: none;  
+}  
+#registration-modal fieldset li {   
+	padding-bottom: 0.5em;  
+}
+
+#registration-modal fieldset.submit {   
+	border-style: none;
+	float: none;      
+	width: auto;      
+	padding-top: 0.5em;      
+	padding-left: 12em;       
+}
+
+#registration-modal fieldset.submit input {
+	font-size: 18px;
 }
 
 #registration-modal > div {
 	width: 500px;
+	height: 550px;
 }
