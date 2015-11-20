@@ -45,3 +45,11 @@
 #pageControl a{
 	font-size: 16px;	
 }
+
+#pageControl tr td{
+	height: 30px;
+}
+
+.articlePageActive {
+	font-weight: bold;
+}
