@@ -10,6 +10,22 @@
   <link href="/resources/css/main.css" rel="stylesheet" type=text/css>
   <link href="/resources/css/catalog.css" rel="stylesheet" type=text/css>
   <script src="http://use.edgefonts.net/clara:n4:default.js" type="text/javascript"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+  
+  $( document ).ready(function() {
+  		var activeSite = parseInt(getQueryVariable(),10);
+	  	var sites = document.getElementsByClassName("articlePages");
+	  	sites[activeSite - 1].className = "articlePageActive";
+  });
+  
+  function getQueryVariable()
+  {
+         var query = window.location.href;
+         var vars = query.split("/");
+         return vars[vars.length - 1];
+  }
+  </script>
 
 </head>
 
@@ -44,8 +60,8 @@
 				</div>
 				<table id="pageControl">
 							<tr>
-								<td th:each="number:${numbers}" >
-								<a th:text="${number}" th:href="@{'/catalog/'+${category}+'/'+${number}}"></a>
+								<td valign="middle" th:each="number:${numbers}" >
+								<a th:text="${number}" th:href="@{'/catalog/'+${category}+'/'+${number}}" class="articlePages"></a>
 								</td>
 							</tr>
 						</table>
