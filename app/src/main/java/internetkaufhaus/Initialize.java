@@ -46,6 +46,7 @@ public class Initialize implements DataInitializer{
 		this.userAccountManager = userAccountManager;
 		this.productCatalog = productCatalog;
 		this.productSearch = productSearch;
+		this.productSearch.setCatalog(productCatalog);
 		this.orderManager = orderManager;
 		this.accountAdministration = accountAdministration;
 		this.accountAdministration.setUserAccountManager(this.userAccountManager);

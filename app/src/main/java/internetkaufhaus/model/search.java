@@ -2,19 +2,19 @@ package internetkaufhaus.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.salespointframework.catalog.Catalog;
 import org.springframework.stereotype.Component;
 
 @Component
 public class search implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-
+   
 	private HashMap<String, ArrayList<ConcreteProduct> > searchType;
+	private Catalog<ConcreteProduct> catalog;
     
     public search(){
     	this.searchType = new HashMap<String, ArrayList<ConcreteProduct> >();
@@ -31,10 +31,14 @@ public class search implements Serializable{
     	return searchType.get(cat);
     }
     
-    public List<List<ConcreteProduct>> list50 (String cat){
+    public void setCatalog(Catalog<ConcreteProduct> catalog){
+        this.catalog = catalog;
+    }
+    
+    public List<List<ConcreteProduct>> list50 (Iterable<ConcreteProduct> prods){
       List<List<ConcreteProduct>> list50 = new ArrayList<List<ConcreteProduct>>();
     	List<ConcreteProduct> init = new ArrayList<ConcreteProduct>();
-    	for( ConcreteProduct p: getProdsByCategory(cat)){
+    	for( ConcreteProduct p: prods){
     		if(init.size()>=4){
     			list50.add(init);
     			init = new ArrayList<ConcreteProduct>();	
@@ -44,6 +48,17 @@ public class search implements Serializable{
     	list50.add(init);
 		return list50;
     	
+    }
+    public Iterable<ConcreteProduct> lookup_bar(String str){
+        if(str.isEmpty())
+            return catalog.findAll();          
+        List<ConcreteProduct> lookup = new ArrayList<ConcreteProduct>();
+        for(ConcreteProduct prod : catalog.findAll()){
+            if(prod.getName().toLowerCase().contains(str.toLowerCase())){
+               lookup.add(prod); 
+            }
+        }
+        return lookup;
     }
   
       public void addProds(Iterable<ConcreteProduct> iterable){
