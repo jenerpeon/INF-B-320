@@ -20,7 +20,7 @@
 				<h2 th:text="${concreteproduct.name}">Artikle</h2>
 				<table>
 					<tr>
-						<td><img class="picture" th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}" height="150" /></td>
+						<td><img class="picture" th:src="@{'/resources/Bilder/' + ${concreteproduct.imagefile}}" height="150" /></td>
 						<td><a class="description" th:text="${concreteproduct.description}">Beschreibung</a></td>
 					</tr>
 				</table>

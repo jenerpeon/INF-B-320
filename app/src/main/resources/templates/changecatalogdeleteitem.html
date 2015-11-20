@@ -34,15 +34,19 @@
 								<li><a class="active">Artikel l&ouml;schen</a></li>
 							</ul>
 						</div>
-						<form id="newitem">
+						<form id="newitem" th:action="@{'/management/deletedArticle/'+${concreteproduct.identifier}}" method="POST">
+							
 							<table class="mainframecontent" border="0" align="left">
+							
 								<tbody>
+									
 									<tr>
-										<td><label id="namefield" th:text="${concreteproduct.name}"></label></td>
+										
+										<td ><label  id="namefield"  th:text="${concreteproduct.name}"></label></td>
 										<td><label id="pricefield" th:text="${price}"></label><a>&euro;</a></td>
 									</tr>
 									<tr>
-										<td><img class="picture" th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}" height="150" /></td>
+										<td><img class="picture" th:src="@{'/resources/Bilder/' + ${concreteproduct.imagefile}}" height="150" /></td>
 										<td><textarea readonly="readonly" style="width: 465px; height: 150px" type="text" id="descriptionfield" placeholder="Beschreibung" th:text="${concreteproduct.description}"></textarea></td>
 									</tr>
 									<tr>

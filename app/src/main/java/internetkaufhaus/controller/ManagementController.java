@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Catalog;
+import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
@@ -111,8 +112,8 @@ public class ManagementController {
 		return "redirect:/management";
 	}
 
-@RequestMapping(value="management/addedArticle", method=RequestMethod.POST)
-public String addedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm,  @RequestParam("image") MultipartFile img, BindingResult result, ModelMap model){
+	@RequestMapping(value="management/addedArticle", method=RequestMethod.POST)
+	public String addedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm,  @RequestParam("image") MultipartFile img, BindingResult result, ModelMap model){
 		if (result.hasErrors()) {
 			return "redirect:/management/addArticle/";
 		}
@@ -147,13 +148,27 @@ public String addedArticle(@ModelAttribute("editArticleForm") @Valid EditArticle
 	}
 
 
-@RequestMapping("/management/deleteArticle/{prodId}")
+	@RequestMapping("/management/deleteArticle/{prodId}")
 	public String deleteArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("price", prod.getPrice().getNumber());
 		return "changecatalogdeleteitem";
 	}
+	
+	@RequestMapping(value="/management/deletedArticle/{prodId}", method=RequestMethod.POST)
+	public String deletedArticle(@PathVariable("prodId") ConcreteProduct prod){
+		 
+		System.out.println(prod);
+		catalog.delete(prod);
+	
+		    
+		
+		return "redirect:/management";
+		
+		
+	}
+
 
 	public Inventory<InventoryItem> getInventory() {
 		return inventory;
@@ -162,5 +177,7 @@ public String addedArticle(@ModelAttribute("editArticleForm") @Valid EditArticle
 	public static Quantity getNone() {
 		return NONE;
 	}
+	
+
 
 }
