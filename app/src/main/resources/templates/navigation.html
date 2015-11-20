@@ -25,24 +25,6 @@
 
 	<div id="header">
 		<header>
-			<div id="header-row1">
-				<ul>
-					<li sec:authorize="isAuthenticated()"><a>Herzlich
-							Willkommen</a></li>
-					<li sec:authorize="!isAuthenticated()"><a href="#login-modal">Anmelden</a></li>
-					<li sec:authorize="!isAuthenticated()"><a
-						href="#registration-modal">Registrieren</a></li>
-					<li sec:authorize="isAuthenticated()"><a
-						th:href="@{'/logout'}">Ausloggen</a></li>
-					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a>Service</a></li>
-					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a>Punktestand</a></li>
-					<li sec:authorize="hasRole('ROLE_EMPLOYEE')"><a
-						th:href="@{/employee}">Mitarbeiterportal</a></li>
-					<li sec:authorize="isAuthenticated()"><a th:href="@{'/login'}">Mein
-							Konto</a></li>
-				</ul>
-			</div>
-
 
 			<div id="login-modal" class="modalDialog">
 				<div>
