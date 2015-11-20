@@ -27,8 +27,8 @@ public class AccountAdministration {
     
     public String requestKey(UserAccount user){
         String key = new BigInteger(120, random).toString(32);
-        mailSender mailsender = new mailSender("behrens_lars@gmx.de", "behrens_lars@gmx.de", "Greetings from earth!", key);
-        mailsender.sendMail(); 
+        //mailSender mailsender = new mailSender("behrens_lars@gmx.de", "behrens_lars@gmx.de", "Greetings from earth!", key);
+        //mailsender.sendMail(); 
         key2account.put(key, user);
         return key;
     }

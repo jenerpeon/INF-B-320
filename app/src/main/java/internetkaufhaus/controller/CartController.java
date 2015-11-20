@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.mail.MailSender;
+
+import internetkaufhaus.model.ConcreteMailSender;
 import internetkaufhaus.model.search;
 @Controller
 @PreAuthorize("isAuthenticated()")
@@ -30,14 +33,16 @@ import internetkaufhaus.model.search;
 class CartController {
 
 	private final OrderManager<Order> orderManager;
-  private final search prodSearch;
+	private final search prodSearch;
+	private MailSender sender;
 
 	@Autowired
-	public CartController(OrderManager<Order> orderManager, search prodSearch) {
+	public CartController(OrderManager<Order> orderManager, search prodSearch, MailSender sender) {
 
 		Assert.notNull(orderManager, "OrderManager must not be null!");
 		this.orderManager = orderManager;
 		this.prodSearch = prodSearch;
+        this.sender = sender;
 	}
 
 	@ModelAttribute("cart")
@@ -109,11 +114,11 @@ class CartController {
 			orderManager.payOrder(order);
 			orderManager.completeOrder(order);
 
+            ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);
+            concreteMailSender.sendMail("heinztut@googlemail.com", "zu@googlemail.com", "subject", "text");
+            
 			cart.clear();
 
-//			mailSender mailsender = new mailSender("steveJobs@heaven.com", "me@web.de", "Greetings from earth!", "Hello Steve.");
-	//		mailsender.sendMail();
-		//	orderManager.save(order);
 			return "redirect:/";
 		}).orElse("redirect:/login");
 	}
