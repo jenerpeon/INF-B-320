@@ -37,24 +37,31 @@ public class ManagementController {
 	@RequestMapping("/management")
 	public String articleManagement(Optional<UserAccount> userAccount, ModelMap model) {
 		model.addAttribute("prod50", catalog.findAll());
+		model.addAttribute("categories", prodSearch.getCagegories());
 		return "changecatalog";
 	}
 
 	@RequestMapping("/management/addArticle")
 	public String addArticle(Optional<UserAccount> userAccount, ModelMap model) {
-
+		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("categories", prodSearch.getCagegories());
 		return "changecatalognewitem";
 	}
 
 	@RequestMapping("/management/editArticle/{prodId}")
 	public String editArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
-
 		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("price", prod.getPrice().getNumber());
-
 		return "changecatalogchangeitem";
+	}
+
+	@RequestMapping("/management/deleteArticle/{prodId}")
+	public String deleteArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
+		model.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("concreteproduct", prod);
+		model.addAttribute("price", prod.getPrice().getNumber());
+		return "changecatalogdeleteitem";
 	}
 
 	public Inventory<InventoryItem> getInventory() {

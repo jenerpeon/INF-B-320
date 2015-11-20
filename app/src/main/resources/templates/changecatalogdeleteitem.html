@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>changecatalognewitem</title>
+<title>changecatalochangeitem</title>
 <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
 <link href="/resources/css/employee.css" rel="stylesheet" type="text/css">
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type=text/css>
@@ -19,9 +19,9 @@
 	<div id="wrapper">
 		<div id="header" th:include="navigation :: navigation"></div>
 		<main>
-		<div style="height: 330px" id="workframe">
+		<div style="height: 300px" id="workframe">
 			<ul>
-				<li><div style="height: 400px" id="optionscolumn">
+				<li><div style="height: 370px" id="optionscolumn">
 						<ul>
 							<li><a th:href="@{'/management'}" class="activeoption">Katalog bearbeiten</a></li>
 							<li><a th:href="@{'/management/stock'}">Lagerbestand</a></li>
@@ -31,37 +31,23 @@
 				<li><div id="mainframe">
 						<div id="catalogheader">
 							<ul class="nav">
-								<li><a class="active">Neuen Artikel hinzuf&uuml;gen</a></li>
-								<li><a th:href="@{'/management'}">Artikel bearbeiten</a></li>
+								<li><a>Neuen Artikel hinzuf&uuml;gen</a></li>
+								<li><a class="active">Artikel l&ouml;schen</a></li>
 							</ul>
 						</div>
 						<form id="newitem">
 							<table class="mainframecontent" border="0" align="left">
 								<tbody>
 									<tr>
-										<td><a>Kategorie:</a></td>
-										<td><select id="categoriefield" size="1">
-												<option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
-										</select></td>
+										<td><label id="namefield" th:text="${concreteproduct.name}"></label></td>
+										<td><label id="pricefield" th:text="${price}"></label><a>&euro;</a></td>
 									</tr>
 									<tr>
-										<td><a>Name:</a></td>
-										<td><input type="text" id="namefield" placeholder="Name" /></td>
+										<td><img class="picture" th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}" height="150" /></td>
+										<td><textarea readonly="readonly" style="width: 465px; height: 150px" type="text" id="descriptionfield" placeholder="Beschreibung" th:text="${concreteproduct.description}"></textarea></td>
 									</tr>
 									<tr>
-										<td><a>Preis:</a></td>
-										<td><input type="number" id="pricefield" value="Preis in &euro;" min="0.01" step="0.01" /><a>&euro;</a></td>
-									</tr>
-									<tr>
-										<td><a>Bild:</a></td>
-										<td><input type="file" id="imagefield" value="Pfad zum Bild" /></td>
-									</tr>
-									<tr>
-										<td><a>Beschreibung:</a></td>
-										<td><textarea style="width: 465px; height: 150px" type="text" id="descriptionfield" placeholder="Beschreibung"></textarea></td>
-									</tr>
-									<tr>
-										<td><input type="submit" id="submitfield" value="Neuen Artikel erstellen" /></td>
+										<td><input type="submit" id="submitfield" value="Artikel löschen" style="background-color: #FF0000;" /></td>
 									</tr>
 								</tbody>
 							</table>
