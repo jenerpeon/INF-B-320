@@ -35,16 +35,19 @@ import internetkaufhaus.model.search;
 @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
 public class ManagementController {
 
+	
 	private static final Quantity NONE = Quantity.of(0);
 	private final Catalog<ConcreteProduct> catalog;
 	private final Inventory<InventoryItem> inventory;
 	private final search prodSearch;
+
 
 	@Autowired
 	public ManagementController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, search prodSearch) {
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.prodSearch = prodSearch;
+		
 
 	}
 
@@ -53,6 +56,7 @@ public class ManagementController {
 		model.addAttribute("prod50", catalog.findAll());
 		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("inventory", inventory);
+		
 		return "changecatalog";
 	}
 
@@ -72,14 +76,14 @@ public class ManagementController {
 	}
 
 	@RequestMapping(value = "/management/editedArticle", method = RequestMethod.POST)
-	public String editedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm, @RequestParam("image") MultipartFile image, BindingResult result) {
+	public String editedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm, @RequestParam("image") MultipartFile img, BindingResult result) {
 		if (result.hasErrors()) {
 			return "redirect:/management/editArticle/";
 		}
 
-		if (!image.isEmpty()) {
+		if (!img.isEmpty()) {
 			try {
-				byte[] bytes = image.getBytes();
+				byte[] bytes = img.getBytes();
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("filename"))); // TODO:
 																													// generate
 																													// filename
@@ -92,18 +96,58 @@ public class ManagementController {
 		} else {
 			System.out.println("another error (file empty) !!!");
 		}
+		
 		ConcreteProduct prodId = editForm.getProdId();
 		prodId.addCategory(editForm.getCategory());
 		prodId.setName(editForm.getName());
 		prodId.setPrice(Money.of(editForm.getPrice(), "EUR"));
+		prodId.setDescription(editForm.getDescription());
 		catalog.save(prodId);
+		
 		List<ConcreteProduct> prods = new ArrayList<ConcreteProduct>();
 		prods.add(prodId); // TODO: das hier ist offensichtlich.
 		prodSearch.addProds(prods);
+		
 		return "redirect:/management";
 	}
 
-	@RequestMapping("/management/deleteArticle/{prodId}")
+@RequestMapping(value="management/addedArticle", method=RequestMethod.POST)
+public String addedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm,  @RequestParam("image") MultipartFile img, BindingResult result, ModelMap model){
+		if (result.hasErrors()) {
+			return "redirect:/management/addArticle/";
+		}
+	
+		if (!img.isEmpty()) {
+			try {
+				byte[] bytes = img.getBytes();
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("filename"))); // TODO:
+																													// generate
+																													// filename
+				stream.write(bytes);
+				stream.close();
+				System.out.println("success (yay) !!!"); // TODO: validation
+			} catch (Exception e) {
+				System.out.println("error (" + e.getMessage() + ") !!!");
+			}
+		} else {
+			System.out.println("another error (file empty) !!!");
+		}
+		
+		
+		ConcreteProduct prodId= new ConcreteProduct(editForm.getName(),Money.of(editForm.getPrice(), "EUR"), editForm.getCategory(),editForm.getDescription(),"", img.getOriginalFilename());
+		
+		catalog.save(prodId);
+		
+		List<ConcreteProduct> prods = new ArrayList<ConcreteProduct>();
+		prods.add(prodId); // TODO: das hier ist offensichtlich.
+		prodSearch.addProds(prods);
+
+		return "redirect:/management";
+	
+	}
+
+
+@RequestMapping("/management/deleteArticle/{prodId}")
 	public String deleteArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("concreteproduct", prod);

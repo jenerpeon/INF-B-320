@@ -71,39 +71,39 @@ public class Initialize implements DataInitializer {
 
 		ConcreteProduct p1 = new ConcreteProduct("Delikatesse 1", Money.of(0.99, EURO), "Delikatessen",
 				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz");
+				"https://eng.wikipedia.org/wiki/Fuzz", "delikatessen.png");
 		ConcreteProduct p2 = new ConcreteProduct("Delikatesse 2", Money.of(0.99, EURO), "Delikatessen",
 				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz");
+				"https://eng.wikipedia.org/wiki/Fuzz","delikatessen.png");
 		ConcreteProduct p3 = new ConcreteProduct("Delikatesse 3", Money.of(0.99, EURO), "Delikatessen",
 				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz");
+				"https://eng.wikipedia.org/wiki/Fuzz","delikatessen.png");
 
 		ConcreteProduct p4 = new ConcreteProduct("Wein 1", Money.of(0.99, EURO), "Wein und Gourmet",
 				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz");
+				"https://eng.wikipedia.org/wiki/Fuzz","wein.jpg");
 		ConcreteProduct p5 = new ConcreteProduct("Wein 2", Money.of(0.99, EURO), "Wein und Gourmet",
 				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz");
+				"https://eng.wikipedia.org/wiki/Fuzz", "wein.jpg");
 		ConcreteProduct p6 = new ConcreteProduct("Wein 3", Money.of(0.99, EURO), "Wein und Gourmet",
 				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz");
+				"https://eng.wikipedia.org/wiki/Fuzz", "wein.jpg");
 
 		ConcreteProduct p7 = new ConcreteProduct("Zigarre 1", Money.of(0.99, EURO), "Tabakwaren",
 				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz");
+				"https://eng.wikipedia.org/wiki/Fuzz","zagarre.jpg");
 		ConcreteProduct p8 = new ConcreteProduct("Zigarre 2", Money.of(0.99, EURO), "Tabakwaren",
 				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz");
+				"https://eng.wikipedia.org/wiki/Fuzz","zagarre.jpg");
 		ConcreteProduct p9 = new ConcreteProduct("Zigarre 3", Money.of(0.99, EURO), "Tabakwaren",
 				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz");
+				"https://eng.wikipedia.org/wiki/Fuzz","zagarre.jpg");
 		ConcreteProduct p10 = new ConcreteProduct("Zigarre 4", Money.of(0.99, EURO), "Tabakwaren",
 				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz");
+				"https://eng.wikipedia.org/wiki/Fuzz","zagarre.jpg");
 		ConcreteProduct p11 = new ConcreteProduct("Zigarre 5", Money.of(0.99, EURO), "Tabakwaren",
 				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz");
+				"https://eng.wikipedia.org/wiki/Fuzz","zagarre.jpg");
 
 		productCatalog.save(p1);
 		productCatalog.save(p2);

@@ -34,7 +34,7 @@
 
 						<li class="article" th:each="concreteproduct : ${prod50}">
 							<h1 th:text="${concreteproduct.name}" class="name"></h1> 
-							<img class="picture" th:href="@{'/detail/'+${concreteproduct.identifier}}" th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}" height="150" /> 
+							<img class="picture" th:href="@{'/detail/'+${concreteproduct.identifier}}" th:src="@{'/resources/Bilder/' + ${concreteproduct.imagefile}}" height="150" /> 
 							<a class="description" th:text="${concreteproduct.description}">Beschreibung</a>
 							<a th:href="@{'/detail/'+${concreteproduct.identifier}}">Details</a><br/>
 							<p class="price" th:text="${concreteproduct.price}" />	

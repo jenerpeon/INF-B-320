@@ -30,11 +30,11 @@
 				<li><div id="mainframe">
 						<div id="catalogheader">
 							<ul class="nav">
-								<li><a>Neuer Artikel hinzufügen</a></li>
+								<li><a th:href="@{'/management/addArticle'}">Neuer Artikel hinzufügen</a></li>
 								<li><a class="active">Artikel bearbeiten</a></li>
 							</ul>
 						</div>
-						<form id="newitem" th:action="@{'/management/editedArticle'}" method="POST" enctype="multipart/form-data">
+						<form id="changeitem" th:action="@{'/management/editedArticle'}" method="POST" enctype="multipart/form-data">
 							<input type="hidden" th:value="${concreteproduct.identifier}" name="prodId" />
 							<table class="mainframecontent" border="0" align="left">
 								<tbody>
