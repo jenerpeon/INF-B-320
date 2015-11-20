@@ -24,7 +24,6 @@
 				<li><div style="height: 370px" id="optionscolumn">
 						<ul>
 							<li><a th:href="@{'/management'}" class="activeoption">Katalog bearbeiten</a></li>
-							<li><a th:href="@{'/management/stock'}">Lagerbestand</a></li>
 							<li><a th:href="@{'/management/ratings'}">Bewertungen</a></li>
 						</ul>
 					</div></li>
@@ -35,30 +34,31 @@
 								<li><a class="active">Artikel bearbeiten</a></li>
 							</ul>
 						</div>
-						<form id="newitem">
+						<form id="newitem" th:action="@{'/management/editedArticle'}" method="POST" enctype="multipart/form-data">
+							<input type="hidden" th:value="${concreteproduct.identifier}" name="prodId" />
 							<table class="mainframecontent" border="0" align="left">
 								<tbody>
 									<tr>
 										<td><a>Kategorie:</a></td>
-										<td><select id="categoriefield" size="1">
+										<td><select name="category" id="categoriefield" size="1">
 												<option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
 										</select></td>
 									</tr>
 									<tr>
 										<td><a>Name:</a></td>
-										<td><input type="text" id="namefield" placeholder="Name" th:value="${concreteproduct.name}" /></td>
+										<td><input type="text" name="name" id="namefield" placeholder="Name" th:value="${concreteproduct.name}" /></td>
 									</tr>
 									<tr>
 										<td><a>Preis:</a></td>
-										<td><input type="number" id="pricefield" placeholder="Preis in &euro;" th:value="${price}" min="0.01" step="0.01" /><a>&euro;</a></td>
+										<td><input type="number" name="price" id="pricefield" placeholder="Preis in &euro;" th:value="${price}" min="0.01" step="0.01" /><a>&euro;</a></td>
 									</tr>
 									<tr>
 										<td><a>Bild:</a></td>
-										<td><input type="file" id="imagefield" placeholder="Pfad zum Bild" /></td>
+										<td><input type="file" name="image" id="imagefield" placeholder="Pfad zum Bild" /></td>
 									</tr>
 									<tr>
 										<td><a>Beschreibung:</a></td>
-										<td><textarea style="width: 465px; height: 150px" type="text" id="descriptionfield" placeholder="Beschreibung" th:text="${concreteproduct.description}"></textarea></td>
+										<td><textarea style="width: 465px; height: 150px" name="description" type="text" id="descriptionfield" placeholder="Beschreibung" th:text="${concreteproduct.description}"></textarea></td>
 									</tr>
 									<tr>
 										<td><input type="submit" id="submitfield" value="Artikel ändern" /></td>

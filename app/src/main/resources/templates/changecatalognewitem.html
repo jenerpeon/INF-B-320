@@ -24,7 +24,6 @@
 				<li><div style="height: 400px" id="optionscolumn">
 						<ul>
 							<li><a th:href="@{'/management'}" class="activeoption">Katalog bearbeiten</a></li>
-							<li><a th:href="@{'/management/stock'}">Lagerbestand</a></li>
 							<li><a th:href="@{'/management/ratings'}">Bewertungen</a></li>
 						</ul>
 					</div></li>
@@ -40,25 +39,25 @@
 								<tbody>
 									<tr>
 										<td><a>Kategorie:</a></td>
-										<td><select id="categoriefield" size="1">
+										<td><select name="category" id="categoriefield" size="1">
 												<option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
 										</select></td>
 									</tr>
 									<tr>
 										<td><a>Name:</a></td>
-										<td><input type="text" id="namefield" placeholder="Name" /></td>
+										<td><input type="text" name="name" id="namefield" placeholder="Name" /></td>
 									</tr>
 									<tr>
 										<td><a>Preis:</a></td>
-										<td><input type="number" id="pricefield" value="Preis in &euro;" min="0.01" step="0.01" /><a>&euro;</a></td>
+										<td><input type="number" name="price" id="pricefield" value="Preis in &euro;" min="0.01" step="0.01" /><a>&euro;</a></td>
 									</tr>
 									<tr>
 										<td><a>Bild:</a></td>
-										<td><input type="file" id="imagefield" value="Pfad zum Bild" /></td>
+										<td><input type="file" name="image" id="imagefield" value="Pfad zum Bild" /></td>
 									</tr>
 									<tr>
 										<td><a>Beschreibung:</a></td>
-										<td><textarea style="width: 465px; height: 150px" type="text" id="descriptionfield" placeholder="Beschreibung"></textarea></td>
+										<td><textarea style="width: 465px; height: 150px" name="description" type="text" id="descriptionfield" placeholder="Beschreibung"></textarea></td>
 									</tr>
 									<tr>
 										<td><input type="submit" id="submitfield" value="Neuen Artikel erstellen" /></td>
