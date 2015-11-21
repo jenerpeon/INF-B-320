@@ -1,5 +1,6 @@
 package internetkaufhaus.controller;
 
+import java.awt.Component;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.swing.JOptionPane;
 import javax.validation.Valid;
 
 import org.javamoney.moneta.Money;
@@ -103,6 +105,13 @@ public class ManagementController {
 		prodId.setName(editForm.getName());
 		prodId.setPrice(Money.of(editForm.getPrice(), "EUR"));
 		prodId.setDescription(editForm.getDescription());
+		
+		if(!(img.getOriginalFilename().isEmpty())){
+			prodId.setImagefile(img.getOriginalFilename());
+		}
+		
+		
+		prodSearch.delete(prodId);	
 		catalog.save(prodId);
 		
 		List<ConcreteProduct> prods = new ArrayList<ConcreteProduct>();
@@ -134,6 +143,19 @@ public class ManagementController {
 			System.out.println("another error (file empty) !!!");
 		}
 		
+		if(img.getOriginalFilename().isEmpty()){
+			
+			JOptionPane.showMessageDialog(null, "Bildpfad fehlt!");
+			
+		}
+		
+		if( editForm.getName().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Geben Sie bitte einen Artikelnamen an!");
+		}
+		
+		if(editForm.getDescription().isEmpty()){
+			JOptionPane.showMessageDialog(null,"Die Artikelbeschreibung fehlt!");
+		}
 		
 		ConcreteProduct prodId= new ConcreteProduct(editForm.getName(),Money.of(editForm.getPrice(), "EUR"), editForm.getCategory(),editForm.getDescription(),"", img.getOriginalFilename());
 		

@@ -38,7 +38,7 @@ public class ConcreteProduct extends Product {
 		this.imagefile=imagefile;
 	}
 
-	
+
 
 	public String getImagefile() {
 		return imagefile;

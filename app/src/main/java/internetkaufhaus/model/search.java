@@ -57,5 +57,17 @@ public class search implements Serializable {
 		}
 	}
 
+	public void delete(ConcreteProduct prodId) {
+		HashMap<String, ArrayList<ConcreteProduct>> list= getsearchTypes();
+		Iterable<String> cats=prodId.getCategories();
+		
+		for( String category : cats){
+			list.get(category).remove(prodId);
+			
+		}
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }
