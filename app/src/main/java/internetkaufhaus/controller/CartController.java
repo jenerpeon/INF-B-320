@@ -60,7 +60,7 @@ class CartController {
 
 		cart.addOrUpdateItem(concreteproduct, Quantity.of(amount));
 		// get first Category of product and redirect to associated catalog search
-    return "redirect:catalog/"+concreteproduct.getCategories().iterator().next();
+    return "redirect:catalog/"+concreteproduct.getCategories().iterator().next()+"/1";
 
 	}
 

@@ -52,10 +52,18 @@
 					<tr>
 						<td valign="middle" th:each="number:${numbers}">
 						<a class="articlePages" th:if="${category == null}" th:text="${number}" th:href="@{'/sufu/'+${search}+'/'+${number}}"></a>
-						<a class="articlePages" th:if="${category != null}" th:text="${number}" th:href="@{'/catalog/'+${category}+'/'+${number}}"></a>
-						</td>
-						
-					</tr>
+						<a class="articlePages" th:if="${category != null}" th:text="${number}" th:href="@{'/catalog/'+${category}+'/'+${split}+'/'+${number}}"></a>
+					</td>
+					<tr>
+		        
+			        <form method="post" th:if="${split != null}" th:action="@{'/catalog/'+${category}+'/'+${split}+'/'+${number}}">
+					<fieldset>
+						<label for="total">Bewertung</label>
+						<input id="total" type="text" name="total" value="5" /> 
+						<input type="submit" value="Senden" />
+					</fieldset>
+				</form>
+				</tr>
 				</table>
 
 			</div>

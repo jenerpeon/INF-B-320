@@ -15,6 +15,7 @@ import org.salespointframework.useraccount.*;
 public class ConcreteUserAccount{
     private @Id @GeneratedValue long id;
     private String address;
+    private String email;
  
     @OneToOne private UserAccount userAccount;
 
@@ -27,13 +28,16 @@ public class ConcreteUserAccount{
         this.userAccount.setLastname(lastname);
         this.address=address;
         this.userAccount.setEmail(email);
+        this.email = email;
     }
    
     public UserAccount getUserAccount(){
         return this.userAccount; 
     }
 
-    
+    public String getEmail(){
+    	return this.userAccount.getEmail();
+    }
 
     
 

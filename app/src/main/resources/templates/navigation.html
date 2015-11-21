@@ -36,8 +36,8 @@
 								type="text" id="username" name="username" value="" /><br /> <label
 								for="login-password">Passwort:</label><br /> <input
 								type="password" id="password" name="password" value="" /><br />
-							<input type="submit" value="Anmelden" /> <a href="#"><label
-								for="login-password">Passwort vergessen?</label></a>
+							<input type="submit" value="Anmelden" /> 
+							<a th:href="@{/passreset}"><label for="login-password">Passwort vergessen?</label></a>
 						</fieldset>
 					</form>
 				</div>
@@ -170,7 +170,7 @@
 	<div id="navigation">
 		<ul class="nav">
 			<li th:each="c : ${categories}">
-			<a th:href="@{'/catalog/'+${c}+'/1'}" th:text="${c}">test</a>
+			<a th:href="@{'/catalog/'+${c}+'/1'+'/2'}" th:text="${c}">test</a>
 				<div></div></li>
 		</ul>
 	</div>

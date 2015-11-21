@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.salespointframework.catalog.Catalog;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Component
 public class search implements Serializable{
@@ -24,6 +25,7 @@ public class search implements Serializable{
     	return this.searchType;
     }
     
+    @ModelAttribute("categories") 
     public Iterable<String> getCagegories(){
       return searchType.keySet();
     }

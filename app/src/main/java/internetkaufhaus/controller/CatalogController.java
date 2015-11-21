@@ -1,7 +1,9 @@
 package internetkaufhaus.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,7 @@ import org.salespointframework.quantity.Quantity;
 
 import internetkaufhaus.model.Comment;
 import internetkaufhaus.model.ConcreteProduct;
+import internetkaufhaus.model.ConcreteProductRepository;
 import internetkaufhaus.model.search;
 
 @Controller
@@ -29,13 +32,15 @@ public class CatalogController {
 	private static final Quantity NONE = Quantity.of(0);
 	private final Catalog<ConcreteProduct> catalog;
 	private final Inventory<InventoryItem> inventory;
+	private final ConcreteProductRepository concreteCatalog;
 	private final search prodSearch;
 
 	@Autowired
-	public CatalogController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, search prodSearch) {
+	public CatalogController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, search prodSearch, ConcreteProductRepository concreteCatalog) {
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.prodSearch = prodSearch;
+		this.concreteCatalog = concreteCatalog;
 
 	}
 	@RequestMapping("/sufu/{pagenumber}")
@@ -71,16 +76,20 @@ public class CatalogController {
 		return "catalog";
 	}
 
-	@RequestMapping(path = "/catalog/{type}/{pagenumber}")
-	public String list50(@PathVariable("type") String category, @PathVariable("pagenumber") int number,
+	@RequestMapping(path = "/catalog/{type}/{split}/{pagenumber}", method = {RequestMethod.POST, RequestMethod.GET})
+	public String list50(Pageable pagable, @RequestParam(value = "total", defaultValue = "0") Integer total, @PathVariable("type") String category, @PathVariable("split") int split, @PathVariable("pagenumber") int number,
 			ModelMap model) {
-
-		int max_number = prodSearch.list50(prodSearch.getProdsByCategory(category)).size() + 1;
+		if(split==0)
+            split = 3;
+		if(total!=0)
+            split = total;
+        Page page;
 		model.addAttribute("category", category);
+		model.addAttribute("number", number);
+		model.addAttribute("split", split);
 		model.addAttribute("categories", prodSearch.getCagegories());
-		model.addAttribute("prods", prodSearch.list50(prodSearch.getProdsByCategory(category)).get(number - 1));
-		model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
-
+		model.addAttribute("prods", page = concreteCatalog.findByCategory(category, new PageRequest(number-1,split)));
+		model.addAttribute("numbers", IntStream.range(1, page.getTotalPages()+1).boxed().collect(Collectors.toList()));
 		return "catalog";
 	}
 

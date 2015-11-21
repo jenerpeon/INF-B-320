@@ -20,6 +20,7 @@ public class ConcreteProduct extends Product {
 
 	private String description;
 	private String webLink;
+	private String category;
 
 	@OneToMany(cascade = CascadeType.ALL) private List<Comment> comments = new LinkedList<Comment>();
 		
@@ -29,6 +30,7 @@ public class ConcreteProduct extends Product {
 	public ConcreteProduct(String name, Money price, String category, String description, String webLink){
         super(name, price);
 		this.addCategory(category);
+		this.category=category;
 		this.description=description;
 		this.webLink=webLink;
 
@@ -50,6 +52,9 @@ public class ConcreteProduct extends Product {
 	public void addComment(Comment comment) {
 		comments.add(comment);
 	}
+    public String getCategory(){
+    	return this.category;
+    }
 
 }
 
