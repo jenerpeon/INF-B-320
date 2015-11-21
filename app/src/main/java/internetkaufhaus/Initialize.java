@@ -3,6 +3,7 @@ package internetkaufhaus;
 import static org.salespointframework.core.Currencies.EURO;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.javamoney.moneta.Money;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import internetkaufhaus.model.AccountAdministration;
+import internetkaufhaus.model.Comment;
 import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.ConcreteUserAccount;
 import internetkaufhaus.model.ConcreteUserAccountRepository;
@@ -104,7 +106,16 @@ public class Initialize implements DataInitializer {
 		ConcreteProduct p11 = new ConcreteProduct("Zigarre 5", Money.of(0.99, EURO), "Tabakwaren",
 				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
 				"https://eng.wikipedia.org/wiki/Fuzz","zagarre.jpg");
-
+		
+		/*Comment p= new Comment("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",4, new Date(),"");
+		
+		p11.addreviewedComments(p);
+		p3.addreviewedComments(p);
+		p6.addreviewedComments(p);
+		p1.addreviewedComments(p);
+		p9.addreviewedComments(p);
+		p5.addreviewedComments(p);*/
+		
 		productCatalog.save(p1);
 		productCatalog.save(p2);
 		productCatalog.save(p3);

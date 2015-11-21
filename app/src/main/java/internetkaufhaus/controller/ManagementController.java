@@ -1,19 +1,20 @@
 package internetkaufhaus.controller;
 
-import java.awt.Component;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.swing.JOptionPane;
 import javax.validation.Valid;
 
 import org.javamoney.moneta.Money;
+
 import org.salespointframework.catalog.Catalog;
-import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import internetkaufhaus.forms.EditArticleForm;
+import internetkaufhaus.model.Comment;
 import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.search;
 
@@ -70,6 +72,28 @@ public class ManagementController {
 		return "changecatalognewitem";
 	}
 
+	@RequestMapping("/management/comments")
+	public String comments(ModelMap model){
+		//Map<ConcreteProduct,List<Comment>> com= new HashMap<ConcreteProduct,List<Comment>>(); //TODo:BidiMap
+		List<Comment> comlist=new ArrayList<Comment>();
+		for (ConcreteProduct prods: catalog.findAll()){
+			for(Comment c: prods.getNewComments()){
+				comlist.add(c);	
+			}
+			
+			/*for(Comment c : prods.getNewComments()){
+				List<Comment> comments =new ArrayList<Comment>();
+				comments.add(c);
+				com.put(prods, comments);
+			}*/	
+		}
+		
+		model.addAttribute("Comments", comlist);
+		//model.addAttribute("concretProduct", com.getKey(com.values));
+
+		return "changecatalogcomment";
+	}
+	
 	@RequestMapping("/management/editArticle/{prodId}")
 	public String editArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCagegories());

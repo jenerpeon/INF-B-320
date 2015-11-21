@@ -39,7 +39,7 @@ public class Comment implements Serializable {
 	}
 	
 	public void setFormatedDate(Date date){
-		SimpleDateFormat formatter= new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss", Locale.GERMANY);
+		SimpleDateFormat formatter= new SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.GERMANY);
 		String formatedDate= formatter.format(date);
 		this.formatedDate=formatedDate;
 		

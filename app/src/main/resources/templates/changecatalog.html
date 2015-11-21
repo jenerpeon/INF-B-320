@@ -39,12 +39,12 @@
 									<th><a>Bild</a></th>
 									<th><a>Preis</a></th>
 									<th><a>Menge</a></th>
-									<th><a>bearbeiten</a></th>
+									<th><a>Bearbeiten</a></th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr class="article" th:each="concreteproduct : ${prod50}" style="padding: 6px;">
-									<td><a target="_newtab" th:text="${concreteproduct.name}" class="name" title="Artikel in Katalog anzeigen" th:href="@{'/detail/'+${concreteproduct.identifier}}"></a></td>
+									<td><a target="newtab" th:text="${concreteproduct.name}" class="name" title="Artikel in Katalog anzeigen" th:href="@{'/detail/'+${concreteproduct.identifier}}"></a></td>
 									<td><img class="picture" th:href="@{'/detail/'+${concreteproduct.identifier}}" th:src="@{'/resources/Bilder/' + ${concreteproduct.imagefile}}" height="30" /></td>
 									<td><span class="price" th:text="${concreteproduct.price}"></span></td>
 									<td><span class="quantity" th:text="${concreteproduct.getQuantity(inventory)}"></span></td>

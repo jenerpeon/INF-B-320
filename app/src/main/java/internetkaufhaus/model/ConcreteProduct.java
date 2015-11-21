@@ -24,8 +24,11 @@ public class ConcreteProduct extends Product {
 	private String webLink;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Comment> comments = new LinkedList<Comment>();
+	private List<Comment> reviewedComments = new LinkedList<Comment>();
 
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Comment> newComments = new LinkedList<Comment>();
+	
 	@SuppressWarnings({ "unused", "deprecation" })
 	private ConcreteProduct() {
 	}
@@ -38,7 +41,13 @@ public class ConcreteProduct extends Product {
 		this.imagefile=imagefile;
 	}
 
-
+	public void addreviewedComments(Comment p){
+		reviewedComments.add(p);
+	}
+	
+	public void addnewComments(Comment p){
+		newComments.add(p);
+	}
 
 	public String getImagefile() {
 		return imagefile;
@@ -56,12 +65,20 @@ public class ConcreteProduct extends Product {
 		return webLink;
 	}
 
-	public Iterable<Comment> getComments() {
-		return comments;
+	public List<Comment> getReviewedComments() {
+		return reviewedComments;
 	}
 
-	public void addComment(Comment comment) {
-		comments.add(comment);
+	public void setReviewedComments(List<Comment> reviewedComments) {
+		this.reviewedComments = reviewedComments;
+	}
+
+	public List<Comment> getNewComments() {
+		return newComments;
+	}
+
+	public void setNewComments(List<Comment> newComments) {
+		this.newComments = newComments;
 	}
 
 	public Quantity getQuantity(Inventory<InventoryItem> inventory) {
