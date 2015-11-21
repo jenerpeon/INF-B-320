@@ -3,11 +3,8 @@ package internetkaufhaus;
 import static org.salespointframework.core.Currencies.EURO;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.Arrays;
-=======
 import java.util.Date;
->>>>>>> articlemanagement
 import java.util.List;
 
 import org.javamoney.moneta.Money;
@@ -25,33 +22,26 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import internetkaufhaus.model.AccountAdministration;
-<<<<<<< HEAD
 import internetkaufhaus.model.ConcreteMailSender;
-=======
 import internetkaufhaus.model.Comment;
->>>>>>> articlemanagement
 import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.ConcreteProductRepository;
 import internetkaufhaus.model.ConcreteUserAccount;
 import internetkaufhaus.model.ConcreteUserAccountRepository;
-<<<<<<< HEAD
 import org.springframework.mail.MailSender;
-=======
 import internetkaufhaus.model.search;
->>>>>>> articlemanagement
 
 @Component
 public class Initialize implements DataInitializer {
 	private final ConcreteUserAccountRepository ConcreteUserAccountManager;
 	private final UserAccountManager userAccountManager;
-<<<<<<< HEAD
     private final Inventory<InventoryItem> inventory;
     private final Catalog<ConcreteProduct> productCatalog;
     private final OrderManager<Order> orderManager;
     private final AccountAdministration accountAdministration;
-    private final ConcreteProductRepository concreteProductRepository;
     private final MailSender sender;
 
+    private final ConcreteProductRepository concreteProductRepository;
     private final search productSearch;   
     
 	@Autowired
@@ -59,20 +49,6 @@ public class Initialize implements DataInitializer {
 	        ConcreteUserAccountRepository ConcreteUserAccountManager, Inventory<InventoryItem> inventory, 
 	        OrderManager<Order> orderManager, search productSearch, AccountAdministration accountAdministration, MailSender sender, ConcreteProductRepository concreteProductRepository) {
         this.inventory = inventory;
-=======
-	private final Inventory<InventoryItem> inventory;
-	private final Catalog<ConcreteProduct> productCatalog;
-	private final OrderManager<Order> orderManager;
-	private final AccountAdministration accountAdministration;
-
-	private final search productSearch;
-
-	@Autowired
-	public Initialize(Catalog<ConcreteProduct> productCatalog, UserAccountManager userAccountManager,
-			ConcreteUserAccountRepository ConcreteUserAccountManager, Inventory<InventoryItem> inventory,
-			OrderManager<Order> orderManager, search productSearch, AccountAdministration accountAdministration) {
-		this.inventory = inventory;
->>>>>>> articlemanagement
 		this.ConcreteUserAccountManager = ConcreteUserAccountManager;
 		this.userAccountManager = userAccountManager;
 		this.productCatalog = productCatalog;
@@ -90,55 +66,6 @@ public class Initialize implements DataInitializer {
 	public void initialize() {
 		// fill the user database
 		initializeUsers(userAccountManager, ConcreteUserAccountManager);
-<<<<<<< HEAD
-		//fill the Catalog with Items
-		initializeCatalog(productCatalog, inventory, productSearch, concreteProductRepository);
-		//fill inventory with Inventory items
-		//Inventory Items consist of one ConcreteProduct and a number representing the stock
-		initializeInventory(productCatalog,inventory);
-
-	}
-
-
-	private void initializeCatalog(Catalog<ConcreteProduct> productCatalog, Inventory<InventoryItem> inventory, search productSearch, ConcreteProductRepository concreteProductRepository){
-		//prevents the Initializer to run in case of data persistance
-        if(productCatalog.count()>0){
-        	return;
-        }
-     
-        ConcreteProduct p1 = new ConcreteProduct("Delikatesse 1", Money.of(0.99, EURO), "Delikatessen", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz");		
-        ConcreteProduct p2 = new ConcreteProduct("Delikatesse 2", Money.of(0.99, EURO), "Delikatessen", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz");		
-        ConcreteProduct p3 = new ConcreteProduct("Delikatesse 3", Money.of(0.99, EURO), "Delikatessen", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz");		
-        
-        
-        ConcreteProduct p4 = new ConcreteProduct("Wein 1", Money.of(0.99, EURO), "Wein und Gurmet", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz");		
-        ConcreteProduct p5 = new ConcreteProduct("Wein 2", Money.of(0.99, EURO), "Wein und Gurmet", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz");		
-        ConcreteProduct p6 = new ConcreteProduct("Wein 3", Money.of(0.99, EURO), "Wein und Gurmet", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz");		
-        
-        ConcreteProduct p7 = new ConcreteProduct("Zigarre 1", Money.of(0.99, EURO), "Tabakwaren", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz");		
-        ConcreteProduct p8 = new ConcreteProduct("Zigarre 2", Money.of(0.99, EURO), "Tabakwaren", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz");		
-        ConcreteProduct p9 = new ConcreteProduct("Zigarre 3", Money.of(0.99, EURO), "Tabakwaren", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz");		
-        ConcreteProduct p10 = new ConcreteProduct("Zigarre 4", Money.of(0.99, EURO), "Tabakwaren", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz");		
-        ConcreteProduct p11 = new ConcreteProduct("Zigarre 5", Money.of(0.99, EURO), "Tabakwaren", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz");		
-        
-        List<ConcreteProduct> prods = 
-        		new ArrayList<ConcreteProduct>(Arrays.asList(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11)); 
-        productCatalog.save(prods);
-        concreteProductRepository.save(prods);
-        
-        System.out.println("debugprodpage:"+concreteProductRepository.findByCategory("Tabakwaren",new PageRequest(1, 5)).toString());
-        
-        System.out.println("######################");
-        System.out.println("debugprodpage:"+concreteProductRepository.findAll(new PageRequest(1, 5)));
-        
-        System.out.println("######################");
-        System.out.println("debugprodpage:"+concreteProductRepository.findByCategory("Tabakwaren",new PageRequest(0, 2)).getTotalPages());
-        
-        System.out.println("######################");
-
-       
-        productSearch.addProds(productCatalog.findAll());
-=======
 		// fill the Catalog with Items
 		initializeCatalog(productCatalog, inventory, productSearch);
 		// fill inventory with Inventory items
@@ -200,20 +127,12 @@ public class Initialize implements DataInitializer {
 		p9.addreviewedComments(p);
 		p5.addreviewedComments(p);*/
 		
-		productCatalog.save(p1);
-		productCatalog.save(p2);
-		productCatalog.save(p3);
-		productCatalog.save(p4);
-		productCatalog.save(p5);
-		productCatalog.save(p6);
-		productCatalog.save(p7);
-		productCatalog.save(p8);
-		productCatalog.save(p9);
-		productCatalog.save(p10);
-		productCatalog.save(p11);
+        List<ConcreteProduct> prods = 
+        		new ArrayList<ConcreteProduct>(Arrays.asList(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11)); 
+        productCatalog.save(prods);
+        concreteProductRepository.save(prods);
 
 		productSearch.addProds(productCatalog.findAll());
->>>>>>> articlemanagement
 	}
 
 	private void initializeInventory(Catalog<ConcreteProduct> productCatalog, Inventory<InventoryItem> inventory) {
@@ -238,14 +157,7 @@ public class Initialize implements DataInitializer {
 		List<ConcreteUserAccount> userAccounts = new ArrayList<ConcreteUserAccount>();
 		userAccounts.add(new ConcreteUserAccount("peon", "peon", adminRole, userAccountManager));
 		userAccounts.add(new ConcreteUserAccount("saul", "saul", employeeRole, userAccountManager));
-<<<<<<< HEAD
-	  userAccounts.add(new ConcreteUserAccount("admin", "admin", customerRole, userAccountManager));
-    userAccounts.add(new ConcreteUserAccount("behrens_lars@gmx.de", "any", "Skywalker", "Tatooine Outa RIM", "dark",adminRole, userAccountManager));
-	  for(ConcreteUserAccount acc : userAccounts){
-    		userAccountManager.save(acc.getUserAccount());
-		    ConcreteUserAccountManager.save(acc);
-	  }	
-=======
+
 		userAccounts.add(new ConcreteUserAccount("admin", "admin", customerRole, userAccountManager));
 		userAccounts.add(new ConcreteUserAccount("darth@vader.dark", "Anikan", "Skywalker", "Tatooine Outa RIM", "dark",
 				adminRole, userAccountManager));
@@ -258,6 +170,5 @@ public class Initialize implements DataInitializer {
 
 	public OrderManager<Order> getOrderManager() {
 		return orderManager;
->>>>>>> articlemanagement
 	}
 }

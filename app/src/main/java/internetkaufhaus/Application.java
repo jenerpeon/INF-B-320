@@ -1,13 +1,9 @@
 package internetkaufhaus;
-<<<<<<< HEAD
 import internetkaufhaus.interceptors.*;
-=======
 
->>>>>>> articlemanagement
 import org.salespointframework.EnableSalespoint;
 import org.salespointframework.SalespointWebConfiguration;
 import org.springframework.boot.SpringApplication;
-<<<<<<< HEAD
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
@@ -16,8 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-=======
->>>>>>> articlemanagement
 
 @EnableSalespoint
 @Configuration

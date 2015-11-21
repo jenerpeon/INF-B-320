@@ -10,40 +10,11 @@ import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 
 @Entity
-<<<<<<< HEAD
-public class ConcreteUserAccount{
-    private @Id @GeneratedValue long id;
-    private String address;
-    private String email;
- 
-    @OneToOne private UserAccount userAccount;
-
-    public ConcreteUserAccount(String username, String password, Role role, UserAccountManager u){
-        this.userAccount = u.create(username, password, role);
-    }
-
-    public ConcreteUserAccount(String email, String username, String lastname, String address, String password, Role role, UserAccountManager u){
-        this.userAccount = u.create(username, password, role);
-        this.userAccount.setLastname(lastname);
-        this.address=address;
-        this.userAccount.setEmail(email);
-        this.email = email;
-    }
-   
-    public UserAccount getUserAccount(){
-        return this.userAccount; 
-    }
-
-    public String getEmail(){
-    	return this.userAccount.getEmail();
-    }
-
-    
-=======
 public class ConcreteUserAccount {
 	private @Id @GeneratedValue long id;
 	private String address;
-
+    private String email;
+    
 	public String getAddress() {
 		return address;
 	}
@@ -65,11 +36,15 @@ public class ConcreteUserAccount {
 		this.userAccount.setLastname(lastname);
 		this.address = address;
 		this.userAccount.setEmail(email);
+		this.email = email;
 	}
-
-	public UserAccount getUserAccount() {
+	
+		public UserAccount getUserAccount() {
 		return this.userAccount;
 	}
->>>>>>> articlemanagement
+		
+    public String getEmail(){
+    	return this.email;
+    }
 
 }

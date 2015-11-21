@@ -37,14 +37,10 @@ public class ConcreteProduct extends Product {
 	public ConcreteProduct(String name, Money price, String category, String description, String webLink,String imagefile) {
 		super(name, price);
 		this.addCategory(category);
-<<<<<<< HEAD
-		this.category=category;
-		this.description=description;
-		this.webLink=webLink;
-=======
 		this.description = description;
 		this.webLink = webLink;
 		this.imagefile=imagefile;
+		this.category = category;
 	}
 
 	public void addreviewedComments(Comment p){
@@ -54,7 +50,6 @@ public class ConcreteProduct extends Product {
 	public void addnewComments(Comment p){
 		newComments.add(p);
 	}
->>>>>>> articlemanagement
 
 	public String getImagefile() {
 		return imagefile;

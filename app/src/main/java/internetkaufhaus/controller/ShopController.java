@@ -34,11 +34,8 @@ public class ShopController {
 		return "index";
 	}
 
-<<<<<<< HEAD
-=======
 	public UserAccountManager getUserAccountManager() {
 		return userAccountManager;
 	}
 
->>>>>>> articlemanagement
 }

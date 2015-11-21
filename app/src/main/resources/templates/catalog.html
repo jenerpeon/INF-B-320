@@ -7,9 +7,6 @@
   <meta charset="utf-8">
   <title>Main Page</title>
   <script src="/resources/script/jquery-1.11.2.min.js" type="text/javascript"></script>
-  <script src="/resources/script/bootstrap.min.js" type="text/javascript"></script>
-<link href="/resources/css/bootstrap.css" rel="stylesheet" type=text/css>
-<link href="/resources/css/bootstrap-theme.css" rel="stylesheet" type=text/css>
   <link href="/resources/css/main.css" rel="stylesheet" type=text/css>
   <link href="/resources/css/catalog.css" rel="stylesheet" type=text/css>
   <script src="http://use.edgefonts.net/clara:n4:default.js" type="text/javascript"></script>
@@ -21,8 +18,7 @@
 <body>
 	<div id="wrapper">
 
-		<div id="header">
-			<div id="header" th:include="navigation :: navigation"></div>
+		<div id="header" th:include="navigation :: navigation"></div>
 			<main>
 			<div id="main-wrapper">
 				<p th:if="${category != null}" th:text="@{'Categorie'+ ' > ' +${category}}">Home &gt; "${category}"</p>
@@ -37,7 +33,6 @@
 
 					<ul id="ariclelist">
 
-<<<<<<< HEAD
 						<li class="article" th:each="concreteproduct : ${prods}">
 						    <a th:href="@{'/detail/'+${concreteproduct.identifier}}">
 							<h1 th:text="${concreteproduct.name}" class="name"></h1> </a> 
@@ -48,24 +43,6 @@
 							th:text="${concreteproduct.description}">Beschreibung</a> <a
 							th:href="@{'/detail/'+${concreteproduct.identifier}}">Details</a><br />
 							<p class="price" th:text="${concreteproduct.price}" /></li>
-=======
-						<li class="article" th:each="concreteproduct : ${prod50}">
-						<a th:href="@{'/detail/'+${concreteproduct.identifier}}">
-							<h1 th:text="${concreteproduct.name}" class="name"></h1> 
-							<img class="picture" th:href="@{'/detail/'+${concreteproduct.identifier}}" th:src="@{'/resources/Bilder/' + ${concreteproduct.imagefile}}" height="150" /> 
-							<p class="description" th:text="${concreteproduct.description}">Beschreibung</p>
-							<p class="price" th:text="${concreteproduct.price}" />	
-						</a>
-			
-						</li>
-						<table>
-							<tr>
-								<td th:each="number:${numbers}" >
-								<a th:text="${number}" th:href="@{'/catalog/'+${category}+'/'+${number}}"></a>
-								</td>
-							</tr>
-						</table>
->>>>>>> articlemanagement
 					</ul>
 
 				</div>

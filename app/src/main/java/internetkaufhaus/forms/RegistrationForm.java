@@ -50,5 +50,6 @@ public class RegistrationForm {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 
 }
