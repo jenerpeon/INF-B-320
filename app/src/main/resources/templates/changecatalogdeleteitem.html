@@ -21,48 +21,37 @@
 		<main>
 		<div style="height: 300px" id="workframe">
 			<ul>
-			<li style="float: left;">
+				<li style="float: left;">
 					<div class="btn-group-vertical" role="group">
 						<button type="button" class="btn btn-primary" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/management'}">Katalog bearbeiten</button>
 						<button type="button" class="btn btn-default" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/management/addArticle'}">Artikel hinzuf&uuml;gen</button>
-						<button type="button" class="btn btn-default" >Kommentare</button>
+						<button type="button" class="btn btn-default" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/management/comments'}">Kommentare</button>
 					</div>
 				</li>
 				<li><div id="mainframe">
 						<div id="catalogheader">
 							<ul class="nav">
-								<li><a th:href="@{'/management/addArticle'}">Neuer Artikel hinzufügen</a></li>
-								<li><a class="active">Artikel bearbeiten</a></li>
+								<li><a th:href="@{'/management/addArticle'}">Neuen Artikel hinzuf&uuml;gen</a></li>
+								<li><a class="active">Artikel l&ouml;schen</a></li>
 							</ul>
 						</div>
-						<form id="changeitem" th:action="@{'/management/editedArticle'}" method="POST" enctype="multipart/form-data">
-							<input type="hidden" th:value="${concreteproduct.identifier}" name="prodId" />
+						<form id="newitem" th:action="@{'/management/deletedArticle/'+${concreteproduct.identifier}}" method="POST">
+							
 							<table class="mainframecontent" border="0" align="left">
+							
 								<tbody>
+									
 									<tr>
-										<td><a>Kategorie:</a></td>
-										<td><select name="category" id="categoriefield" size="1">
-												<option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
-										</select></td>
+										
+										<td ><label  id="namefield"  th:text="${concreteproduct.name}"></label></td>
+										<td><label id="pricefield" th:text="${price}"></label><a>&euro;</a></td>
 									</tr>
 									<tr>
-										<td><a>Name:</a></td>
-										<td><input type="text" name="name" id="namefield" placeholder="Name" th:value="${concreteproduct.name}" /></td>
+										<td><img class="picture" th:src="@{'/resources/Bilder/' + ${concreteproduct.imagefile}}" height="150" /></td>
+										<td><textarea readonly="readonly" style="width: 465px; height: 150px" type="text" id="descriptionfield" placeholder="Beschreibung" th:text="${concreteproduct.description}"></textarea></td>
 									</tr>
 									<tr>
-										<td><a>Preis:</a></td>
-										<td><input type="number" name="price" id="pricefield" placeholder="Preis in &euro;" th:value="${price}" min="0.01" step="0.01" /><a>&euro;</a></td>
-									</tr>
-									<tr>
-										<td><a>Bild:</a></td>
-										<td><input type="file" name="image" id="imagefield" placeholder="Pfad zum Bild" /></td>
-									</tr>
-									<tr>
-										<td><a>Beschreibung:</a></td>
-										<td><textarea style="width: 465px; height: 150px" name="description" type="text" id="descriptionfield" placeholder="Beschreibung" th:text="${concreteproduct.description}"></textarea></td>
-									</tr>
-									<tr>
-										<td><input type="submit" id="submitfield" value="Artikel ändern" /></td>
+										<td><input type="submit" id="submitfield" value="Artikel löschen" style="background-color: #FF0000;" /></td>
 									</tr>
 								</tbody>
 							</table>

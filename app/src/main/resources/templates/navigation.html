@@ -1,16 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <meta charset="utf-8">
 <title>Main Page</title>
+<<<<<<< HEAD
 <script src="/resources/script/jquery-1.11.2.min.js"
 	type="text/javascript"></script>
 <script src="/resources/script/bootstrap.min.js" type="text/javascript"></script>
 <link href="/resources/css/main.css" rel="stylesheet" type=text/css>
 <script src="http://use.edgefonts.net/clara:n4:default.js"
 	type="text/javascript"></script>
+=======
+<script src="/resources/script/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="/resources/script/bootstrap.min.js" type="text/javascript"></script>
+<link href="/resources/css/main.css" rel="stylesheet" type=text/css>
+<script src="http://use.edgefonts.net/clara:n4:default.js" type="text/javascript"></script>
+>>>>>>> articlemanagement
 
 </head>
 <li sec:authorize="!isAuthenticated()" class="loginlogout"><a
@@ -113,9 +119,36 @@
 					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a>Punktestand</a></li>
 					<li sec:authorize="hasRole('ROLE_EMPLOYEE')"><a th:href="@{/employee}">Mitarbeiterportal</a></li>
 					<li sec:authorize="isAuthenticated()"><a th:href="@{'/login'}">Mein Konto</a></li>
+					<li sec:authorize="hasRole('ROLE_EMPLOYEE')"><a th:href="@{'/management'}">Management</a></li>
 				</ul>
 			</div>
+<<<<<<< HEAD
 				
+=======
+			<!--   <form th:action="@{/login}" method="post">
+	            <label for="username">Username</label>:
+	            <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
+	            <label for="password">Password</label>:
+	            <input type="password" id="password" name="password" /> <br />
+	            <input type="submit" value="Log in" />
+	        </form>
+	        		    <form th:action="@{/NewPass}" method="post">
+	            <label for="password">Password</label>:
+	            <input type="password" id="password" name="password" /> <br />
+	            <input type="submit" value="change pass" />
+	        </form>-->
+			<div id="login-modal" class="modalDialog">
+				<div>
+					<a href="#close" title="Close" class="close">X</a>
+					<h2>Anmeldung</h2>
+					<form method="post" th:action="@{/login}">
+						<fieldset>
+							<label for="login-name">E-Mail Adresse:</label><br /> <input type="text" id="username" name="username" value="" /><br /> <label for="login-password">Passwort:</label><br /> <input type="password" id="password" name="password" value="" /><br /> <input type="submit" value="Anmelden" /> <a href="#"><label for="login-password">Passwort vergessen?</label></a>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+>>>>>>> articlemanagement
 
 			<div id="header-row2">
 				<table id="header-row2-table">
@@ -129,11 +162,16 @@
 										<table>
 											<tbody>
 												<tr id="searchcolumn">
+<<<<<<< HEAD
 													<td><input type="search" id="search" name="search"
 														value="Suchbegriff" onFocus="value=''" /></td>
 													<td><input type="submit" value="suchen" /></td>
 													<!--  <td><input type="submit" src="/resources/Bilder/search.png" alt="Suche_Icon" /></td>-->
 
+=======
+													<td><input type="search" id="searchword" placeholder="Suchbegriff" /></td>
+													<td><input type="image" src="/resources/Bilder/search.png" alt="Suche_Icon" /></td>
+>>>>>>> articlemanagement
 												</tr>
 											</tbody>
 										</table>
@@ -144,9 +182,13 @@
 								<table>
 									<tbody>
 										<tr>
+<<<<<<< HEAD
 											<td><a th:href="@{'/cart'}"><img
 													src="/resources/Bilder/warenkorb_icon_dark.png" height="50"
 													alt="" /></a></td>
+=======
+											<td><a th:href="@{'/cart'}"><img src="/resources/Bilder/warenkorb_icon_dark.png" height="50" alt="" /></a></td>
+>>>>>>> articlemanagement
 											<td>
 												<ul id="cart-text-list">
 													<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a>0
@@ -169,8 +211,13 @@
 	</div>
 	<div id="navigation">
 		<ul class="nav">
+<<<<<<< HEAD
 			<li th:each="c : ${categories}">
 			<a th:href="@{'/catalog/'+${c}+'/1'+'/2'}" th:text="${c}">test</a>
+=======
+			<li th:each="c : ${categories}"><a th:href="@{'/catalog/'+${c}+'/1'}" th:text="${c}">test</a>
+
+>>>>>>> articlemanagement
 				<div></div></li>
 		</ul>
 	</div>
