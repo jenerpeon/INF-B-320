@@ -28,7 +28,9 @@
 
 				<form method="post" action="/cart" th:if="${orderable}">
 
-					<input type="hidden" name="prodId" value="0" th:value="${concreteproduct.identifier}" /> <label for="number">Anzahl</label> <select name="dropDown" size="1">
+					<input type="hidden" name="prodId" value="0" th:value="${concreteproduct.identifier}" />
+					<label for="number">Anzahl</label> 
+					<select name="dropDown" size="1">
 						<option>1</option>
 						<option>2</option>
 						<option>3</option>
