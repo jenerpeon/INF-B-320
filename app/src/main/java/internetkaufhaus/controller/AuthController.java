@@ -61,8 +61,8 @@ public class AuthController extends SalespointSecurityConfiguration {
 		//boolean valid = this.accountAdministration.isValidKey(key);
 		//if (!valid)
 		//	System.out.println("Your Key is not Valid");
-		//this.accountAdministration.verifyPass(key);ByEmail("behrens_lars@gmx.de"
-        System.out.println(this.concreteUserAccountManager.findAll().toString());
+		this.accountAdministration.verifyPass(key);//ByEmail("behrens_lars@gmx.de"
+        //System.out.println(this.concreteUserAccountManager.findAll().toString());
 		return "redirect:/#login-modal";
 	}
 
