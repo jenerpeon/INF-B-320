@@ -56,7 +56,16 @@ public class ManagementController {
 
 	}
 
-	@RequestMapping("/management")
+	@RequestMapping("/employee")
+	public String employeeStart(ModelMap model) {
+		model.addAttribute("prod50", catalog.findAll());
+		model.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("inventory", inventory);
+		
+		return "employee";
+	}
+	
+	@RequestMapping("/employee/changecatalog")
 	public String articleManagement(Optional<UserAccount> userAccount, ModelMap model) {
 		model.addAttribute("prod50", catalog.findAll());
 		model.addAttribute("categories", prodSearch.getCagegories());
@@ -65,14 +74,14 @@ public class ManagementController {
 		return "changecatalog";
 	}
 
-	@RequestMapping("/management/addArticle")
+	@RequestMapping("/employee/addArticle")
 	public String addArticle(Optional<UserAccount> userAccount, ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("categories", prodSearch.getCagegories());
 		return "changecatalognewitem";
 	}
 
-	@RequestMapping("/management/comments")
+	@RequestMapping("/employee/comments")
 	public String comments(ModelMap model){
 		//Map<ConcreteProduct,List<Comment>> com= new HashMap<ConcreteProduct,List<Comment>>(); //TODo:BidiMap
 		List<Comment> comlist=new ArrayList<Comment>();
@@ -94,7 +103,7 @@ public class ManagementController {
 		return "changecatalogcomment";
 	}
 	
-	@RequestMapping("/management/editArticle/{prodId}")
+	@RequestMapping("/employee/editArticle/{prodId}")
 	public String editArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("concreteproduct", prod);
@@ -102,10 +111,10 @@ public class ManagementController {
 		return "changecatalogchangeitem";
 	}
 
-	@RequestMapping(value = "/management/editedArticle", method = RequestMethod.POST)
+	@RequestMapping(value = "/employee/editedArticle", method = RequestMethod.POST)
 	public String editedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm, @RequestParam("image") MultipartFile img, BindingResult result) {
 		if (result.hasErrors()) {
-			return "redirect:/management/editArticle/";
+			return "redirect:/employee/editArticle/";
 		}
 
 		if (!img.isEmpty()) {
@@ -142,13 +151,13 @@ public class ManagementController {
 		prods.add(prodId); // TODO: das hier ist offensichtlich.
 		prodSearch.addProds(prods);
 		
-		return "redirect:/management";
+		return "redirect:/employee/changecatalog";
 	}
 
-	@RequestMapping(value="management/addedArticle", method=RequestMethod.POST)
+	@RequestMapping(value="/employee/addedArticle", method=RequestMethod.POST)
 	public String addedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm,  @RequestParam("image") MultipartFile img, BindingResult result, ModelMap model){
 		if (result.hasErrors()) {
-			return "redirect:/management/addArticle/";
+			return "redirect:/employee/addArticle/";
 		}
 	
 		if (!img.isEmpty()) {
@@ -189,12 +198,12 @@ public class ManagementController {
 		prods.add(prodId); // TODO: das hier ist offensichtlich.
 		prodSearch.addProds(prods);
 
-		return "redirect:/management";
+		return "redirect:/employee/changecatalog";
 	
 	}
 
 
-	@RequestMapping("/management/deleteArticle/{prodId}")
+	@RequestMapping("/employee/deleteArticle/{prodId}")
 	public String deleteArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("concreteproduct", prod);
@@ -202,7 +211,7 @@ public class ManagementController {
 		return "changecatalogdeleteitem";
 	}
 	
-	@RequestMapping(value="/management/deletedArticle/{prodId}", method=RequestMethod.POST)
+	@RequestMapping(value="/employee/deletedArticle/{prodId}", method=RequestMethod.POST)
 	public String deletedArticle(@PathVariable("prodId") ConcreteProduct prod){
 		 
 		System.out.println(prod);
@@ -210,7 +219,7 @@ public class ManagementController {
 	
 		    
 		
-		return "redirect:/management";
+		return "redirect:/employee/changecatalog";
 		
 		
 	}

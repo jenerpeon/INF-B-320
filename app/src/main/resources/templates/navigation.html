@@ -110,7 +110,6 @@
 					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a>Punktestand</a></li>
 					<li sec:authorize="hasRole('ROLE_EMPLOYEE')"><a th:href="@{/employee}">Mitarbeiterportal</a></li>
 					<li sec:authorize="isAuthenticated()"><a th:href="@{'/login'}">Mein Konto</a></li>
-					<li sec:authorize="hasRole('ROLE_EMPLOYEE')"><a th:href="@{'/management'}">Management</a></li>
 				</ul>
 			</div>
 
