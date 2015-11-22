@@ -41,7 +41,7 @@
 							</thead>
 							<tbody>
 								<tr class="article" th:each="employee : ${employees}" style="padding: 6px;">
-									<td><a target="newtab" th:text="${concreteproduct.name}" class="name" title="Artikel in Katalog anzeigen" th:href="@{'/detail/'+${concreteproduct.identifier}}"></a></td>
+									<td><a target="newtab" th:text="${employee.useraccount.name}" class="name" "></a></td>
 									<td>
 										<div class="btn-group" role="group">
 											<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'management/editArticle/'+${concreteproduct.identifier}}" class="btn btn-default" style="padding: 3px 6px;">
