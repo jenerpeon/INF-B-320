@@ -19,13 +19,11 @@
 		<main>
 		<div id="main-wrapper">
 			<h1>Reset password</h1>
-		    <form th:action="@{/newPass}" method="post">
+		    <form th:action="@{/NewPass}" method="post">
 	            <label for="email">email</label>:
-	            <input type="text" id="email" name="username" autofocus="autofocus" /> <br />
+	            <input type="text" id="email" name="email" autofocus="autofocus" /> <br />
 	            <label for="password">Password</label>:
-	            <input type="password" id="password1" name="password1" /> <br />
-                <label for="password">Password</label>:
-	            <input type="password" id="password2" name="password2" /> <br />
+	            <input type="password" id="password" name="password" /> <br />
 	            <input type="submit" value="Change Now" />
 	        </form>
 		</div>

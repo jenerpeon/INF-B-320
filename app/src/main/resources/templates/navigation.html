@@ -29,7 +29,7 @@
 					<h2>Anmeldung</h2>
 					<form method="post" th:action="@{/login}">
 						<fieldset>
-							<label for="login-name">E-Mail Adresse:</label><br /> <input
+							<label for="login-name">Benutzername:</label><br /> <input
 								type="text" id="username" name="username" value="" /><br /> <label
 								for="login-password">Passwort:</label><br /> <input
 								type="password" id="password" name="password" value="" /><br />
@@ -50,12 +50,12 @@
 							<legend><span>Kontaktdetails</span></legend>
 							<ol>
 								<li>
-									<label for="name">Name:</label>
-									<input type="text" id="name" name="name" value="" />
+									<label for="username">Benutzername:</label>
+									<input type="text" id="username" name="username" value="" />
 								</li>
 								<li>
 									<label for="login-name">E-Mail Adresse:</label>
-									<input type="text" id="username" name="username" value="" />
+									<input type="text" id="email" name="email" value="" />
 								</li>
 							</ol>
 						</fieldset>
@@ -67,21 +67,31 @@
 									<input type="password" id="password" name="password" value="" />
 								</li>
 								<li>
-									<label for="login-password-repeat">Passwort:</label>
-									<input type="password" id="password-repeat" name="password-repeat" value="" />
+									<label for="login-passwordrepeat">Passwort:</label>
+									<input type="password" id="passwordrepeat" name="passwordrepeat" value="" />
 								</li>
 							</ol>
 						</fieldset>
 						<fieldset>
+							<legend><span>Klarname</span></legend>
+							<ol>
+								<li>
+									<label for="firstname">Vorname:</label>
+									<input type="text" id="firstname" name="firstname" value="" />
+								</li>
+								<li>
+									<label for="lastname">Nachname</label>
+									<input type="text" id="lastname" name="lastname" value="" />
+								</li>
+							</ol>
+						</fieldset>
+						
+						<fieldset>
 							<legend><span>Adresse</span></legend>
 							<ol>
 								<li>
-									<label for="adress1">Adresszeile 1:</label>
-									<input type="text" id="adress1" name="adress1" value="" />
-								</li>
-								<li>
-									<label for="adress2">Adresszeile 2:</label>
-									<input type="text" id="adress2" name="adress2" value="" />
+									<label for="address">Adresszeile 1:</label>
+									<input type="text" id="address" name="address" value="" />
 								</li>
 								<li>
 									<label for="town">Stadt:</label>

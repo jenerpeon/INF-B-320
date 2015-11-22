@@ -29,18 +29,45 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class RegistrationForm {
 
-	@NotEmpty(message = "{RegistrationForm.name.NotEmpty}")//
-	private String name;
+	@NotEmpty(message = "username is mandatory")
+	private String username;
 
-	@NotEmpty(message = "{RegistrationForm.password.NotEmpty}")//
+	@NotEmpty(message = "password field is mandatory")
 	private String password;
 
-	public String getName() {
-		return name;
+	@NotEmpty(message = "password-repeat field is mandatory")
+	private String passwordrepeat;
+
+	@NotEmpty(message = "email field is mandatory")
+	private String email;
+	
+	@NotEmpty(message = "address field is mandatory")
+	private String address;
+	
+	private String firstname;
+	private String lastname;
+	
+	public String getFirstname(){
+		return this.firstname;
+	}
+	
+	public String getLastname(){
+		return this.lastname;
+	}
+	
+	public void setFirstname(String firstname){
+		this.firstname = firstname;
+	}
+	
+	public void setLastname(String lastname){
+		this.lastname = lastname;
+	}
+	public String getUsername() {
+		return username;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUsername(String name) {
+		this.username = name;
 	}
 
 	public String getPassword() {
@@ -50,6 +77,27 @@ public class RegistrationForm {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+	public String getPasswordrepeat() {
+		return passwordrepeat;
+	}
 
+	public void setPasswordrepeat(String passwordrepeat) {
+		this.passwordrepeat = passwordrepeat;
+	}
+	
+	public String getEmail(){
+		return this.email;
+	}
+	
+	public void setEmail(String email){
+		this.email = email;
+	}
+	
+	public String getAddress(){
+		return this.address;
+	}
+	
+    public void setAddress(String address){
+    	this.address = address;
+    }
 }

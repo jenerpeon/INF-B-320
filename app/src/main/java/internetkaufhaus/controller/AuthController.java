@@ -50,20 +50,20 @@ public class AuthController extends SalespointSecurityConfiguration {
 	}
 
 	@RequestMapping(value = "/NewPass", method = RequestMethod.POST)
-	public String newPass(@RequestParam("email") String email, @RequestParam("password") String pass, @LoggedIn Optional<UserAccount> userAccount) {
-		String key = this.accountAdministration.requestPass(pass, userAccount.get());
+	public String newPass(@RequestParam("email") String email, @RequestParam("password") String pass) {
+		String key = this.accountAdministration.requestPass(pass, email);
 		this.accountAdministration.PassValidation(key);
-		return "redirect:/login";
+		return "redirect:/passreset";
 	}
 
 	@RequestMapping(value = "/NewPass/{key}")
 	public String changepassword(@PathVariable("key") String key) {
-		boolean valid = this.accountAdministration.VerifyKey(key);
-		if (!valid)
-			System.out.println("Your Key is not Valid");
-		this.accountAdministration.verifyPass(key);
-
-		return "redirect:/login";
+		//boolean valid = this.accountAdministration.isValidKey(key);
+		//if (!valid)
+		//	System.out.println("Your Key is not Valid");
+		this.accountAdministration.verifyPass(key);//ByEmail("behrens_lars@gmx.de"
+        //System.out.println(this.concreteUserAccountManager.findAll().toString());
+		return "redirect:/#login-modal";
 	}
 
 	@RequestMapping(value = { "/register" })
@@ -74,12 +74,12 @@ public class AuthController extends SalespointSecurityConfiguration {
 	@RequestMapping("/registerNew")
 	public String registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm,
 			BindingResult result) {
-		if (result.hasErrors()) {
+		if (result.hasErrors()){ 
 			return "register";
 		}
 
-		ConcreteUserAccount user = new ConcreteUserAccount(registrationForm.getName(), registrationForm.getPassword(),
-				Role.of("ROLE_CUSTOMER"), userAccountManager);
+		ConcreteUserAccount user = new ConcreteUserAccount(registrationForm.getEmail(), registrationForm.getPassword(), "Vader", registrationForm.getAddress(), registrationForm.getPassword(),
+		Role.of("ROLE_CUSTOMER"), this.userAccountManager);
 		concreteUserAccountManager.save(user);
 		userAccountManager.save(user.getUserAccount());
 
