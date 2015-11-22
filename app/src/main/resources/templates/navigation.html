@@ -118,7 +118,7 @@
 				<table id="header-row2-table">
 					<tbody>
 						<tr>
-							<td><a th:href="@{'/'}" id="logo">Woods Super Dooper
+							<td align="left"><a th:href="@{'/'}" id="logo">Woods Super Dooper
 									Shop</a></td>
 							<td>
 								<div id="searchfield">
@@ -126,18 +126,15 @@
 										<table>
 											<tbody>
 												<tr id="searchcolumn">
-													<td><input type="search" id="search" name="search"
-														value="Suchbegriff" onFocus="value=''" /></td>
-													<!--<td><input type="submit" value="suchen" /></td>-->
-													  <td><input type="image" src="/resources/Bilder/search.png" alt="Suche_Icon" /></td>
-
+													<td><input type="search" id="search" name="search" value="Suchbegriff" onFocus="value=''" /></td>
+													<td><input type="image" src="/resources/Bilder/search.png" alt="Suche_Icon" /></td>
 												</tr>
 											</tbody>
 										</table>
 									</form>
 								</div>
 							</td>
-							<td>
+							<td align="right">
 								<table>
 									<tbody>
 										<tr>
@@ -148,10 +145,8 @@
 												<ul id="cart-text-list">
 													<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a>0
 															Artikel</a></li>
-													<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a
-														th:href="@{'/catalog/default'}">Summe</a></li>
-													<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a
-														th:href="@{'/cart'}">Zum Warenkorb</a></li>
+													<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a>Summe</a></li>
+													<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a th:href="@{'/cart'}">Zum Warenkorb</a></li>
 												</ul>
 											</td>
 										</tr>

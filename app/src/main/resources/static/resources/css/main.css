@@ -185,14 +185,14 @@ table   {
 }
 
 #header header #header-row2 {
-	width: 1000px;
+	width: 950px;
 	margin-left: auto;
 	margin-right: auto;
 }
 
 #header-row2-table {
 	border: 0;
-	width: 1000px;
+	width: 950px;
 }
 
 #header-row2 table td {
