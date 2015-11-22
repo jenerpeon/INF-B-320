@@ -28,6 +28,7 @@ public class ConcreteUserAccount {
     
 	private String address;
     private String email;
+    private Role role;
     
 	public String getAddress() {
 		return address;
@@ -53,6 +54,7 @@ public class ConcreteUserAccount {
 		this.address = address;
 		this.userAccount.setEmail(email);
 		this.email = email;
+		this.role=userAccount.getRoles().iterator().next();
 	}
 	
 		public UserAccount getUserAccount() {
@@ -63,4 +65,7 @@ public class ConcreteUserAccount {
     	return this.email;
     }
 
+    public Role getRole(){
+    	return role;
+    }
 }
