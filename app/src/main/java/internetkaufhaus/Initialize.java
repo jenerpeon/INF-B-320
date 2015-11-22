@@ -130,5 +130,6 @@ public class Initialize implements DataInitializer{
     		userAccountManager.save(acc.getUserAccount());
 		    ConcreteUserAccountManager.save(acc);
 	  }	
+	  
 	}
 }
