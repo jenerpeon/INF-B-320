@@ -1,17 +1,31 @@
 package internetkaufhaus.model;
 
+import java.io.Serializable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 
+
 @Entity
+@Table(name = "ConcreteAccounts")
 public class ConcreteUserAccount {
-	private @Id @GeneratedValue long id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+	@OneToOne(cascade=CascadeType.ALL)
+	private UserAccount userAccount;
+    
 	private String address;
     private String email;
     
@@ -22,9 +36,11 @@ public class ConcreteUserAccount {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	@SuppressWarnings("deprecation")
+	public ConcreteUserAccount(){
+		
+	}
 
-	@OneToOne
-	private UserAccount userAccount;
 
 	public ConcreteUserAccount(String username, String password, Role role, UserAccountManager u) {
 		this.userAccount = u.create(username, password, role);

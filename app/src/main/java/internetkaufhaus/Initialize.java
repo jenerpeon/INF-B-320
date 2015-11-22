@@ -59,6 +59,7 @@ public class Initialize implements DataInitializer {
 		this.sender = sender;
 		this.accountAdministration = accountAdministration;
 		this.accountAdministration.setUserAccountManager(this.userAccountManager);
+		this.accountAdministration.setConcreteUserAccountManager(this.ConcreteUserAccountManager);
 		this.accountAdministration.setMailSender(this.sender);
 	}
 
@@ -159,13 +160,15 @@ public class Initialize implements DataInitializer {
 		userAccounts.add(new ConcreteUserAccount("saul", "saul", employeeRole, userAccountManager));
 
 		userAccounts.add(new ConcreteUserAccount("admin", "admin", customerRole, userAccountManager));
-		userAccounts.add(new ConcreteUserAccount("darth@vader.dark", "Anikan", "Skywalker", "Tatooine Outa RIM", "dark",
+		userAccounts.add(new ConcreteUserAccount("behrens_lars@gmx.de", "lars", "lars", "Tatooine Outa RIM", "lars",
 				adminRole, userAccountManager));
 
 		for (ConcreteUserAccount acc : userAccounts) {
 			userAccountManager.save(acc.getUserAccount());
 			ConcreteUserAccountManager.save(acc);
 		}
+		
+	   // System.out.println("###############"+ConcreteUserAccountManager.findByEmail("behrens_lars@gmx.de").toString());	
 	}
 
 	public OrderManager<Order> getOrderManager() {
