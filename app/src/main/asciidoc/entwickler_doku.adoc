@@ -46,10 +46,13 @@ Mitarbeiter können über die Website Produktinformationen und Kunden-Daten eins
 |===
 
 == Bausteinsicht
+
 ===Top Level Architektur
+
 image::Top-Level-Architecture_Diagramm.png[Top Level Architecture]
 
 === PaketDiagramm
+
 image::PaketDiagramm.jpg[Package Diagramm]
 
 == Entwurfsentscheidungen
