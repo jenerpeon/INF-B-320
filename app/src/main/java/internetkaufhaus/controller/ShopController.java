@@ -1,20 +1,21 @@
 package internetkaufhaus.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.salespointframework.catalog.Catalog;
+import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import internetkaufhaus.model.*;
-import org.salespointframework.useraccount.*;
-import org.salespointframework.catalog.Catalog;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.search;
+
 @Controller
 public class ShopController {
 
 	private final Catalog<ConcreteProduct> catalog;
 	private final UserAccountManager userAccountManager;
-  private final search prodSearch;
+	private final search prodSearch;
 
 	@Autowired
 	public ShopController(UserAccountManager userAccountManager, Catalog<ConcreteProduct> catalog, search prodSearch) {
@@ -24,15 +25,17 @@ public class ShopController {
 		this.prodSearch = prodSearch;
 	}
 
-
-	@RequestMapping(value = {"/", "/index"})
+	@RequestMapping(value = { "/", "/index" })
 	public String index(ModelMap modelmap) {
-	
-        modelmap.addAttribute("prodList", catalog.findAll());
-        modelmap.addAttribute("categories", prodSearch.getCagegories());
-        
-        return "index";
+
+		modelmap.addAttribute("prodList", catalog.findAll());
+		modelmap.addAttribute("categories", prodSearch.getCagegories());
+
+		return "index";
 	}
-	
+
+	public UserAccountManager getUserAccountManager() {
+		return userAccountManager;
+	}
 
 }

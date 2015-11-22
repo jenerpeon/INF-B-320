@@ -1,5 +1,23 @@
 @charset "utf-8";
 
+#topLine {
+	width: 950px;
+}
+#articlesPerPage {
+	width: 500px;
+	text-align: right;
+}
+#articlesPerPage fieldset {
+	border: none;
+}
+#articlesPerPage label {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	text-size: 14px;
+}
+#articlesPerPage input[type="number"] {
+	width: 30px;
+}
+
 #catalognavigaton {
 	width: 200px;
 	height: 850px;
@@ -15,10 +33,9 @@
 #catalogview {
 	width: 720px;
 	height: 850px;
-	float: left;
+	float: right;
 	padding-left: 20px;
 	overflow: auto;
-
 }
 #ariclelist {
 	list-style-type: none;
@@ -39,6 +56,7 @@
 }
 
 #pageControl {
+	float: left;
 	padding-left: 260px;
 }
 

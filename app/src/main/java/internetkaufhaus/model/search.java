@@ -7,10 +7,11 @@ import java.util.List;
 
 import org.salespointframework.catalog.Catalog;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Component
-public class search implements Serializable{
-	
+public class search implements Serializable {
+
 	private static final long serialVersionUID = 1L;
    
 	private HashMap<String, ArrayList<ConcreteProduct> > searchType;
@@ -24,6 +25,7 @@ public class search implements Serializable{
     	return this.searchType;
     }
     
+    @ModelAttribute("categories") 
     public Iterable<String> getCagegories(){
       return searchType.keySet();
     }
@@ -71,5 +73,17 @@ public class search implements Serializable{
                 this.searchType.get(cat).add(prod);
             }
         }
-    }
+      }
+    	public void delete(ConcreteProduct prodId) {
+    		HashMap<String, ArrayList<ConcreteProduct>> list= getsearchTypes();
+    		Iterable<String> cats=prodId.getCategories();
+    		
+    		for( String category : cats){
+    			list.get(category).remove(prodId);
+    			
+    		}
+    		// TODO Auto-generated method stub
+    		
+    	}
+
 }
