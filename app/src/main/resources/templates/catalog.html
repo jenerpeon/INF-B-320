@@ -21,8 +21,30 @@
 		<div id="header" th:include="navigation :: navigation"></div>
 			<main>
 			<div id="main-wrapper">
-				<p th:if="${category != null}" th:text="@{'Categorie'+ ' > ' +${category}}">Home &gt; "${category}"</p>
-				<p th:if="${category == null}" th:text="@{'Suche'+ ' > ' +${search}}">Home &gt; "${category}"</p>
+				<table id="topLine">
+					<tbody>
+						<tr>
+							<td>
+								<div id="path">
+									<p th:if="${category != null}" th:text="@{'Kategorie'+ ' > ' +${category}}">Home &gt; "${category}"</p>
+									<p th:if="${category == null}" th:text="@{'Suche'+ ' > ' +${search}}">Home &gt; "${category}"</p>
+								</div>
+							</td>
+							<td align="right">
+								<div id="articlesPerPage">
+									<form method="post" th:if="${split != null}" th:action="@{'/catalog/'+${category}+'/'+${split}+'/'+${number}}">
+										<fieldset>
+											<label for="total">Artikel pro Seite:</label>
+											<input id="total" type="number" name="total" value="4"/> 
+											<input type="submit" value="Aktualisieren" />
+										</fieldset>
+									</form>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
 				<div id="catalognavigaton">
 					<a th:each="category: ${allCategory}"
 						th:href="@{'/catalog/'+${category}}">
@@ -53,14 +75,6 @@
 						<a class="articlePages" th:if="${category != null}" th:text="${number}" th:href="@{'/catalog/'+${category}+'/'+${split}+'/'+${number}}"></a>
 					</td>
 					<tr>
-		        
-			        <form method="post" th:if="${split != null}" th:action="@{'/catalog/'+${category}+'/'+${split}+'/'+${number}}">
-					<fieldset>
-						<label for="total">Bewertung</label>
-						<input id="total" type="text" name="total" value="5" /> 
-						<input type="submit" value="Senden" />
-					</fieldset>
-				</form>
 				</tr>
 				</table>
 
