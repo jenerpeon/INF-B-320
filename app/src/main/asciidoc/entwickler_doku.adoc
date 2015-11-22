@@ -48,7 +48,14 @@ Mitarbeiter können über die Website Produktinformationen und Kunden-Daten eins
 == Bausteinsicht
 image::PaketDiagramm.jpg[Package Diagramm]
 
+image::Top-Level-Architecture_Diagramm.png[Top Level Architecture]
+
+image::PaketDiagramm.jpg[Package Diagramm]
+
 == Entwurfsentscheidungen
+
+=== Architektur
+
 Im Backend gibt es folgende Module: 
 - Login/Registrierung von Nutzern
 - Katalog mit Warenübersicht und Detailansicht von Waren
@@ -56,12 +63,23 @@ Im Backend gibt es folgende Module:
 - Nutzerübersicht
 - Waren-/Lagerbestand
 
+=== Verwendete Muster
+
 Damit der Mitarbeiter neue Produkte hinzufügen kann, wird das Factory-Pattern genutzt. 
 Das Singleton-Pattern wird für die gesamte Bilanz des Kaufhauses benutzt. 
 Das Observer-Pattern garantiert die Benachrichtigung der Mitarbeiter, wenn ein Kommentar erstellt wird. 
 In Sales Point werden Iterator- und MVC-Entwurfsmuster genutzt.
 Falls das Internetkaufhaus in der Zukunft konfigurierbare Produkte anbietet, sollte das Deckorator-Pattern in Betracht bezogen werden.
-Die Datenspeicherung erfolgt über die JPA-Datenbank, die mit Hilfe von Sales Point bearbeitet und ausgelesen wird. 
+
+=== Persistenz
+
+Die Datenspeicherung erfolgt über die HSQ-Datenbank, die mit Hilfe von Sales Point bearbeitet und ausgelesen wird. 
+In der Data-Initiator-Klasse können feste, vordefinierte Daten gespeichert werden. 
+
+=== Benutzeroberfläche
+
+Die Benutzeroberfläche ist eine klar strukturierte Internet-Seite, die gleichermaßen vom Gast und Kunde als auch vom Mitarbeiter und Administrator einfach genutzt werden kann.
+Umgesetz wird die Oberfläche mit Hilfe von Bootstrap.
 
 [appendix]
 == Glossar
