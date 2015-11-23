@@ -128,7 +128,6 @@ public class Initialize implements DataInitializer {
 		List<ConcreteUserAccount> userAccounts = new ArrayList<ConcreteUserAccount>();
 		userAccounts.add(new ConcreteUserAccount("peon", "peon", adminRole, userAccountManager));
 		userAccounts.add(new ConcreteUserAccount("saul", "saul", employeeRole, userAccountManager));
-
 		userAccounts.add(new ConcreteUserAccount("admin", "admin", customerRole, userAccountManager));
 		userAccounts.add(new ConcreteUserAccount("behrens_lars@gmx.de", "lars", "Lars", "Behrens", "Musterstraße", "01069", "Definitiv nicht Dresden", "lars", adminRole, userAccountManager));
 
@@ -142,6 +141,7 @@ public class Initialize implements DataInitializer {
 
 	public OrderManager<Order> getOrderManager() {
 		return orderManager;
+
 	}
 
 }

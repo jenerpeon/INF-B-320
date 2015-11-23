@@ -1,10 +1,12 @@
 package internetkaufhaus.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -15,6 +17,7 @@ import org.salespointframework.useraccount.UserAccountManager;
 @Entity
 @Table(name = "ConcreteAccounts")
 public class ConcreteUserAccount {
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,6 +30,8 @@ public class ConcreteUserAccount {
 	private String address;
 	private String zipCode;
 	private String city;
+    private Role role;
+
 
 	public ConcreteUserAccount() {
 
@@ -34,6 +39,7 @@ public class ConcreteUserAccount {
 
 	public ConcreteUserAccount(String username, String password, Role role, UserAccountManager u) {
 		this.userAccount = u.create(username, password, role);
+		this.role = role;
 	}
 
 	public ConcreteUserAccount(String email, String username, String firstname, String lastname, String address, String zipCode, String city, String password, Role role, UserAccountManager u) {
@@ -45,6 +51,7 @@ public class ConcreteUserAccount {
 		this.city = city;
 		this.userAccount.setEmail(email);
 		this.email = email;
+		this.role=role;
 	}
 
 	public Long getId() {
@@ -95,4 +102,22 @@ public class ConcreteUserAccount {
 		this.address = address;
 	}
 
+    public Role getRole(){
+    	return role;
+    }
+    public boolean setRole(Role role)
+    {
+    	this.role = role;
+    	return (this.role.equals(role));
+    	
+    }
+    public void setUserAccount(UserAccount acc)
+    {
+    	this.userAccount=acc;
+    }
+
+    public Long getId()
+    {
+    	return id;
+    }
 }
