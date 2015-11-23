@@ -18,7 +18,11 @@
 	</form>
 </li>
 <body th:fragment="navigation">
-
+	<script th:inline="javascript">
+	$(document).ready(function() {
+		$('.modalDialog').height($(document).height());
+	});
+	</script>
 	<div id="header">
 		<header>
 

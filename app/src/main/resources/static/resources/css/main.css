@@ -53,6 +53,7 @@ table   {
 }
 
 .modalDialog:target {
+	position: absolute;
 	opacity:1;
 	pointer-events: auto;
 }
