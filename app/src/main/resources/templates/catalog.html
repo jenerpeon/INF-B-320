@@ -32,10 +32,10 @@
 							</td>
 							<td align="right">
 								<div id="articlesPerPage">
-									<form method="post" th:if="${split != null}" th:action="@{'/catalog/'+${category}+'/'+${split}+'/'+${number}}">
+									<form method="post" th:if="${split != null}" th:action="@{'/catalog/'+${category}+'/'+${split}+'/'+${number}+'/changedSetting'}">
 										<fieldset>
 											<label for="total">Artikel pro Seite:</label>
-											<input id="total" type="number" name="total" value="4"/> 
+											<input id="total" type="number" name="total" th:value="${split}"/> 
 											<input type="submit" value="Aktualisieren" />
 										</fieldset>
 									</form>

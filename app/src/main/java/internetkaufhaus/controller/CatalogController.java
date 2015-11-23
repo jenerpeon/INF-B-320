@@ -100,6 +100,11 @@ public class CatalogController {
 
 		return "catalog";
 	}
+	
+	@RequestMapping(value="/catalog/{type}/{split}/{pagenumber}/changedSetting", method=RequestMethod.POST)
+	public String changeStartPageSetting(@PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split) {
+		return "redirect:/catalog/"+category+'/'+split+'/'+number;
+	}
 
 	@RequestMapping("/detail/{prodId}")
 	public String detail(@PathVariable("prodId") ConcreteProduct prod, Model model) {
