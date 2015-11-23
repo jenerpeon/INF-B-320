@@ -105,6 +105,10 @@ table   {
 	margin: 30px 0 0 0;
 }
 
+#passwordReset-modal h2 {
+	float: left;
+}
+
 #registration-modal fieldset {
 	float: left;      
 	clear: both;      
