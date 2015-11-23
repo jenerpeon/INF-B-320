@@ -39,7 +39,23 @@
 							<input type="password" id="password" name="password" value="" required/>
 							<br />
 							<input type="submit" value="Anmelden" /> 
-							<a th:href="@{/passreset}"><label for="login-password">Passwort vergessen?</label></a>
+							<a href="#passwordReset-modal"><label for="login-password">Passwort vergessen?</label></a>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+			
+			<div id="passwordReset-modal" class="modalDialog">
+				<div>
+					<a href="#close" title="Close" class="close">X</a>
+					<h2>Passwort zurücksetzen</h2>
+					<form method="post" th:action="@{/passreset}">
+						<fieldset>
+							<label for="email">E-Mail Adresse:</label>
+							<br />
+							<input type="email" name="email" placeholder="E-Mail-Adresse" required/>
+							<br />
+							<input type="submit" value="Registrieren" />
 						</fieldset>
 					</form>
 				</div>
