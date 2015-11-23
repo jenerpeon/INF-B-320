@@ -29,6 +29,11 @@
 	width: 750px;
 	height: 500px;
 }
+
+#workframe h2{
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	margin: 0 0 0 0;
+}
 #workframe table {
 	table-layout: fixed;
 	width: 650px;
@@ -48,10 +53,10 @@
 	padding: 10px 20px 10px 20px;
 	white-space: nowrap;
 }
-#workframe thead > tr, thead{
+#workframe thead > tr, #workframe thead{
     display:block;
 }
-#workframe thead > tr, tbody{
+#workframe thead > tr, #workframe tbody{
     display:block;
 }
 #workframe #welcome {
@@ -165,4 +170,45 @@
 
 #orderitem input[type='submit'] {
 	margin: 0 0 0 0;
+}
+
+.changeStartPageForm fieldset {
+	border: none;
+}
+
+.changeStartPageForm ol {
+	padding: 0 1em 0 1em;  
+	list-style: none;  
+}
+
+.changeStartPageForm li {
+	
+	padding-bottom: 0.5em;
+	
+}
+
+.changeStartPageForm label {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	float: left;
+	width: 40%;
+	margin-right:0.5em;
+    padding-top:0.2em;
+  	text-align:left;
+}
+
+.changeStartPageForm input {
+	width: 50px;
+}
+
+.changeStartPageForm input[type='submit'] {
+	width: auto;
+	margin: 0 0 0 0;
+}
+
+#changeStartPage label {
+	width: 25%;
+}
+#changeStartPage li {
+	float: left;
+	width: 50%;
 }

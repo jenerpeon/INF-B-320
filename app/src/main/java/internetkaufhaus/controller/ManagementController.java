@@ -243,7 +243,19 @@ public class ManagementController {
 		
 		return "redirect:/employee/changecatalog";
 	}
-
+	
+	@RequestMapping("/employee/startpage/{totalCaroussel}/{totalSelection}")
+	public String editStartPage(@PathVariable("totalCaroussel") int totalCaroussel, @PathVariable("totalSelection") int totalSelection, ModelMap model) {
+		model.addAttribute("prod50", catalog.findAll());
+		model.addAttribute("totCar", totalCaroussel);
+		model.addAttribute("totSel", totalSelection);
+		return "changestartpage";
+	}
+	
+	@RequestMapping(value="/employee/startpage/changedSetting", method=RequestMethod.POST)
+	public String changeStartPageSetting(@RequestParam("totalCaroussel") int totalCaroussel,@RequestParam("totalSelection") int totalSelection) {
+		return "redirect:/employee/startpage/"+totalCaroussel+'/'+totalSelection;
+	}
 
 	public Inventory<InventoryItem> getInventory() {
 		return inventory;
