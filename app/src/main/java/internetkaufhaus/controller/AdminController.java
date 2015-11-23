@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import internetkaufhaus.model.ConcreteUserAccount;
 import internetkaufhaus.model.ConcreteUserAccountRepository;
 
 @Controller

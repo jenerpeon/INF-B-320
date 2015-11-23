@@ -3,10 +3,12 @@ package internetkaufhaus.model;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -45,6 +47,7 @@ public class ConcreteUserAccount {
 
 	public ConcreteUserAccount(String username, String password, Role role, UserAccountManager u) {
 		this.userAccount = u.create(username, password, role);
+		this.role = role;
 	}
 
 	public ConcreteUserAccount(String email, String username, String lastname, String address, String password,
@@ -54,7 +57,7 @@ public class ConcreteUserAccount {
 		this.address = address;
 		this.userAccount.setEmail(email);
 		this.email = email;
-		this.role=userAccount.getRoles().iterator().next();
+		this.role=role;
 	}
 	
 		public UserAccount getUserAccount() {
