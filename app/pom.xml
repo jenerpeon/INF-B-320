@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>de.tudresden.inf.st.lab</groupId>
-	<artifactId>lab-kickstart</artifactId>
+	<artifactId>swt15w22-application</artifactId>
 	<version>1.1.0.BUILD-SNAPSHOT</version>
 
 	<name>swt15w22 - Software Engineering Lab</name>
