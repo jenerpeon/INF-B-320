@@ -31,7 +31,7 @@ public class AdminController{
 	@RequestMapping(value="/customer")
 	public String customers(ModelMap model){
 		Role role= Role.of("ROLE_COSTUMER");
-		model.addAttribute("customers", manager.findByRole(role)
+		model.addAttribute("customers", manager.findByRole(role));
 	
 		return "changecustomer";
 	}
