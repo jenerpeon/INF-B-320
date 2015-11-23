@@ -103,6 +103,18 @@
     -webkit-border-radius: 8px;
 }
 
+#workframe .fire-button {
+	width: 35px;
+	height: 35px;
+	background-image: url(/resources/Bilder/fire.png);
+	background-size: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 8px;
+	moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
 #workframe .content {
 	padding-left: 20px;
 }
