@@ -72,8 +72,18 @@ public class ConcreteUserAccount {
     public Role getRole(){
     	return role;
     }
+    public boolean setRole(Role role)
+    {
+    	this.role = role;
+    	return (this.role.equals(role));
+    	
+    }
+    public void setUserAccount(UserAccount acc)
+    {
+    	this.userAccount=acc;
+    }
 
-    public long getId()
+    public Long getId()
     {
     	return id;
     }
