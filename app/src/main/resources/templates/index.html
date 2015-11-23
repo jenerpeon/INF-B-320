@@ -16,6 +16,11 @@
 	<div id="wrapper">
 		<div id="header" th:include="navigation :: navigation"></div>
 		<main>
+		<ul>
+			<li th:each="concreteproduct : ${startCarousselProducts}">
+				<a th:text="${concreteproduct.name}"></a>
+			</li>
+		</ul>
 <!--
     <div id="main-wrapper" th:include="caroussel :: caroussel"></div>
 

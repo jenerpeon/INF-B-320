@@ -174,4 +174,5 @@ public class Initialize implements DataInitializer {
 	public OrderManager<Order> getOrderManager() {
 		return orderManager;
 	}
+
 }
