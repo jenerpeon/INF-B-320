@@ -13,11 +13,7 @@
 	<div id="header" th:include="navigation :: navigation"></div>
 	<main>
 		<div id="mainframe">
-			<div id="employeenavigaton">
-				<a href="/employee/changecatalog"><p>Katalog bearbeiten</p></a>
-				<a href="/employee/inventory"><p>Lagerbestand</p></a>
-				<a href="/employee/valuations"><p>Bewertungen</p></a>
-			</div>
+			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
 		
 			<div id="workframe">
 				<h1 id="welcome">Hallo Mitarbeiter XYZ</h1>

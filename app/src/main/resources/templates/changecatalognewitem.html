@@ -22,14 +22,10 @@ $(document).ready(function() {
 		<div id="header" th:include="navigation :: navigation"></div>
 		<main>
 		<div id="mainframe">
-			<div id="employeenavigaton">
-				<a href="/employee/changecatalog"><p class="active">Katalog bearbeiten</p></a>
-				<a href="/employee/inventory"><p>Lagerbestand</p></a>
-				<a href="/employee/valuations"><p>Bewertungen</p></a>
-			</div>
+			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
 			
 			<div id="workframe">		
-				<form id="newitem" class="itemform" th:action="@{'/employee/addedArticle'}" method="POST" enctype="multipart/form-data" onsubmit='return checkForm();'>
+				<form id="newitem" class="itemform" th:action="@{'/employee/changecatalog/addedArticle'}" method="POST" enctype="multipart/form-data" onsubmit='return checkForm();'>
 					<ol>
 						<li>
 								<label for="category">Kategorie: </label>

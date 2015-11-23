@@ -21,11 +21,7 @@ $(document).ready(function() {
 		<div id="header" th:include="navigation :: navigation"></div>
 		<main>
 		<div id="mainframe">
-			<div id="employeenavigaton">
-				<a href="/employee/changecatalog"><p class="active">Katalog bearbeiten</p></a>
-				<a href="/employee/inventory"><p>Lagerbestand</p></a>
-				<a href="/employee/valuations"><p>Bewertungen</p></a>
-			</div>
+			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
 			
 			<div id="workframe">
 				<div class="content">
@@ -42,7 +38,7 @@ $(document).ready(function() {
 					<br />
 				</div>
 				
-				<form id="deleteitem" th:action="@{'/employee/deletedArticle/'+${concreteproduct.identifier}}" method="POST">
+				<form id="deleteitem" th:action="@{'/employee/changecatalog/deletedArticle/'+${concreteproduct.identifier}}" method="POST">
 					<input type="submit" id="submitfield" value="Artikel löschen" />
 				</form>
 			</div>

@@ -23,14 +23,10 @@ $(document).ready(function() {
 		<br/>
 		<main>
 		<div id="mainframe">
-			<div id="employeenavigaton">
-				<a href="/employee/changecatalog"><p class="active">Katalog bearbeiten</p></a>
-				<a href="/employee/inventory"><p>Lagerbestand</p></a>
-				<a href="/employee/valuations"><p>Bewertungen</p></a>
-			</div>
+			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
 			
 			<div id="workframe">
-				<form id="changeitem" class="itemform" th:action="@{'/employee/editedArticle'}" method="POST" enctype="multipart/form-data">
+				<form id="changeitem" class="itemform" th:action="@{'/employee/changecatalog/editedArticle'}" method="POST" enctype="multipart/form-data">
 					<ol>
 						<li>
 							<input type="hidden" th:value="${concreteproduct.identifier}" name="prodId" />

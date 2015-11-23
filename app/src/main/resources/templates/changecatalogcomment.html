@@ -2,11 +2,10 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Artikelverwaltung</title>
+<title>Kommentarverwaltung</title>
 <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
 <link href="/resources/css/employee.css" rel="stylesheet" type="text/css">
-<link href="/resources/css/bootstrap.min.css" rel="stylesheet" type=text/css>
-<link href="/resources/css/bootstrap-theme.min.css" rel="stylesheet" type=text/css>
+
 <link href="/resources/js/bootstrap.min.js" rel="stylesheet" type=text/css>
 <script src="/resources/js/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -21,17 +20,12 @@
 <body>
 	<div id="wrapper">
 		<div id="header" th:include="navigation :: navigation"></div>
+		<br/>
 		<main>
-		<div id="workframe">
-			<ul>
-				<li style="float: left;">
-					<div class="btn-group-vertical" role="group">
-						<button type="button" class="btn btn-default" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/management'}">Katalog bearbeiten</button>
-						<button type="button" class="btn btn-default" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/management/addArticle'}">Artikel hinzuf&uuml;gen</button>
-						<button type="button" class="btn btn-primary" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/management/comments'}"> Kommentare</button>
-					</div>
-				</li>
-				<li><div id="mainframe" class="panel panel-default">
+		<div id="mainframe">
+			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
+			<div id="workframe" class="panel panel-default">
+			
 						<table class="table" style="font-size: 12pt;">
 							<thead>
 								<tr>
@@ -53,10 +47,10 @@
 										<td></td>
 										<td>
 											<div class="btn-group" role="group">
-												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'management/deleteComment}" class="btn btn-default" style="padding: 3px 6px;"> <!--href=... '+${concreteproduct.identifier}}" darüber deltete ausführen comment -->
+												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{/employee/deleteComment}" class="btn btn-default" style="padding: 3px 6px;"> <!--href=... '+${concreteproduct.identifier}}" darüber deltete ausführen comment -->
 													<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 												</button>	
-												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'management/acceptComment}" class="btn btn-default" style="padding: 3px 6px;">	
+												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{/employee/acceptComment}" class="btn btn-default" style="padding: 3px 6px;">	
 													<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 												</button>
 											</div>
@@ -67,8 +61,7 @@
 									
 							</tbody>
 						</table>
-					</div></li>
-			</ul>
+					</div>
 		</div>
 		</main>
 		<br>

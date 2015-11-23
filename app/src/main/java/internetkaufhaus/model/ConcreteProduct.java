@@ -47,8 +47,16 @@ public class ConcreteProduct extends Product {
 		reviewedComments.add(p);
 	}
 	
+	public void deletereviewedComments(Comment p) {
+		reviewedComments.remove(p);
+	}
+	
 	public void addnewComments(Comment p){
 		newComments.add(p);
+	}
+	
+	public void deletenewComments(Comment p) {
+		newComments.remove(p);
 	}
 
 	public String getImagefile() {

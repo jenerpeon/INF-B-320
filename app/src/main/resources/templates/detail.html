@@ -24,7 +24,11 @@
 						<td><a class="description" th:text="${concreteproduct.description}">Beschreibung</a></td>
 					</tr>
 				</table>
-				<br /> <a>Preis: </a><a class="price" th:text="${concreteproduct.price}">1 Euro</a><br /> <a>Vorrat: </a><a th:text="${quantity}">10 Stück</a><br />
+				<br />
+				<a>Preis: </a>
+				<a class="price" th:text="${concreteproduct.price}">1 Euro</a>
+				<br /> <a>Vorrat: </a>
+				<a th:text="${quantity}">10 Stück</a><br />
 
 				<form method="post" action="/cart" th:if="${orderable}">
 

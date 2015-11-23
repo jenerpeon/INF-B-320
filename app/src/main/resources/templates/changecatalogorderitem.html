@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Kommentarverwaltung</title>
+<link href="/resources/css/main.css" rel="stylesheet" type="text/css">
+<link href="/resources/css/employee.css" rel="stylesheet" type="text/css">
+
+<link href="/resources/js/bootstrap.min.js" rel="stylesheet" type=text/css>
+<script src="/resources/js/jquery.min.js" type="text/javascript"></script>
+
+</head>
+<div id="wrapper">
+		<div id="header" th:include="navigation :: navigation"></div>
+		<br/>
+		<main>
+		<div id="mainframe">
+			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
+			<div id="workframe">
+				<h1 th:text="${concreteproduct.name}">Produktname</h1>
+				<p th:text="'Lagerstand: '+${quantity}">Lagerstand: 10</p>
+				<p th:text="'Preis: '+${concreteproduct.price}">Preis</p>
+				<form id="orderitem" class="itemform" th:action="@{'/employee/changecatalog/orderedArticle/'+${concreteproduct.identifier}}" method="POST">
+					<label for="quantity">Menge: </label>
+					<input type="number" name="quantity" id="quantityfield" value="1" min="1" max="100" step="1"/>
+					<input type="submit" id="submitfield" value="Artikel bestellen"/>
+				</form>
+			</div>
+		</div>
+		</main>
+		<br/>
+		<div id="footer" th:include="footer :: footer"></div>
+</div>

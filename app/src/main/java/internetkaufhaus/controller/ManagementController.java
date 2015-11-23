@@ -74,7 +74,7 @@ public class ManagementController {
 		return "changecatalog";
 	}
 
-	@RequestMapping("/employee/addArticle")
+	@RequestMapping("/employee/changecatalog/addArticle")
 	public String addArticle(Optional<UserAccount> userAccount, ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("categories", prodSearch.getCagegories());
@@ -103,7 +103,7 @@ public class ManagementController {
 		return "changecatalogcomment";
 	}
 	
-	@RequestMapping("/employee/editArticle/{prodId}")
+	@RequestMapping("/employee/changecatalog/editArticle/{prodId}")
 	public String editArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("concreteproduct", prod);
@@ -111,10 +111,10 @@ public class ManagementController {
 		return "changecatalogchangeitem";
 	}
 
-	@RequestMapping(value = "/employee/editedArticle", method = RequestMethod.POST)
+	@RequestMapping(value = "/employee/changecatalog/editedArticle", method = RequestMethod.POST)
 	public String editedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm, @RequestParam("image") MultipartFile img, BindingResult result) {
 		if (result.hasErrors()) {
-			return "redirect:/employee/editArticle/";
+			return "redirect:/employee/changecatalog/editArticle/";
 		}
 
 		if (!img.isEmpty()) {
@@ -154,10 +154,10 @@ public class ManagementController {
 		return "redirect:/employee/changecatalog";
 	}
 
-	@RequestMapping(value="/employee/addedArticle", method=RequestMethod.POST)
+	@RequestMapping(value="/employee/changecatalog/addedArticle", method=RequestMethod.POST)
 	public String addedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm,  @RequestParam("image") MultipartFile img, BindingResult result, ModelMap model){
 		if (result.hasErrors()) {
-			return "redirect:/employee/addArticle/";
+			return "redirect:/employee/changecatalog/addArticle/";
 		}
 	
 		if (!img.isEmpty()) {
@@ -203,7 +203,7 @@ public class ManagementController {
 	}
 
 
-	@RequestMapping("/employee/deleteArticle/{prodId}")
+	@RequestMapping("/employee/changecatalog/deleteArticle/{prodId}")
 	public String deleteArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("concreteproduct", prod);
@@ -211,7 +211,7 @@ public class ManagementController {
 		return "changecatalogdeleteitem";
 	}
 	
-	@RequestMapping(value="/employee/deletedArticle/{prodId}", method=RequestMethod.POST)
+	@RequestMapping(value="/employee/changecatalog/deletedArticle/{prodId}", method=RequestMethod.POST)
 	public String deletedArticle(@PathVariable("prodId") ConcreteProduct prod){
 		 
 		System.out.println(prod);
@@ -222,6 +222,26 @@ public class ManagementController {
 		return "redirect:/employee/changecatalog";
 		
 		
+	}
+	
+	@RequestMapping("/employee/changecatalog/orderArticle/{prodId}")
+	public String orderArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
+		
+		Optional<InventoryItem> item = inventory.findByProductIdentifier(prod.getIdentifier());
+		Quantity quantity = item.map(InventoryItem::getQuantity).orElse(NONE);
+		model.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("concreteproduct", prod);
+		model.addAttribute("quantity", quantity);
+		model.addAttribute("price", prod.getPrice().getNumber());
+		return "changecatalogorderitem";
+	}
+	
+	@RequestMapping(value="/employee/changecatalog/orderedArticle/{prodId}", method=RequestMethod.POST)
+	public String orderedArticle(@PathVariable("prodId") ConcreteProduct prod, @RequestParam("quantity") int quantity) {
+		
+		inventory.findByProductIdentifier(prod.getIdentifier()).get().increaseQuantity(Quantity.of(quantity));
+		
+		return "redirect:/employee/changecatalog";
 	}
 
 
