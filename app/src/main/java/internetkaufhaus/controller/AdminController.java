@@ -1,10 +1,13 @@
 package internetkaufhaus.controller;
 
 import org.salespointframework.useraccount.Role;
+import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import internetkaufhaus.model.ConcreteUserAccount;
@@ -18,6 +21,7 @@ public class AdminController{
 	@Autowired
 	public AdminController(ConcreteUserAccountRepository manager){
 		this.manager=manager;	
+
 	}
 
 	@RequestMapping(value="/employee")
@@ -26,6 +30,14 @@ public class AdminController{
 		model.addAttribute("employees",manager.findByRole(role));
 		return "changeemployee";
 		
+	}
+	@RequestMapping(value="/management/deleteUser/{id}")
+	public String deleteUser(@PathVariable("id") ConcreteUserAccount acc )
+	{
+//		UserAccount u = acc.getUserAccount();
+//		manager.delete(acc);
+		
+		return "redirect:/changeemployee";
 	}
 	
 	

@@ -21,7 +21,8 @@ import org.salespointframework.useraccount.UserAccountManager;
 @Table(name = "ConcreteAccounts")
 public class ConcreteUserAccount {
 
-    @Id
+
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -70,5 +71,10 @@ public class ConcreteUserAccount {
 
     public Role getRole(){
     	return role;
+    }
+
+    public long getId()
+    {
+    	return id;
     }
 }
