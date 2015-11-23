@@ -3,36 +3,38 @@
 Dieser Testplan stellt eine vereinfachte Version der IEEE 829-1998 Vorlage dar.
 
 == Einführung
-Wozu dient das Dokument? Zielgruppe?
+Der Testplan dient zur Organisation der Test am Softwareprodukt "Woods Super Dooper Shop" und gibt detailliert wieder, welche Kriterien bzw. Funktionalitäten erfolgreich getestet werden müssen.
+Da mit dem Spring-Framework gearbeitet wird, bietet es sich an, die Tests in Unit-Tests und Integrations-Tests aufzuteilen. 
+Während durch Unit-Tests einzelne Methoden getestet werden, wird bei Integration-Tests das komplette Modul getestet, vorrausgesetzt, alle Unit-Tests wurden erfüllt. 
 
 == Aufbau der Testbezeichner
-Nach welchem Schema sind die Tests benannt?
+Die Tests sind nach folgendem Schema benannt:
 
-*Bsp.*
+U - Unit Test, I - Integrationstest, 1,2,3.. - Nummer, N - Überprüfung Normalfall, E - Überprüfung Fehlerfall, +
 
-*U - Unit Test, I - Integrationstest*
+z.B.: "U-2-E" bedeutet 2. Unit-Test, der den Fehlerfall überprüft
 
-*U-1, U-2, I-1*
 
 == Test Gegenstände
 
 == Zu testende Funktionalitäten
+Die Methodenaufrufe innerhalb der einzelnen Klassen werden getestet. Das schließt die Methoden der Controller mit ein. 
+Die Schnittstellen zu anderen Bibliotheken von Drittanbietern werden benfalls getestet, gleichermaßen die "Dependency Injection".
 
 == Nicht zu testende Funktionalitäten
 z.B. Bibliotheken von Drittanbietern (eigene Tests beschränken sich auf Schnittstelle, bzw. Zusammenspiel).
 
 == Herangehensweise
-*Bsp.:*
-
-*Klassen werden mit JUnit getestet.*
-
-*Integrationstest nach Bottom-Up Prinzip*
+Zuerst werden die Methoden/Schnittstellen/Verknüpfungen in den Klassen mit Hilfe von JUnit 4 getestet. Wenn diese Tests bestanden sind, wird das Modul , welches die Klassen enthält, getestet.
+Also werden modulweise immer erst Unit-Tests und anschließend Integrations-Tests durchgeführt. Es wird innerhalb der Module das Bottem-Up-Testmuster verfolgt.
 
 == Umgebungsvoraussetzungen
-* Wird spezielle Hardware benötigt?
-* Welche Daten müssen bereitgestellt werden? Wie werden die Daten bereitgestellt?
-* Wird zusätzliche Software für das Testen benötigt?
-* Wie kommuniziert die Software während des Testens? Internet? Netzwerk?
+Vorraussetzung ür JUnit-Tests sind ein Maven-ausführbares System, auf dem eine Java-Entwicklungsumgebung läuft.
+Es wird das Software-Entwicklungsprojekt benötigt, in welchem die Funktionalität getestet wird. 
+Für die konkreten Test-Klassen wird ein seperater Ordner angelegt. Dieser wird dann mit hilfe von Maven ausgeführt bzw. getestet. 
+Maven gibt durch Konsolenausgaben Infromationen bezüglich der Testverläufe zurück. 
+Für das testen wird die JUnit-Bibliothek benötigt, außerdem werden mehrere Spring-Bibliotheken importiert. Gerade die Verknüpfungen durch die "Dependency Injection" sind hier zu beachten.
+Für einige Tests, beispielsweise dem des E-Mail-Versendens wird eine anliegende Internetverbindung benötigt.
 
 == Testfälle und Verantwortlichkeit
 Jede testbezogene Aufgabe muss einem Ansprechpartner zugeordnet werden.
@@ -40,6 +42,7 @@ Jede testbezogene Aufgabe muss einem Ansprechpartner zugeordnet werden.
 // See http://asciidoctor.org/docs/user-manual/#tables
 [options="headers"]
 |===
-|ID |Anwendungsfall |Vorbedingungen |Eingabe |Ausgabe
-|…  |…              |…              |…       |…
+|ID |Anwendungsfall |Vorbedingungen |Eingabe |erwartete Ausgabe |Implementierer |Tester
+|U-1-N |ConcreteProduct: Test getName, Test Name-Parameter Konstruktor| - |Erstellen eines neuen ConcreteProduct-Objekts mit Name "Zigarre"|String "Zigarre" |Linda|Heiner
+|U-1-E |ConcreteProduct: Test getName, Test Name-Parameter Konstruktor| - |Erstellen eines neuen ConcreteProduct-Objekts mit Name ""|Fehler, da Name leer (IllegalArgumentException) |Linda|Heiner
 |===
