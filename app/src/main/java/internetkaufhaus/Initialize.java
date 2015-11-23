@@ -4,7 +4,6 @@ import static org.salespointframework.core.Currencies.EURO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.javamoney.moneta.Money;
@@ -18,37 +17,32 @@ import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Component;
 
 import internetkaufhaus.model.AccountAdministration;
-import internetkaufhaus.model.ConcreteMailSender;
-import internetkaufhaus.model.Comment;
 import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.ConcreteProductRepository;
 import internetkaufhaus.model.ConcreteUserAccount;
 import internetkaufhaus.model.ConcreteUserAccountRepository;
-import org.springframework.mail.MailSender;
 import internetkaufhaus.model.search;
 
 @Component
 public class Initialize implements DataInitializer {
 	private final ConcreteUserAccountRepository ConcreteUserAccountManager;
 	private final UserAccountManager userAccountManager;
-    private final Inventory<InventoryItem> inventory;
-    private final Catalog<ConcreteProduct> productCatalog;
-    private final OrderManager<Order> orderManager;
-    private final AccountAdministration accountAdministration;
-    private final MailSender sender;
+	private final Inventory<InventoryItem> inventory;
+	private final Catalog<ConcreteProduct> productCatalog;
+	private final OrderManager<Order> orderManager;
+	private final AccountAdministration accountAdministration;
+	private final MailSender sender;
 
-    private final ConcreteProductRepository concreteProductRepository;
-    private final search productSearch;   
-    
+	private final ConcreteProductRepository concreteProductRepository;
+	private final search productSearch;
+
 	@Autowired
-	public Initialize(Catalog<ConcreteProduct> productCatalog,UserAccountManager userAccountManager, 
-	        ConcreteUserAccountRepository ConcreteUserAccountManager, Inventory<InventoryItem> inventory, 
-	        OrderManager<Order> orderManager, search productSearch, AccountAdministration accountAdministration, MailSender sender, ConcreteProductRepository concreteProductRepository) {
-        this.inventory = inventory;
+	public Initialize(Catalog<ConcreteProduct> productCatalog, UserAccountManager userAccountManager, ConcreteUserAccountRepository ConcreteUserAccountManager, Inventory<InventoryItem> inventory, OrderManager<Order> orderManager, search productSearch, AccountAdministration accountAdministration, MailSender sender, ConcreteProductRepository concreteProductRepository) {
+		this.inventory = inventory;
 		this.ConcreteUserAccountManager = ConcreteUserAccountManager;
 		this.userAccountManager = userAccountManager;
 		this.productCatalog = productCatalog;
@@ -76,62 +70,39 @@ public class Initialize implements DataInitializer {
 
 	}
 
-	private void initializeCatalog(Catalog<ConcreteProduct> productCatalog, Inventory<InventoryItem> inventory,
-			search productSearch) {
+	private void initializeCatalog(Catalog<ConcreteProduct> productCatalog, Inventory<InventoryItem> inventory, search productSearch) {
 		// prevents the Initializer to run in case of data persistance
 		if (productCatalog.count() > 0) {
 			return;
 		}
 
-		ConcreteProduct p1 = new ConcreteProduct("Delikatesse 1", Money.of(0.99, EURO), "Delikatessen",
-				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz", "delikatessen.png");
-		ConcreteProduct p2 = new ConcreteProduct("Delikatesse 2", Money.of(0.99, EURO), "Delikatessen",
-				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz","delikatessen.png");
-		ConcreteProduct p3 = new ConcreteProduct("Delikatesse 3", Money.of(0.99, EURO), "Delikatessen",
-				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz","delikatessen.png");
+		ConcreteProduct p1 = new ConcreteProduct("Delikatesse 1", Money.of(0.99, EURO), "Delikatessen", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz", "delikatessen.png");
+		ConcreteProduct p2 = new ConcreteProduct("Delikatesse 2", Money.of(0.99, EURO), "Delikatessen", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz", "delikatessen.png");
+		ConcreteProduct p3 = new ConcreteProduct("Delikatesse 3", Money.of(0.99, EURO), "Delikatessen", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz", "delikatessen.png");
 
-		ConcreteProduct p4 = new ConcreteProduct("Wein 1", Money.of(0.99, EURO), "Wein und Gourmet",
-				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz","wein.jpg");
-		ConcreteProduct p5 = new ConcreteProduct("Wein 2", Money.of(0.99, EURO), "Wein und Gourmet",
-				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz", "wein.jpg");
-		ConcreteProduct p6 = new ConcreteProduct("Wein 3", Money.of(0.99, EURO), "Wein und Gourmet",
-				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz", "wein.jpg");
+		ConcreteProduct p4 = new ConcreteProduct("Wein 1", Money.of(0.99, EURO), "Wein und Gourmet", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz", "wein.jpg");
+		ConcreteProduct p5 = new ConcreteProduct("Wein 2", Money.of(0.99, EURO), "Wein und Gourmet", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz", "wein.jpg");
+		ConcreteProduct p6 = new ConcreteProduct("Wein 3", Money.of(0.99, EURO), "Wein und Gourmet", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz", "wein.jpg");
 
-		ConcreteProduct p7 = new ConcreteProduct("Zigarre 1", Money.of(0.99, EURO), "Tabakwaren",
-				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz","zagarre.jpg");
-		ConcreteProduct p8 = new ConcreteProduct("Zigarre 2", Money.of(0.99, EURO), "Tabakwaren",
-				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz","zagarre.jpg");
-		ConcreteProduct p9 = new ConcreteProduct("Zigarre 3", Money.of(0.99, EURO), "Tabakwaren",
-				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz","zagarre.jpg");
-		ConcreteProduct p10 = new ConcreteProduct("Zigarre 4", Money.of(0.99, EURO), "Tabakwaren",
-				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz","zagarre.jpg");
-		ConcreteProduct p11 = new ConcreteProduct("Zigarre 5", Money.of(0.99, EURO), "Tabakwaren",
-				"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
-				"https://eng.wikipedia.org/wiki/Fuzz","zagarre.jpg");
-		
-		/*Comment p= new Comment("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",4, new Date(),"");
-		
-		p11.addreviewedComments(p);
-		p3.addreviewedComments(p);
-		p6.addreviewedComments(p);
-		p1.addreviewedComments(p);
-		p9.addreviewedComments(p);
-		p5.addreviewedComments(p);*/
-		
-        List<ConcreteProduct> prods = 
-        		new ArrayList<ConcreteProduct>(Arrays.asList(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11)); 
-        productCatalog.save(prods);
-        concreteProductRepository.save(prods);
+		ConcreteProduct p7 = new ConcreteProduct("Zigarre 1", Money.of(0.99, EURO), "Tabakwaren", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz", "zagarre.jpg");
+		ConcreteProduct p8 = new ConcreteProduct("Zigarre 2", Money.of(0.99, EURO), "Tabakwaren", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz", "zagarre.jpg");
+		ConcreteProduct p9 = new ConcreteProduct("Zigarre 3", Money.of(0.99, EURO), "Tabakwaren", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz", "zagarre.jpg");
+		ConcreteProduct p10 = new ConcreteProduct("Zigarre 4", Money.of(0.99, EURO), "Tabakwaren", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz", "zagarre.jpg");
+		ConcreteProduct p11 = new ConcreteProduct("Zigarre 5", Money.of(0.99, EURO), "Tabakwaren", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren", "https://eng.wikipedia.org/wiki/Fuzz", "zagarre.jpg");
+
+		/*
+		 * Comment p= new Comment(
+		 * "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren"
+		 * ,4, new Date(),"");
+		 * 
+		 * p11.addreviewedComments(p); p3.addreviewedComments(p);
+		 * p6.addreviewedComments(p); p1.addreviewedComments(p);
+		 * p9.addreviewedComments(p); p5.addreviewedComments(p);
+		 */
+
+		List<ConcreteProduct> prods = new ArrayList<ConcreteProduct>(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
+		productCatalog.save(prods);
+		concreteProductRepository.save(prods);
 
 		productSearch.addProds(productCatalog.findAll());
 	}
@@ -144,8 +115,7 @@ public class Initialize implements DataInitializer {
 		}
 	}
 
-	private void initializeUsers(UserAccountManager userAccountManager,
-			ConcreteUserAccountRepository ConcreteUserAccountManager) {
+	private void initializeUsers(UserAccountManager userAccountManager, ConcreteUserAccountRepository ConcreteUserAccountManager) {
 		// prevents the Initializer to run in case of data persistance
 		if (userAccountManager.findByUsername("peon").isPresent()) {
 			return;
@@ -160,15 +130,14 @@ public class Initialize implements DataInitializer {
 		userAccounts.add(new ConcreteUserAccount("saul", "saul", employeeRole, userAccountManager));
 
 		userAccounts.add(new ConcreteUserAccount("admin", "admin", customerRole, userAccountManager));
-		userAccounts.add(new ConcreteUserAccount("behrens_lars@gmx.de", "lars", "lars", "Tatooine Outa RIM", "lars",
-				adminRole, userAccountManager));
+		userAccounts.add(new ConcreteUserAccount("behrens_lars@gmx.de", "lars", "Lars", "Behrens", "Musterstraße", "01069", "Definitiv nicht Dresden", "lars", adminRole, userAccountManager));
 
 		for (ConcreteUserAccount acc : userAccounts) {
 			userAccountManager.save(acc.getUserAccount());
 			ConcreteUserAccountManager.save(acc);
 		}
-		
-	   // System.out.println("###############"+ConcreteUserAccountManager.findByEmail("behrens_lars@gmx.de").toString());	
+
+		// System.out.println("###############"+ConcreteUserAccountManager.findByEmail("behrens_lars@gmx.de").toString());
 	}
 
 	public OrderManager<Order> getOrderManager() {

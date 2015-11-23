@@ -1,7 +1,5 @@
 package internetkaufhaus.controller;
 
-import java.util.List;
-
 import org.salespointframework.catalog.Catalog;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
