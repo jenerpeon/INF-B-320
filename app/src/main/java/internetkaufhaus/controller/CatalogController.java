@@ -118,7 +118,7 @@ public class CatalogController {
 		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("quantity", quantity);
 		model.addAttribute("orderable", quantity.isGreaterThan(NONE));
-		model.addAttribute("comments", prod.getRevComments());
+		model.addAttribute("comments", prod.getAcceptedComments());
 
 		return "detail";
 	}
@@ -127,7 +127,7 @@ public class CatalogController {
 	public String comment(@RequestParam("prodId") ConcreteProduct prod, @RequestParam("comment") String comment, @RequestParam("rating") int rating, Model model) {
 		Comment c = new Comment(comment, rating, new Date(), "");
 		if (!(comment == "")) {
-			prod.addnewComment(c);
+			prod.addComment(c);
 			c.setFormatedDate(c.getDate());
 			catalog.save(prod);
 			model.addAttribute("time", c.getFormatedDate());
