@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -81,20 +82,44 @@ public class ManagementController {
 		return "changecatalognewitem";
 	}
 
+	@RequestMapping("/employee/acceptComment/{comId}")
+	public String acceptComments(@PathVariable("comId") long comId){
+		for (ConcreteProduct prods: catalog.findAll()){
+			for(Comment c: prods.getURevComments()){
+				if(c.getId() == comId){
+					c.setRev();
+				}
+			}
+	    this.catalog.save(prods);
+		}
+	    return "redirect:/employee/comments";
+	}
+	
+	@RequestMapping("/employee/deleteComment/{comId}")
+	public String deleteComments(@PathVariable("comId") long comId){
+		boolean break_outer = false;
+		for (ConcreteProduct prods: catalog.findAll()){
+			if (break_outer)
+				break;
+			for(Comment c : prods.getComments()){
+            	if(c.getId() == comId){
+            		prods.removeComment(c);
+            		break_outer = true;
+            		// prevents modification while interation
+            		break;
+            	}
+			}
+    	    this.catalog.save(prods);
+		}
+
+	    return "redirect:/employee/comments";
+	}
+	
 	@RequestMapping("/employee/comments")
 	public String comments(ModelMap model){
-		//Map<ConcreteProduct,List<Comment>> com= new HashMap<ConcreteProduct,List<Comment>>(); //TODo:BidiMap
 		List<Comment> comlist=new ArrayList<Comment>();
 		for (ConcreteProduct prods: catalog.findAll()){
-			for(Comment c: prods.getNewComments()){
-				comlist.add(c);	
-			}
-			
-			/*for(Comment c : prods.getNewComments()){
-				List<Comment> comments =new ArrayList<Comment>();
-				comments.add(c);
-				com.put(prods, comments);
-			}*/	
+				comlist.addAll(prods.getURevComments());	
 		}
 		
 		model.addAttribute("Comments", comlist);
@@ -213,10 +238,9 @@ public class ManagementController {
 	
 	@RequestMapping(value="/employee/changecatalog/deletedArticle/{prodId}", method=RequestMethod.POST)
 	public String deletedArticle(@PathVariable("prodId") ConcreteProduct prod){
-		 
-		System.out.println(prod);
+		
 		catalog.delete(prod);
-	
+		prodSearch.delete(prod);
 		    
 		
 		return "redirect:/employee/changecatalog";

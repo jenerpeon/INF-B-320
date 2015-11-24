@@ -16,9 +16,11 @@ public class search implements Serializable {
    
 	private HashMap<String, ArrayList<ConcreteProduct> > searchType;
 	private Catalog<ConcreteProduct> catalog;
+	private HashMap<Comment, ConcreteProduct> comments2product; 
     
     public search(){
     	this.searchType = new HashMap<String, ArrayList<ConcreteProduct> >();
+    	this.comments2product = new HashMap<Comment, ConcreteProduct>();
     }
 	
     public HashMap<String, ArrayList<ConcreteProduct> > getsearchTypes() {
@@ -35,6 +37,10 @@ public class search implements Serializable {
     
     public void setCatalog(Catalog<ConcreteProduct> catalog){
         this.catalog = catalog;
+    }
+    
+    public void getComments(){
+    	
     }
     
     public List<List<ConcreteProduct>> list50 (Iterable<ConcreteProduct> prods){

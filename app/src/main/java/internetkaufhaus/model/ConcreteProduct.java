@@ -1,37 +1,51 @@
 package internetkaufhaus.model;
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Product;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
-import org.springframework.web.multipart.MultipartFile;
 
 @Entity
+@Table(name="CPRODUCT")
 public class ConcreteProduct extends Product {
-	private static final long serialVersionUID = 3602164805477720501L;
+	private static final long serialVersionUID = 1L;
+	
+	@Column(name="CATEGORY")
+	private String category;
 	
 	private String imagefile;
 	private String description;
 	private String webLink;
-	private String category;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Comment> reviewedComments = new LinkedList<Comment>();
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE},mappedBy="product", orphanRemoval=true)
+    private List<Comment> comments =  new LinkedList<Comment>();
+    
+    public List<Comment> getComments(){	return comments; }
+    
+    public void setComments(List<Comment> comments){ this.comments=comments; }
 
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Comment> newComments = new LinkedList<Comment>();
-	
+
 	@SuppressWarnings({ "unused", "deprecation" })
 	private ConcreteProduct() {
+		
 	}
 
 	public ConcreteProduct(String name, Money price, String category, String description, String webLink,String imagefile) {
@@ -41,22 +55,35 @@ public class ConcreteProduct extends Product {
 		this.webLink = webLink;
 		this.imagefile=imagefile;
 		this.category = category;
+
 	}
 
-	public void addreviewedComments(Comment p){
-		reviewedComments.add(p);
+	public List<Comment> getRevComments(){
+		List<Comment> l = new LinkedList<Comment>();
+ 		for(Comment c : this.comments){
+		    if(c.isRev()){
+		    	l.add(c);
+		    }
+		}
+ 		return l;
 	}
-	
-	public void deletereviewedComments(Comment p) {
-		reviewedComments.remove(p);
+	public List<Comment> getURevComments(){
+		List<Comment> l = new LinkedList<Comment>();
+ 		for(Comment c : this.comments){
+		    if(!c.isRev()){
+		    	l.add(c);
+		    }
+		}
+ 		return l;
 	}
-	
-	public void addnewComments(Comment p){
-		newComments.add(p);
+	public void addnewComment(Comment c){
+		c.setParent(this);
+		this.comments.add(c);
 	}
-	
-	public void deletenewComments(Comment p) {
-		newComments.remove(p);
+	public void removeComment(Comment c){
+		c.setParent(null);
+		int index = comments.indexOf(c);
+        comments.remove(index);
 	}
 
 	public String getImagefile() {
@@ -75,24 +102,10 @@ public class ConcreteProduct extends Product {
 		return webLink;
 	}
 
-	public List<Comment> getReviewedComments() {
-		return reviewedComments;
-	}
-
-	public void setReviewedComments(List<Comment> reviewedComments) {
-		this.reviewedComments = reviewedComments;
-	}
     public String getCategory(){
     	return this.category;
     }
 
-	public List<Comment> getNewComments() {
-		return newComments;
-	}
-
-	public void setNewComments(List<Comment> newComments) {
-		this.newComments = newComments;
-	}
 
 	public Quantity getQuantity(Inventory<InventoryItem> inventory) {
 		Optional<InventoryItem> item = inventory.findByProductIdentifier(this.getIdentifier());

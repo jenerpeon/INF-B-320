@@ -47,10 +47,10 @@
 										<td></td>
 										<td>
 											<div class="btn-group" role="group">
-												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{/employee/deleteComment}" class="btn btn-default" style="padding: 3px 6px;"> <!--href=... '+${concreteproduct.identifier}}" darüber deltete ausführen comment -->
+												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/deleteComment/'+${comment.id}}" class="btn btn-default" style="padding: 3px 6px;"> <!--href=... '+${concreteproduct.identifier}}" darüber deltete ausführen comment -->
 													<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 												</button>	
-												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{/employee/acceptComment}" class="btn btn-default" style="padding: 3px 6px;">	
+												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/acceptComment/'+${comment.id}}" class="btn btn-default" style="padding: 3px 6px;">	
 													<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 												</button>
 											</div>

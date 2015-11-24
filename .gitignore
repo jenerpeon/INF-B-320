@@ -7,10 +7,8 @@
 *.war
 *.swo
 #ignore vagrant meta files
-/boxes/vagrant/swt-group22/.vagrant
-/boxes/vagrang/data/packages/*
-/app/target/*
-<<<<<<< HEAD
-=======
-/app/bin/*
->>>>>>> 5dd5b47289155ffb907ec71133b855d334f17b97
+boxes/vagrant/swt-group22/.vagrant
+boxes/vagrang/data/packages/*
+app/target/*
+app/bin/*
+app/.settings/*

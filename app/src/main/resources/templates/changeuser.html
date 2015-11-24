@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Artikelverwaltung</title>
 <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
-<link href="/resources/css/employee.css" rel="stylesheet" type="text/css">
+<link href="/resources/css/admin.css" rel="stylesheet" type="text/css">
 
 <link href="/resources/js/bootstrap.min.js" rel="stylesheet" type=text/css>
 <script src="/resources/js/jquery.min.js" type="text/javascript"></script>
@@ -26,7 +26,7 @@
 		<br>
 		<main>
 		<div id="mainframe">
-			<div id="adminnavigaton" th:include="adminnavigaton :: adminnavigaton"></div>
+			<div id="adminnavigaton" th:include="adminnavigation :: adminnavigation"></div>
 			
 			<div id="workframe">
 				
@@ -39,19 +39,40 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr class="article" th:each="account : ${accounts}">
-							<td style="width:150px"><a target="newtab" th:text="${account.name}" class="name" title="Artikel in Katalog anzeigen" th:href="@{'/detail/'+${concreteproduct.identifier}}"></a></td>
-							<td style="width:100px"><a th:text="${account.role}"></a></td>
+						<tr class="article" th:each="account : ${customers}">
+							<td style="width:150px"><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="User anzeigen" th:href="@{'/admin/changeuser/detail/'+${account.id}}"></a></td>
+							<td style="width:100px"><a>Kunde</a></td>
 							<td style="width:150px">
 								<div class="btn-group" role="group">
-									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/deleteUser/'+${account.identifier}}" class="fire-button"></button>
+									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/editUser/'+${account.id}}" class="edit-button"></button>
+									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/deleteUser/'+${account.id}}" class="fire-button"></button>
+								</div>
+							</td>
+						</tr>
+						<tr class="article" th:each="account : ${employees}">
+							<td style="width:150px"><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="User anzeigen" th:href="@{'/admin/changeuser/detail/'+${account.id}}"></a></td>
+							<td style="width:100px"><a>Mitarbeiter</a></td>
+							<td style="width:150px">
+								<div class="btn-group" role="group">
+									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/editUser/'+${account.id}}" class="edit-button"></button>
+									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/deleteUser/'+${account.id}}" class="fire-button"></button>
+								</div>
+							</td>
+						</tr>
+						<tr class="article" th:each="account : ${admins}">
+							<td style="width:150px"><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="User anzeigen" th:href="@{'/admin/changeuser/detail/'+${account.id}}"></a></td>
+							<td style="width:100px"><a>Administrator</a></td>
+							<td style="width:150px">
+								<div class="btn-group" role="group">
+									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/editUser/'+${account.id}}" class="edit-button"></button>
+									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/deleteUser/'+${account.id}}" class="fire-button"></button>
 								</div>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 				
-				<button id="newuser" type="button" onclick="self.location.href = this.getAttribute('href');" href="/employee/changeuser/addUser">Neuen User hinzufügen</button>
+				<button id="newuser" type="button" onclick="self.location.href = this.getAttribute('href');" href="/admin/changeuser/addUser">Neuen User hinzufügen</button>
 			</div>
 
 		</div>
