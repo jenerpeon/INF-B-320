@@ -64,8 +64,8 @@
 							<td style="width:100px"><a>Administrator</a></td>
 							<td style="width:150px">
 								<div class="btn-group" role="group">
-									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/editUser/'+${account.id}}" class="edit-button"></button>
-									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/deleteUser/'+${account.id}}" class="fire-button"></button>
+									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/editUser/'+${account.id}}" class="edit-button" title="Edit Account"></button>
+									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/deleteUser/'+${account.id}}" class="fire-button" title="Delete Account"></button>
 								</div>
 							</td>
 						</tr>
