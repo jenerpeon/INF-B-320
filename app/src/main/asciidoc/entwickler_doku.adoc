@@ -65,11 +65,11 @@ image::Entwurfsklassendiagramm.png[Entwurfsklassendiagramm]
 === Architektur
 
 Im Backend gibt es folgende Module: 
-- Login/Registrierung von Nutzern
-- Katalog mit Warenübersicht und Detailansicht von Waren
-- Warenkorb mit Kauffunktion
-- Nutzerübersicht
-- Waren-/Lagerbestand
+- Login/Registrierung von Nutzern +
+- Katalog mit Warenübersicht und Detailansicht von Waren +
+- Warenkorb mit Kauffunktion +
+- Nutzerübersicht +
+- Waren-/Lagerbestand +
 
 === Verwendete Muster
 
@@ -93,4 +93,9 @@ Umgesetz wird die Oberfläche mit Hilfe von Bootstrap.
 == Glossar
 |===
 |MVC-Entwurfsmuster| MVC steht für "Model View Controller" und ist ein Muster zur Strukturierung von Software-Entwicklung in die Einheiten "Datenmodell (model)", "Präsentation (view)" und "Programmsteuerung (controller)". So wird ein flexibler Programmentwurf geschaffen, der spätere Änderung oder Erweiterung des Programms erleichtert.
+|Factory-Entwurfsmuster| Mit Hilfe des Factory-Entwurfsmusters können in der Software-Entwicklung Objekte ohne direkten Konstruktor-Aufruf, sondern durch Methodenaufruf erzeugt werden.
+|Observer-Enwurfsmuster| Das Observer-Entwurfsmuster garantiert die Weitergabe von Änderungen an einem Objekt, an von diesem Objekt abhängige Strukturen.
+|Iterator-Entwurfsmuster| Durch dieses Muster kann auf Elemente einer aggregierten Struktur sequenziell zugegriffen werden.
+|Decorator-Entwurfsmuster| Mit Hilfe des Dekorierers kann eine Klasse flexibel um zusätzliche Funktionalitäten erweitert werden, ohne dass Unterklassen gebildet werden müssen.
+|Singleton-Entwurfsmuster| Wenn es notwendig ist, dass von einer Klasse nur genau ein Objekt exisieren kann, wird das Singleton-Muster angewandt.
 |===
