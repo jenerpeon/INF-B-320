@@ -1,24 +1,27 @@
 package internetkaufhaus.controller;
 
+import javax.validation.Valid;
+
+import org.salespointframework.SalespointSecurityConfiguration;
+import org.salespointframework.useraccount.Role;
+import org.salespointframework.useraccount.UserAccountManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.salespointframework.SalespointSecurityConfiguration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.validation.*;
-import internetkaufhaus.forms.*;
-import internetkaufhaus.model.*;
-import org.salespointframework.useraccount.*;
-import org.salespointframework.useraccount.web.LoggedIn;
 
-import java.util.Optional;
-
-import javax.validation.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.mail.MailSender;
+import internetkaufhaus.forms.RegistrationForm;
+import internetkaufhaus.model.AccountAdministration;
+import internetkaufhaus.model.ConcreteUserAccount;
+import internetkaufhaus.model.ConcreteUserAccountRepository;
 
 @Controller
 public class AuthController extends SalespointSecurityConfiguration {
@@ -29,8 +32,7 @@ public class AuthController extends SalespointSecurityConfiguration {
 	private final AccountAdministration accountAdministration;
 
 	@Autowired
-	public AuthController(AccountAdministration accountAdministration, UserAccountManager userAccountManager,
-			ConcreteUserAccountRepository concreteUserAccountManager, MailSender sender) {
+	public AuthController(AccountAdministration accountAdministration, UserAccountManager userAccountManager, ConcreteUserAccountRepository concreteUserAccountManager, MailSender sender) {
 		this.userAccountManager = userAccountManager;
 		this.concreteUserAccountManager = concreteUserAccountManager;
 		this.accountAdministration = accountAdministration;
@@ -58,11 +60,11 @@ public class AuthController extends SalespointSecurityConfiguration {
 
 	@RequestMapping(value = "/NewPass/{key}")
 	public String changepassword(@PathVariable("key") String key) {
-		//boolean valid = this.accountAdministration.isValidKey(key);
-		//if (!valid)
-		//	System.out.println("Your Key is not Valid");
-		this.accountAdministration.verifyPass(key);//ByEmail("behrens_lars@gmx.de"
-        //System.out.println(this.concreteUserAccountManager.findAll().toString());
+		// boolean valid = this.accountAdministration.isValidKey(key);
+		// if (!valid)
+		// System.out.println("Your Key is not Valid");
+		this.accountAdministration.verifyPass(key);// ByEmail("behrens_lars@gmx.de"
+		// System.out.println(this.concreteUserAccountManager.findAll().toString());
 		return "redirect:/#login-modal";
 	}
 
@@ -72,14 +74,13 @@ public class AuthController extends SalespointSecurityConfiguration {
 	}
 
 	@RequestMapping("/registerNew")
-	public String registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm,
-			BindingResult result) {
-		if (result.hasErrors()){ 
+	public String registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm, BindingResult result, ModelMap modelmap) {
+		if (result.hasErrors()) {
+			modelmap.addAttribute("message", result.getAllErrors());
 			return "register";
 		}
 
-		ConcreteUserAccount user = new ConcreteUserAccount(registrationForm.getEmail(), registrationForm.getPassword(), "Vader", registrationForm.getAddress(), registrationForm.getPassword(),
-		Role.of("ROLE_CUSTOMER"), this.userAccountManager);
+		ConcreteUserAccount user = new ConcreteUserAccount(registrationForm.getEmail(), registrationForm.getName(), registrationForm.getFirstname(), registrationForm.getLastname(), registrationForm.getAddress(), registrationForm.getZipCode(), registrationForm.getCity(), registrationForm.getPassword(), Role.of("ROLE_CUSTOMER"), this.userAccountManager);
 		concreteUserAccountManager.save(user);
 		userAccountManager.save(user.getUserAccount());
 

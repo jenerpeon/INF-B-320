@@ -30,5 +30,10 @@ public class ConcreteProductTest {
 	//	model.addnewComments(p);
 	//	assertTrue("Kommentar gesetzt", model.getNewComments().contains(p));
 	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetNameError() throws Exception{
+		model = new ConcreteProduct("", Money.of(1.99, EURO), "Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
+	}
 
 }
