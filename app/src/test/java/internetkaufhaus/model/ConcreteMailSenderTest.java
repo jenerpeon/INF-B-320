@@ -26,7 +26,7 @@ public class ConcreteMailSenderTest {
 	
 	
 	@Test
-	public void exceptionTest () throws Exception{
+	public void wiredTest () throws Exception{
 		ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);
 		concreteMailSender.sendMail("heinzerluds@googlemail.com", "Hallo Heinz", "me@web.de", "tescht");
 	}
