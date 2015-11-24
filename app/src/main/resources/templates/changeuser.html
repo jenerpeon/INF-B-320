@@ -40,8 +40,8 @@
 					</thead>
 					<tbody>
 						<tr class="article" th:each="account : ${customers}">
-							<td style="width:150px"><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="Artikel in Katalog anzeigen" th:href="@{'/detail/'+${account.id}}"></a></td>
-							<td style="width:100px"><a th:text="${account.role}"></a></td>
+							<td style="width:150px"><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="Artikel in Katalog anzeigen" th:href="@{'/admin/changeuser/detail/'+${account.id}}"></a></td>
+							<td style="width:100px"><a>Kunde</a></td>
 							<td style="width:150px">
 								<div class="btn-group" role="group">
 									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/editUser/'+${account.id}}" class="edit-button"></button>
@@ -50,8 +50,8 @@
 							</td>
 						</tr>
 						<tr class="article" th:each="account : ${employees}">
-							<td style="width:150px"><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="Artikel in Katalog anzeigen" th:href="@{'/detail/'+${account.id}}"></a></td>
-							<td style="width:100px"><a th:text="${account.role}"></a></td>
+							<td style="width:150px"><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="Artikel in Katalog anzeigen" th:href="@{'/admin/changeuser/detail/'+${account.id}}"></a></td>
+							<td style="width:100px"><a>Mitarbeiter</a></td>
 							<td style="width:150px">
 								<div class="btn-group" role="group">
 									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/editUser/'+${account.id}}" class="edit-button"></button>
@@ -60,8 +60,8 @@
 							</td>
 						</tr>
 						<tr class="article" th:each="account : ${admins}">
-							<td style="width:150px"><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="Artikel in Katalog anzeigen" th:href="@{'/detail/'+${account.id}}"></a></td>
-							<td style="width:100px"><a th:text="${account.role}"></a></td>
+							<td style="width:150px"><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="Artikel in Katalog anzeigen" th:href="@{'/admin/changeuser/detail/'+${account.id}}"></a></td>
+							<td style="width:100px"><a>Administrator</a></td>
 							<td style="width:150px">
 								<div class="btn-group" role="group">
 									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/editUser/'+${account.id}}" class="edit-button"></button>

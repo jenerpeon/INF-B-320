@@ -96,41 +96,44 @@ public class AdminController{
 		return "changeusernewuser";
 	}
 	
+	@RequestMapping(value="/admin/changeuser/detail/{id}")
+	public String detailUser(@PathVariable("id") ConcreteUserAccount acc, ModelMap model) {
+		model.addAttribute("account",acc);
+		return "changeuserdetailuser";
+	}
+	
 	@RequestMapping(value ="/admin/changeuser/addedUser", method=RequestMethod.POST)
 	public String addedUser(@RequestParam(value="name") String username, @RequestParam(value="password") String password,
-			@RequestParam(value="role") String roleString)
+			@RequestParam(value="role") String role)
 	{
-		String role = "";
-		if (roleString.equals("Mitarbeiter")) {
-			role = "ROLE_EMPLOYEE";
-		} else if (roleString.equals("Administrator")) {
-			role = "ROLE_ADMIN";
-		}
-		
+		System.out.println(username);
+		System.out.println(password);
+		System.out.println(role);
 		ConcreteUserAccount acc = new ConcreteUserAccount(username, password, Role.of(role), umanager ); 
 		manager.save(acc);
 		return "redirect:/admin/changeuser/";
 	}
-	@RequestMapping(value ="/management/changeUserDisplay/{id}")
-	public String changeUserDisplay(ModelMap model, @PathVariable("id") ConcreteUserAccount acc)
-	{
-		model.addAttribute("user", acc);
-		return "/changeUserDisplay";
+	
+	@RequestMapping(value="/admin/changeuser/editUser/{id}")
+	public String editUser(@PathVariable("id") ConcreteUserAccount acc, ModelMap model) {
+		model.addAttribute("account",acc);
+		return "changeuseredituser";
 	}
-	@RequestMapping(value="/management/changeUser", method=RequestMethod.POST)
-	public String changeUser(@RequestParam(value="password") String password,
-			@RequestParam(value="role") String roleName, @RequestParam(value="id") ConcreteUserAccount acc)
+	
+	@RequestMapping(value="/admin/changeuser/editedUser/{id}", method=RequestMethod.POST)
+	public String editedUserUser(@PathVariable("id") ConcreteUserAccount acc, @RequestParam(value="password") String password,
+			@RequestParam(value="role") String role)
 	{
 		
 		UserAccount usacc = acc.getUserAccount();
 		usacc.remove(Role.of("ROLE_ADMIN"));
 		usacc.remove(Role.of("ROLE_EMPLOYEE"));
 		usacc.remove(Role.of("ROLE_CUSTOMER"));
-		acc.getUserAccount().add(Role.of(roleName));
+		usacc.add(Role.of(role));
 		umanager.save(usacc);
 		acc.setUserAccount(usacc);
-		acc.setRole(Role.of(roleName));
-		umanager.changePassword(acc.getUserAccount(), password);
+		acc.setRole(Role.of(role));
+		umanager.changePassword(usacc, password);
 		return "redirect:/employee";
 	}
 	@RequestMapping(value="/management/addUser")
@@ -138,8 +141,6 @@ public class AdminController{
 	{
 		return "addUser";
 	}
-	
-	
 	
 	/*@RequestMapping(value="/userManagement")
 	public String userManagement(ModelMap model){
