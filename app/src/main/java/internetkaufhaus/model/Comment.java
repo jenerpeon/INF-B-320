@@ -13,76 +13,119 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "COMMENTS")
 public class Comment implements Serializable {
 
 	private static final long serialVersionUID = 2L;
 
-	@Id 
-	@GeneratedValue 
-    @Column(name="ID")
-    private Long commentid;
-    
-	@Column(name="TEXT")
+	@Id
+	@GeneratedValue
+	@Column(name = "ID")
+	private Long commentid;
+
+	@Column(name = "TEXT")
 	private String text;
-	
-	@Column(name="RATE")
+
+	@Column(name = "RATE")
 	private int rating;
 
-	@Column(name="DATE")
+	@Column(name = "DATE")
 	private Date date;
-	
-	@Column(name="REVIEWED")
-	private boolean rev;
-	
-	@Column(name="REMOVED")
-	private boolean rm;
-	
+
+	@Column(name = "REVIEWED")
+	private boolean accepted;
+
+	@Column(name = "REMOVED")
+	private boolean removed;
+
 	private String formatedDate;
-	
-    @ManyToOne
-    @JoinColumn(name="CPRODUCT_ID", nullable = false)
-    private ConcreteProduct product;
-    
-    public ConcreteProduct getParent() {
-        return product;
-     }
-    public void setParent(ConcreteProduct product){
-    	this.product = product;
-    }
-    
+
+	@ManyToOne
+	@JoinColumn(name = "CPRODUCT_ID", nullable = false)
+	private ConcreteProduct product;
+
+	public ConcreteProduct getParent() {
+		return product;
+	}
+
+	public void setParent(ConcreteProduct product) {
+		this.product = product;
+	}
 
 	@SuppressWarnings("unused")
-	private Comment() {}
+	private Comment() {
+	}
 
 	public Comment(String text, int rating, Date dateTime, String t) {
-	
-
 		this.text = text;
 		this.rating = rating;
 		this.date = dateTime;
-		this.formatedDate=t;
-		this.rev = false;
-		this.rm = false;
-		
+		this.formatedDate = t;
+		this.accepted = false;
+		this.removed = false;
 	}
 
-	public boolean isRev(){
-		return this.rev;
+	public Long getCommentid() {
+		return commentid;
 	}
-	public void setRev(){
-		this.rev = true;
+
+	public void setCommentid(Long commentid) {
+		this.commentid = commentid;
 	}
-	
-	public void setFormatedDate(Date date){
-		SimpleDateFormat formatter= new SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.GERMANY);
-		String formatedDate= formatter.format(date);
-		this.formatedDate=formatedDate;
-		
+
+	public boolean isRemoved() {
+		return removed;
 	}
-	public String getFormatedDate(){
+
+	public void setRemoved(boolean removed) {
+		this.removed = removed;
+	}
+
+	public ConcreteProduct getProduct() {
+		return product;
+	}
+
+	public void setProduct(ConcreteProduct product) {
+		this.product = product;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public boolean isAccepted() {
+		return this.accepted;
+	}
+
+	public void accept() {
+		this.accepted = true;
+	}
+
+	public void setAccepted(boolean accepted) {
+		this.accepted = accepted;
+	}
+
+	public void setFormatedDate(String formatedDate) {
+		this.formatedDate = formatedDate;
+	}
+
+	public void setFormatedDate(Date date) {
+		SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.GERMANY);
+		String formatedDate = formatter.format(date);
+		this.formatedDate = formatedDate;
+
+	}
+
+	public String getFormatedDate() {
 		return formatedDate;
 	}
 
@@ -107,4 +150,3 @@ public class Comment implements Serializable {
 		return text;
 	}
 }
-

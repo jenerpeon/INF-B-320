@@ -32,7 +32,6 @@
 }
 #catalogview {
 	width: 720px;
-	height: 850px;
 	float: right;
 	padding-left: 20px;
 	overflow: auto;

@@ -4,17 +4,13 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.swing.JOptionPane;
 import javax.validation.Valid;
 
 import org.javamoney.moneta.Money;
-
 import org.salespointframework.catalog.Catalog;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
@@ -41,19 +37,16 @@ import internetkaufhaus.model.search;
 @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
 public class ManagementController {
 
-	
 	private static final Quantity NONE = Quantity.of(0);
 	private final Catalog<ConcreteProduct> catalog;
 	private final Inventory<InventoryItem> inventory;
 	private final search prodSearch;
-
 
 	@Autowired
 	public ManagementController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, search prodSearch) {
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.prodSearch = prodSearch;
-		
 
 	}
 
@@ -62,16 +55,16 @@ public class ManagementController {
 		model.addAttribute("prod50", catalog.findAll());
 		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("inventory", inventory);
-		
+
 		return "employee";
 	}
-	
+
 	@RequestMapping("/employee/changecatalog")
 	public String articleManagement(Optional<UserAccount> userAccount, ModelMap model) {
 		model.addAttribute("prod50", catalog.findAll());
 		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("inventory", inventory);
-		
+
 		return "changecatalog";
 	}
 
@@ -83,51 +76,51 @@ public class ManagementController {
 	}
 
 	@RequestMapping("/employee/acceptComment/{comId}")
-	public String acceptComments(@PathVariable("comId") long comId){
-		for (ConcreteProduct prods: catalog.findAll()){
-			for(Comment c: prods.getURevComments()){
-				if(c.getId() == comId){
-					c.setRev();
+	public String acceptComments(@PathVariable("comId") long comId) {
+		for (ConcreteProduct prods : catalog.findAll()) {
+			for (Comment c : prods.getUnacceptedComments()) {
+				if (c.getId() == comId) {
+					c.accept();
 				}
 			}
-	    this.catalog.save(prods);
+			this.catalog.save(prods);
 		}
-	    return "redirect:/employee/comments";
+		return "redirect:/employee/comments";
 	}
-	
+
 	@RequestMapping("/employee/deleteComment/{comId}")
-	public String deleteComments(@PathVariable("comId") long comId){
+	public String deleteComments(@PathVariable("comId") long comId) {
 		boolean break_outer = false;
-		for (ConcreteProduct prods: catalog.findAll()){
+		for (ConcreteProduct prods : catalog.findAll()) {
 			if (break_outer)
 				break;
-			for(Comment c : prods.getComments()){
-            	if(c.getId() == comId){
-            		prods.removeComment(c);
-            		break_outer = true;
-            		// prevents modification while interation
-            		break;
-            	}
+			for (Comment c : prods.getComments()) {
+				if (c.getId() == comId) {
+					prods.removeComment(c);
+					break_outer = true;
+					// prevents modification while interation
+					break;
+				}
 			}
-    	    this.catalog.save(prods);
+			this.catalog.save(prods);
 		}
 
-	    return "redirect:/employee/comments";
+		return "redirect:/employee/comments";
 	}
-	
+
 	@RequestMapping("/employee/comments")
-	public String comments(ModelMap model){
-		List<Comment> comlist=new ArrayList<Comment>();
-		for (ConcreteProduct prods: catalog.findAll()){
-				comlist.addAll(prods.getURevComments());	
+	public String comments(ModelMap model) {
+		List<Comment> comlist = new ArrayList<Comment>();
+		for (ConcreteProduct prods : catalog.findAll()) {
+			comlist.addAll(prods.getUnacceptedComments());
 		}
-		
+
 		model.addAttribute("Comments", comlist);
-		//model.addAttribute("concretProduct", com.getKey(com.values));
+		// model.addAttribute("concretProduct", com.getKey(com.values));
 
 		return "changecatalogcomment";
 	}
-	
+
 	@RequestMapping("/employee/changecatalog/editArticle/{prodId}")
 	public String editArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCagegories());
@@ -145,9 +138,7 @@ public class ManagementController {
 		if (!img.isEmpty()) {
 			try {
 				byte[] bytes = img.getBytes();
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("filename"))); // TODO:
-																													// generate
-																													// filename
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("filename"))); // TODO: generate filename
 				stream.write(bytes);
 				stream.close();
 				System.out.println("success (yay) !!!"); // TODO: validation
@@ -157,40 +148,37 @@ public class ManagementController {
 		} else {
 			System.out.println("another error (file empty) !!!");
 		}
-		
+
 		ConcreteProduct prodId = editForm.getProdId();
 		prodId.addCategory(editForm.getCategory());
 		prodId.setName(editForm.getName());
 		prodId.setPrice(Money.of(editForm.getPrice(), "EUR"));
 		prodId.setDescription(editForm.getDescription());
-		
-		if(!(img.getOriginalFilename().isEmpty())){
+
+		if (!(img.getOriginalFilename().isEmpty())) {
 			prodId.setImagefile(img.getOriginalFilename());
 		}
-		
-		
-		prodSearch.delete(prodId);	
+
+		prodSearch.delete(prodId);
 		catalog.save(prodId);
-		
+
 		List<ConcreteProduct> prods = new ArrayList<ConcreteProduct>();
 		prods.add(prodId); // TODO: das hier ist offensichtlich.
 		prodSearch.addProds(prods);
-		
+
 		return "redirect:/employee/changecatalog";
 	}
 
-	@RequestMapping(value="/employee/changecatalog/addedArticle", method=RequestMethod.POST)
-	public String addedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm,  @RequestParam("image") MultipartFile img, BindingResult result, ModelMap model){
+	@RequestMapping(value = "/employee/changecatalog/addedArticle", method = RequestMethod.POST)
+	public String addedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm, @RequestParam("image") MultipartFile img, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
 			return "redirect:/employee/changecatalog/addArticle/";
 		}
-	
+
 		if (!img.isEmpty()) {
 			try {
 				byte[] bytes = img.getBytes();
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("filename"))); // TODO:
-																													// generate
-																													// filename
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("filename"))); // TODO: generate filename
 				stream.write(bytes);
 				stream.close();
 				System.out.println("success (yay) !!!"); // TODO: validation
@@ -200,33 +188,32 @@ public class ManagementController {
 		} else {
 			System.out.println("another error (file empty) !!!");
 		}
-		
-		if(img.getOriginalFilename().isEmpty()){
-			
+
+		if (img.getOriginalFilename().isEmpty()) {
+
 			JOptionPane.showMessageDialog(null, "Bildpfad fehlt!");
-			
+
 		}
-		
-		if( editForm.getName().isEmpty()){
+
+		if (editForm.getName().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Geben Sie bitte einen Artikelnamen an!");
 		}
-		
-		if(editForm.getDescription().isEmpty()){
-			JOptionPane.showMessageDialog(null,"Die Artikelbeschreibung fehlt!");
+
+		if (editForm.getDescription().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Die Artikelbeschreibung fehlt!");
 		}
-		
-		ConcreteProduct prodId= new ConcreteProduct(editForm.getName(),Money.of(editForm.getPrice(), "EUR"), editForm.getCategory(),editForm.getDescription(),"", img.getOriginalFilename());
-		
+
+		ConcreteProduct prodId = new ConcreteProduct(editForm.getName(), Money.of(editForm.getPrice(), "EUR"), editForm.getCategory(), editForm.getDescription(), "", img.getOriginalFilename());
+
 		catalog.save(prodId);
-		
+
 		List<ConcreteProduct> prods = new ArrayList<ConcreteProduct>();
 		prods.add(prodId); // TODO: das hier ist offensichtlich.
 		prodSearch.addProds(prods);
 
 		return "redirect:/employee/changecatalog";
-	
-	}
 
+	}
 
 	@RequestMapping("/employee/changecatalog/deleteArticle/{prodId}")
 	public String deleteArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
@@ -235,22 +222,20 @@ public class ManagementController {
 		model.addAttribute("price", prod.getPrice().getNumber());
 		return "changecatalogdeleteitem";
 	}
-	
-	@RequestMapping(value="/employee/changecatalog/deletedArticle/{prodId}", method=RequestMethod.POST)
-	public String deletedArticle(@PathVariable("prodId") ConcreteProduct prod){
-		
+
+	@RequestMapping(value = "/employee/changecatalog/deletedArticle/{prodId}", method = RequestMethod.POST)
+	public String deletedArticle(@PathVariable("prodId") ConcreteProduct prod) {
+
 		catalog.delete(prod);
 		prodSearch.delete(prod);
-		    
-		
+
 		return "redirect:/employee/changecatalog";
-		
-		
+
 	}
-	
+
 	@RequestMapping("/employee/changecatalog/orderArticle/{prodId}")
 	public String orderArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
-		
+
 		Optional<InventoryItem> item = inventory.findByProductIdentifier(prod.getIdentifier());
 		Quantity quantity = item.map(InventoryItem::getQuantity).orElse(NONE);
 		model.addAttribute("categories", prodSearch.getCagegories());
@@ -259,15 +244,15 @@ public class ManagementController {
 		model.addAttribute("price", prod.getPrice().getNumber());
 		return "changecatalogorderitem";
 	}
-	
-	@RequestMapping(value="/employee/changecatalog/orderedArticle/{prodId}", method=RequestMethod.POST)
+
+	@RequestMapping(value = "/employee/changecatalog/orderedArticle/{prodId}", method = RequestMethod.POST)
 	public String orderedArticle(@PathVariable("prodId") ConcreteProduct prod, @RequestParam("quantity") int quantity) {
-		
+
 		inventory.findByProductIdentifier(prod.getIdentifier()).get().increaseQuantity(Quantity.of(quantity));
-		
+
 		return "redirect:/employee/changecatalog";
 	}
-	
+
 	@RequestMapping("/employee/startpage/{totalCaroussel}/{totalSelection}")
 	public String editStartPage(@PathVariable("totalCaroussel") int totalCaroussel, @PathVariable("totalSelection") int totalSelection, ModelMap model) {
 		model.addAttribute("prod50", catalog.findAll());
@@ -275,10 +260,10 @@ public class ManagementController {
 		model.addAttribute("totSel", totalSelection);
 		return "changestartpage";
 	}
-	
-	@RequestMapping(value="/employee/startpage/changedSetting", method=RequestMethod.POST)
-	public String changeStartPageSetting(@RequestParam("totalCaroussel") int totalCaroussel,@RequestParam("totalSelection") int totalSelection) {
-		return "redirect:/employee/startpage/"+totalCaroussel+'/'+totalSelection;
+
+	@RequestMapping(value = "/employee/startpage/changedSetting", method = RequestMethod.POST)
+	public String changeStartPageSetting(@RequestParam("totalCaroussel") int totalCaroussel, @RequestParam("totalSelection") int totalSelection) {
+		return "redirect:/employee/startpage/" + totalCaroussel + '/' + totalSelection;
 	}
 
 	public Inventory<InventoryItem> getInventory() {
@@ -288,7 +273,5 @@ public class ManagementController {
 	public static Quantity getNone() {
 		return NONE;
 	}
-	
-
 
 }
