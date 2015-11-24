@@ -16,11 +16,13 @@ import org.salespointframework.useraccount.UserAccountManager;
 
 
 @Entity
-@Table(name = "ConcreteAccounts")
-public class ConcreteUserAccount {
+@Table(name="CACCOUNT")
+public class ConcreteUserAccount implements Serializable{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+	private static final long serialVersionUID = 3L;
+
+	@Id
+    @GeneratedValue//(strategy = GenerationType.IDENTITY)
     private Long id;
 
 	@OneToOne(cascade=CascadeType.ALL)

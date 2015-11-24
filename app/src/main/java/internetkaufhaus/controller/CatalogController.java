@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -115,7 +116,7 @@ public class CatalogController {
 		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("quantity", quantity);
 		model.addAttribute("orderable", quantity.isGreaterThan(NONE));
-		model.addAttribute("comments", prod.getReviewedComments());
+		model.addAttribute("comments", prod.getRevComments());
 
 		return "detail";
 	}
@@ -125,7 +126,7 @@ public class CatalogController {
 			@RequestParam("rating") int rating, Model model) {
 		Comment c = new Comment(comment, rating, new Date(),"");
 		if (!(comment == "")) {
-			prod.getNewComments().add(c);
+		    prod.addnewComment(c);	
 			c.setFormatedDate(c.getDate());
 			catalog.save(prod);
 			model.addAttribute("time", c.getFormatedDate());
