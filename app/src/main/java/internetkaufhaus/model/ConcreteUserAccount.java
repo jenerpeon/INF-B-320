@@ -111,13 +111,4 @@ public class ConcreteUserAccount {
     	return (this.role.equals(role));
     	
     }
-    public void setUserAccount(UserAccount acc)
-    {
-    	this.userAccount=acc;
-    }
-
-    public Long getId()
-    {
-    	return id;
-    }
 }

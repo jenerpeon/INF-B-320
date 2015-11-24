@@ -147,7 +147,8 @@
 					<li sec:authorize="isAuthenticated()"><a th:href="@{'/logout'}">Ausloggen</a></li>
 					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a>Service</a></li>
 					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a>Punktestand</a></li>
-					<li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/employee}">Mitarbeiterverwaltung</a></li>
+					<li sec:authorize="hasRole('ROLE_EMPLOYEE')"><a th:href="@{/employee}">Mitarbeiterportal</a></li>
+					<li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/admin}">Adminportal</a></li>
 					<li sec:authorize="isAuthenticated()"><a th:href="@{'/login'}">Mein Konto</a></li>
 				</ul>
 			</div>

@@ -6,6 +6,7 @@ import org.salespointframework.useraccount.UserAccountManager;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Optional;
 
 import org.salespointframework.useraccount.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,28 +33,24 @@ public class AdminController{
 		this.umanager = umanager;
 
 	}
-
-	@RequestMapping(value="/employee")
-	public String employees(ModelMap model){
-		Role role = Role.of("ROLE_EMPLOYEE");
-		model.addAttribute("employees",manager.findByRole(role));
-		return "changeemployee";	
-	}
+	
 	@RequestMapping(value="/admin")
-	public String admins(ModelMap model){
-		Role role = Role.of("ROLE_ADMIN");
-		model.addAttribute("employees",manager.findByRole(role));
-		return "changeemployee";
-		
-	}
-	@RequestMapping(value="/customer")
-	public String customers(ModelMap model){
-		Role role= Role.of("ROLE_CUSTOMER");
-		model.addAttribute("employees", manager.findByRole(role));
-		return "changeemployee";
+	public String admin() {
+		return "admin";
 	}
 	
-	@RequestMapping(value="/management/deleteUser/{id}")
+	@RequestMapping(value="/admin/changeuser")
+	public String changeUser(ModelMap model){
+		Role roleCustomer= Role.of("ROLE_CUSTOMER");
+		Role roleAdmin = Role.of("ROLE_ADMIN");
+		Role roleEmployee = Role.of("ROLE_EMPLOYEE");
+		model.addAttribute("employees",manager.findByRole(roleEmployee));
+		model.addAttribute("customers",manager.findByRole(roleCustomer));
+		model.addAttribute("admins",manager.findByRole(roleAdmin));
+		return "changeuser";	
+	}
+	
+	@RequestMapping(value="/admin/changeuser/deleteUser/{id}")
 	public String deleteUser(@PathVariable("id") ConcreteUserAccount acc )
 	{
 		int remaining = 0;
@@ -91,17 +88,28 @@ public class AdminController{
 
 			
 
-		return "redirect:/employee";
+		return "redirect:/admin/changeuser";
 	}
 	
-
-	@RequestMapping(value ="/management/addUser1", method=RequestMethod.POST)
-	public String addUser(@RequestParam(value="name") String username, @RequestParam(value="password") String password,
-			@RequestParam(value="role") String role)
+	@RequestMapping("/admin/changeuser/addUser")
+	public String addArticle(Optional<UserAccount> userAccount) {
+		return "changeusernewuser";
+	}
+	
+	@RequestMapping(value ="/admin/changeuser/addedUser", method=RequestMethod.POST)
+	public String addedUser(@RequestParam(value="name") String username, @RequestParam(value="password") String password,
+			@RequestParam(value="role") String roleString)
 	{
+		String role = "";
+		if (roleString.equals("Mitarbeiter")) {
+			role = "ROLE_EMPLOYEE";
+		} else if (roleString.equals("Administrator")) {
+			role = "ROLE_ADMIN";
+		}
+		
 		ConcreteUserAccount acc = new ConcreteUserAccount(username, password, Role.of(role), umanager ); 
 		manager.save(acc);
-		return "redirect:/employee";
+		return "redirect:/admin/changeuser/";
 	}
 	@RequestMapping(value ="/management/changeUserDisplay/{id}")
 	public String changeUserDisplay(ModelMap model, @PathVariable("id") ConcreteUserAccount acc)
