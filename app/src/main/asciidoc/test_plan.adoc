@@ -45,4 +45,19 @@ Jede testbezogene Aufgabe muss einem Ansprechpartner zugeordnet werden.
 |ID |Anwendungsfall |Vorbedingungen |Eingabe |erwartete Ausgabe |Implementierer |Tester
 |U-1-N |ConcreteProduct: Test getName, Test Name-Parameter Konstruktor| - |Erstellen eines neuen ConcreteProduct-Objekts mit Name "Zigarre"|String "Zigarre" |Linda|Heiner
 |U-1-E |ConcreteProduct: Test getName, Test Name-Parameter Konstruktor| - |Erstellen eines neuen ConcreteProduct-Objekts mit Name ""|Fehler, da Name leer (IllegalArgumentException) |Linda|Heiner
+|U-..|..|..|..|..|..|..
+|U-..|search|||||
+|I-..|ShopController|||||
+|U-..|ConcreteMailSender|||||
+|I-..|CartController|||||
+|U-..|Comment|||||
+|I-..|ManagementController|||||
+|U-..|ConcreteProductRepository|||||
+|I-..|CatalogController|||||
+|U-..|AccountAdministration|||||
+|U-..|ConcreteUserAccount|||||
+|U-..|ConcreteUserAccountManager|||||
+|I-..|AuthController|||||
+|U-..|ConcreteUserAccountRepository|||||
+|I-..|AdminController|||||
 |===
