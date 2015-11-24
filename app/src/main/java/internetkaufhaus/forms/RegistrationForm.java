@@ -72,7 +72,7 @@ public class RegistrationForm {
 
 	@AssertTrue(message = "password-repeat field should be equal to password field")
 	private boolean isValid() {
-		return this.password.equals(this.passwordrepeat);
+		return this.password != null && this.passwordrepeat != null && this.password.equals(this.passwordrepeat);
 	}
 
 	public RegistrationForm() {

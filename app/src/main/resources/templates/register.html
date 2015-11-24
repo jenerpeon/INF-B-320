@@ -10,7 +10,9 @@
 	<div class="all">
 		<header>
 			<h1 th:text="Registrierung"></h1>
-			<p class="warning" th:text="${message}"></p>
+			<ul>
+				<li th:each="line : ${message}" th:text="${line.getDefaultMessage()}"></li>
+			</ul>
 		</header>
 		<div class="content">
 			<div class="salespoint">
