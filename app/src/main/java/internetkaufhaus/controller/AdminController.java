@@ -118,8 +118,8 @@ public class AdminController{
 		return "changeuseredituser";
 	}
 	
-	@RequestMapping(value="/admin/changeuser/editedUser/{id}", method=RequestMethod.POST)
-	public String editedUserUser(@PathVariable("id") ConcreteUserAccount acc, @RequestParam(value="password") String password,
+	@RequestMapping(value="/admin/changeuser/editedUser", method=RequestMethod.POST)
+	public String editedUserUser(@RequestParam(value="id") ConcreteUserAccount acc, @RequestParam(value="password") String password,
 			@RequestParam(value="role") String role)
 	{
 		
@@ -132,7 +132,7 @@ public class AdminController{
 		acc.setUserAccount(usacc);
 		acc.setRole(Role.of(role));
 		umanager.changePassword(usacc, password);
-		return "redirect:/employee";
+		return "redirect:/admin/changeuser/";
 	}
 	@RequestMapping(value="/management/addUser")
 	public String addU()
