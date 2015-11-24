@@ -79,7 +79,7 @@ public class AuthController extends SalespointSecurityConfiguration {
 			return "register";
 		}
 
-		ConcreteUserAccount user = new ConcreteUserAccount(registrationForm.getEmail(), registrationForm.getPassword(), registrationForm.getFirstname(), registrationForm.getLastname(), registrationForm.getAddress(), registrationForm.getZipCode(), registrationForm.getCity(), registrationForm.getPassword(), Role.of("ROLE_CUSTOMER"), this.userAccountManager);
+		ConcreteUserAccount user = new ConcreteUserAccount(registrationForm.getEmail(), registrationForm.getName(), registrationForm.getFirstname(), registrationForm.getLastname(), registrationForm.getAddress(), registrationForm.getZipCode(), registrationForm.getCity(), registrationForm.getPassword(), Role.of("ROLE_CUSTOMER"), this.userAccountManager);
 		concreteUserAccountManager.save(user);
 		userAccountManager.save(user.getUserAccount());
 

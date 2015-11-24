@@ -91,26 +91,24 @@ public class AdminController{
 		return "redirect:/admin/changeuser";
 	}
 	
-	@RequestMapping("/admin/changeuser/addUser")
-	public String addArticle(Optional<UserAccount> userAccount) {
-		return "changeusernewuser";
-	}
-	
 	@RequestMapping(value="/admin/changeuser/detail/{id}")
 	public String detailUser(@PathVariable("id") ConcreteUserAccount acc, ModelMap model) {
 		model.addAttribute("account",acc);
 		return "changeuserdetailuser";
 	}
 	
+	@RequestMapping("/admin/changeuser/addUser")
+	public String addArticle(Optional<UserAccount> userAccount) {
+		return "changeusernewuser";
+	}
+	
 	@RequestMapping(value ="/admin/changeuser/addedUser", method=RequestMethod.POST)
 	public String addedUser(@RequestParam(value="name") String username, @RequestParam(value="password") String password,
 			@RequestParam(value="role") String role)
 	{
-		System.out.println(username);
-		System.out.println(password);
-		System.out.println(role);
 		ConcreteUserAccount acc = new ConcreteUserAccount(username, password, Role.of(role), umanager ); 
 		manager.save(acc);
+		umanager.save(acc.getUserAccount());
 		return "redirect:/admin/changeuser/";
 	}
 	
