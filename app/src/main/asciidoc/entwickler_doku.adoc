@@ -13,7 +13,7 @@ Das Internet-Kaufhaus soll eine übersichtliche, anschauliche Website erhalten, 
 |===
 |Betriebssystem |Linux
 |Plattform |Webanwendung 
-|Architektur |Frontend direkt im Web, Backend läuft auf dem Server einer Hosting-Agentur, Umsetzung des Backends erfolgt mit den Java-Frameworks „Spring“ und dem darauf aufgebauten „SalesPoint“, das Frostend wird mit „Bootstrab“ umgesetzt
+|Architektur |Frontend direkt im Web, Backend läuft auf dem Server einer Hosting-Agentur, Umsetzung des Backends erfolgt mit den Java-Frameworks „Spring“ und dem darauf aufgebauten „SalesPoint“, das Frontend wird mit „Bootstrap“ umgesetzt
 |vergleichbare Projekte | http://www.karstadt.de, http://shop.kadewe.de
 |===
 
