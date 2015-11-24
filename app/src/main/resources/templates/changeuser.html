@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Artikelverwaltung</title>
+<link href="/resources/css/main.css" rel="stylesheet" type="text/css">
+<link href="/resources/css/employee.css" rel="stylesheet" type="text/css">
+
+<link href="/resources/js/bootstrap.min.js" rel="stylesheet" type=text/css>
+<script src="/resources/js/jquery.min.js" type="text/javascript"></script>
+<script src="/resources/script/emplyeenavigation.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('label.tree-toggler').click(function() {
+			$(this).parent().children('ul.tree').toggle(300);
+		});
+		document.getElementById("mainframe").style.height = "460px";
+		
+	});
+</script>
+</head>
+
+<body>
+	<div id="wrapper">
+		<div id="header" th:include="navigation :: navigation"></div>
+		<br>
+		<main>
+		<div id="mainframe">
+			<div id="adminnavigaton" th:include="adminnavigaton :: adminnavigaton"></div>
+			
+			<div id="workframe">
+				
+				<table>
+					<thead>
+						<tr>
+							<th style="width:150px"><a>Name</a></th>
+							<th style="width:100px"><a>Rolle</a></th>
+							<th style="width:150px"><a>Bearbeiten</a></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="article" th:each="account : ${accounts}">
+							<td style="width:150px"><a target="newtab" th:text="${account.name}" class="name" title="Artikel in Katalog anzeigen" th:href="@{'/detail/'+${concreteproduct.identifier}}"></a></td>
+							<td style="width:100px"><a th:text="${account.role}"></a></td>
+							<td style="width:150px">
+								<div class="btn-group" role="group">
+									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/deleteUser/'+${account.identifier}}" class="fire-button"></button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<button id="newuser" type="button" onclick="self.location.href = this.getAttribute('href');" href="/employee/changeuser/addUser">Neuen User hinzufügen</button>
+			</div>
+
+		</div>
+		</main>
+		<br>
+
+		<div id="footer" th:include="footer :: footer"></div>
+	</div>
+</body>
+</html>
+

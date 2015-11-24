@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<title>Main Page</title>
+<script src="/resources/script/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="/resources/script/bootstrap.min.js" type="text/javascript"></script>
+<link href="/resources/css/main.css" rel="stylesheet" type=text/css>
+<link href="/resources/css/detail.css" rel="stylesheet" type=text/css>
+<script src="http://use.edgefonts.net/clara:n4:default.js" type="text/javascript"></script>
+
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header" th:include="navigation :: navigation"></div>
+		<main>
+		<div id="main-wrapper">
+			<div class="content">
+				<h2 th:text="${concreteproduct.name}">Artikle</h2>
+				<table>
+					<tr>
+						<td><img class="picture" th:src="@{'/resources/Bilder/' + ${concreteproduct.imagefile}}" height="150" /></td>
+						<td><a class="description" th:text="${concreteproduct.description}">Beschreibung</a></td>
+					</tr>
+				</table>
+				<br />
+				<a>Preis: </a>
+				<a class="price" th:text="${concreteproduct.price}">1 Euro</a>
+				<br /> <a>Vorrat: </a>
+				<a th:text="${quantity}">10 Stück</a><br />
+
+				<form method="post" action="/cart" th:if="${orderable}">
+
+					<input type="hidden" name="prodId" value="0" th:value="${concreteproduct.identifier}" />
+					<label for="number">Anzahl</label> 
+					<select name="dropDown" size="1">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+					</select> <input type="submit" value="Zum Warenkorb hinzufügen" />
+				</form>
+			</div>
+
+			<table id="comments">
+				<tr>
+					<th id="comment">Kommentar</th>
+					<th id="rating">Bewertung</th>
+					<th id="time">Zeit</th>
+				</tr>
+				<tr th:each="comment : ${comments}">
+					<td><a th:text="${comment.text}">Kommentar</a></td>
+					<td><a th:text="${comment.rating}">5 Sterne</a></td>
+					<td><a th:text="${comment.formatedDate}">Zeitpunkt</a></td>
+				</tr>
+			</table>
+
+			<br /> <br />
+
+			<form method="post" action="/comment">
+				<fieldset>
+					<legend>Kommentar hinzufügen</legend>
+
+					<input type="hidden" name="prodId" value="0" th:value="${concreteproduct.identifier}" />
+					<textarea name="comment" cols="40" rows="5"></textarea>
+					<br /> <label for="rating">Bewertung</label> <input id="rating" type="text" name="rating" value="5" /> <input type="submit" value="Senden" />
+				</fieldset>
+			</form>
+		</div>
+
+		</main>
+		<div id="footer" th:include="footer :: footer"></div>
+	</div>
+
+</body>
+</html>

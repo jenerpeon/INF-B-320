@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Kommentarverwaltung</title>
+<link href="/resources/css/main.css" rel="stylesheet" type="text/css">
+<link href="/resources/css/employee.css" rel="stylesheet" type="text/css">
+
+<link href="/resources/js/bootstrap.min.js" rel="stylesheet" type=text/css>
+<script src="/resources/js/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('label.tree-toggler').click(function() {
+			$(this).parent().children('ul.tree').toggle(300);
+		});
+	});
+</script>
+</head>
+
+<body>
+	<div id="wrapper">
+		<div id="header" th:include="navigation :: navigation"></div>
+		<br/>
+		<main>
+		<div id="mainframe">
+			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
+			<div id="workframe" class="panel panel-default">
+			
+						<table class="table" style="font-size: 12pt;">
+							<thead>
+								<tr>
+									<th></th>
+									<th><a>Text</a></th>
+									<th><a>Bewertung</a></th>
+									<th><a>Datum</a></th>
+									<th><a></a></th>
+									<th><a>Löschen/Akzeptieren</a></th>
+								</tr>
+							</thead>
+							<tbody>
+								
+								<tr class="article" th:each="comment : ${Comments}"style="padding: 6px;">
+										<td> <input type="hidden" name="comment" th:value="${comment}"/></td>
+										<td><a th:text="${comment.text}">Kommentar</a></td>
+										<td><a th:text="${comment.rating}">5 Sterne</a></td>
+										<td><a th:text="${comment.formatedDate}">Zeitpunkt</a></td>
+										<td></td>
+										<td>
+											<div class="btn-group" role="group">
+												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{/employee/deleteComment}" class="btn btn-default" style="padding: 3px 6px;"> <!--href=... '+${concreteproduct.identifier}}" darüber deltete ausführen comment -->
+													<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+												</button>	
+												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{/employee/acceptComment}" class="btn btn-default" style="padding: 3px 6px;">	
+													<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+												</button>
+											</div>
+										</td>
+							
+								<tr>
+								
+									
+							</tbody>
+						</table>
+					</div>
+		</div>
+		</main>
+		<br>
+
+		<div id="footer" th:include="footer :: footer"></div>
+	</div>
+</body>
+</html>

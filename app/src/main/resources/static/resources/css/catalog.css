@@ -1,0 +1,73 @@
+@charset "utf-8";
+
+#topLine {
+	width: 950px;
+}
+#articlesPerPage {
+	width: 500px;
+	text-align: right;
+}
+#articlesPerPage fieldset {
+	border: none;
+}
+#articlesPerPage label {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	text-size: 14px;
+}
+#articlesPerPage input[type="number"] {
+	width: 30px;
+}
+
+#catalognavigaton {
+	width: 200px;
+	height: 850px;
+	border-right: 1px solid #000000;
+	float: left;
+}
+#catalognavigaton h1 {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 20px;
+	text-align: left;
+	font-weight: normal;
+}
+#catalogview {
+	width: 720px;
+	height: 850px;
+	float: right;
+	padding-left: 20px;
+	overflow: auto;
+}
+#ariclelist {
+	list-style-type: none;
+}
+#ariclelist .article h1 {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 18px;
+}
+#ariclelist .article .picture {
+	float: left;
+	margin-right: 20px;
+}
+#ariclelist .article .description {
+
+}
+#ariclelist .article {
+	padding-bottom: 25px;
+}
+
+#pageControl {
+	float: left;
+	padding-left: 260px;
+}
+
+#pageControl a{
+	font-size: 16px;	
+}
+
+#pageControl tr td{
+	height: 30px;
+}
+
+.articlePageActive {
+	font-weight: bold;
+}

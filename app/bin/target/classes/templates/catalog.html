@@ -3,6 +3,16 @@
  
  <head>
     <meta charset="utf-8"/>
+<<<<<<< HEAD
+=======
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="../static/resources/css/bootstrap.min.css" rel="stylesheet" />
+>>>>>>> 5dd5b47289155ffb907ec71133b855d334f17b97
 </head>
 
 <body>
@@ -17,27 +27,46 @@
 			
 			<div class="catalog" th:remove="all-but-first">
 
+<<<<<<< HEAD
 				<a th:each="concreteproduct : ${catagory}" th:href="@{'/detail/'+${concreteproduct.identifier}}" href="detail.html">
 					<div class="products">  
 						<h4 th:text="${concreteproduct.name}" class="name">Last Action Hero</h4>
 						<img th:src="@{'/resources/img/' + ${concreteproduct.name} + '.jpg'}" src="../resources/img/evil_newton.jpg" alt="" />
 						<p th:text="${concreteproduct.price}" class="price">9.99 €</p>
 						<!--<a th:text="Herstellerlink" class="link" href="${concreteproduct.webLink}">www.blablab.de</a> HerstellerLink einbinden-->
+=======
+				<a th:each="concreteproduct : ${catalog}">
+					<div class="products">  
+						<h4 th:text="${concreteproduct.name}">Last Action Hero</h4>
+						<p th:text="${concreteproduct.price}" class="price">9.99 €</p>
+>>>>>>> 5dd5b47289155ffb907ec71133b855d334f17b97
 					
 					</div>
 				</a>
 				
 				
+<<<<<<< HEAD
 					<div class="products">  
 						<h4>Artikel</h4>
 						<img class="thumbnail" src="../resources/img/evil_newton.jpg" alt="" />
+=======
+					<div class="disc">  
+						<h4>Last Action Hero</h4>
+						<img class="thumbnail" src="../resources/img/cover/lac.jpg" alt="" />
+>>>>>>> 5dd5b47289155ffb907ec71133b855d334f17b97
 						<p class="price">9.99 €</p>
 					</div>
 				
 				
+<<<<<<< HEAD
 					<div class="products">  
 						<h4>Artikel</h4>
 						<img class="thumbnail" src="../resources/img/evil_newton.jpg" alt="" />
+=======
+					<div class="disc">  
+						<h4>Last Action Hero</h4>
+						<img class="thumbnail" src="../resources/img/cover/lac.jpg" alt="" />
+>>>>>>> 5dd5b47289155ffb907ec71133b855d334f17b97
 						<p class="price">9.99 €</p>
 					</div>
 				

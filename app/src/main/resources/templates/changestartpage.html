@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Artikelverwaltung</title>
+<link href="/resources/css/main.css" rel="stylesheet" type="text/css">
+<link href="/resources/css/employee.css" rel="stylesheet" type="text/css">
+
+<link href="/resources/js/bootstrap.min.js" rel="stylesheet" type=text/css>
+<script src="/resources/js/jquery.min.js" type="text/javascript"></script>
+<script src="/resources/script/emplyeenavigation.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var query = window.location.href;
+        var vars = query.split("/");
+        var totalCaroussel = Math.ceil(vars[vars.length -2]/2);
+        var totalSelection = Math.ceil(vars[vars.length -1]/2);
+        var height = 336 + (totalCaroussel * 33) + (totalSelection * 33);
+		document.getElementById("mainframe").style.height = height + "px";
+		document.getElementById("employeenavigaton").style.height = (height) + "px";
+	});
+</script>
+</head>
+
+<body>
+<div id="wrapper">
+	<div id="header" th:include="navigation :: navigation"></div>
+	<br>
+	<main>
+		<div id="mainframe">
+			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
+			
+			<div id="workframe">
+				<form id="changeSettings" class="changeStartPageForm" th:action="@{'/employee/startpage/changedSetting'}" method="POST">
+					<fieldset>
+						<h2>Einstellungen</h2>
+						<ol>
+							<li>
+								<label for="totalCaroussel">Artikel im Karussel:</label>
+								<input type="number" name="totalCaroussel" id="totalCarousselfield" th:value="${totCar}" min="1" max="5"/>
+							</li>
+							<li>
+								<label for="totalSelection">Artikel in der Auswahl:</label>
+								<input type="number" name="totalSelection" id="totalSelectionfield" th:value="${totSel}" min="1" max="16"/>
+							</li>
+							<li>
+								<input type="submit" name="submitSettings" value="Einstellungen übernehmen"/>
+							</li>
+						</ol>
+					</fieldset>
+				</form>
+				<form id="changeStartPage" class="changeStartPageForm" th:action="@{'/employee/startpage/changedStartpage'}" method="POST">
+					<fieldset>
+						<h2>Karussel</h2>
+						<ol>
+							<li th:each="i : ${#numbers.sequence( 1, totCar)}">
+								<label th:text="'Artikel '+${i}+': '"></label>
+								<select size="1">
+									<option th:each="concreteproduct : ${prod50}">
+										<a th:text="${concreteproduct.name}">Name</a>
+									</option>
+								</select>
+							</li>
+						</ol>
+					</fieldset>
+					<fieldset>
+						<h2>Artikelauswahl</h2>
+						<ol>
+							<li th:each="i : ${#numbers.sequence( 1, totSel)}">
+								<label th:text="'Artikel '+${i}+': '"></label>
+								<select size="1">
+									<option th:each="concreteproduct : ${prod50}">
+										<a th:text="${concreteproduct.name}">Name</a>
+									</option>
+								</select>
+							</li>
+						</ol>
+					</fieldset>
+					<fieldset class="changeStartPageForm">
+						<input type="submit" value="Startseite übernehmen"/>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	<div id="footer" th:include="footer :: footer"></div>
+	</main>
+</div>
+</body>
+</html>
