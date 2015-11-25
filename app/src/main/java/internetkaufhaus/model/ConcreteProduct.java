@@ -105,7 +105,7 @@ public class ConcreteProduct extends Product {
     public String getCategory(){
     	return this.category;
     }
-
+    
 
 	public Quantity getQuantity(Inventory<InventoryItem> inventory) {
 		Optional<InventoryItem> item = inventory.findByProductIdentifier(this.getIdentifier());

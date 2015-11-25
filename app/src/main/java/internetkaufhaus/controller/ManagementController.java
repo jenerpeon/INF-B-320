@@ -35,7 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 import internetkaufhaus.forms.EditArticleForm;
 import internetkaufhaus.model.Comment;
 import internetkaufhaus.model.ConcreteProduct;
-import internetkaufhaus.model.search;
+import internetkaufhaus.model.Search;
 
 @Controller
 @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
@@ -45,11 +45,11 @@ public class ManagementController {
 	private static final Quantity NONE = Quantity.of(0);
 	private final Catalog<ConcreteProduct> catalog;
 	private final Inventory<InventoryItem> inventory;
-	private final search prodSearch;
+	private final Search prodSearch;
 
 
 	@Autowired
-	public ManagementController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, search prodSearch) {
+	public ManagementController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch) {
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.prodSearch = prodSearch;
