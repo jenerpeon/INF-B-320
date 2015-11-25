@@ -1,13 +1,25 @@
 @charset "utf-8";
 
+#mainframe {
+	width: 930px;
+	margin: 0 auto 0 auto;
+	padding-left: 60px;
+}
+
 #topLine {
-	width: 950px;
+	padding: 10px 0 20px 0;
+	display: flex;
+}
+#path {
+	flex: auto;
+	text-align: left;
 }
 #articlesPerPage {
-	width: 500px;
+	flex: auto;
 	text-align: right;
 }
 #articlesPerPage fieldset {
+	padding: 0;
 	border: none;
 }
 #articlesPerPage label {
@@ -18,11 +30,18 @@
 	width: 30px;
 }
 
+.clear {
+	clear: both;
+}
+
+#workframe {
+	display: flex;
+}
+
 #catalognavigaton {
-	width: 200px;
-	height: 850px;
+	width: 20%;
 	border-right: 1px solid #000000;
-	float: left;
+	flex: auto;
 }
 #catalognavigaton h1 {
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
@@ -31,29 +50,56 @@
 	font-weight: normal;
 }
 #catalogview {
-	width: 720px;
-	float: right;
-	padding-left: 20px;
-	overflow: auto;
+	width: 75%;
+	flex: auto;
 }
-#ariclelist {
+#articlelist {
 	list-style-type: none;
 }
-#ariclelist .article h1 {
+#articlelist .article h1 {
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
 	font-size: 18px;
 }
-#ariclelist .article .picture {
+#articlelist .flex-container{
+	display: flex;
+}
+#articlelist .article .picture {
 	float: left;
 	margin-right: 20px;
+	width: 150px;
+	height: auto;
 }
-#ariclelist .article .description {
+#articlelist .article .description {
 
 }
-#ariclelist .article {
+#articlelist .article {
 	padding-bottom: 25px;
 }
 
+#articlelist:last-child {
+	padding-bottom: 0px;
+}
+.rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    padding: 20px 0 0 0;
+}
+.rating span {
+    display: inline-block;
+    position: relative;
+    width:1.1em;
+    font-size:1.4em;
+}
+.rating .filled:before {
+    content: "\2605";
+    position: absolute;
+    color:gold;
+    text-shadow:0 0 1px #666;
+}
+#articlelist .article p{
+	text-align: right;
+	clear: both;
+}
 #pageControl {
 	float: left;
 	padding-left: 260px;
