@@ -26,18 +26,18 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.mail.MailSender;
 
 import internetkaufhaus.model.ConcreteMailSender;
-import internetkaufhaus.model.search;
+import internetkaufhaus.model.Search;
 @Controller
 @PreAuthorize("isAuthenticated()")
 @SessionAttributes("cart")
 class CartController {
 
 	private final OrderManager<Order> orderManager;
-	private final search prodSearch;
+	private final Search prodSearch;
 	private MailSender sender;
 
 	@Autowired
-	public CartController(OrderManager<Order> orderManager, search prodSearch, MailSender sender) {
+	public CartController(OrderManager<Order> orderManager, Search prodSearch, MailSender sender) {
 
 		Assert.notNull(orderManager, "OrderManager must not be null!");
 		this.orderManager = orderManager;
@@ -66,7 +66,6 @@ class CartController {
 
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String cartRedirect(Model model) {
-	    model.addAttribute("categories", prodSearch.getCagegories());
 		return "cart";
 	}
 	

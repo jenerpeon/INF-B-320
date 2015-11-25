@@ -25,7 +25,7 @@ import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.ConcreteProductRepository;
 import internetkaufhaus.model.ConcreteUserAccount;
 import internetkaufhaus.model.ConcreteUserAccountRepository;
-import internetkaufhaus.model.search;
+import internetkaufhaus.model.Search;
 
 @Component
 public class Initialize implements DataInitializer {
@@ -38,10 +38,10 @@ public class Initialize implements DataInitializer {
 	private final MailSender sender;
 
 	private final ConcreteProductRepository concreteProductRepository;
-	private final search productSearch;
+	private final Search productSearch;
 
 	@Autowired
-	public Initialize(Catalog<ConcreteProduct> productCatalog, UserAccountManager userAccountManager, ConcreteUserAccountRepository ConcreteUserAccountManager, Inventory<InventoryItem> inventory, OrderManager<Order> orderManager, search productSearch, AccountAdministration accountAdministration, MailSender sender, ConcreteProductRepository concreteProductRepository) {
+	public Initialize(Catalog<ConcreteProduct> productCatalog, UserAccountManager userAccountManager, ConcreteUserAccountRepository ConcreteUserAccountManager, Inventory<InventoryItem> inventory, OrderManager<Order> orderManager, Search productSearch, AccountAdministration accountAdministration, MailSender sender, ConcreteProductRepository concreteProductRepository) {
 		this.inventory = inventory;
 		this.ConcreteUserAccountManager = ConcreteUserAccountManager;
 		this.userAccountManager = userAccountManager;
@@ -70,7 +70,7 @@ public class Initialize implements DataInitializer {
 
 	}
 
-	private void initializeCatalog(Catalog<ConcreteProduct> productCatalog, Inventory<InventoryItem> inventory, search productSearch) {
+	private void initializeCatalog(Catalog<ConcreteProduct> productCatalog, Inventory<InventoryItem> inventory, Search productSearch) {
 		// prevents the Initializer to run in case of data persistance
 		if (productCatalog.count() > 0) {
 			return;

@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import internetkaufhaus.model.Comment;
 import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.ConcreteProductRepository;
-import internetkaufhaus.model.search;
+import internetkaufhaus.model.Search;
 
 @Controller
 public class CatalogController {
@@ -36,10 +36,10 @@ public class CatalogController {
 	private final Catalog<ConcreteProduct> catalog;
 	private final Inventory<InventoryItem> inventory;
 	private final ConcreteProductRepository concreteCatalog;
-	private final search prodSearch;
+	private final Search prodSearch;
 
 	@Autowired
-	public CatalogController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, search prodSearch, ConcreteProductRepository concreteCatalog) {
+	public CatalogController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, ConcreteProductRepository concreteCatalog) {
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.prodSearch = prodSearch;
@@ -51,7 +51,6 @@ public class CatalogController {
 	public String sufu(@RequestParam("search") String lookup, @PathVariable("pagenumber") int number, ModelMap model) {
 
 		int max_number = prodSearch.list50(prodSearch.lookup_bar(lookup)).size() + 1;
-		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
 		model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
 		model.addAttribute("search", lookup);
@@ -63,7 +62,7 @@ public class CatalogController {
 	public String postsufu(@PathVariable("search") String lookup, @PathVariable("pagenumber") int number, ModelMap model) {
 
 		int max_number = prodSearch.list50(prodSearch.lookup_bar(lookup)).size() + 1;
-		model.addAttribute("categories", prodSearch.getCagegories());
+		//model.addAttribute("prods", concreteCatalog));
 		model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
 		model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
 		model.addAttribute("search", lookup);
@@ -75,7 +74,6 @@ public class CatalogController {
 	public String category(@PathVariable("type") String category, ModelMap model) {
 
 		model.addAttribute("category", category);
-		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("ProdsOfCategory", prodSearch.getProdsByCategory(category));
 
 		return "catalog";
@@ -95,12 +93,8 @@ public class CatalogController {
 		model.addAttribute("maximum", prodSearch.getProdsByCategory(category).size());
 		model.addAttribute("quantities", new TreeSet<Integer>(quantities));
 		model.addAttribute("split", split);
-		model.addAttribute("categories", prodSearch.getCagegories());
-		model.addAttribute("prods", page = concreteCatalog.findByCategory(category, new PageRequest(number - 1, split)));
-		model.addAttribute("numbers", IntStream.range(1, page.getTotalPages() + 1).boxed().collect(Collectors.toList()));
-		System.out.println(concreteCatalog.findByCategory(category, new PageRequest(number - 1, split)));
-		System.out.println("##########################");
-
+		model.addAttribute("prods", page = concreteCatalog.findByCategory(category, new PageRequest(number-1,split)));
+		model.addAttribute("numbers", IntStream.range(1, page.getTotalPages()+1).boxed().collect(Collectors.toList()));
 		return "catalog";
 	}
 
@@ -114,7 +108,6 @@ public class CatalogController {
 
 		Optional<InventoryItem> item = inventory.findByProductIdentifier(prod.getIdentifier());
 		Quantity quantity = item.map(InventoryItem::getQuantity).orElse(NONE);
-		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("quantity", quantity);
 		model.addAttribute("orderable", quantity.isGreaterThan(NONE));
