@@ -48,9 +48,9 @@
 							<td style="width:100px"><a class="quantity" th:text="${concreteproduct.getQuantity(inventory)}"></a></td>
 							<td style="width:150px">
 								<div class="btn-group" role="group">
-									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/changecatalog/editArticle/'+${concreteproduct.identifier}}" class="edit-button"></button>
-									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/changecatalog/deleteArticle/'+${concreteproduct.identifier}}" class="trash-button"></button>
-									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/changecatalog/orderArticle/'+${concreteproduct.identifier}}" class="order-button"></button>
+									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/changecatalog/editArticle/'+${concreteproduct.identifier}}" class="edit-button" title="Edit Article"></button>
+									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/changecatalog/deleteArticle/'+${concreteproduct.identifier}}" class="trash-button" title="Delete Article"></button>
+									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/changecatalog/orderArticle/'+${concreteproduct.identifier}}" class="order-button" title="Order Article"></button>
 								</div>
 							</td>
 						</tr>

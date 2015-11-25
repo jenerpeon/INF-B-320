@@ -14,7 +14,7 @@ public class Search implements Serializable {
 
 	private static final long serialVersionUID = 1L;
    
-	private HashMap<String, ArrayList<ConcreteProduct> > searchType;
+	private HashMap<String, ArrayList<ConcreteProduct>> searchType;
 	private Catalog<ConcreteProduct> catalog;
 	private HashMap<Comment, ConcreteProduct> comments2product; 
     
@@ -31,7 +31,7 @@ public class Search implements Serializable {
     public Iterable<String> getCagegories(){
       return searchType.keySet();
     }
-    public Iterable<ConcreteProduct> getProdsByCategory(String cat){
+    public List<ConcreteProduct> getProdsByCategory(String cat){
     	return searchType.get(cat);
     }
     
