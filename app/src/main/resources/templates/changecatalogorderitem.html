@@ -25,6 +25,11 @@
 					<input type="number" name="quantity" id="quantityfield" value="1" min="1" max="100" step="1"/>
 					<input type="submit" id="submitfield" value="Artikel bestellen"/>
 				</form>
+				<form id="orderitem" class="itemform" th:action="@{'/employee/changecatalog/decreasedArticle/'+${concreteproduct.identifier}}" method="POST">
+					<label for="quantity">Menge: </label>
+					<input type="number" name="quantity" id="quantityfield" value="1" min="1" max="100" step="1"/>
+					<input type="submit" id="submitfield" value="Artikel vernichten"/>
+				</form>
 			</div>
 		</div>
 		</main>

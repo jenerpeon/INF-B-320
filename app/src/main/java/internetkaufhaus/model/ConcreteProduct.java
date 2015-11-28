@@ -138,5 +138,5 @@ public class ConcreteProduct extends Product {
 		Optional<InventoryItem> item = inventory.findByProductIdentifier(this.getIdentifier());
 		return item.map(InventoryItem::getQuantity).orElse(Quantity.of(0));
 	}
-
+	
 }

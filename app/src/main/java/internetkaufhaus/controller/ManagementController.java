@@ -12,6 +12,7 @@ import javax.validation.Valid;
 
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Catalog;
+import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
@@ -32,6 +33,7 @@ import internetkaufhaus.forms.EditArticleForm;
 import internetkaufhaus.model.Comment;
 import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.Search;
+import internetkaufhaus.model.StockManager;
 
 @Controller
 @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
@@ -41,12 +43,14 @@ public class ManagementController {
 	private final Catalog<ConcreteProduct> catalog;
 	private final Inventory<InventoryItem> inventory;
 	private final Search prodSearch;
+	private final StockManager stock;
 
 	@Autowired
-	public ManagementController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch) {
+	public ManagementController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, StockManager stock) {
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.prodSearch = prodSearch;
+		this.stock = stock;
 
 	}
 
@@ -246,10 +250,14 @@ public class ManagementController {
 	}
 
 	@RequestMapping(value = "/employee/changecatalog/orderedArticle/{prodId}", method = RequestMethod.POST)
-	public String orderedArticle(@PathVariable("prodId") ConcreteProduct prod, @RequestParam("quantity") int quantity) {
+	public String orderedArticle(@PathVariable("prodId") ProductIdentifier prod, @RequestParam("quantity") int quantity) {
+		stock.orderArticle(prod, Quantity.of(quantity));
+		return "redirect:/employee/changecatalog";
+	}
+	@RequestMapping(value = "/employee/changecatalog/decreasedArticle/{prodId}", method = RequestMethod.POST)
+	public String decreasedArticle(@PathVariable("prodId") ProductIdentifier prod, @RequestParam("quantity") int quantity) {
 
-		inventory.findByProductIdentifier(prod.getIdentifier()).get().increaseQuantity(Quantity.of(quantity));
-
+		stock.removeArticle(prod, Quantity.of(quantity));
 		return "redirect:/employee/changecatalog";
 	}
 

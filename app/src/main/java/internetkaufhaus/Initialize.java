@@ -21,6 +21,7 @@ import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Component;
 
 import internetkaufhaus.model.AccountAdministration;
+import internetkaufhaus.model.ConcreteInventoryItem;
 import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.ConcreteProductRepository;
 import internetkaufhaus.model.ConcreteUserAccount;
