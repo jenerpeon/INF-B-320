@@ -4,8 +4,10 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.lang.Object;
 
 import javax.swing.JOptionPane;
 import javax.validation.Valid;
@@ -33,10 +35,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.apache.commons.collections.IteratorUtils;
 
 import internetkaufhaus.forms.EditArticleForm;
 import internetkaufhaus.model.Comment;
 import internetkaufhaus.model.ConcreteProduct;
+import internetkaufhaus.model.ConcreteOrder;
 import internetkaufhaus.model.Search;
 
 @Controller
@@ -276,7 +280,15 @@ public class ManagementController {
 	
 	@RequestMapping(value = "/employee/orders")
 	public String orders(ModelMap model) {
-		model.addAttribute("ordersCompleted", orderManager.findBy(OrderStatus.OPEN));
+		Collection<Order> ordersPaid = IteratorUtils.toList(orderManager.findBy(OrderStatus.PAID).iterator());
+		Collection<Order> ordersOpen = IteratorUtils.toList(orderManager.findBy(OrderStatus.OPEN).iterator());
+		Collection<Order> ordersCancelled = IteratorUtils.toList(orderManager.findBy(OrderStatus.CANCELLED).iterator());
+		Collection<Order> ordersCompleted = IteratorUtils.toList(orderManager.findBy(OrderStatus.COMPLETED).iterator());
+
+		model.addAttribute("ordersPaid", ordersPaid);
+		model.addAttribute("ordersOpen", ordersOpen);
+		model.addAttribute("ordersCancelled", ordersCancelled);
+		model.addAttribute("ordersCompleted", ordersCompleted);
 		return "orders";
 	}
 

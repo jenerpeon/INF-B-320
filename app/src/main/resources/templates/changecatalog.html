@@ -14,7 +14,6 @@
 		$('label.tree-toggler').click(function() {
 			$(this).parent().children('ul.tree').toggle(300);
 		});
-		document.getElementById("mainframe").style.height = "460px";
 		
 	});
 </script>
@@ -31,22 +30,20 @@
 			<div id="workframe">
 				
 				<table>
-					<thead>
-						<tr>
-							<th style="width:150px"><a>Name</a></th>
-							<th style="width:35px"><a>Bild</a></th>
-							<th style="width:100px"><a>Preis</a></th>
-							<th style="width:100px"><a>Menge</a></th>
-							<th style="width:150px"><a>Bearbeiten</a></th>
-						</tr>
-					</thead>
 					<tbody>
+						<tr>
+							<td><a>Name</a></td>
+							<td><a>Bild</a></td>
+							<td><a>Preis</a></td>
+							<td><a>Menge</a></td>
+							<td><a>Bearbeiten</a></td>
+						</tr>
 						<tr class="article" th:each="concreteproduct : ${prod50}">
-							<td style="width:150px"><a target="newtab" th:text="${concreteproduct.name}" class="name" title="Artikel in Katalog anzeigen" th:href="@{'/detail/'+${concreteproduct.identifier}}"></a></td>
-							<td style="width:35px"><img class="picture" th:href="@{'/detail/'+${concreteproduct.identifier}}" th:src="@{'/resources/Bilder/' + ${concreteproduct.imagefile}}"/></td>
-							<td style="width:100px"><a class="price" th:text="${concreteproduct.price}"></a></td>
-							<td style="width:100px"><a class="quantity" th:text="${concreteproduct.getQuantity(inventory)}"></a></td>
-							<td style="width:150px">
+							<td ><a target="newtab" th:text="${concreteproduct.name}" class="name" title="Artikel in Katalog anzeigen" th:href="@{'/detail/'+${concreteproduct.identifier}}"></a></td>
+							<td ><img class="picture" th:href="@{'/detail/'+${concreteproduct.identifier}}" th:src="@{'/resources/Bilder/' + ${concreteproduct.imagefile}}"/></td>
+							<td ><a class="price" th:text="${concreteproduct.price}"></a></td>
+							<td ><a class="quantity" th:text="${concreteproduct.getQuantity(inventory)}"></a></td>
+							<td >
 								<div class="btn-group" role="group">
 									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/changecatalog/editArticle/'+${concreteproduct.identifier}}" class="edit-button" title="Edit Article"></button>
 									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/changecatalog/deleteArticle/'+${concreteproduct.identifier}}" class="trash-button" title="Delete Article"></button>

@@ -4,7 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.*;
 
+import org.apache.commons.collections.IteratorUtils;
 import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderStatus;
 import org.salespointframework.useraccount.UserAccount;
 
 @Entity
@@ -126,6 +128,11 @@ public class ConcreteOrder extends Order {
 	
 	public String getShippingTown() {
 		return shippingTown;
+	}
+	
+	public int getOrderLinesSize() {
+		Collection<Order> orderLines = IteratorUtils.toList(this.getOrderLines().iterator());
+		return orderLines.size();
 	}
 	
 	
