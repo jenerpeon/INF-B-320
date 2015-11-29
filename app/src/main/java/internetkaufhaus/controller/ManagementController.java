@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.commons.collections.IteratorUtils;
+import org.salespointframework.order.OrderIdentifier;
 
 import internetkaufhaus.forms.EditArticleForm;
 import internetkaufhaus.model.Comment;
@@ -284,12 +285,24 @@ public class ManagementController {
 		Collection<Order> ordersOpen = IteratorUtils.toList(orderManager.findBy(OrderStatus.OPEN).iterator());
 		Collection<Order> ordersCancelled = IteratorUtils.toList(orderManager.findBy(OrderStatus.CANCELLED).iterator());
 		Collection<Order> ordersCompleted = IteratorUtils.toList(orderManager.findBy(OrderStatus.COMPLETED).iterator());
-
+		
 		model.addAttribute("ordersPaid", ordersPaid);
 		model.addAttribute("ordersOpen", ordersOpen);
 		model.addAttribute("ordersCancelled", ordersCancelled);
 		model.addAttribute("ordersCompleted", ordersCompleted);
 		return "orders";
+	}
+	
+	@RequestMapping(value="/employee/orders/accept/{orderId}", method = RequestMethod.GET)
+	public String acceptOrder(@PathVariable("orderId") OrderIdentifier orderId) {
+		orderManager.completeOrder(orderManager.get(orderId).get());
+		return "redirect:/employee/orders";
+	}
+	
+	@RequestMapping(value="/employee/orders/cancel/{orderId}", method = RequestMethod.GET)
+	public String cancelOrder(@PathVariable("orderId") OrderIdentifier orderId) {
+		orderManager.cancelOrder(orderManager.get(orderId).get());
+		return "redirect:/employee/orders";
 	}
 
 	public Inventory<InventoryItem> getInventory() {
