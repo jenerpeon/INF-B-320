@@ -46,18 +46,22 @@ Jede testbezogene Aufgabe muss einem Ansprechpartner zugeordnet werden.
 |U-1-N |ConcreteProduct: Test getName, Test Name-Parameter Konstruktor| - |Erstellen eines neuen ConcreteProduct-Objekts mit Name "Zigarre"|String "Zigarre" |Linda|Heiner
 |U-1-E |ConcreteProduct: Test getName, Test Name-Parameter Konstruktor| - |Erstellen eines neuen ConcreteProduct-Objekts mit Name ""|Fehler, da Name leer (IllegalArgumentException) |Linda|Heiner
 |U-..|..|..|..|..|..|..
-|U-..|search|||||
-|I-..|ShopController|||||
-|U-..|ConcreteMailSender|||||
+|U-1..|Search: Test list50||||-|-
+|U-2..|Search: Test addProds||||-|-
+|U-3..|Search: Test delete||||-|-
+|I-..|ShopController|-|-|-|-|-
+|U-1-N..|ConcreteMailSender: Test sendMail|Internetanbindung, korrekt gesetzte application.properties|Mail mit Beispieldaten verschicken|Mail kommt bei gesetzter E-Mail-Adresse an|Heiner|Heiner
 |I-..|CartController|||||
-|U-..|Comment|||||
+|U-..|Comment|-|-|-|Linda|-
 |I-..|ManagementController|||||
-|U-..|ConcreteProductRepository|||||
+|U-1-N..|ConcreteProductRepository: Test findByCategory|im Katalog befinden sich kategorisierte Produkte|übergib Kategorie und Anzahl an in der Page zu speichernden Produkten|Anzahl an Produkten mit gleicher Kategorie wird in Page gespeichert||
 |I-..|CatalogController|||||
-|U-..|AccountAdministration|||||
-|U-..|ConcreteUserAccount|||||
-|U-..|ConcreteUserAccountManager|||||
+|U-1-N|AccountAdministration: Test requestKey|random-Funktion|E-Mail Adresse wird übergeben|Schlüssel mit Mail und zufällig generierter Zahl wird ausgegeben, Zufallszahl besitzt 32 Stellen|Lars|
+|U-2-N|AccountAdministration: Test PassValidation|valider key aus requestKey-Methode, Mail-Sender|Key wird übergeben|Mail mit Registrierungs-Link wird abgeschickt|Lars|isValidKey
+|U-3-N|AccountAdministration: Test isValidKey|key-Objekt|Key wird übergeben|Key wird auf Validität geprüft|Lars|
+|U-0|ConcreteUserAccount|-|-|-|-|-
+|U-1-N|ConcreteUserAccountManager|-|-|-|-|-
 |I-..|AuthController|||||
-|U-..|ConcreteUserAccountRepository|||||
+|U-..|ConcreteUserAccountRepository: Test findByRole|Nutzer-Account mit zugewiesener Rolle|Rolle wird übergeben|Alle Nutzer mit entsprechender Rolle werden zurückgegeben|-|-
 |I-..|AdminController|||||
 |===
