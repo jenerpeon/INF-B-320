@@ -214,6 +214,9 @@ public class ManagementController {
 		List<ConcreteProduct> prods = new ArrayList<ConcreteProduct>();
 		prods.add(prodId); // TODO: das hier ist offensichtlich.
 		prodSearch.addProds(prods);
+		
+		InventoryItem inventoryItem = new InventoryItem(prodId, Quantity.of(0));
+		inventory.save(inventoryItem);
 
 		return "redirect:/employee/changecatalog";
 
