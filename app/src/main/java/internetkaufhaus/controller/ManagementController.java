@@ -14,6 +14,7 @@ import javax.validation.Valid;
 
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Catalog;
+import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
@@ -44,6 +45,7 @@ import internetkaufhaus.model.Comment;
 import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.ConcreteOrder;
 import internetkaufhaus.model.Search;
+import internetkaufhaus.model.StockManager;
 
 @Controller
 @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
@@ -54,14 +56,15 @@ public class ManagementController {
 	private final Inventory<InventoryItem> inventory;
 	private final Search prodSearch;
 	private final OrderManager<Order> orderManager;
+	private final StockManager stock;
 
 	@Autowired
-	public ManagementController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, OrderManager<Order> orderManager) {
+	public ManagementController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, OrderManager<Order> orderManager, StockManager stock) {
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.prodSearch = prodSearch;
 		this.orderManager = orderManager;
-
+		this.stock = stock;
 	}
 
 	@RequestMapping("/employee")
@@ -220,6 +223,9 @@ public class ManagementController {
 		List<ConcreteProduct> prods = new ArrayList<ConcreteProduct>();
 		prods.add(prodId); // TODO: das hier ist offensichtlich.
 		prodSearch.addProds(prods);
+		
+		InventoryItem inventoryItem = new InventoryItem(prodId, Quantity.of(0));
+		inventory.save(inventoryItem);
 
 		return "redirect:/employee/changecatalog";
 
@@ -256,10 +262,14 @@ public class ManagementController {
 	}
 
 	@RequestMapping(value = "/employee/changecatalog/orderedArticle/{prodId}", method = RequestMethod.POST)
-	public String orderedArticle(@PathVariable("prodId") ConcreteProduct prod, @RequestParam("quantity") int quantity) {
+	public String orderedArticle(@PathVariable("prodId") ProductIdentifier prod, @RequestParam("quantity") int quantity) {
+		stock.orderArticle(prod, Quantity.of(quantity));
+		return "redirect:/employee/changecatalog";
+	}
+	@RequestMapping(value = "/employee/changecatalog/decreasedArticle/{prodId}", method = RequestMethod.POST)
+	public String decreasedArticle(@PathVariable("prodId") ProductIdentifier prod, @RequestParam("quantity") int quantity) {
 
-		inventory.findByProductIdentifier(prod.getIdentifier()).get().increaseQuantity(Quantity.of(quantity));
-
+		stock.removeArticle(prod, Quantity.of(quantity));
 		return "redirect:/employee/changecatalog";
 	}
 
