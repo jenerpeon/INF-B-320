@@ -1,0 +1,61 @@
+@charset "utf-8";
+
+#mainframe {
+	width: 930px;
+	margin: 0 auto 0 auto;
+	padding-left: 60px;
+}
+#orderData div{
+	display: flex;
+}
+
+.orderDataGroup {
+	felx: auto;
+}
+input[type="text"] {
+	width: 200px;
+}
+.radioSelect {
+	margin: 0 0 0 0;
+}
+.radioSelect label{
+	float: none;
+}
+.paymentData {
+	margin-left: 1.5em;
+	display: block;
+	flex: 0;
+}
+label {
+	float: left;
+	width: 34%;
+	margin-right:0.5em;
+    padding-top:0.2em;
+  	text-align:left;
+}
+fieldset {   
+	border: none; 
+} 
+fieldset ol {   
+	padding: 0.5em 1em 0 1em;   
+	list-style: none;  
+}  
+fieldset li {   
+	padding-bottom: 0.5em;  
+}
+
+fieldset.submit {   
+	border-style: none;
+	float: none;      
+	width: auto;      
+	padding-top: 0.5em;      
+	padding-left: 12em;       
+}
+
+fieldset.submit input {
+	font-size: 18px;
+}
+
+#paymethod {
+	
+}

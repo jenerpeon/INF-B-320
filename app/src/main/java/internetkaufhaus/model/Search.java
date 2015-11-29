@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Component
-public class search implements Serializable {
+public class Search implements Serializable {
 
 	private static final long serialVersionUID = 1L;
    
@@ -18,7 +18,7 @@ public class search implements Serializable {
 	private Catalog<ConcreteProduct> catalog;
 	private HashMap<Comment, ConcreteProduct> comments2product; 
     
-    public search(){
+    public Search(){
     	this.searchType = new HashMap<String, ArrayList<ConcreteProduct> >();
     	this.comments2product = new HashMap<Comment, ConcreteProduct>();
     }

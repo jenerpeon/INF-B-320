@@ -16,6 +16,8 @@ public interface ConcreteProductRepository extends PagingAndSortingRepository<Co
 	Page<ConcreteProduct> findByCategory(String category, Pageable pageable);
 	Iterable<ConcreteProduct> findAll(Sort sort);
 	Page<ConcreteProduct> findAll(Pageable pageable);
+//Iterable<ConcreteProduct> findBySubstring(String substring, Sort sort);
+//	Page<ConcreteProduct> findBySubstring(String substring, Pageable pageable);
 
 
 }

@@ -115,6 +115,7 @@ public class ConcreteProduct extends Product {
 		return webLink;
 	}
 
+
 	public void setWebLink(String webLink) {
 		if (webLink.length() == 0) {
 			throw new IllegalArgumentException();

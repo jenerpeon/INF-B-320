@@ -8,17 +8,17 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import internetkaufhaus.model.ConcreteProduct;
-import internetkaufhaus.model.search;
+import internetkaufhaus.model.Search;
 
 @Controller
 public class ShopController {
 
 	private final Catalog<ConcreteProduct> catalog;
 	private final UserAccountManager userAccountManager;
-	private final search prodSearch;
+	private final Search prodSearch;
 
 	@Autowired
-	public ShopController(UserAccountManager userAccountManager, Catalog<ConcreteProduct> catalog, search prodSearch) {
+	public ShopController(UserAccountManager userAccountManager, Catalog<ConcreteProduct> catalog, Search prodSearch) {
 
 		this.userAccountManager = userAccountManager;
 		this.catalog = catalog;
@@ -26,10 +26,10 @@ public class ShopController {
 	}
 
 	@RequestMapping(value = { "/", "/index" })
-	public String index(ModelMap modelmap) {
+	public String index(ModelMap model) {
 
-		modelmap.addAttribute("prodList", catalog.findAll());
-		modelmap.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("prodList", catalog.findAll());
+		model.addAttribute("categories", prodSearch.getCagegories());
 
 		return "index";
 	}
