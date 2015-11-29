@@ -24,6 +24,7 @@ import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -64,18 +65,14 @@ public class ManagementController {
 	}
 
 	@RequestMapping("/employee")
-	public String employeeStart(ModelMap model) {
-		model.addAttribute("prod50", catalog.findAll());
-		model.addAttribute("categories", prodSearch.getCagegories());
-		model.addAttribute("inventory", inventory);
-
+	public String employeeStart(@LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
+		model.addAttribute("account", userAccount.get());
 		return "employee";
 	}
 
 	@RequestMapping("/employee/changecatalog")
 	public String articleManagement(Optional<UserAccount> userAccount, ModelMap model) {
 		model.addAttribute("prod50", catalog.findAll());
-		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("inventory", inventory);
 
 		return "changecatalog";

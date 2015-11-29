@@ -3,6 +3,7 @@ package internetkaufhaus.controller;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
+import org.salespointframework.useraccount.web.LoggedIn;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -34,8 +35,9 @@ public class AdminController{
 
 	}
 	
-	@RequestMapping(value="/admin")
-	public String admin() {
+	@RequestMapping("/admin")
+	public String adminStart(@LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
+		model.addAttribute("account", userAccount.get());
 		return "admin";
 	}
 	

@@ -2,17 +2,16 @@
 
 #mainframe {
 	width: 950px;
-	height: 400px;
 	margin-left: auto;
 	margin-right: auto;
 	padding-left: 100px;
+	display: flex;
 }
 
 #adminnavigaton {
-	width: 200px;
-	height: 490px;
+	width: 20%;
 	border-right: 1px solid #000000;
-	float: left;
+	flex: auto;
 }
 
 #adminnavigaton p {
@@ -25,9 +24,9 @@
 }
 
 #workframe {
-	margin-left: 200px;
-	width: 750px;
-	height: 500px;
+	padding-left: 20px;
+	width: 75%;
+	felx: auto;
 }
 
 #workframe h2{
@@ -36,12 +35,9 @@
 }
 #workframe table {
 	table-layout: fixed;
-	width: 650px;
+	width: 700px;
 }
 #workframe tbody {
-	height: 400px;
-	overflow-x: hidden;
-	overflow-y: auto;
 }
 #workframe th {
 	text-align: center;
