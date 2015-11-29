@@ -304,6 +304,16 @@ public class ManagementController {
 		orderManager.cancelOrder(orderManager.get(orderId).get());
 		return "redirect:/employee/orders";
 	}
+	
+	@RequestMapping(value="/employee/orders/detail/{orderId}")
+	public String detailOrder(@PathVariable("orderId") OrderIdentifier orderId, ModelMap model) {
+		Order order = orderManager.get(orderId).get();
+		Collection<Order> orderLines = IteratorUtils.toList(order.getOrderLines().iterator());
+		
+		model.addAttribute("order", order);
+		model.addAttribute("orderLines", orderLines);
+		return "orderdetail";
+	}
 
 	public Inventory<InventoryItem> getInventory() {
 		return inventory;
