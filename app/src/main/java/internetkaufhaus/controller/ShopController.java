@@ -26,10 +26,10 @@ public class ShopController {
 	}
 
 	@RequestMapping(value = { "/", "/index" })
-	public String index(ModelMap modelmap) {
+	public String index(ModelMap model) {
 
-		modelmap.addAttribute("prodList", catalog.findAll());
-		modelmap.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("prodList", catalog.findAll());
+		model.addAttribute("categories", prodSearch.getCagegories());
 
 		return "index";
 	}

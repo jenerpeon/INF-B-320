@@ -78,12 +78,9 @@
 			</div>
 			<table id="pageControl">
 				<tr>
-					<td valign="middle" th:each="number:${numbers}"><a
-						class="articlePages" th:if="${category == null}"
-						th:text="${number}" th:href="@{'/sufu/'+${search}+'/'+${number}}"></a>
-						<a class="articlePages" th:if="${category != null}"
-						th:text="${number}"
-						th:href="@{'/catalog/'+${category}+'/'+${split}+'/'+${number}}"></a>
+					<td valign="middle" th:each="number:${numbers}">
+						<a class="articlePages" th:if="${category == null}"	th:text="${number}" th:href="@{'/sufu/'+${search}+'/'+${number}}"></a>
+						<a class="articlePages" th:if="${category != null}"	th:text="${number}" th:href="@{'/catalog/'+${category}+'/'+${split}+'/'+${number}}"></a>
 					</td>
 				<tr>
 				</tr>

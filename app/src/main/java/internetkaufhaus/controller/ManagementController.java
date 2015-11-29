@@ -15,6 +15,12 @@ import org.salespointframework.catalog.Catalog;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
+import org.salespointframework.order.Cart;
+import org.salespointframework.order.CartItem;
+import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderManager;
+import org.salespointframework.order.OrderStatus;
+import org.salespointframework.payment.Cash;
 import org.salespointframework.useraccount.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,12 +47,14 @@ public class ManagementController {
 	private final Catalog<ConcreteProduct> catalog;
 	private final Inventory<InventoryItem> inventory;
 	private final Search prodSearch;
+	private final OrderManager<Order> orderManager;
 
 	@Autowired
-	public ManagementController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch) {
+	public ManagementController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, OrderManager<Order> orderManager) {
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.prodSearch = prodSearch;
+		this.orderManager = orderManager;
 
 	}
 
@@ -264,6 +272,12 @@ public class ManagementController {
 	@RequestMapping(value = "/employee/startpage/changedSetting", method = RequestMethod.POST)
 	public String changeStartPageSetting(@RequestParam("totalCaroussel") int totalCaroussel, @RequestParam("totalSelection") int totalSelection) {
 		return "redirect:/employee/startpage/" + totalCaroussel + '/' + totalSelection;
+	}
+	
+	@RequestMapping(value = "/employee/orders")
+	public String orders(ModelMap model) {
+		model.addAttribute("ordersCompleted", orderManager.findBy(OrderStatus.OPEN));
+		return "orders";
 	}
 
 	public Inventory<InventoryItem> getInventory() {

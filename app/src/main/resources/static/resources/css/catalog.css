@@ -76,7 +76,7 @@
 	padding-bottom: 25px;
 }
 
-#articlelist:last-child {
+#articlelist .article:last-child {
 	padding-bottom: 0px;
 }
 .rating {
@@ -89,11 +89,12 @@
     position: relative;
     width:1.1em;
     font-size:1.4em;
+    color: gold;
 }
 .rating .filled:before {
     content: "\2605";
     position: absolute;
-    color:gold;
+    color: gold;
     text-shadow:0 0 1px #666;
 }
 #articlelist .article p{
@@ -101,7 +102,7 @@
 	clear: both;
 }
 #pageControl {
-	float: left;
+	padding-top: 20px;
 	padding-left: 260px;
 }
 
