@@ -20,9 +20,10 @@
 				<h1 th:text="${concreteproduct.name}">Produktname</h1>
 				<p th:text="'Lagerstand: '+${quantity}">Lagerstand: 10</p>
 				<p th:text="'Preis: '+${concreteproduct.price}">Preis</p>
-				<form id="orderitem" class="itemform" th:action="@{'/employee/changecatalog/orderedArticle/'+${concreteproduct.identifier}}" method="POST">
+				<form id="orderitem" class="itemform" th:action="@{'/employee/changecatalog/orderedArticle/'}" method="POST">
 					<label for="quantity">Menge: </label>
 					<input type="number" name="quantity" id="quantityfield" value="1" min="1" max="100" step="1"/>
+					<input type ="hidden" name="prodId" th:value="${concreteproduct.identifier}" />
 					<input type="submit" id="submitfield" value="Artikel bestellen"/>
 				</form>
 				<form id="orderitem" class="itemform" th:action="@{'/employee/changecatalog/decreasedArticle/'+${concreteproduct.identifier}}" method="POST">
