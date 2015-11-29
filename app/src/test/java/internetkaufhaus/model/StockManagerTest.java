@@ -44,11 +44,6 @@ public class StockManagerTest {
 	public void init(){
 		model = new ConcreteProduct("Zigarre", Money.of(1.99, EURO), "Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");	
 		
-		productCatalog.save(model);
-
-		List<ConcreteProduct> prods = new ArrayList<ConcreteProduct>();
-		prods.add(model); // TODO: das hier ist offensichtlich.
-		productSearch.addProds(prods);
 		InventoryItem inventoryItem = new InventoryItem(model, Quantity.of(10));
 		inventory.save(inventoryItem);
 	}
@@ -61,7 +56,7 @@ public class StockManagerTest {
 		prodId=model.getIdentifier();		
 		inventory.findByProductIdentifier(prodId ).ifPresent(x->{x.increaseQuantity(quantity);inventory.save(x);});
 		
-		assertTrue("increase stock", inventory.findByProduct(model).get().getQuantity() == Quantity.of(12) );
+		assertTrue("increase stock", inventory.findByProduct(model).get().getQuantity().isGreaterThanOrEqualTo(Quantity.of(12)) );
 		
 	}
 }
