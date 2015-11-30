@@ -232,3 +232,26 @@
 	float: left;
 	width: 50%;
 }
+
+#orderData {
+	display: flex;
+}
+
+#orderData label {
+	float: left;
+	width: 34%;
+	margin-right:0.5em;
+    padding-top:0.2em;
+  	text-align:left;
+}
+#orderData fieldset {   
+	border: none; 
+} 
+#orderData fieldset ol {   
+	padding: 0.5em 1em 0 1em;   
+	list-style: none;  
+}  
+#orderData fieldset li {   
+	padding-bottom: 0.5em;  
+}
+

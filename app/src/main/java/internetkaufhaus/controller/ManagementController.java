@@ -41,6 +41,7 @@ import org.apache.commons.collections.IteratorUtils;
 import org.salespointframework.order.OrderIdentifier;
 
 import internetkaufhaus.forms.EditArticleForm;
+import internetkaufhaus.forms.ChangeStartPageForm;
 import internetkaufhaus.model.Comment;
 import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.ConcreteOrder;
@@ -55,16 +56,20 @@ public class ManagementController {
 	private final Catalog<ConcreteProduct> catalog;
 	private final Inventory<InventoryItem> inventory;
 	private final Search prodSearch;
-	private final OrderManager<Order> orderManager;
+	private final OrderManager<ConcreteOrder> orderManager;
 	private final StockManager stock;
+	//private final List<ConcreteProduct> carousselList;
+	//private final List<ConcreteProduct> selectionList;
 
 	@Autowired
-	public ManagementController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, OrderManager<Order> orderManager, StockManager stock) {
+	public ManagementController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, OrderManager<ConcreteOrder> orderManager, StockManager stock) {
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.prodSearch = prodSearch;
 		this.orderManager = orderManager;
 		this.stock = stock;
+		//this.carousselList = carousselList;
+		//this.selectionList = selectionList;
 	}
 
 	@RequestMapping("/employee")
@@ -240,11 +245,14 @@ public class ManagementController {
 	}
 
 	@RequestMapping(value = "/employee/changecatalog/deletedArticle/{prodId}", method = RequestMethod.POST)
-	public String deletedArticle(@PathVariable("prodId") ConcreteProduct prod) {
-
-		catalog.delete(prod);
-		prodSearch.delete(prod);
-
+	public String deletedArticle(@PathVariable("prodId") ProductIdentifier prod) {
+		//catalog.delete(catalog.findOne(prod).get());
+		
+		System.out.println("Test1");
+		prodSearch.delete(catalog.findOne(prod).get());
+		System.out.println("Test2");
+		inventory.delete(inventory.findByProductIdentifier(prod).get());
+		System.out.println("Test3");
 		return "redirect:/employee/changecatalog";
 
 	}
@@ -285,13 +293,30 @@ public class ManagementController {
 	public String changeStartPageSetting(@RequestParam("totalCaroussel") int totalCaroussel, @RequestParam("totalSelection") int totalSelection) {
 		return "redirect:/employee/startpage/" + totalCaroussel + '/' + totalSelection;
 	}
+	/*
+	@RequestMapping(value = "/employee/startpage/changedstartpage", method = RequestMethod.POST)
+	public String changeStartpage(@ModelAttribute ChangeStartPageForm changeStartPageForm) {
+		List<ProductIdentifier> carousselProdsId = changeStartPageForm.getCarousselArticle();
+		List<ProductIdentifier> selectionProdsId = changeStartPageForm.getSelectionArticle();
+		int index = 0;
+		for (ProductIdentifier prodId : carousselProdsId) {
+			carousselList.set(index, catalog.findOne(prodId).get());
+			index ++;
+		}
+		index = 0;
+		for (ProductIdentifier prodId : selectionProdsId) {
+			selectionList.set(index, catalog.findOne(prodId).get());
+			index ++;
+		}
+		return "redirect:/";
+	}*/
 	
 	@RequestMapping(value = "/employee/orders")
 	public String orders(ModelMap model) {
-		Collection<Order> ordersPaid = IteratorUtils.toList(orderManager.findBy(OrderStatus.PAID).iterator());
-		Collection<Order> ordersOpen = IteratorUtils.toList(orderManager.findBy(OrderStatus.OPEN).iterator());
-		Collection<Order> ordersCancelled = IteratorUtils.toList(orderManager.findBy(OrderStatus.CANCELLED).iterator());
-		Collection<Order> ordersCompleted = IteratorUtils.toList(orderManager.findBy(OrderStatus.COMPLETED).iterator());
+		Collection<ConcreteOrder> ordersPaid = IteratorUtils.toList(orderManager.findBy(OrderStatus.PAID).iterator());
+		Collection<ConcreteOrder> ordersOpen = IteratorUtils.toList(orderManager.findBy(OrderStatus.OPEN).iterator());
+		Collection<ConcreteOrder> ordersCancelled = IteratorUtils.toList(orderManager.findBy(OrderStatus.CANCELLED).iterator());
+		Collection<ConcreteOrder> ordersCompleted = IteratorUtils.toList(orderManager.findBy(OrderStatus.COMPLETED).iterator());
 		
 		model.addAttribute("ordersPaid", ordersPaid);
 		model.addAttribute("ordersOpen", ordersOpen);
@@ -314,9 +339,8 @@ public class ManagementController {
 	
 	@RequestMapping(value="/employee/orders/detail/{orderId}")
 	public String detailOrder(@PathVariable("orderId") OrderIdentifier orderId, ModelMap model) {
-		Order order = orderManager.get(orderId).get();
-		Collection<Order> orderLines = IteratorUtils.toList(order.getOrderLines().iterator());
-		
+		ConcreteOrder order = orderManager.get(orderId).get();
+		Collection<ConcreteOrder> orderLines = IteratorUtils.toList(order.getOrderLines().iterator());
 		model.addAttribute("order", order);
 		model.addAttribute("orderLines", orderLines);
 		return "orderdetail";

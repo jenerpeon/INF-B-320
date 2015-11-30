@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import internetkaufhaus.forms.RegistrationForm;
 import internetkaufhaus.model.AccountAdministration;
@@ -30,6 +32,7 @@ public class AuthController extends SalespointSecurityConfiguration {
 	private final UserAccountManager userAccountManager;
 	private final ConcreteUserAccountRepository concreteUserAccountManager;
 	private final AccountAdministration accountAdministration;
+	ModelAndView modelAndView = new ModelAndView();
 
 	@Autowired
 	public AuthController(AccountAdministration accountAdministration, UserAccountManager userAccountManager, ConcreteUserAccountRepository concreteUserAccountManager, MailSender sender) {
@@ -70,20 +73,22 @@ public class AuthController extends SalespointSecurityConfiguration {
 
 	@RequestMapping(value = { "/register" })
 	public String register() {
-		return "register";
+		return "redirect:/#registration-modal";
 	}
 
 	@RequestMapping("/registerNew")
-	public String registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm, BindingResult result, ModelMap modelmap) {
+	public ModelAndView registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm, BindingResult result, RedirectAttributes redir) {
 		if (result.hasErrors()) {
-			modelmap.addAttribute("message", result.getAllErrors());
-			return "register";
+			modelAndView.setViewName("redirect:/#registration-modal");
+			redir.addFlashAttribute("message", result.getAllErrors());
+			return modelAndView;
 		}
 
 		ConcreteUserAccount user = new ConcreteUserAccount(registrationForm.getEmail(), registrationForm.getName(), registrationForm.getFirstname(), registrationForm.getLastname(), registrationForm.getAddress(), registrationForm.getZipCode(), registrationForm.getCity(), registrationForm.getPassword(), Role.of("ROLE_CUSTOMER"), this.userAccountManager);
 		concreteUserAccountManager.save(user);
 		userAccountManager.save(user.getUserAccount());
-
-		return "redirect:/";
+		
+		modelAndView.setViewName("redirect:/");
+		return modelAndView;
 	}
 }

@@ -18,6 +18,7 @@
 		<main>
 
 		<div id="main-wrapper">
+			<form>
 			<table th:unless="${cart.empty}">
 				<thead>
 					<tr>
@@ -54,6 +55,7 @@
 					</tr>
 				</tbody>
 			</table>
+			</form>
 			<br />
 			<div th:text="'Summe: ' + ${cart.price}">Summe</div>
 			<div th:if="${cart.empty}">Leer</div>

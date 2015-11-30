@@ -44,8 +44,8 @@
 						<ol>
 							<li th:each="i : ${#numbers.sequence( 1, totCar)}">
 								<label th:text="'Artikel '+${i}+': '"></label>
-								<select size="1">
-									<option th:each="concreteproduct : ${prod50}">
+								<select th:name="@{'carousselArticle'+${i}}" size="1">
+									<option th:value="${concreteproduct.getId()}" th:each="concreteproduct : ${prod50}">
 										<a th:text="${concreteproduct.name}">Name</a>
 									</option>
 								</select>
@@ -57,8 +57,8 @@
 						<ol>
 							<li th:each="i : ${#numbers.sequence( 1, totSel)}">
 								<label th:text="'Artikel '+${i}+': '"></label>
-								<select size="1">
-									<option th:each="concreteproduct : ${prod50}">
+								<select th:name="@{'selectionArticle'+${i}}" size="1">
+									<option th:value="${concreteproduct.getId()}" th:each="concreteproduct : ${prod50}">
 										<a th:text="${concreteproduct.name}">Name</a>
 									</option>
 								</select>
