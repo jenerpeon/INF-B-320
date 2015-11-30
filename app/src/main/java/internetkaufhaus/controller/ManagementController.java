@@ -41,6 +41,7 @@ import org.apache.commons.collections.IteratorUtils;
 import org.salespointframework.order.OrderIdentifier;
 
 import internetkaufhaus.forms.EditArticleForm;
+import internetkaufhaus.forms.StockForm;
 import internetkaufhaus.model.Comment;
 import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.ConcreteOrder;
@@ -261,15 +262,21 @@ public class ManagementController {
 		return "changecatalogorderitem";
 	}
 
-	@RequestMapping(value = "/employee/changecatalog/orderedArticle/{prodId}", method = RequestMethod.POST)
-	public String orderedArticle(@PathVariable("prodId") ProductIdentifier prod, @RequestParam("quantity") int quantity) {
-		stock.orderArticle(prod, Quantity.of(quantity));
+	@RequestMapping(value = "/employee/changecatalog/orderedArticle", method = RequestMethod.POST)
+	public String orderedArticle(@ModelAttribute("StockForm") @Valid 	StockForm stockForm, BindingResult result, ModelMap model) {
+		if (result.hasErrors()) {
+			return "redirect:/employee/changecatalog";
+		}
+		stock.orderArticle(stockForm.getProdId(), Quantity.of(stockForm.getQuantity()));
 		return "redirect:/employee/changecatalog";
 	}
 	@RequestMapping(value = "/employee/changecatalog/decreasedArticle/{prodId}", method = RequestMethod.POST)
-	public String decreasedArticle(@PathVariable("prodId") ProductIdentifier prod, @RequestParam("quantity") int quantity) {
-
-		stock.removeArticle(prod, Quantity.of(quantity));
+	public String decreasedArticle(@ModelAttribute("StockForm") @Valid StockForm stockForm, BindingResult result) {
+		if(result.hasErrors())
+		{
+			return "redirect:/employee/changecatalog";
+		}
+		stock.removeArticle(stockForm.getProdId(), Quantity.of(stockForm.getQuantity()));
 		return "redirect:/employee/changecatalog";
 	}
 
