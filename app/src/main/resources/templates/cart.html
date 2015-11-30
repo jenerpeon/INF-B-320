@@ -61,9 +61,6 @@
 			<div th:if="${cart.empty}">Leer</div>
 			<br />
 			<div>
-				<form class="form" method="post" action="checkout" sec:authorize="hasRole('ROLE_CUSTOMER')">
-					<input type="submit" value="Kaufen" />
-				</form>
 			</div>
 
 			<div>
