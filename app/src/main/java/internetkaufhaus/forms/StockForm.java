@@ -1,13 +1,16 @@
 package internetkaufhaus.forms;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.NotEmpty;
 import org.salespointframework.catalog.ProductIdentifier;
 
 public class StockForm {
 
-//	@NotEmpty(message="{StockForm.quantity.NotEmpty}")
+	@NotNull(message="leer") @Min(1)
 	private int quantity;
-//	@NotEmpty(message="{StockForm.prodId.NotEmpty}")
+
 	private ProductIdentifier prodId;
 	
 	public StockForm()

@@ -253,8 +253,7 @@ public class ManagementController {
 	@RequestMapping(value = "/employee/changecatalog/orderedArticle", method = RequestMethod.POST)
 	public String orderedArticle(@ModelAttribute("StockForm") @Valid 	StockForm stockForm, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
-			model.addAttribute("message", result.getAllErrors());
-			return "redirect:employee/changecatalog";
+			return "redirect:/employee/changecatalog";
 		}
 		stock.orderArticle(stockForm.getProdId(), Quantity.of(stockForm.getQuantity()));
 		return "redirect:/employee/changecatalog";
@@ -263,7 +262,7 @@ public class ManagementController {
 	public String decreasedArticle(@ModelAttribute("StockForm") @Valid StockForm stockForm, BindingResult result) {
 		if(result.hasErrors())
 		{
-			return "redirect:employee/changecatalog";
+			return "redirect:/employee/changecatalog";
 		}
 		stock.removeArticle(stockForm.getProdId(), Quantity.of(stockForm.getQuantity()));
 		return "redirect:/employee/changecatalog";
