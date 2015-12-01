@@ -152,11 +152,11 @@ public class AdminController{
 	public String balance(ModelMap model)
 	{
 		
-		Collection<ConcreteOrder> ordersPaid = IteratorUtils.toList(orderManager.findBy(OrderStatus.PAID).iterator());
+		Collection<ConcreteOrder> ordersCompleted = IteratorUtils.toList(orderManager.findBy(OrderStatus.COMPLETED).iterator());
 		Collection<ConcreteOrder> ordersOpen = IteratorUtils.toList(orderManager.findBy(OrderStatus.OPEN).iterator());
 		
 		double totalPaid = 0;
-		for (ConcreteOrder order : ordersPaid) {
+		for (ConcreteOrder order : ordersCompleted) {
 			totalPaid += order.getTotalPrice().getNumberStripped().doubleValue();
 		}
 		
@@ -165,10 +165,10 @@ public class AdminController{
 			totalOpen += order.getTotalPrice().getNumberStripped().doubleValue();
 		}
 		
-		double balance = totalPaid - totalOpen;
+		double balance = Math.round((totalPaid - totalOpen) * 100.00) / 100.00;
 		
-		model.addAttribute("customerOrders",orderManager.findBy(OrderStatus.PAID));
-		model.addAttribute("StockOrders",orderManager.findBy(OrderStatus.OPEN));
+		model.addAttribute("customerOrders",ordersCompleted);
+		model.addAttribute("StockOrders",ordersOpen);
 		model.addAttribute("customerOrdersTotal",Money.of(totalPaid, EURO));
 		model.addAttribute("StockOrdersTotal",Money.of(totalOpen, EURO));
 		model.addAttribute("balance",Money.of(balance, EURO));
