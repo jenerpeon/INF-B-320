@@ -3,28 +3,25 @@ package internetkaufhaus.controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.lang.Object;
-import java.time.LocalDateTime;
 
-import javax.swing.JOptionPane;
 import javax.validation.Valid;
 
+import org.apache.commons.collections.IteratorUtils;
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Catalog;
 import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
-import org.salespointframework.quantity.Quantity;
-import org.salespointframework.order.Cart;
-import org.salespointframework.order.CartItem;
-import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderIdentifier;
+import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
-import org.salespointframework.payment.Cash;
+import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,17 +35,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.apache.commons.collections.IteratorUtils;
-import org.salespointframework.order.OrderIdentifier;
-import org.salespointframework.order.OrderLine;
 
 import internetkaufhaus.forms.EditArticleForm;
-import internetkaufhaus.forms.ChangeStartPageForm;
 import internetkaufhaus.forms.StockForm;
-
 import internetkaufhaus.model.Comment;
-import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.ConcreteOrder;
+import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.Search;
 import internetkaufhaus.model.StockManager;
 
