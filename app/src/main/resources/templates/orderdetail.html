@@ -20,7 +20,7 @@
 			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
 			
 			<div id="workframe">
-				<h2 id="orderId" th:text="${order.getIdentifier()}">Order-ID</h2>
+				<h2 id="orderUser" th:text="@{'Bestellung von '+${order.getUserAccount().getUsername()}}">Account:</h2>
 				<table>
 					<tr>
 						<td><a>Name</a></td>
@@ -34,7 +34,90 @@
 				</table>
 				
 				<p th:text="@{'Preis der Bestellung: '+${order.getTotalPrice()}}">Preis: </p>
-				<p th:text="@{'Status der Bestellung: '+${order.getOrderStatus()}}">Preis: </p>
+				<p th:text="@{'Kunde der Bestellung: '+${order.getUserAccount().getUsername()}}">Kunde: </p>
+				<p th:text="@{'Status der Bestellung: '+${order.getOrderStatus()}}">Status: </p>
+				<form id="orderData">
+					<fieldset class="orderDataGroup">
+						<h2>Versandadresse:</h2>
+						<ol id="shippingData" class="paymentData">
+							<li>
+								<label for="shippingGender">Anrede:</label>
+								<select name="shippingGender">
+									<option value="Herr">Herr</option>
+									<option value="Frau">Frau</option>
+								</select>
+							</li>
+							<li>
+								<label for="shippingFirstName">Vorname:</label>
+								<input type="text" th:value="${order.getShippingFirstName()}" name="shippingFirstName" disabled/>
+							</li>
+							<li>
+								<label for="shippingLastNamer">Nachname:</label>
+								<input type="text" th:value="${order.getShippingLastName()}" name="shippingLastName" disabled/>
+							</li>
+							<li>
+								<label for="shippingStreet">Straße:</label>
+								<input type="text" th:value="${order.getShippingStreet()}" name="shippingStreet" disabled/>
+							</li>
+							<li>
+								<label for="shippingHouseNumber">Hausnummer:</label>
+								<input type="text" th:value="${order.getShippingHouseNumber()}"  name="shippingHouseNumber" disabled/>
+							</li>
+							<li>
+								<label for="shippingAdressLine2">Adresszusatz:</label>
+								<input type="text" th:value="${order.getShippingAdressLine2()}" name="shippingAdressLine2" disabled/>
+							</li>
+							<li>
+								<label for="shippingZipCode">Postleitzahl:</label>
+								<input type="text" th:value="${order.getShippingZipCode()}" name="shippingZipCode" disabled/>
+							</li>
+							<li>
+								<label for="shippingTown">Adresszusatz:</label>
+								<input type="text" th:value="${order.getShippingTown()}" name="shippingTown" disabled/>
+							</li>
+						</ol>
+					</fieldset>
+					<fieldset>
+						<h2>Rechnungsadresse:</h2>
+						<ol id="billingData" class="paymentData">
+							<li>
+								<label for="billingGender">Anrede:</label>
+								<select name="billingGender">
+									<option value="Herr">Herr</option>
+									<option value="Frau">Frau</option>
+								</select>
+							</li>
+							<li>
+								<label for="billingFirstName">Vorname:</label>
+								<input type="text" th:value="${order.getBillingFirstName()}" name="billingFirstName" disabled/>
+							</li>
+							<li>
+								<label for="billingLastNamer">Nachname:</label>
+								<input type="text" th:value="${order.getBillingLastName()}" name="billingLastName" disabled/>
+							</li>
+							<li>
+								<label for="billingStreet">Straße:</label>
+								<input type="text" th:value="${order.getBillingStreet()}" name="billingStreet" disabled/>
+							</li>
+							<li>
+								<label for="billingHouseNumber">Hausnummer:</label>
+								<input type="text" th:value="${order.getBillingHouseNumber()}" name="billingHouseNumber" disabled/>
+							</li>
+							<li>
+								<label for="billingAdressLine2">Adresszusatz:</label>
+								<input type="text" th:value="${order.getBillingAdressLine2()}" name="billingAdressLine2" disabled/>
+							</li>
+							<li>
+								<label for="billingZipCode">Postleitzahl:</label>
+								<input type="text" th:value="${order.getBillingZipCode()}" name="billingZipCode" disabled/>
+							</li>
+							<li>
+								<label for="billingTown">Adresszusatz:</label>
+								<input type="text" th:value="${order.getBillingTown()}" name="billingTown" disabled/>
+							</li>
+						</ol>
+					</fieldset>
+				</form>
 			</div>
 		<div>
 		</main>

@@ -2,10 +2,13 @@ package internetkaufhaus.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import java.time.LocalDateTime;
 import java.util.*;
 
 import org.apache.commons.collections.IteratorUtils;
 import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.useraccount.UserAccount;
 
@@ -31,6 +34,8 @@ public class ConcreteOrder extends Order {
 	private String shippingAdressLine2;
 	private String shippingZipCode;
 	private String shippingTown;
+	
+	private LocalDateTime dateOrdered;
 
 	@SuppressWarnings({ "unused", "deprecation" })
 	private ConcreteOrder() {
@@ -45,7 +50,7 @@ public class ConcreteOrder extends Order {
 	public ConcreteOrder(String billingGender, String billingFirstName, String billingLastName, String billingStreet, 
 			String billingHouseNumber, String billingAdressLine2, String billingZipCode, String billingTown, 
 			String shippingGender, String shippingFirstName, String shippingLastName, String shippingStreet, 
-			String shippingHouseNumber, String shippingAdressLine2, String shippingZipCode, String shippingTown) {
+			String shippingHouseNumber, String shippingAdressLine2, String shippingZipCode, String shippingTown, LocalDateTime dateOrdered) {
 		 this.billingGender = billingGender;
 		 this.billingFirstName = billingFirstName;
 		 this.billingLastName = billingLastName;
@@ -63,6 +68,8 @@ public class ConcreteOrder extends Order {
 		 this.shippingAdressLine2 = shippingAdressLine2;
 		 this.shippingZipCode = shippingZipCode;
 		 this.shippingTown = shippingTown;
+		 
+		 this.dateOrdered = dateOrdered;
 	}
 
 	public String getBillingGender() {
@@ -131,8 +138,21 @@ public class ConcreteOrder extends Order {
 	}
 	
 	public int getOrderLinesSize() {
-		Collection<Order> orderLines = IteratorUtils.toList(this.getOrderLines().iterator());
+		Collection<OrderLine> orderLines = IteratorUtils.toList(this.getOrderLines().iterator());
 		return orderLines.size();
+	}
+	
+	public int getTotalProductNumber() {
+		int total = 0;
+		Collection<OrderLine> orderLines = IteratorUtils.toList(this.getOrderLines().iterator());
+		for (OrderLine orderLine : orderLines) {
+			total += Integer.parseInt(orderLine.getQuantity().toString());
+		}
+		return total;
+	}
+	
+	public LocalDateTime getDateOrdered() {
+		return this.dateOrdered;
 	}
 	
 	
@@ -224,5 +244,9 @@ public class ConcreteOrder extends Order {
 		this.shippingAdressLine2 = shippingAdress.get(5);
 		this.shippingZipCode = shippingAdress.get(6);
 		this.shippingTown = shippingAdress.get(7);
+	}
+	
+	public void setDateOrdered(LocalDateTime dateTime) {
+		this.dateOrdered = dateTime;
 	}
 }

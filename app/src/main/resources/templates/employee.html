@@ -11,16 +11,17 @@
 <body>
 <div id="wrapper">
 	<div id="header" th:include="navigation :: navigation"></div>
+	<br/>
 	<main>
 		<div id="mainframe">
 			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
 		
 			<div id="workframe">
-				<h1 id="welcome">Hallo Mitarbeiter XYZ</h1>
+				<h1 th:text="@{'Hallo Mitarbeiter '+${account.getUsername()}}" id="welcome">Hallo Mitarbeiter XYZ</h1>
 			</div>
 		</div>
 	</main>
-	<br>
+	<br/>
 
 	<div id="footer" th:include="footer :: footer"></div>
 </div>

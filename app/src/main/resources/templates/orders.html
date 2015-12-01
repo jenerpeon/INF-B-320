@@ -35,22 +35,9 @@
 									<td><a>Status</a></th>
 									<td><a>Löschen/Akzeptieren</a></td>
 								</tr>
-								<tr class="article" th:each="order : ${ordersOpen}" th:switch="${order.getUserAccount().getFirstname()}">
-										<td><a target="newtab" th:href="@{'/employee/orders/detail/'+${order.getIdentifier()}}" th:text="${order.getTotalPrice()}">Gesamtpreis</a></td>
-										<td><a th:text="${order.getOrderLinesSize()}">Artikelanzahl</a></td>
-										<td th:case="null"><a th:text="${order.getUserAccount().getUsername()}">Anzahl Artikel:</a></td>
-										<td th:case="*" ><a th:text="@{${order.getUserAccount().getFirstname()}+' '+${order.getUserAccount().getLastname()}}">Anzahl Artikel:</a></td>
-										<td><a th:text="${order.getOrderStatus()}">Status</a></td>
-										<td>
-											<div class="btn-group" role="group">
-												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/orders/accept/'+${order.getIdentifier()}}" class="accept-button" title="Edit Article"></button>
-												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/orders/cancel/'+${order.getIdentifier()}}" class="cancel-button" title="Delete Article"></button>
-											</div>
-										</td>
-								<tr>
 								<tr class="article" th:each="order : ${ordersPaid}" th:switch="${order.getUserAccount().getFirstname()}">
 										<td><a target="newtab" th:href="@{'/employee/orders/detail/'+${order.getIdentifier()}}" th:text="${order.getTotalPrice()}">Gesamtpreis</a></td>
-										<td><a th:text="${order.getOrderLinesSize()}">Artikelanzahl</a></td>
+										<td><a th:text="${order.getTotalProductNumber()}">Artikelanzahl</a></td>
 										<td th:case="null"><a th:text="${order.getUserAccount().getUsername()}">Anzahl Artikel:</a></td>
 										<td th:case="*" ><a th:text="@{${order.getUserAccount().getFirstname()}+' '+${order.getUserAccount().getLastname()}}">Anzahl Artikel:</a></td>
 										<td><a th:text="${order.getOrderStatus()}">Status</a></td>
@@ -62,7 +49,7 @@
 								<tr>
 								<tr class="article" th:each="order : ${ordersCompleted}" th:switch="${order.getUserAccount().getFirstname()}">
 										<td><a target="newtab" th:href="@{'/employee/orders/detail/'+${order.getIdentifier()}}" th:text="${order.getTotalPrice()}">Gesamtpreis</a></td>
-										<td><a th:text="${order.getOrderLinesSize()}">Artikelanzahl</a></td>
+										<td><a th:text="${order.getTotalProductNumber()}">Artikelanzahl</a></td>
 										<td th:case="null"><a th:text="${order.getUserAccount().getUsername()}">Anzahl Artikel:</a></td>
 										<td th:case="*" ><a th:text="@{${order.getUserAccount().getFirstname()}+' '+${order.getUserAccount().getLastname()}}">Anzahl Artikel:</a></td>
 										<td><a th:text="${order.getOrderStatus()}">Status</a></td>
@@ -74,7 +61,7 @@
 								<tr>
 								<tr class="article" th:each="order : ${ordersCancelled}" th:switch="${order.getUserAccount().getFirstname()}">
 										<td><a target="newtab" th:href="@{'/employee/orders/detail/'+${order.getIdentifier()}}" th:text="${order.getTotalPrice()}">Gesamtpreis</a></td>
-										<td><a th:text="${order.getOrderLinesSize()}">Artikelanzahl</a></td>
+										<td><a th:text="${order.getTotalProductNumber()}">Artikelanzahl</a></td>
 										<td th:case="null"><a th:text="${order.getUserAccount().getUsername()}">Anzahl Artikel:</a></td>
 										<td th:case="*" ><a th:text="@{${order.getUserAccount().getFirstname()}+' '+${order.getUserAccount().getLastname()}}">Anzahl Artikel:</a></td>
 										<td><a th:text="${order.getOrderStatus()}">Status</a></td>

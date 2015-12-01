@@ -45,7 +45,6 @@ import internetkaufhaus.forms.BillingAdressForm;
 import internetkaufhaus.model.ConcreteMailSender;
 import internetkaufhaus.model.Search;
 @Controller
-@PreAuthorize("isAuthenticated()")
 @SessionAttributes("cart")
 class CartController {
 
@@ -118,7 +117,6 @@ class CartController {
 
 		return "redirect:/cart";
 	}
-	
 	@RequestMapping(value="/orderdata/{option}", method = RequestMethod.POST)
 	public String orderdata(@PathVariable("option") int option, @LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
 		
@@ -129,7 +127,7 @@ class CartController {
 			return "orderdata";
 		}).orElse("redirect:/login");
 	}
-	
+	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 	@RequestMapping(value="/orderdata/{option}", method = RequestMethod.GET)
 	public String orderdataredirect(@PathVariable("option") int option, @ModelAttribute Cart cart, @LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
 		
@@ -138,7 +136,7 @@ class CartController {
 			return "orderdata";
 		}).orElse("redirect:/login");
 	}
-	
+	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 	@RequestMapping(value="/payed", method = RequestMethod.POST)
 	public String payed(@ModelAttribute Cart cart, @ModelAttribute("paymentForm") @Valid PaymentForm paymentForm, @ModelAttribute("shippingAdressForm") @Valid ShippingAdressForm shippingAdressForm, @ModelAttribute("billingAdressForm") @Valid BillingAdressForm billingAdressForm, BindingResult result, @LoggedIn Optional<UserAccount> userAccount) {
 		return userAccount.map(account -> {
@@ -163,6 +161,8 @@ class CartController {
 			order.setBillingAdress(billingAdressForm.getBillingAdress());
 			
 			order.setShippingAdress(shippingAdressForm.getShippingAdress());
+			
+			order.setDateOrdered(LocalDateTime.now());
 			
 			orderManager.save(order);
 			
