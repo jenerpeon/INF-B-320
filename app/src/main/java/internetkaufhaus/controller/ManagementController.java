@@ -236,6 +236,8 @@ public class ManagementController {
 		inventory.delete(inventory.findByProductIdentifier(prod).get());
 		catalog.delete(catalog.findOne(prod).get());
 		
+		catalog.delete(catalog.findOne(prod).get());
+		
 		return "redirect:/employee/changecatalog";
 
 	}
