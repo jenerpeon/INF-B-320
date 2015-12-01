@@ -202,19 +202,6 @@ public class ManagementController {
 			System.out.println("another error (file empty) !!!");
 		}
 
-		if (img.getOriginalFilename().isEmpty()) {
-
-			JOptionPane.showMessageDialog(null, "Bildpfad fehlt!");
-
-		}
-
-		if (editForm.getName().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Geben Sie bitte einen Artikelnamen an!");
-		}
-
-		if (editForm.getDescription().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Die Artikelbeschreibung fehlt!");
-		}
 
 		ConcreteProduct prodId = new ConcreteProduct(editForm.getName(), Money.of(editForm.getPrice(), "EUR"), editForm.getCategory(), editForm.getDescription(), "", img.getOriginalFilename());
 
@@ -236,12 +223,14 @@ public class ManagementController {
 		return "changecatalogdeleteitem";
 	}
 
-	@RequestMapping(value = "/employee/changecatalog/deletedArticle/{prodId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/employee/changecatalog/deletedArticle/{prodId}", method = RequestMethod.GET)
 	public String deletedArticle(@PathVariable("prodId") ConcreteProduct prod) {
 
+		Optional<InventoryItem> item =inventory.findByProductIdentifier(prod.getIdentifier());
+		inventory.delete(item.get());
 		catalog.delete(prod);
 		prodSearch.delete(prod);
-
+		
 		return "redirect:/employee/changecatalog";
 
 	}
