@@ -56,7 +56,7 @@ def generate_week(nworkdays, nhours):
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser()
-	parser.add_argument("--nweeks", type=int,
+	parser.add_argument("--nweeks", default=1, type=int,
 	                        help='number of weeks to be generated. default is 1')
 	parser.add_argument("--kw", action='store_true',
 	                        help='use and print kalenderwoche. first kw defaults to \'n\'')
