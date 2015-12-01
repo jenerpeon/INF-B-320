@@ -63,7 +63,7 @@ public class AdminController{
 		{
 			Iterator <ConcreteUserAccount> iter = manager.findByRole(Role.of("ROLE_ADMIN")).iterator();
 //			ArrayList<ConcreteUserAccount> accli = new ArrayList<ConcreteUserAccount>();
-			if(acc.getRole().equals(Role.of("ROLE_ADMIN")))
+			if(acc.getUserAccount().getRoles().iterator().next().equals(Role.of("ROLE_ADMIN")))
 			{
 				while(iter.hasNext())
 				{
@@ -130,7 +130,8 @@ public class AdminController{
 		usacc.add(Role.of(role));
 		umanager.save(usacc);
 		acc.setUserAccount(usacc);
-		acc.setRole(Role.of(role));
+		//acc.getUserAccount().add(Role.of(role));
+		//acc.setRole(Role.of(role));
 		umanager.changePassword(usacc, password);
 		return "redirect:/admin/changeuser/";
 	}

@@ -27,6 +27,8 @@ public class ConcreteProduct extends Product {
 	private String imagefile;
 	private String description;
 	private String webLink;
+	private int comamounts;
+	private float rating;
 
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE }, mappedBy = "product", orphanRemoval = true)
 	private List<Comment> comments = new LinkedList<Comment>();
@@ -43,6 +45,22 @@ public class ConcreteProduct extends Product {
 		this.webLink = webLink;
 		this.imagefile = imagefile;
 		this.category = category;
+	    this.rating = 0;
+	}
+	public int getRatings(){
+		this.comamounts = comments.size();
+		return comamounts;
+	}
+	
+	public float getRating(){
+        float rating = 0;
+        if(comments.isEmpty())
+        	return 0;
+		for(Comment c : comments){
+            rating += c.getRating();			
+		}
+		this.rating = rating/comments.size();
+		return this.rating;
 	}
 
 	public List<Comment> getComments() {

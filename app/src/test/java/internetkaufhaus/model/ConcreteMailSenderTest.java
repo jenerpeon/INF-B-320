@@ -1,5 +1,7 @@
 package internetkaufhaus.model;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -29,5 +31,6 @@ public class ConcreteMailSenderTest {
 	public void wiredTest () throws Exception{
 		ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);
 		concreteMailSender.sendMail("heinzerluds@googlemail.com", "Hallo Heinz", "me@web.de", "tescht");
+		assertTrue("empty test", true);
 	}
 }

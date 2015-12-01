@@ -33,15 +33,26 @@ public class ConcreteUserAccount implements Serializable{
 	private String address;
 	private String zipCode;
 	private String city;
+    private String recruitedby;
     private Role role;
 
-
-	public ConcreteUserAccount() {
-
+	public ConcreteUserAccount() {}
+	
+	public ConcreteUserAccount(String username, String password, Role role, UserAccountManager u){
+		this.userAccount = u.create(username, password, role);
+		this.role=role;
 	}
 
-	public ConcreteUserAccount(String username, String password, Role role, UserAccountManager u) {
+	public ConcreteUserAccount(String email, String username, String firstname, String lastname, String address, String zipCode, String city, String password, Role role, UserAccountManager u, String recruitedby) {
 		this.userAccount = u.create(username, password, role);
+		this.recruitedby = recruitedby;
+		this.userAccount.setFirstname(firstname);
+		this.userAccount.setLastname(lastname);
+		this.address = address;
+		this.zipCode = zipCode;
+		this.city = city;
+		this.userAccount.setEmail(email);
+		this.email = email;
 		this.role = role;
 	}
 
@@ -54,12 +65,13 @@ public class ConcreteUserAccount implements Serializable{
 		this.city = city;
 		this.userAccount.setEmail(email);
 		this.email = email;
-		this.role=role;
+		this.role = role;
 	}
 
 	public Long getId() {
 		return id;
 	}
+
 
 	public void setId(Long id) {
 		this.id = id;
@@ -104,14 +116,14 @@ public class ConcreteUserAccount implements Serializable{
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
-    public Role getRole(){
-    	return role;
-    }
-    public boolean setRole(Role role)
-    {
-    	this.role = role;
-    	return (this.role.equals(role));
+	public void setRecruitedBy(String email){
+		this.recruitedby = email;
+	}
     	
+    public String getRecruitedBy(){
+    	return this.recruitedby;
+    }
+    public Role getRole(){
+    	return this.userAccount.getRoles().iterator().next();
     }
 }
