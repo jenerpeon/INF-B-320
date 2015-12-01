@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.lang.Object;
+import java.time.LocalDateTime;
 
 import javax.swing.JOptionPane;
 import javax.validation.Valid;
@@ -39,6 +40,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.commons.collections.IteratorUtils;
 import org.salespointframework.order.OrderIdentifier;
+import org.salespointframework.order.OrderLine;
 
 import internetkaufhaus.forms.EditArticleForm;
 import internetkaufhaus.forms.ChangeStartPageForm;
@@ -250,11 +252,10 @@ public class ManagementController {
 	public String deletedArticle(@PathVariable("prodId") ProductIdentifier prod) {
 		//catalog.delete(catalog.findOne(prod).get());
 		
-		System.out.println("Test1");
 		prodSearch.delete(catalog.findOne(prod).get());
-		System.out.println("Test2");
+		
 		inventory.delete(inventory.findByProductIdentifier(prod).get());
-		System.out.println("Test3");
+		
 		return "redirect:/employee/changecatalog";
 
 	}
@@ -272,10 +273,20 @@ public class ManagementController {
 	}
 
 	@RequestMapping(value = "/employee/changecatalog/orderedArticle", method = RequestMethod.POST)
-	public String orderedArticle(@ModelAttribute("StockForm") @Valid 	StockForm stockForm, BindingResult result, ModelMap model) {
+	public String orderedArticle(@ModelAttribute("StockForm") @Valid StockForm stockForm, BindingResult result, ModelMap model, @LoggedIn Optional<UserAccount> userAccount) {
 		if (result.hasErrors()) {
 			return "redirect:/employee/changecatalog";
 		}
+		ConcreteOrder order = new ConcreteOrder(userAccount.get());
+		
+		OrderLine orderLine = new OrderLine(catalog.findOne(stockForm.getProdId()).get(), Quantity.of(stockForm.getQuantity()));
+		
+		order.add(orderLine);
+		
+		order.setDateOrdered(LocalDateTime.now());
+		
+		orderManager.save(order);
+		
 		stock.orderArticle(stockForm.getProdId(), Quantity.of(stockForm.getQuantity()));
 		return "redirect:/employee/changecatalog";
 	}
@@ -322,12 +333,10 @@ public class ManagementController {
 	@RequestMapping(value = "/employee/orders")
 	public String orders(ModelMap model) {
 		Collection<ConcreteOrder> ordersPaid = IteratorUtils.toList(orderManager.findBy(OrderStatus.PAID).iterator());
-		Collection<ConcreteOrder> ordersOpen = IteratorUtils.toList(orderManager.findBy(OrderStatus.OPEN).iterator());
 		Collection<ConcreteOrder> ordersCancelled = IteratorUtils.toList(orderManager.findBy(OrderStatus.CANCELLED).iterator());
 		Collection<ConcreteOrder> ordersCompleted = IteratorUtils.toList(orderManager.findBy(OrderStatus.COMPLETED).iterator());
 		
 		model.addAttribute("ordersPaid", ordersPaid);
-		model.addAttribute("ordersOpen", ordersOpen);
 		model.addAttribute("ordersCancelled", ordersCancelled);
 		model.addAttribute("ordersCompleted", ordersCompleted);
 		return "orders";

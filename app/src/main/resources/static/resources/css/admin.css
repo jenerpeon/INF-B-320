@@ -121,3 +121,7 @@
 	margin-top: 0.5em;      
 	margin-left: 11.5em;       
 }
+
+.orderTable {
+	width: 300px !important;
+}

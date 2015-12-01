@@ -5,10 +5,18 @@ import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.salespointframework.useraccount.web.LoggedIn;
 
+import static org.salespointframework.core.Currencies.EURO;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.collections.IteratorUtils;
+import org.javamoney.moneta.Money;
+import org.salespointframework.order.OrderManager;
+import org.salespointframework.order.OrderStatus;
 import org.salespointframework.useraccount.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import internetkaufhaus.model.ConcreteOrder;
 import internetkaufhaus.model.ConcreteUserAccount;
 import internetkaufhaus.model.ConcreteUserAccountRepository;
 
@@ -27,11 +36,13 @@ import internetkaufhaus.model.ConcreteUserAccountRepository;
 public class AdminController{
 	private final ConcreteUserAccountRepository manager;
 	private final UserAccountManager umanager;
+	private final OrderManager<ConcreteOrder> orderManager;
 
 	@Autowired
-	public AdminController(ConcreteUserAccountRepository manager, UserAccountManager umanager){
+	public AdminController(ConcreteUserAccountRepository manager, UserAccountManager umanager, OrderManager<ConcreteOrder> orderManager){
 		this.manager=manager;	
 		this.umanager = umanager;
+		this.orderManager = orderManager;
 
 	}
 	
@@ -136,10 +147,32 @@ public class AdminController{
 		umanager.changePassword(usacc, password);
 		return "redirect:/admin/changeuser/";
 	}
-	@RequestMapping(value="/management/addUser")
-	public String addU()
+	
+	@RequestMapping(value="/admin/balance")
+	public String balance(ModelMap model)
 	{
-		return "addUser";
+		
+		Collection<ConcreteOrder> ordersPaid = IteratorUtils.toList(orderManager.findBy(OrderStatus.PAID).iterator());
+		Collection<ConcreteOrder> ordersOpen = IteratorUtils.toList(orderManager.findBy(OrderStatus.OPEN).iterator());
+		
+		double totalPaid = 0;
+		for (ConcreteOrder order : ordersPaid) {
+			totalPaid += order.getTotalPrice().getNumberStripped().doubleValue();
+		}
+		
+		double totalOpen = 0;
+		for (ConcreteOrder order : ordersOpen) {
+			totalOpen += order.getTotalPrice().getNumberStripped().doubleValue();
+		}
+		
+		double balance = totalPaid - totalOpen;
+		
+		model.addAttribute("customerOrders",orderManager.findBy(OrderStatus.PAID));
+		model.addAttribute("StockOrders",orderManager.findBy(OrderStatus.OPEN));
+		model.addAttribute("customerOrdersTotal",Money.of(totalPaid, EURO));
+		model.addAttribute("StockOrdersTotal",Money.of(totalOpen, EURO));
+		model.addAttribute("balance",Money.of(balance, EURO));
+		return "balance";
 	}
 	
 	/*@RequestMapping(value="/userManagement")

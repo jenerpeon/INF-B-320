@@ -162,6 +162,8 @@ class CartController {
 			
 			order.setShippingAdress(shippingAdressForm.getShippingAdress());
 			
+			order.setDateOrdered(LocalDateTime.now());
+			
 			orderManager.save(order);
 			
 			orderManager.payOrder(order);
