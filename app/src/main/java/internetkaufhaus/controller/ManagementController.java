@@ -250,11 +250,12 @@ public class ManagementController {
 
 	@RequestMapping(value = "/employee/changecatalog/deletedArticle/{prodId}", method = RequestMethod.POST)
 	public String deletedArticle(@PathVariable("prodId") ProductIdentifier prod) {
-		//catalog.delete(catalog.findOne(prod).get());
 		
 		prodSearch.delete(catalog.findOne(prod).get());
 		
 		inventory.delete(inventory.findByProductIdentifier(prod).get());
+		
+		catalog.delete(catalog.findOne(prod).get());
 		
 		return "redirect:/employee/changecatalog";
 
