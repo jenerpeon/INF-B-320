@@ -36,6 +36,8 @@ public class ConcreteOrder extends Order {
 	private String shippingTown;
 	
 	private LocalDateTime dateOrdered;
+	
+	boolean returned = false;
 
 	@SuppressWarnings({ "unused", "deprecation" })
 	private ConcreteOrder() {
@@ -155,6 +157,9 @@ public class ConcreteOrder extends Order {
 		return this.dateOrdered;
 	}
 	
+	public boolean getReturned() {
+		return this.returned;
+	}
 	
 	public void setBillingGender(String billingGender) {
 		this.billingGender = billingGender;
@@ -248,5 +253,9 @@ public class ConcreteOrder extends Order {
 	
 	public void setDateOrdered(LocalDateTime dateTime) {
 		this.dateOrdered = dateTime;
+	}
+	
+	public void setReturned(boolean returned) {
+		this.returned = returned;
 	}
 }
