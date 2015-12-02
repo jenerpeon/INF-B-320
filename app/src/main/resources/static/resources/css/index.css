@@ -263,7 +263,7 @@
 #selection-container {
 	display: flex;
 	flex-flow: row wrap;
-	justify-content: center;
+	justify-content: space-between;
 	margin: 0 auto 0 auto;
 }
 #selection-container .img-thumbnail {
