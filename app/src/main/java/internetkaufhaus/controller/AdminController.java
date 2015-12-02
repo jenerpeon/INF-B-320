@@ -157,7 +157,9 @@ public class AdminController{
 		
 		double totalPaid = 0;
 		for (ConcreteOrder order : ordersCompleted) {
-			totalPaid += order.getTotalPrice().getNumberStripped().doubleValue();
+			if (order.getReturned() == false) {
+				totalPaid += order.getTotalPrice().getNumberStripped().doubleValue();
+			}
 		}
 		
 		double totalOpen = 0;

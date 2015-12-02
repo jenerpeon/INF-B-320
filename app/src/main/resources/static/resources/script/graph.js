@@ -83,6 +83,14 @@ $(document).ready(function () {
 		$('#graph-bars').fadeIn().removeClass('hidden');
 		e.preventDefault();
 	});
+	
+	$('.dataset').on('click', function (e) {
+		if (this.className == "dataset active") {
+			$(this).removeClass("active");
+		} else {
+			$(this).addClass('active');
+		}
+	});
 
 	// Tooltip #################################################
 	function showTooltip(x, y, contents) {

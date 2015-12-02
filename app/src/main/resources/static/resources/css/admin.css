@@ -226,17 +226,17 @@
 }
 
 /* Colors For each Link */
-.graph-info .sales { border-bottom: 2px solid #71c73e; }
-.graph-info .refunds { border-bottom: 2px solid #ef2929; }
-.graph-info .purchases { border-bottom: 2px solid #77b7c5; }
-.graph-info .turnover { border-bottom: 2px solid #c4a000; }
-.graph-info .profit { border-bottom: 2px solid #75507b; }
+.graph-info #sales { border-bottom: 2px solid #71c73e; }
+.graph-info #refunds { border-bottom: 2px solid #ef2929; }
+.graph-info #purchases { border-bottom: 2px solid #77b7c5; }
+.graph-info #turnover { border-bottom: 2px solid #c4a000; }
+.graph-info #profit { border-bottom: 2px solid #75507b; }
 
-.graph-info .sales:before { background: #71c73e; }
-.graph-info .refunds:before { background: #ef2929; }
-.graph-info .purchases:before { background: #77b7c5; }
-.graph-info .turnover:before { background: #c4a000; }
-.graph-info .profit:before { background: #75507b; }
+.graph-info #sales:before { background: #71c73e; }
+.graph-info #refunds:before { background: #ef2929; }
+.graph-info #purchases:before { background: #77b7c5; }
+.graph-info #turnover:before { background: #c4a000; }
+.graph-info #profit:before { background: #75507b; }
 
 /* Lines & Bars Buttons */
 #lines, #bars {
@@ -271,6 +271,43 @@
 
 #lines.active span { background-image: url('/resources/Bilder/lines_active.png'); }
 #bars.active span { background-image: url('/resources/Bilder/bars_active.png'); }
+
+#sales.active {
+	background: #71c73e;
+	color: #ffffff;
+}
+#refunds.active {
+	background: #ef2929;
+	color: #ffffff;
+}
+#purchases.active {
+	background: #77b7c5;
+	color: #ffffff;
+}
+#turnover.active {
+	background: #c4a000;
+	color: #ffffff;
+}
+#profit.active {
+	background: #75507b;
+	color: #ffffff;
+}
+
+#sales.active:before {
+	background: #ffffff;
+}
+#refunds.active:before {
+	background: #ffffff;
+}
+#purchases.active:before {
+	background: #ffffff;
+}
+#turnover.active:before {
+	background: #ffffff;
+}
+#profit.active:before {
+	background: #ffffff;
+}
 
 /* Hide the First and Last Y Label */
 .yAxis .tickLabel:first-child,
