@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -26,8 +27,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import internetkaufhaus.model.Comment;
+import internetkaufhaus.model.ConcreteMailSender;
 import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.ConcreteProductRepository;
+import internetkaufhaus.model.ConcreteUserAccount;
+import internetkaufhaus.model.ConcreteUserAccountRepository;
+import internetkaufhaus.model.NewsletterManager;
 import internetkaufhaus.model.Search;
 
 @Controller
@@ -37,14 +42,20 @@ public class CatalogController {
 	private final Inventory<InventoryItem> inventory;
 	private final ConcreteProductRepository concreteCatalog;
 	private final Search prodSearch;
+	private final NewsletterManager newsManager;
+	private final MailSender sender;
+	private final ConcreteUserAccountRepository usermanager;
+
 
 	@Autowired
-	public CatalogController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, ConcreteProductRepository concreteCatalog) {
+	public CatalogController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, ConcreteProductRepository concreteCatalog, NewsletterManager newsManager, MailSender sender,ConcreteUserAccountRepository usermanager) {
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.prodSearch = prodSearch;
 		this.concreteCatalog = concreteCatalog;
-
+		this.newsManager= newsManager;
+		this.sender=sender;
+		this.usermanager=usermanager;
 	}
 
 	@RequestMapping("/sufu/{pagenumber}")
@@ -133,4 +144,24 @@ public class CatalogController {
 		return "redirect:detail/" + prod.getIdentifier();
 	}
 
+	@RequestMapping(value="/newsletter", method=RequestMethod.GET)
+	public String newsletter(@RequestParam("email") String sendTo, ModelMap model){
+		ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);
+		String username;
+		newsManager.addToNewsletterAbo(sendTo);
+		if(usermanager.findByEmail(sendTo)==null){
+			username="Nicht registierter Abonnet";
+		}
+		else username=usermanager.findByEmail(sendTo).getUserAccount().getUsername();
+		newsManager.getMap().put(username, sendTo);
+		concreteMailSender.sendMail(sendTo, "Sie haben sich für den Woods Super Dooper Shop Newsletter angemeldet.", "zu@googlemail.com", "NewsletterAbonnement");
+		
+		model.addAttribute("prodList", catalog.findAll());
+		model.addAttribute("categories", prodSearch.getCagegories());
+		
+		return "index";
+		
+		
+			
+		}
 }

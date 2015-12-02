@@ -25,6 +25,7 @@ import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -39,8 +40,11 @@ import org.springframework.web.multipart.MultipartFile;
 import internetkaufhaus.forms.EditArticleForm;
 import internetkaufhaus.forms.StockForm;
 import internetkaufhaus.model.Comment;
+import internetkaufhaus.model.ConcreteMailSender;
 import internetkaufhaus.model.ConcreteOrder;
 import internetkaufhaus.model.ConcreteProduct;
+import internetkaufhaus.model.ConcreteUserAccount;
+import internetkaufhaus.model.NewsletterManager;
 import internetkaufhaus.model.Search;
 import internetkaufhaus.model.StockManager;
 
@@ -54,16 +58,20 @@ public class ManagementController {
 	private final Search prodSearch;
 	private final OrderManager<ConcreteOrder> orderManager;
 	private final StockManager stock;
+	private final NewsletterManager newsManager;
+	private final MailSender sender;
 	//private final List<ConcreteProduct> carousselList;
 	//private final List<ConcreteProduct> selectionList;
 
 	@Autowired
-	public ManagementController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, OrderManager<ConcreteOrder> orderManager, StockManager stock) {
+	public ManagementController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, OrderManager<ConcreteOrder> orderManager, StockManager stock,NewsletterManager newsManager, MailSender sender) {
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.prodSearch = prodSearch;
 		this.orderManager = orderManager;
 		this.stock = stock;
+		this.sender=sender;
+		this.newsManager=newsManager;
 		//this.carousselList = carousselList;
 		//this.selectionList = selectionList;
 	}
@@ -84,7 +92,6 @@ public class ManagementController {
 
 	@RequestMapping("/employee/changecatalog/addArticle")
 	public String addArticle(Optional<UserAccount> userAccount, ModelMap model) {
-		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("categories", prodSearch.getCagegories());
 		return "changecatalognewitem";
 	}
@@ -236,8 +243,6 @@ public class ManagementController {
 		inventory.delete(inventory.findByProductIdentifier(prod).get());
 		catalog.delete(catalog.findOne(prod).get());
 		
-		catalog.delete(catalog.findOne(prod).get());
-		
 		return "redirect:/employee/changecatalog";
 
 	}
@@ -343,6 +348,35 @@ public class ManagementController {
 		model.addAttribute("order", order);
 		model.addAttribute("orderLines", orderLines);
 		return "orderdetail";
+	}
+	
+	@RequestMapping(value="employee/newsletter")
+	public String newsletter(ModelMap model){
+		model.addAttribute("newsUser",newsManager.getMap());
+		return "newsletter";
+	}
+	
+	@RequestMapping("/employee/newsletter/changeNewsletter")
+	public String changeNewsletter(Optional<UserAccount> userAccount, ModelMap model) {
+		model.addAttribute("categories", prodSearch.getCagegories());
+		return "changenewsletter";
+	}
+	
+	@RequestMapping(value="/employee/newsletter/deleteUserAbo/{mail}/{username}")
+	public String deleteUserAbo(@PathVariable("mail") String mail,@PathVariable("username") String name){
+		newsManager.deleteNewsletterAbo(mail);
+		newsManager.getMap().remove(name);
+		return "redirect:/employee/newsletter";
+	}
+
+	@RequestMapping(value="/employee/newsletter/changeNewsletter/sendNewsletter", method=RequestMethod.GET)
+	public String sendNewsletter(@RequestParam("subject") String subject, @RequestParam("mailBody") String mailBody){
+		ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);
+		for(String mail : this.newsManager.getNewsletterAbo()){
+			concreteMailSender.sendMail(mail, mailBody, "zu@googlemail.com", subject);
+		}
+		
+		return "redirect:/employee/newsletter";
 	}
 
 	public Inventory<InventoryItem> getInventory() {
