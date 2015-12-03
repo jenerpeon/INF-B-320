@@ -157,7 +157,9 @@ public class AdminController{
 		
 		double totalPaid = 0;
 		for (ConcreteOrder order : ordersCompleted) {
-			totalPaid += order.getTotalPrice().getNumberStripped().doubleValue();
+			if (order.getReturned() == false) {
+				totalPaid += order.getTotalPrice().getNumberStripped().doubleValue();
+			}
 		}
 		
 		double totalOpen = 0;
@@ -175,6 +177,11 @@ public class AdminController{
 		return "balance";
 	}
 	
+	@RequestMapping(value="/admin/statistics")
+	public String statistics(ModelMap model)
+	{
+		return "statistics";
+	}
 	/*@RequestMapping(value="/userManagement")
 	public String userManagement(ModelMap model){
 		//model.addAttribute("customers", );

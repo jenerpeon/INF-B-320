@@ -41,6 +41,7 @@
 										<tr th:each="order : ${customerOrders}">
 											<td><a target="newtab" th:href="@{'/employee/orders/detail/'+${order.getIdentifier()}}" th:text="@{${order.getTotalProductNumber()}+' Artikel'}"></a></td>
 											<td><a th:text="@{'Gesamt: '+${order.getTotalPrice()}}"></a></td>
+											<td><img th:if="${order.getReturned()}" src="/resources/Bilder/return.png" width="30px"/></td>
 										</tr>
 									</tbody>
 								</table>
