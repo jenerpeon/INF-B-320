@@ -14,7 +14,6 @@
 		$('label.tree-toggler').click(function() {
 			$(this).parent().children('ul.tree').toggle(300);
 		});
-		document.getElementById("mainframe").style.height = "460px";
 		
 	});
 </script>
@@ -31,18 +30,16 @@
 			<div id="workframe">
 				
 				<table>
-					<thead>
-						<tr>
-							<th style="width:150px"><a>Name</a></th>
-							<th style="width:100px"><a>Rolle</a></th>
-							<th style="width:150px"><a>Bearbeiten</a></th>
-						</tr>
-					</thead>
 					<tbody>
+						<tr>
+							<td ><a>Name</a></td>
+							<td ><a>Rolle</a></td>
+							<td ><a>Bearbeiten</a></td>
+						</tr>
 						<tr class="article" th:each="account : ${customers}">
-							<td style="width:150px"><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="User anzeigen" th:href="@{'/admin/changeuser/detail/'+${account.id}}"></a></td>
-							<td style="width:100px"><a>Kunde</a></td>
-							<td style="width:150px">
+							<td ><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="User anzeigen" th:href="@{'/admin/changeuser/detail/'+${account.id}}"></a></td>
+							<td ><a>Kunde</a></td>
+							<td >
 								<div class="btn-group" role="group">
 									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/editUser/'+${account.id}}" class="edit-button"></button>
 									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/deleteUser/'+${account.id}}" class="fire-button"></button>
@@ -50,9 +47,9 @@
 							</td>
 						</tr>
 						<tr class="article" th:each="account : ${employees}">
-							<td style="width:150px"><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="User anzeigen" th:href="@{'/admin/changeuser/detail/'+${account.id}}"></a></td>
-							<td style="width:100px"><a>Mitarbeiter</a></td>
-							<td style="width:150px">
+							<td ><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="User anzeigen" th:href="@{'/admin/changeuser/detail/'+${account.id}}"></a></td>
+							<td ><a>Mitarbeiter</a></td>
+							<td >
 								<div class="btn-group" role="group">
 									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/editUser/'+${account.id}}" class="edit-button"></button>
 									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/deleteUser/'+${account.id}}" class="fire-button"></button>
@@ -60,9 +57,9 @@
 							</td>
 						</tr>
 						<tr class="article" th:each="account : ${admins}">
-							<td style="width:150px"><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="User anzeigen" th:href="@{'/admin/changeuser/detail/'+${account.id}}"></a></td>
-							<td style="width:100px"><a>Administrator</a></td>
-							<td style="width:150px">
+							<td ><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="User anzeigen" th:href="@{'/admin/changeuser/detail/'+${account.id}}"></a></td>
+							<td ><a>Administrator</a></td>
+							<td >
 								<div class="btn-group" role="group">
 									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/editUser/'+${account.id}}" class="edit-button" title="Edit Account"></button>
 									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/admin/changeuser/deleteUser/'+${account.id}}" class="fire-button" title="Delete Account"></button>

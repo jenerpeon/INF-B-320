@@ -59,6 +59,7 @@ public class CatalogController {
 		model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
 		model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
 		model.addAttribute("search", lookup);
+		model.addAttribute("categories", prodSearch.getCagegories());
 
 		return "catalog";
 	}
@@ -71,6 +72,7 @@ public class CatalogController {
 		model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
 		model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
 		model.addAttribute("search", lookup);
+		model.addAttribute("categories", prodSearch.getCagegories());
 
 		return "catalog";
 	}
@@ -80,6 +82,7 @@ public class CatalogController {
 
 		model.addAttribute("category", category);
 		model.addAttribute("ProdsOfCategory", prodSearch.getProdsByCategory(category));
+		model.addAttribute("categories", prodSearch.getCagegories());
 
 		return "catalog";
 	}
@@ -100,12 +103,14 @@ public class CatalogController {
 		model.addAttribute("split", split);
 		model.addAttribute("prods", page = concreteCatalog.findByCategory(category, new PageRequest(number-1,split)));
 		model.addAttribute("numbers", IntStream.range(1, page.getTotalPages()+1).boxed().collect(Collectors.toList()));
+		model.addAttribute("categories", prodSearch.getCagegories());
 		return "catalog";
 	}
 
 	@RequestMapping(value = "/catalog/{type}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)
-	public String changeStartPageSetting(@PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split) {
-		return "redirect:/catalog/" + category + '/' + split + '/' + number;
+	public String changeStartPageSetting(Pageable pagable, @PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split, ModelMap model) {
+		model.addAttribute("categories", prodSearch.getCagegories());
+		return "redirect:/catalog/"+category+'/'+split+'/'+number;
 	}
 
 	@RequestMapping("/detail/{prodId}")
@@ -117,7 +122,7 @@ public class CatalogController {
 		model.addAttribute("quantity", quantity);
 		model.addAttribute("orderable", quantity.isGreaterThan(NONE));
 		model.addAttribute("comments", prod.getAcceptedComments());
-
+		model.addAttribute("categories", prodSearch.getCagegories());
 		return "detail";
 	}
 

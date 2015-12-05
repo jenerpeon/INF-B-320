@@ -2,17 +2,16 @@
 
 #mainframe {
 	width: 950px;
-	height: 400px;
 	margin-left: auto;
 	margin-right: auto;
 	padding-left: 100px;
+	display: flex;
 }
 
 #employeenavigaton {
-	width: 200px;
-	height: 490px;
+	width: 20%;
 	border-right: 1px solid #000000;
-	float: left;
+	flex: auto;
 }
 
 #employeenavigaton p {
@@ -25,9 +24,9 @@
 }
 
 #workframe {
-	margin-left: 200px;
-	width: 750px;
-	height: 500px;
+	padding-left: 20px;
+	width: 75%;
+	felx: auto;
 }
 
 #workframe h2{
@@ -36,12 +35,9 @@
 }
 #workframe table {
 	table-layout: fixed;
-	width: 650px;
+	width: 700px;
 }
 #workframe tbody {
-	height: 400px;
-	overflow-x: hidden;
-	overflow-y: auto;
 }
 #workframe th {
 	text-align: center;
@@ -50,7 +46,7 @@
 }
 #workframe td {
 	text-align: center;
-	padding: 10px 20px 10px 20px;
+	padding: 10px 10px 10px 10px;
 	white-space: nowrap;
 }
 #workframe thead > tr, #workframe thead{
@@ -95,6 +91,30 @@
 	width: 35px;
 	height: 35px;
 	background-image: url(/resources/Bilder/order.png);
+	background-size: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 8px;
+	moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+#workframe .accept-button {
+	width: 35px;
+	height: 35px;
+	background-image: url(/resources/Bilder/accept.png);
+	background-size: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 8px;
+	moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+#workframe .cancel-button {
+	width: 35px;
+	height: 35px;
+	background-image: url(/resources/Bilder/cancel.png);
 	background-size: 25px;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -212,3 +232,26 @@
 	float: left;
 	width: 50%;
 }
+
+#orderData {
+	display: flex;
+}
+
+#orderData label {
+	float: left;
+	width: 34%;
+	margin-right:0.5em;
+    padding-top:0.2em;
+  	text-align:left;
+}
+#orderData fieldset {   
+	border: none; 
+} 
+#orderData fieldset ol {   
+	padding: 0.5em 1em 0 1em;   
+	list-style: none;  
+}  
+#orderData fieldset li {   
+	padding-bottom: 0.5em;  
+}
+

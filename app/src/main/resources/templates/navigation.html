@@ -87,6 +87,9 @@
 				<div>
 					<a href="#close" title="Close" class="close">X</a>
 					<h2>Registrierung</h2>
+					<ul id="registration-error">
+						<li th:each="line : ${message}" th:text="${line.getDefaultMessage()}"></li>
+					</ul>
 					<form method="post" th:action="@{/registerNew}">
 						<fieldset>
 

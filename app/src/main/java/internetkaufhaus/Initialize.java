@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 import internetkaufhaus.controller.AuthController;
 import internetkaufhaus.forms.RegistrationForm;
 import internetkaufhaus.model.AccountAdministration;
+import internetkaufhaus.model.ConcreteInventoryItem;
 import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.ConcreteProductRepository;
 import internetkaufhaus.model.ConcreteUserAccount;

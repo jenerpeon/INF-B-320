@@ -11,17 +11,16 @@
 <body>
 <div id="wrapper">
 	<div id="header" th:include="navigation :: navigation"></div>
+	<br/>
 	<main>
 		<div id="mainframe">
 			<div id="adminnavigaton" th:include="adminnavigation :: adminnavigation"></div>
 		
 			<div id="workframe">
-				<h1 id="welcome">Hallo Admin XYZ</h1>
+				<h1 th:text="@{'Hallo Admin '+${account.getUsername()}}" id="welcome">Hallo Admin XYZ</h1>
 			</div>
 		</div>
 	</main>
-	<br>
-
 	<div id="footer" th:include="footer :: footer"></div>
 </div>
 </body>

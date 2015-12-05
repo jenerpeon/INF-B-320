@@ -2,14 +2,26 @@
 package internetkaufhaus.controller;
 
 import internetkaufhaus.model.ConcreteProduct;
+import internetkaufhaus.model.ConcreteOrder;
 
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+
+import static org.salespointframework.core.Currencies.EURO;
+
+import java.time.LocalDateTime;
 import java.util.Optional;
+
+import javax.validation.Valid;
+
+import org.javamoney.moneta.Money;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.CartItem;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
+import org.salespointframework.order.OrderIdentifier;
 import org.salespointframework.payment.Cash;
+import org.salespointframework.payment.CreditCard;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
@@ -18,17 +30,21 @@ import org.springframework.security.access.prepost.PreAuthorize;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.mail.MailSender;
 
+import internetkaufhaus.forms.PaymentForm;
+import internetkaufhaus.forms.ShippingAdressForm;
+import internetkaufhaus.forms.BillingAdressForm;
 import internetkaufhaus.model.ConcreteMailSender;
 import internetkaufhaus.model.Search;
 @Controller
-@PreAuthorize("isAuthenticated()")
 @SessionAttributes("cart")
 class CartController {
 
@@ -60,7 +76,7 @@ class CartController {
 
 		cart.addOrUpdateItem(concreteproduct, Quantity.of(amount));
 		// get first Category of product and redirect to associated catalog search
-    return "redirect:catalog/"+concreteproduct.getCategories().iterator().next()+"/4/1";
+    return "redirect:catalog/"+concreteproduct.getCategories().iterator().next()+"/5/1";
 
 	}
 
@@ -101,24 +117,67 @@ class CartController {
 
 		return "redirect:/cart";
 	}
-	
-	@RequestMapping(value = "/pay", method = RequestMethod.POST)
-	public String pay(@ModelAttribute Cart cart, @LoggedIn Optional<UserAccount> userAccount) {
+	@RequestMapping(value="/orderdata/{option}", method = RequestMethod.POST)
+	public String orderdata(@PathVariable("option") int option, @LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
 		
 		return userAccount.map(account -> {
 
-			Order order = new Order(account,Cash.CASH);
+			model.addAttribute("option", option);
+
+			return "orderdata";
+		}).orElse("redirect:/login");
+	}
+	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
+	@RequestMapping(value="/orderdata/{option}", method = RequestMethod.GET)
+	public String orderdataredirect(@PathVariable("option") int option, @ModelAttribute Cart cart, @LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
+		
+		return userAccount.map(account -> {
+			model.addAttribute("option", option);
+			return "orderdata";
+		}).orElse("redirect:/login");
+	}
+	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
+	@RequestMapping(value="/payed", method = RequestMethod.POST)
+	public String payed(@ModelAttribute Cart cart, @ModelAttribute("paymentForm") @Valid PaymentForm paymentForm, @ModelAttribute("shippingAdressForm") @Valid ShippingAdressForm shippingAdressForm, @ModelAttribute("billingAdressForm") @Valid BillingAdressForm billingAdressForm, BindingResult result, @LoggedIn Optional<UserAccount> userAccount) {
+		return userAccount.map(account -> {
+			org.javamoney.moneta.Money dailyWithdrawalLimit = Money.of(1000000000, EURO);
+			org.javamoney.moneta.Money creditLimit = Money.of(1000000000, EURO);
+			LocalDateTime validFrom = LocalDateTime.MIN;
+			
+			ConcreteOrder order = new ConcreteOrder(account);
+			
 			cart.addItemsTo(order);
-
+			
+			
+			String billingAdress = billingAdressForm.getBillingFirstName() + " " + billingAdressForm.getBillingLastName() + 
+					"\n" + billingAdressForm.getBillingStreet() + " " + billingAdressForm.getBillingHouseNumber() + "\n" +
+					billingAdressForm.getBillingAdressLine2() + "\n" + billingAdressForm.getBillingZipCode() + "" +
+					billingAdressForm.getBillingTown();
+			
+			CreditCard paymentMethod = new CreditCard(paymentForm.getCardName(), paymentForm.getCardAssociationName(), paymentForm.getCardNumber(), paymentForm.getNameOnCard(), billingAdress, validFrom, paymentForm.getExpiryDateLocalDateTime(), paymentForm.getCardVerificationCode(), dailyWithdrawalLimit, creditLimit);
+			
+			order.setPaymentMethod(paymentMethod);
+			
+			order.setBillingAdress(billingAdressForm.getBillingAdress());
+			
+			order.setShippingAdress(shippingAdressForm.getShippingAdress());
+			
+			order.setDateOrdered(LocalDateTime.now());
+			
+			orderManager.save(order);
+			
 			orderManager.payOrder(order);
-			orderManager.completeOrder(order);
 
-            ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);
-            concreteMailSender.sendMail("heinztut@googlemail.com", "zu@googlemail.com", "subject", "text");
+			//orderManager.payOrder(order);
+			//orderManager.completeOrder(order);
+
+            //ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);
+            //concreteMailSender.sendMail("heinztut@googlemail.com", "zu@googlemail.com", "subject", "text");
             
 			cart.clear();
 
 			return "redirect:/";
 		}).orElse("redirect:/login");
 	}
+	
 }

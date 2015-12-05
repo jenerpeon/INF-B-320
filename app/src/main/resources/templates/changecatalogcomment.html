@@ -24,21 +24,18 @@
 		<main>
 		<div id="mainframe">
 			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
-			<div id="workframe" class="panel panel-default">
+			<div id="workframe" >
 			
-						<table class="table" style="font-size: 12pt;">
-							<thead>
-								<tr>
-									<th></th>
-									<th><a>Text</a></th>
-									<th><a>Bewertung</a></th>
-									<th><a>Datum</a></th>
-									<th><a></a></th>
-									<th><a>Löschen/Akzeptieren</a></th>
-								</tr>
-							</thead>
+						<table >
 							<tbody>
-								
+								<tr>
+									<td></td>
+									<td><a>Text</a></td>
+									<td><a>Bewertung</a></td>
+									<td><a>Datum</a></td>
+									<td><a></a></td>
+									<td><a>Löschen/Akzeptieren</a></td>
+								</tr>
 								<tr class="article" th:each="comment : ${Comments}"style="padding: 6px;">
 										<td> <input type="hidden" name="comment" th:value="${comment}"/></td>
 										<td><a th:text="${comment.text}">Kommentar</a></td>
@@ -55,10 +52,7 @@
 												</button>
 											</div>
 										</td>
-							
 								<tr>
-								
-									
 							</tbody>
 						</table>
 					</div>

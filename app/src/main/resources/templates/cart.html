@@ -19,25 +19,22 @@
 
 		<div id="main-wrapper">
 			<table th:unless="${cart.empty}">
-				<thead>
+				<tbody >
 					<tr>
-						<th></th>
-						<th>Name</th>
-						<th>Anzahl</th>
-						<th>Preis</th>
-						<th>Anzahl ändern</th>
-						<th>Entfernen</th>
+						<td>Name</td>
+						<td>Anzahl</td>
+						<td>Preis</td>
+						<td>Anzahl ändern</td>
+						<td>Entfernen</td>
 					</tr>
-				</thead>
-				<tbody th:remove="all-but-first">
 					<tr th:each="item : ${cart} ">
-						<td><input type="checkbox" /></td>
 						<td th:text="${item.productName}">Name</td>
 						<td th:text="${item.quantity}">Anzahl</td>
 						<td th:text="${item.price}">Preis</td>
 						<td>
 							<form action="changeAmount" method="post">
-								<input type="hidden" name="cid" th:value="${item.identifier}" /> <select name="amount" id="dropdown" size="1">
+								<input type="hidden" name="cid" th:value="${item.identifier}" />
+								<select onchange="this.form.submit()" name="amount" id="dropdown" size="1">
 									<option>1</option>
 									<option>2</option>
 									<option>3</option>
@@ -59,13 +56,10 @@
 			<div th:if="${cart.empty}">Leer</div>
 			<br />
 			<div>
-				<form class="form" method="post" action="checkout" sec:authorize="hasRole('ROLE_CUSTOMER')">
-					<input type="submit" value="Kaufen" />
-				</form>
 			</div>
 
 			<div>
-				<form class="form" method="post" action="pay">
+				<form class="form" method="post" action="orderdata/1">
 					<input type="submit" th:value="Bezahlen" value="kaufen" />
 				</form>
 			</div>
