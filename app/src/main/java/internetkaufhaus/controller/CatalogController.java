@@ -13,6 +13,8 @@ import org.salespointframework.catalog.Catalog;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
+import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import internetkaufhaus.model.Comment;
 import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.ConcreteProductRepository;
+import internetkaufhaus.model.ConcreteUserAccountRepository;
 import internetkaufhaus.model.Search;
 
 @Controller
@@ -37,13 +40,15 @@ public class CatalogController {
 	private final Inventory<InventoryItem> inventory;
 	private final ConcreteProductRepository concreteCatalog;
 	private final Search prodSearch;
+	private final ConcreteUserAccountRepository concreteManager;
 
 	@Autowired
-	public CatalogController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, ConcreteProductRepository concreteCatalog) {
+	public CatalogController(ConcreteUserAccountRepository concreteManager,Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, ConcreteProductRepository concreteCatalog) {
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.prodSearch = prodSearch;
 		this.concreteCatalog = concreteCatalog;
+        this.concreteManager = concreteManager;
 
 	}
 
@@ -117,11 +122,11 @@ public class CatalogController {
 	}
 
 	@RequestMapping(value = "/comment", method = RequestMethod.POST)
-	public String comment(@RequestParam("prodId") ConcreteProduct prod, @RequestParam("comment") String comment, @RequestParam("rating") int rating, Model model) {
+	public String comment(@RequestParam("prodId") ConcreteProduct prod, @RequestParam("comment") String comment, @RequestParam("rating") int rating, Model model, @LoggedIn Optional<UserAccount> user) {
 		Comment c = new Comment(comment, rating, new Date(), "");
-		if (!(comment == "")) {
-			prod.addComment(c);
+		if (!(comment == "") && user.isPresent()) {
 			c.setFormatedDate(c.getDate());
+			prod.addComment(c,concreteManager.findByUserAccount(user.get()));
 			catalog.save(prod);
 			model.addAttribute("time", c.getFormatedDate());
 		}
