@@ -6,10 +6,14 @@ import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
-import javax.swing.JOptionPane;
 import javax.validation.Valid;
 
 import org.apache.commons.collections.IteratorUtils;
@@ -23,10 +27,11 @@ import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.quantity.Quantity;
-import org.salespointframework.time.Interval;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -42,6 +47,11 @@ import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.forms.EditArticleForm;
 import internetkaufhaus.forms.StockForm;
+import internetkaufhaus.model.ConcreteMailSender;
+import internetkaufhaus.model.ConcreteOrder;
+import internetkaufhaus.model.ConcreteProduct;
+import internetkaufhaus.model.ConcreteUserAccount;
+import internetkaufhaus.model.NewsletterManager;
 import internetkaufhaus.model.Search;
 import internetkaufhaus.model.Statistic;
 import internetkaufhaus.model.StockManager;
@@ -56,16 +66,20 @@ public class ManagementController {
 	private final Search prodSearch;
 	private final OrderManager<ConcreteOrder> orderManager;
 	private final StockManager stock;
+	private final NewsletterManager newsManager;
+	private final MailSender sender;
 	//private final List<ConcreteProduct> carousselList;
 	//private final List<ConcreteProduct> selectionList;
 
 	@Autowired
-	public ManagementController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, OrderManager<ConcreteOrder> orderManager, StockManager stock) {
+	public ManagementController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, OrderManager<ConcreteOrder> orderManager, StockManager stock,NewsletterManager newsManager, MailSender sender) {
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.prodSearch = prodSearch;
 		this.orderManager = orderManager;
 		this.stock = stock;
+		this.sender=sender;
+		this.newsManager=newsManager;
 		//this.carousselList = carousselList;
 		//this.selectionList = selectionList;
 	}
@@ -86,7 +100,6 @@ public class ManagementController {
 
 	@RequestMapping("/employee/changecatalog/addArticle")
 	public String addArticle(Optional<UserAccount> userAccount, ModelMap model) {
-		model.addAttribute("categories", prodSearch.getCagegories());
 		model.addAttribute("categories", prodSearch.getCagegories());
 		return "changecatalognewitem";
 	}
@@ -204,19 +217,6 @@ public class ManagementController {
 			System.out.println("another error (file empty) !!!");
 		}
 
-		if (img.getOriginalFilename().isEmpty()) {
-
-			JOptionPane.showMessageDialog(null, "Bildpfad fehlt!");
-
-		}
-
-		if (editForm.getName().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Geben Sie bitte einen Artikelnamen an!");
-		}
-
-		if (editForm.getDescription().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Die Artikelbeschreibung fehlt!");
-		}
 
 		ConcreteProduct prodId = new ConcreteProduct(editForm.getName(), Money.of(editForm.getPrice(), "EUR"), editForm.getCategory(), editForm.getDescription(), "", img.getOriginalFilename());
 
@@ -241,13 +241,14 @@ public class ManagementController {
 		return "changecatalogdeleteitem";
 	}
 
-	@RequestMapping(value = "/employee/changecatalog/deletedArticle/{prodId}", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/employee/changecatalog/deletedArticle/{prodId}", method = RequestMethod.GET)
 	public String deletedArticle(@PathVariable("prodId") ProductIdentifier prod) {
-		//catalog.delete(catalog.findOne(prod).get());
+		
 		
 		prodSearch.delete(catalog.findOne(prod).get());
-		
 		inventory.delete(inventory.findByProductIdentifier(prod).get());
+		catalog.delete(catalog.findOne(prod).get());
 		
 		return "redirect:/employee/changecatalog";
 
@@ -355,7 +356,56 @@ public class ManagementController {
 		model.addAttribute("orderLines", orderLines);
 		return "orderdetail";
 	}
+	
+	@RequestMapping(value="employee/newsletter")
+	public String newsletter(ModelMap model){
+		model.addAttribute("newsUser",newsManager.getMap());
+		return "newsletter";
+	}
+	
+	@RequestMapping("/employee/newsletter/changeNewsletter")
+	public String changeNewsletter(Optional<UserAccount> userAccount, ModelMap model) {
+		model.addAttribute("categories", prodSearch.getCagegories());
+		return "changenewsletter";
+	}
+	
+	@RequestMapping(value="/employee/newsletter/deleteUserAbo/{mail}/{username}")
+	public String deleteUserAbo(@PathVariable("mail") String mail,@PathVariable("username") String name){
+		newsManager.getMap().remove(name);
+		return "redirect:/employee/newsletter";
+	}
 
+	@RequestMapping(value="/employee/newsletter/changeNewsletter/sendNewsletter", method=RequestMethod.GET)
+	public String sendNewsletter(@RequestParam("subject") String subject, @RequestParam("mailBody") String mailBody){
+		Map<Date,String> maildetails= new HashMap<Date,String>();
+		ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);
+		if(!(mailBody=="")){
+			for(String mail : this.newsManager.getMap().values()){
+				concreteMailSender.sendMail(mail, mailBody, "zu@googlemail.com", subject);
+			}
+			maildetails.put(new Date(), mailBody);
+			newsManager.getOldAbos().put(subject, maildetails);
+		}
+		return "redirect:/employee/newsletter";
+	}
+	
+	@RequestMapping(value="/employee/newsletter/oldAbos")
+	public String oldAbos(ModelMap model){
+		
+		model.addAttribute("mailComponents",newsManager.getOldAbos());
+		
+		return"oldnewsletterstable";
+	}
+
+	@RequestMapping(value="/employee/newsletter/oldAbos/{date}/{subject}")
+	public String oldAbosdetails(@PathVariable("date") String date,@PathVariable("subject")String subject, ModelMap model)  { 
+		model.addAttribute("date", date);
+		model.addAttribute("mailsubject",subject);
+		model.addAttribute("mailtext",newsManager.getOldAbos().get(subject));
+		
+		return"oldnewsletterdetail";
+	}
+	
 	public Inventory<InventoryItem> getInventory() {
 		return inventory;
 	}

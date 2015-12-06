@@ -33,7 +33,7 @@
 					<br />
 				</div>
 				
-				<form id="deleteitem" th:action="@{'/employee/changecatalog/deletedArticle/'+${concreteproduct.identifier}}" method="POST">
+				<form id="deleteitem" th:action="@{'/employee/changecatalog/deletedArticle/'+${concreteproduct.identifier}}" method="get">
 					<input type="submit" id="submitfield" value="Artikel löschen" />
 				</form>
 			</div>

@@ -75,7 +75,11 @@ public class AuthController extends SalespointSecurityConfiguration {
 	}
 
 	@RequestMapping("/registerNew")
+<<<<<<< HEAD
 	public String registerNew(ModelMap modelmap, @ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm, BindingResult result, RedirectAttributes redir) {
+=======
+	public  ModelAndView registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm, BindingResult result, RedirectAttributes redir, ModelMap model) {
+>>>>>>> 00147c1a1ba37d7e1d0dfc2bfcecd6f92ffdfa84
 		if (result.hasErrors()) {
 			modelAndView.setViewName("redirect:/#registration-modal");
 			redir.addFlashAttribute("message", result.getAllErrors());
@@ -93,7 +97,7 @@ public class AuthController extends SalespointSecurityConfiguration {
 		concreteUserAccountManager.save(user);
 		userAccountManager.save(user.getUserAccount());
 
-		modelmap.addAttribute("info", "account has been generate. Check your Email to validate");
+		model.addAttribute("info", "account has been generate. Check your Email to validate");
 		return "index";
 	}
 

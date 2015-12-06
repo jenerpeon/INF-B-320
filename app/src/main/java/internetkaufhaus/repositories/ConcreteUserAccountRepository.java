@@ -12,6 +12,7 @@ public interface ConcreteUserAccountRepository extends CrudRepository<ConcreteUs
 	ConcreteUserAccount findByEmail(String email); 
 	Iterable<ConcreteUserAccount> findByRole(Role role);
 	ConcreteUserAccount findByUserAccount(UserAccount acc);
+	
 } 
 
 

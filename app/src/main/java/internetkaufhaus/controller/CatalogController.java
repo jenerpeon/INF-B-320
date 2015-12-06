@@ -1,6 +1,9 @@
 package internetkaufhaus.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -19,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -27,8 +31,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import internetkaufhaus.entities.Comment;
-import internetkaufhaus.entities.ConcreteProduct;
+import internetkaufhaus.model.Comment;
+import internetkaufhaus.model.ConcreteMailSender;
+import internetkaufhaus.model.ConcreteProduct;
+import internetkaufhaus.model.ConcreteProductRepository;
+
+import internetkaufhaus.model.ConcreteUserAccount;
+import internetkaufhaus.model.ConcreteUserAccountRepository;
+import internetkaufhaus.model.NewsletterManager;
+
 import internetkaufhaus.model.Search;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
@@ -40,16 +51,21 @@ public class CatalogController {
 	private final Inventory<InventoryItem> inventory;
 	private final ConcreteProductRepository concreteCatalog;
 	private final Search prodSearch;
-	private final ConcreteUserAccountRepository concreteManager;
+	private final NewsletterManager newsManager;
+	private final MailSender sender;
+	private final ConcreteUserAccountRepository usermanager;
+
 
 	@Autowired
-	public CatalogController(ConcreteUserAccountRepository concreteManager,Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, ConcreteProductRepository concreteCatalog) {
+	public CatalogController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, ConcreteProductRepository concreteCatalog, NewsletterManager newsManager, MailSender sender,ConcreteUserAccountRepository usermanager) {
+
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.prodSearch = prodSearch;
 		this.concreteCatalog = concreteCatalog;
-        this.concreteManager = concreteManager;
-
+		this.newsManager= newsManager;
+		this.sender=sender;
+		this.usermanager=usermanager;
 	}
 
 	@RequestMapping("/sufu/{pagenumber}")
@@ -131,11 +147,33 @@ public class CatalogController {
 		Comment c = new Comment(comment, rating, new Date(), "");
 		if (!(comment == "") && user.isPresent()) {
 			c.setFormatedDate(c.getDate());
-			prod.addComment(c,concreteManager.findByUserAccount(user.get()));
+			prod.addComment(c,usermanager.findByUserAccount(user.get()));
 			catalog.save(prod);
 			model.addAttribute("time", c.getFormatedDate());
 		}
 		return "redirect:detail/" + prod.getIdentifier();
 	}
 
+	@RequestMapping(value="/newsletter", method=RequestMethod.GET)
+	public String newsletter(@RequestParam("email") String sendTo, ModelMap model) throws ParseException{
+		ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);
+		String text="Sie haben sich für den Woods Super Dooper Shop Newsletter angemeldet.";
+		String username;
+		
+		if(usermanager.findByEmail(sendTo)==null){
+			username="Nicht registierter Abonnet";
+		}
+		else username=usermanager.findByEmail(sendTo).getUserAccount().getUsername();
+		
+		newsManager.getMap().put(username, sendTo);
+		concreteMailSender.sendMail(sendTo, text,"zu@googlemail.com", "NewsletterAbonnement");
+	
+		model.addAttribute("prodList", catalog.findAll());
+		model.addAttribute("categories", prodSearch.getCagegories());
+		
+		return "index";
+		
+		
+			
+		}
 }

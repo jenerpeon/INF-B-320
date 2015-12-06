@@ -32,13 +32,13 @@ public class ConcreteUserAccount implements Serializable{
     
 	@OneToOne
 	private UserAccount userAccount;
-
 	private String email;
 	private String address;
 	private String zipCode;
 	private String city;
     private String recruitedby;
     private Role role;
+    
 
 	public ConcreteUserAccount() {}
 	
@@ -137,4 +137,5 @@ public class ConcreteUserAccount implements Serializable{
     public Role getRole(){
     	return this.userAccount.getRoles().iterator().next();
     }
+
 }
