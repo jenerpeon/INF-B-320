@@ -23,6 +23,6 @@ public class GeneralInterceptor extends HandlerInterceptorAdapter {
     @Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView){
 			ModelMap modelMap = modelAndView.getModelMap();
-			modelMap.addAttribute("Categories", prodSearch.getCagegories());
+			modelMap.addAttribute("categories", prodSearch.getCagegories());
 		}
 	} 

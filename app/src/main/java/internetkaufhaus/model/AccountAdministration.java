@@ -12,13 +12,18 @@ import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.ModelMap;
 
 @Component
 public class AccountAdministration {
 	private ConcreteMailSender concreteSender;
     private SecureRandom random;
+    //Maps key to email. Used in Password reset and registration
     Map<String,String> key2email; 
+    //Maps emails to passwords. Used in Password reset
     Map<String, String> email2pass; 
+    //Maps recruits to invitators. Used in Registration with recruitation link
+    Map<String, String> recruit2invite;
 
     @OneToOne private ConcreteUserAccountRepository ConcreteUserAccountManager;
     @OneToOne private UserAccountManager userAccountManager; 
@@ -27,7 +32,25 @@ public class AccountAdministration {
         this.random = new SecureRandom();
         this.key2email = new HashMap<String, String>();
         this.email2pass = new HashMap<String, String>();
+        this.recruit2invite = new HashMap<String, String>();
     }
+    
+    public String RecruitCustomer(String recruit, String invitator){
+        if(this.isRegistered(recruit)){
+        	return "your friend is allready a member";
+        }
+        String invitation = "http://localhost:8080/register";
+        this.concreteSender.sendMail(recruit, invitator+" recruited you. Join now! "+invitation, "unnecessaryfield", "Click to join");
+        this.recruit2invite.put(recruit, invitator);
+        return "your friend got an invitation link";
+    }
+    
+    public boolean isRecruit(String email){
+    	if(this.recruit2invite.containsKey(email))
+    		return true;
+    	return false;
+    }
+    
     public boolean isRegistered(String email){
     	if(ConcreteUserAccountManager.findByEmail(email)!=null)
     		return true;
@@ -41,7 +64,7 @@ public class AccountAdministration {
     }
     public void PassValidation(String key){
         String validLink = "http://localhost:8080/NewPass/".concat(key);
-        this.concreteSender.sendMail(key2email.get(key),validLink,"tolltolltoll@einfachtoll","Verify your changes");
+        this.concreteSender.sendMail(key2email.get(key),validLink,"unnecessaryfield","Verify your changes");
     }
     
     public void setConcreteUserAccountManager(ConcreteUserAccountRepository concreteUserAccountManager){

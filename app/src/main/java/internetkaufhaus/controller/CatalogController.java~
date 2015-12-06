@@ -35,11 +35,13 @@ import internetkaufhaus.model.Comment;
 import internetkaufhaus.model.ConcreteMailSender;
 import internetkaufhaus.model.ConcreteProduct;
 import internetkaufhaus.model.ConcreteProductRepository;
-
+<<<<<<< HEAD
 import internetkaufhaus.model.ConcreteUserAccount;
 import internetkaufhaus.model.ConcreteUserAccountRepository;
 import internetkaufhaus.model.NewsletterManager;
-
+=======
+import internetkaufhaus.model.ConcreteUserAccountRepository;
+>>>>>>> d8a0f6a435e35e2c0df28b411ae277964a8cc234
 import internetkaufhaus.model.Search;
 
 @Controller
@@ -49,6 +51,7 @@ public class CatalogController {
 	private final Inventory<InventoryItem> inventory;
 	private final ConcreteProductRepository concreteCatalog;
 	private final Search prodSearch;
+<<<<<<< HEAD
 	private final NewsletterManager newsManager;
 	private final MailSender sender;
 	private final ConcreteUserAccountRepository usermanager;
@@ -56,14 +59,24 @@ public class CatalogController {
 
 	@Autowired
 	public CatalogController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, ConcreteProductRepository concreteCatalog, NewsletterManager newsManager, MailSender sender,ConcreteUserAccountRepository usermanager) {
+=======
+	private final ConcreteUserAccountRepository concreteManager;
 
+	@Autowired
+	public CatalogController(ConcreteUserAccountRepository concreteManager,Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, ConcreteProductRepository concreteCatalog) {
+>>>>>>> d8a0f6a435e35e2c0df28b411ae277964a8cc234
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.prodSearch = prodSearch;
 		this.concreteCatalog = concreteCatalog;
+<<<<<<< HEAD
 		this.newsManager= newsManager;
 		this.sender=sender;
 		this.usermanager=usermanager;
+=======
+        this.concreteManager = concreteManager;
+
+>>>>>>> d8a0f6a435e35e2c0df28b411ae277964a8cc234
 	}
 
 	@RequestMapping("/sufu/{pagenumber}")
@@ -145,7 +158,7 @@ public class CatalogController {
 		Comment c = new Comment(comment, rating, new Date(), "");
 		if (!(comment == "") && user.isPresent()) {
 			c.setFormatedDate(c.getDate());
-			prod.addComment(c,usermanager.findByUserAccount(user.get()));
+			prod.addComment(c,concreteManager.findByUserAccount(user.get()));
 			catalog.save(prod);
 			model.addAttribute("time", c.getFormatedDate());
 		}

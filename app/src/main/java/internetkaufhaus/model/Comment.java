@@ -11,7 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "COMMENTS")
@@ -24,6 +27,7 @@ public class Comment implements Serializable {
 	@Column(name = "ID")
 	private Long commentid;
 
+//	@NotEmpty(message="{Comment.text.NotEmpty}")
 	@Column(name = "TEXT")
 	private String text;
 
@@ -36,23 +40,16 @@ public class Comment implements Serializable {
 	@Column(name = "REVIEWED")
 	private boolean accepted;
 
-	@Column(name = "REMOVED")
-	private boolean removed;
-
 	private String formatedDate;
 
 	@ManyToOne
 	@JoinColumn(name = "CPRODUCT_ID", nullable = false)
 	private ConcreteProduct product;
 
-	public ConcreteProduct getParent() {
-		return product;
-	}
-
-	public void setParent(ConcreteProduct product) {
-		this.product = product;
-	}
-
+    @OneToOne
+    @JoinColumn(name= "CACCOUNT_ID", nullable = false)
+    private ConcreteUserAccount user; 
+    
 	@SuppressWarnings("unused")
 	private Comment() {
 	}
@@ -63,8 +60,15 @@ public class Comment implements Serializable {
 		this.date = dateTime;
 		this.formatedDate = t;
 		this.accepted = false;
-		this.removed = false;
 	}
+
+    public ConcreteUserAccount getUserAccount(){
+    	return this.user;
+    }
+    
+    public void setUser(ConcreteUserAccount user){
+        this.user = user;
+    }
 
 	public Long getCommentid() {
 		return commentid;
@@ -73,17 +77,8 @@ public class Comment implements Serializable {
 	public void setCommentid(Long commentid) {
 		this.commentid = commentid;
 	}
-
-	public boolean isRemoved() {
-		return removed;
-	}
-
-	public void setRemoved(boolean removed) {
-		this.removed = removed;
-	}
-
 	public ConcreteProduct getProduct() {
-		return product;
+		return this.product;
 	}
 
 	public void setProduct(ConcreteProduct product) {

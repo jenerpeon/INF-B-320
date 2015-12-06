@@ -1,10 +1,14 @@
 package internetkaufhaus.controller;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.salespointframework.SalespointSecurityConfiguration;
 import org.salespointframework.useraccount.Role;
+import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
+import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -49,25 +53,20 @@ public class AuthController extends SalespointSecurityConfiguration {
 				logout().logoutUrl("/logout").logoutSuccessUrl("/");
 	}
 
-	@RequestMapping(value = "/passreset")
-	public String resetPassword() {
-		return "passreset";
-	}
-
+	// Deprecated
+	/*
+	 * @RequestMapping(value = "/passreset") public String resetPassword() { return "passreset"; }
+	 */
 	@RequestMapping(value = "/NewPass", method = RequestMethod.POST)
 	public String newPass(@RequestParam("email") String email, @RequestParam("password") String pass) {
 		String key = this.accountAdministration.requestPass(pass, email);
 		this.accountAdministration.PassValidation(key);
-		return "redirect:/passreset";
+		return "redirect/#login-modal";// "redirect:/passreset";
 	}
 
 	@RequestMapping(value = "/NewPass/{key}")
 	public String changepassword(@PathVariable("key") String key) {
-		// boolean valid = this.accountAdministration.isValidKey(key);
-		// if (!valid)
-		// System.out.println("Your Key is not Valid");
-		this.accountAdministration.verifyPass(key);// ByEmail("behrens_lars@gmx.de"
-		// System.out.println(this.concreteUserAccountManager.findAll().toString());
+		this.accountAdministration.verifyPass(key);
 		return "redirect:/#login-modal";
 	}
 
@@ -77,18 +76,36 @@ public class AuthController extends SalespointSecurityConfiguration {
 	}
 
 	@RequestMapping("/registerNew")
-	public ModelAndView registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm, BindingResult result, RedirectAttributes redir) {
+	public  ModelAndView registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm, BindingResult result, RedirectAttributes redir, ModelMap model) {
 		if (result.hasErrors()) {
 			modelAndView.setViewName("redirect:/#registration-modal");
 			redir.addFlashAttribute("message", result.getAllErrors());
 			return modelAndView;
 		}
 
+		/* catch if mail address allready taken */
+		if (concreteUserAccountManager.findByEmail(registrationForm.getEmail()) == null)
+			return "redirect:/#login-modal";
+
 		ConcreteUserAccount user = new ConcreteUserAccount(registrationForm.getEmail(), registrationForm.getName(), registrationForm.getFirstname(), registrationForm.getLastname(), registrationForm.getAddress(), registrationForm.getZipCode(), registrationForm.getCity(), registrationForm.getPassword(), Role.of("ROLE_CUSTOMER"), this.userAccountManager);
+		if (this.accountAdministration.isRecruit(registrationForm.getEmail())) {
+			user.setRecruitedBy(registrationForm.getEmail());
+		}
 		concreteUserAccountManager.save(user);
 		userAccountManager.save(user.getUserAccount());
-		
-		modelAndView.setViewName("redirect:/");
-		return modelAndView;
+
+		model.addAttribute("info", "account has been generate. Check your Email to validate");
+		return "index";
 	}
+
+	@RequestMapping(value = { "/recruit" })
+	public String recruitUser(ModelMap modelmap, @RequestParam(value = "email") String recruit, @LoggedIn Optional<UserAccount> userAccount) {
+		String invitator = "none@gmx.de";
+		if (!(userAccount.get().getEmail() == null))
+			invitator = userAccount.get().getEmail();
+		String msg = this.accountAdministration.RecruitCustomer(recruit, invitator);
+		modelmap.addAttribute("info", msg);
+		return "/index";
+	}
+
 }

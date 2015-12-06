@@ -403,7 +403,7 @@ public class ManagementController {
 		model.addAttribute("date", date);
 		model.addAttribute("mailsubject",subject);
 		model.addAttribute("mailtext",newsManager.getOldAbos().get(subject));
-		System.out.println("Hallo Hallo Haloolooo");
+		
 		return"oldnewsletterdetail";
 	}
 	

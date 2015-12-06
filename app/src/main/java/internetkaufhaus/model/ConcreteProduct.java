@@ -1,8 +1,11 @@
 package internetkaufhaus.model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,18 +26,19 @@ public class ConcreteProduct extends Product {
 
 	@Column(name = "CATEGORY")
 	private String category;
-
 	private String imagefile;
 	private String description;
 	private String webLink;
 
+
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE }, mappedBy = "product", orphanRemoval = true)
 	private List<Comment> comments = new LinkedList<Comment>();
+	/*@Column(name = "COMMENTS")
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE }, mappedBy = "product", orphanRemoval = true)
+	private List<Comment> comments = new ArrayList<Comment>();*/
 
 	@SuppressWarnings({ "unused", "deprecation" })
-	private ConcreteProduct() {
-
-	}
+	private ConcreteProduct() {}
 
 	public ConcreteProduct(String name, Money price, String category, String description, String webLink, String imagefile) {
 		super(name, price);
@@ -45,27 +49,50 @@ public class ConcreteProduct extends Product {
 		this.category = category;
 	}
 
-	public List<Comment> getComments() {
+	public int getRatings() {
+		return this.getAcceptedComments().size();
+	}
+
+	public boolean isCommentator(ConcreteUserAccount user) {
+		for (Comment c : comments) {
+			if (c.getUserAccount().equals(user))
+				return true;
+		}
+		return false;
+	}
+
+	public List<Integer> getRating() {
+		double rating = 0;
+		if (comments.isEmpty())
+			return null;
+		for (Comment c : this.getAcceptedComments()){
+			System.out.println("single rating"+c.getRating());
+			rating += c.getRating();}
+		rating = (rating / (this.getAcceptedComments().size()) + (0.5));
+		System.out.println("size:"+this.getAcceptedComments().size());
+		System.out.println("rating"+rating);
+		return IntStream.range(0, (int)rating).boxed().collect(Collectors.toList());
+	}
+
+	public Iterable<Comment> getComments() {
 		return comments;
 	}
 
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
-
-	public boolean addComment(Comment c) {
-		c.setParent(this);
-		return this.comments.add(c);
+	public String addComment(Comment c, ConcreteUserAccount userAccount) {
+//		if (isCommentator(userAccount))
+//			return "Sie haben dieses Produkt bereits bewertet";
+		c.setProduct(this);
+		c.setUser(userAccount);
+		userAccount.addComment(c);
+		this.comments.add(c);
+		return "Vielen Dank fuer Ihre Bewertung";
 	}
 
 	public boolean removeComment(Comment c) {
-		c.setParent(null);
-		return comments.remove(c);
-	}
-
-	public Comment removeCommentAt(int i) {
-		comments.get(i).setParent(null);
-		return comments.remove(i);
+		c.setProduct(null);
+		c.setUser(null);
+		comments.remove(c);
+		return true;
 	}
 
 	public List<Comment> getAcceptedComments() {
@@ -114,7 +141,6 @@ public class ConcreteProduct extends Product {
 	public String getWebLink() {
 		return webLink;
 	}
-
 
 	public void setWebLink(String webLink) {
 		if (webLink.length() == 0) {

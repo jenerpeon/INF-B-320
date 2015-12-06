@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Component;
 
+import internetkaufhaus.controller.AuthController;
+import internetkaufhaus.forms.RegistrationForm;
 import internetkaufhaus.model.AccountAdministration;
 import internetkaufhaus.model.ConcreteInventoryItem;
 import internetkaufhaus.model.ConcreteProduct;
@@ -132,6 +134,15 @@ public class Initialize implements DataInitializer {
 		userAccounts.add(new ConcreteUserAccount("admin", "admin", customerRole, userAccountManager));
 		userAccounts.add(new ConcreteUserAccount("behrens_lars@gmx.de", "lars", "Lars", "Behrens", "Musterstraße", "01069", "Definitiv nicht Dresden", "lars", adminRole, userAccountManager));
 
+		/*RegistrationForm reg = new RegistrationForm();
+		reg.setEmail("behrens_lars@gmx.de");
+		reg.setName("peons");
+		reg.setPassword("asdf");
+		reg.setPasswordrepeat("asdf");
+		
+	*/	
+		
+		
 		for (ConcreteUserAccount acc : userAccounts) {
 			userAccountManager.save(acc.getUserAccount());
 			ConcreteUserAccountManager.save(acc);
