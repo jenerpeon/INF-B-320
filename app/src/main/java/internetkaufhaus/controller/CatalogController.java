@@ -1,6 +1,9 @@
 package internetkaufhaus.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -145,17 +148,19 @@ public class CatalogController {
 	}
 
 	@RequestMapping(value="/newsletter", method=RequestMethod.GET)
-	public String newsletter(@RequestParam("email") String sendTo, ModelMap model){
+	public String newsletter(@RequestParam("email") String sendTo, ModelMap model) throws ParseException{
 		ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);
+		String text="Sie haben sich für den Woods Super Dooper Shop Newsletter angemeldet.";
 		String username;
-		newsManager.addToNewsletterAbo(sendTo);
+		
 		if(usermanager.findByEmail(sendTo)==null){
 			username="Nicht registierter Abonnet";
 		}
 		else username=usermanager.findByEmail(sendTo).getUserAccount().getUsername();
-		newsManager.getMap().put(username, sendTo);
-		concreteMailSender.sendMail(sendTo, "Sie haben sich für den Woods Super Dooper Shop Newsletter angemeldet.", "zu@googlemail.com", "NewsletterAbonnement");
 		
+		newsManager.getMap().put(username, sendTo);
+		concreteMailSender.sendMail(sendTo, text,"zu@googlemail.com", "NewsletterAbonnement");
+	
 		model.addAttribute("prodList", catalog.findAll());
 		model.addAttribute("categories", prodSearch.getCagegories());
 		

@@ -3,11 +3,19 @@ package internetkaufhaus.controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -235,7 +243,7 @@ public class ManagementController {
 	}
 
 
-	@RequestMapping(value = "/employee/changecatalog/deletedArticle/{prodId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/employee/changecatalog/deletedArticle/{prodId}", method = RequestMethod.GET)
 	public String deletedArticle(@PathVariable("prodId") ProductIdentifier prod) {
 		
 		
@@ -364,21 +372,41 @@ public class ManagementController {
 	
 	@RequestMapping(value="/employee/newsletter/deleteUserAbo/{mail}/{username}")
 	public String deleteUserAbo(@PathVariable("mail") String mail,@PathVariable("username") String name){
-		newsManager.deleteNewsletterAbo(mail);
 		newsManager.getMap().remove(name);
 		return "redirect:/employee/newsletter";
 	}
 
 	@RequestMapping(value="/employee/newsletter/changeNewsletter/sendNewsletter", method=RequestMethod.GET)
 	public String sendNewsletter(@RequestParam("subject") String subject, @RequestParam("mailBody") String mailBody){
+		Map<Date,String> maildetails= new HashMap<Date,String>();
 		ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);
-		for(String mail : this.newsManager.getNewsletterAbo()){
-			concreteMailSender.sendMail(mail, mailBody, "zu@googlemail.com", subject);
+		if(!(mailBody=="")){
+			for(String mail : this.newsManager.getMap().values()){
+				concreteMailSender.sendMail(mail, mailBody, "zu@googlemail.com", subject);
+			}
+			maildetails.put(new Date(), mailBody);
+			newsManager.getOldAbos().put(subject, maildetails);
 		}
-		
 		return "redirect:/employee/newsletter";
 	}
+	
+	@RequestMapping(value="/employee/newsletter/oldAbos")
+	public String oldAbos(ModelMap model){
+		
+		model.addAttribute("mailComponents",newsManager.getOldAbos());
+		
+		return"oldnewsletterstable";
+	}
 
+	@RequestMapping(value="/employee/newsletter/oldAbos/{date}/{subject}")
+	public String oldAbosdetails(@PathVariable("date") String date,@PathVariable("subject")String subject, ModelMap model)  { 
+		model.addAttribute("date", date);
+		model.addAttribute("mailsubject",subject);
+		model.addAttribute("mailtext",newsManager.getOldAbos().get(subject));
+		System.out.println("Hallo Hallo Haloolooo");
+		return"oldnewsletterdetail";
+	}
+	
 	public Inventory<InventoryItem> getInventory() {
 		return inventory;
 	}

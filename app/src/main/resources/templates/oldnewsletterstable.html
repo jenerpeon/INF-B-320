@@ -32,22 +32,23 @@
 				<table>
 					<tbody>
 						<tr>
-							<td><a>Name</a></td>
-							<td><a>Email</a></td>
-							<td><a>Entfernen</a></td>
+							<td><a>Datum</a></td>
+							<td><a>Betreff</a></td>
+							<td><a>Details</a></td>
 						</tr>
-						<tr class="user" th:each="user : ${newsUser}">
-							<td ><span th:text="${user.key}" class="name"></span></td>
-							<td ><span th:text="${user.value}"></span></td>
-							<td>
+						<tr class="details" th:each="component : ${mailComponents}">
+							<td ><span th:each="com  :${component.value}" th:text="${#dates.format(com.key, 'dd MMM yyyy, HH:mm')}" class="date"></span></td>
+							<td ><span  th:text="${component.key}"></span></td>
+							
+							<td th:each="com :${component.value}">
 								<div class="btn-group" role="group">
-									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/newsletter/deleteUserAbo/'+${user.value}+'/'+${user.key}}" class="delete-button" title="User aus Abo entfernen"></button>
+									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/newsletter/oldAbos/'+${com.key}+'/'+${component.key}}" class="details-button" title="Details"></button>
 								</div>
 							</td>
 						</tr>
 					</tbody>
 				</table>
-				<button id="oldNewsletter" type="button" onclick="self.location.href = this.getAttribute('href');" href="/employee/newsletter/oldAbos">Alte Newsletter</button>
+				
 				<button id="newNewsletter" type="button" onclick="self.location.href = this.getAttribute('href');" href="/employee/newsletter/changeNewsletter">Neuen Newsletter versenden</button>
 			</div>
 
