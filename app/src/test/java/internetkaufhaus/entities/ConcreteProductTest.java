@@ -1,4 +1,4 @@
-package internetkaufhaus.model;
+package internetkaufhaus.entities;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -17,6 +17,8 @@ import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
+
+import internetkaufhaus.entities.ConcreteProduct;
 
 public class ConcreteProductTest {
 	

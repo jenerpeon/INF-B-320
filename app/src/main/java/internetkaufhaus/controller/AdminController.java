@@ -27,9 +27,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import internetkaufhaus.model.ConcreteOrder;
-import internetkaufhaus.model.ConcreteUserAccount;
-import internetkaufhaus.model.ConcreteUserAccountRepository;
+import internetkaufhaus.entities.ConcreteOrder;
+import internetkaufhaus.entities.ConcreteUserAccount;
+import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
 @Controller
 @PreAuthorize("hasRole('ROLE_ADMIN')")

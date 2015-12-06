@@ -1,4 +1,4 @@
-package internetkaufhaus.model;
+package internetkaufhaus.repositories;
 
 import java.util.Iterator;
 import java.util.Optional;

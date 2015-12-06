@@ -1,4 +1,4 @@
-package internetkaufhaus.model;
+package internetkaufhaus.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;

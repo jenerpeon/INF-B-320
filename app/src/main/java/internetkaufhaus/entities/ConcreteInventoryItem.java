@@ -1,4 +1,4 @@
-package internetkaufhaus.model;
+package internetkaufhaus.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

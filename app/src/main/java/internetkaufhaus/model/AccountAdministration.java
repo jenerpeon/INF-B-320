@@ -14,6 +14,8 @@ import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 
+import internetkaufhaus.repositories.ConcreteUserAccountRepository;
+
 @Component
 public class AccountAdministration {
 	private ConcreteMailSender concreteSender;

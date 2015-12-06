@@ -15,7 +15,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.forms.RegistrationForm;
 import internetkaufhaus.model.AccountAdministration;
-import internetkaufhaus.model.ConcreteUserAccount;
-import internetkaufhaus.model.ConcreteUserAccountRepository;
+import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
 @Controller
 public class AuthController extends SalespointSecurityConfiguration {
@@ -76,11 +75,11 @@ public class AuthController extends SalespointSecurityConfiguration {
 	}
 
 	@RequestMapping("/registerNew")
-	public ModelAndView registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm, BindingResult result, RedirectAttributes redir) {
+	public String registerNew(ModelMap modelmap, @ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm, BindingResult result, RedirectAttributes redir) {
 		if (result.hasErrors()) {
 			modelAndView.setViewName("redirect:/#registration-modal");
 			redir.addFlashAttribute("message", result.getAllErrors());
-			return modelAndView;
+			return "redirect:/#registration-modal";
 		}
 
 		/* catch if mail address allready taken */

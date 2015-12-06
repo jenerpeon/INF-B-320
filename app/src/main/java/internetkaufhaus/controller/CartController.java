@@ -1,9 +1,6 @@
 
 package internetkaufhaus.controller;
 
-import internetkaufhaus.model.ConcreteProduct;
-import internetkaufhaus.model.ConcreteOrder;
-
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 
@@ -41,6 +38,8 @@ import org.springframework.mail.MailSender;
 
 import internetkaufhaus.forms.PaymentForm;
 import internetkaufhaus.forms.ShippingAdressForm;
+import internetkaufhaus.entities.ConcreteOrder;
+import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.forms.BillingAdressForm;
 import internetkaufhaus.model.ConcreteMailSender;
 import internetkaufhaus.model.Search;

@@ -1,4 +1,4 @@
-package internetkaufhaus.model;
+package internetkaufhaus.repositories;
 
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;

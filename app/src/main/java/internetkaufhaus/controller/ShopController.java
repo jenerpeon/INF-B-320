@@ -8,7 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import internetkaufhaus.model.ConcreteProduct;
+import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.model.Search;
 
 @Controller
