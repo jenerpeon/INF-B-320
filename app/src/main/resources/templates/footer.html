@@ -75,12 +75,15 @@
 							<li><a>Die Abmeldung ist jederzeit am Ende jeder E-Mail
 									möglich.</a></li>
 							<li><br>
-								<form id="newsletter">
+								<form id="newsletter" method="get" action="/newsletter">
 									<table>
 										<tbody>
 											<tr id="newslettercolumn">
-												<td><input type="email" id="newslettermail"
-													value="E-Mail Adresse" size="12" onFocus="value=''"/></td>
+												<td>
+													<fieldset>
+														<input type="email" id="newslettermail" name="email" placeholder="E-Mail Adresse" size="12" onFocus="value=''"/>
+													</fieldset>
+												</td>	
 												<td><input type="image"
 													src="/resources/Bilder/newsletter.png"
 													alt="Newsletter_Icon" /></td>

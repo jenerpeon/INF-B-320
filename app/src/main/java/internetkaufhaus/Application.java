@@ -24,7 +24,6 @@ public class Application {
 	
 	@Configuration
 	static class InterceptorConfiguration extends WebMvcConfigurerAdapter{
-		
 		@Autowired
 		private Search search;
 		

@@ -1,0 +1,126 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-10-20T11:57:54+00:00
+
+====== 20.10.2015 - Protokoll ======
+Created Dienstag 20 Oktober 2015
+
+===== Was wurde Besprochen: =====
+* Kundengespraech
+	* kann kriterien
+	* muss kriterien
+* ziele
+* Umgang mit der Versionsverwaltung 
+* Kommunikation
+* Magicdraw
+
+===== Welche Ergebnisse wurden Erziehlt: =====
+
+==== Musskriterien ====
+* hat Sortimentverwaltung, 
+* Katalog, Produkte, kundenmeinungen, 
+* Abwicklung von kaeufen,
+* Rabatt und Retourbehandlung
+	* retourgrund
+* Ermittlung des Geschaeftsergebnisses
+	* Lager Festkosten 
+	* einkaufspreis
+	* verkaufspreis
+	* Monatliches intervall fuer billanz
+* Rollen
+	* gast
+		* Kann sortiment einsehen
+	* kunde
+		* Kann Bestellungen Taetigen
+		* konto hat passwort vergessen funktion
+		* daten aendern: email, name username addresse
+	* mitarbeiter
+		* lagerhaltung - einkauf
+		* neue artikel hinzufuegen 
+		* artikel entfernen
+	* admin (mindestens ein admin)
+		* personalverwaltung
+		* Werwaltet Geschaeftsergebnisse
+* Ermittlung der erfolgreichsten Werber
+
+==== Kannkriterien ====
+* Retourpaketschein generieren
+* Meinungen/Bewertungen anonym abgeben
+
+
+==== Naehre Ausfuehrung der Funktionalitaeten: ====
+
+=== Katalog: ===
+* Der Katalog besteht aus einer Menge von Produkten
+
+=== Produkt: ===
+* jedes Produkt hat eine WWW seite
+	* Bilder
+	* Detailinformation des Herstellers
+	* Kundenmeinungen
+* Email Newsletter mit informationen zu neu aufgenommenen Artikeln 
+* Jedes Produkt kann von einem Nutzer genau einmal kommentiert/Bewertet werden
+
+=== Rabattkonto: ===
+* Werbern werden 5% aller Umseatze eines Geworbenen gutgeschrieben (nach einem Monat)
+* Es werden (maximal) Rabatte von 20% auf alle Einkaeufe gewaehrt, bis das Rabattkonto verbraucht ist.
+
+=== Artikelverwaltung: ===
+* schlecht verkaufte/ mehrfach schlecht beurteilte artikel fliegen aus dem Sortiment
+
+=== Mit Emma in 80 Tagen um die Welt: ===
+* 10% erfolgreichsten Werber (hoechste Rabatteinnahmen) nehmen teil
+* Anzahl der Reisen von Jahresgewinn Abhaengig
+
+=== Kaufabwicklung: ===
+* als Kunde ueber die Produktseite
+* bestellbestaetigung und artikelinformation per mail
+
+==== Fragen: ====
+* Benoetigen Mitarbeiter und Admins einen Account? Taetigen Sie Ihre arbeit ueber das Kaufhausportal?
+	* Ja
+* Muessen kundenmeinungen auf Sinnhaftigkeit ueberprueft werden, bevor sie oeffentlich werden?
+	* koennen meinungen und Kommentare auch anonym abgegeben werden? 
+		* kann kriterium
+	* Es ist genau eine bewertung pro produkt und user moeglich
+* Welche Informationen Sollen im Newsletter ueber neue Produkte enthalten sein. In welcher Sortierung?
+	* Wird erstmal so schlicht wie moeglich gehalten.
+* Besitzt Emma eine Zertifizierte Domain fuer mails?
+	* Nein
+* Welche Werber sind die mit dem hoechsten Rabattkontofluss?
+	* Die Bewerber mit den hoechsten Einnahmen
+* Gibt Design kriterien (korporate design) der Firma Emma?
+	* nein
+
+==== Umgang mit der Versionsverwaltung ====
+* Fuer jede Programmieraufgabe wird ein Issue angelegt
+* Issues werden mit milestones assoziiert
+
+==== Kommunikation ====
+* Christoph bekommt einen Slack invite
+
+==== Magic Draw ====
+* Christoph schickt uns eine Lizenz via mail.
+
+===== Formulierte Ziele: =====
+
+==== bis 26.10.2015 (23Uhr) ====
+
+=== muss: ===
+* kontextdiagramm
+* use case 
+* top level architektur
+
+=== kann: ===
+* pflichtenheft tabellarisch durchnummeriert
+* akzeptanztestfaelle (bilden sich aus anforderungen)
+* analyse klassendiagramm
+
+==== bis 02.11.2015 (23Uhr) ====
+* pflichtenheft tabellarisch durchnummeriert
+* akzeptanztestfaelle (bilden sich aus anforderungen)
+* Analyseklassendiagramm
+* Sequenzdiagramme
+* pflichtenheft
+* gui-prototyp: skizzen 
+
