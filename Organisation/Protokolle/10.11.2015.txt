@@ -1,0 +1,36 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-11-10T14:58:13+01:00
+
+====== 10.11.2015 ======
+Created Dienstag 10 November 2015
+
+==== Was ist letzte woche Passiert: ====
+* Entwurfsklassendiagramm
+* Salespoint klassen sind im Diagramm unnoetig
+* getter und setter fehlen
+* gut waere: layout fuer trennung salespoint/internetkaufhaus 
+
+==== GUI-Prototyp (geschlossen) ====
+
+==== Entwicklerdoku ====
+* template module sind pflicht
+* Erklaeren: Diagramme
+
+==== Entwurfsklassendiagramm: ====
+* design patterns (mvc durch spring vorgegeben)
+
+==== Tests: ====
+* junit
+* alles ausser getter setter testen
+* sonaqube extension fuer testmetrik
+
+==== CI: ====
+* jenkins (wird eingerichtet)
+
+==== TODO: ====
+* Prototyp mit gui verbinden
+* Design beenden
+* zwischenpraesentation
+	* praesentationsvorlagen tu dresden
+	* Vorschlag Max: C

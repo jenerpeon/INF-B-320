@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+internetkaufhaus/controller/CatalogController.class
+internetkaufhaus/Application.class
+internetkaufhaus/controller/CartController.class
+internetkaufhaus/model/Comment.class
+internetkaufhaus/model/ConcreteProduct$ProdType.class
+internetkaufhaus/model/ProductCatalog.class
+internetkaufhaus/controller/ShopController.class
+internetkaufhaus/Initialize.class
+internetkaufhaus/controller/TestController.class
+internetkaufhaus/controller/CartController$1.class
+internetkaufhaus/controller/AuthController$WebSecurityConfiguration.class
+internetkaufhaus/controller/AuthController.class
+=======
 internetkaufhaus/model/ProductCatalog.class
 internetkaufhaus/controller/CatalogController.class
 internetkaufhaus/controller/ShopController.class
@@ -6,6 +20,7 @@ internetkaufhaus/Application.class
 internetkaufhaus/controller/AuthController$WebSecurityConfiguration.class
 internetkaufhaus/controller/AuthController.class
 internetkaufhaus/model/ConcreteProduct$ProdType.class
+>>>>>>> 5dd5b47289155ffb907ec71133b855d334f17b97
 internetkaufhaus/controller/AuthController$PeonWebConfiguration.class
 internetkaufhaus/model/ConcreteProduct.class
 internetkaufhaus/forms/RegistrationForm.class

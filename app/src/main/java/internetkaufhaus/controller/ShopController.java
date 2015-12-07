@@ -5,9 +5,10 @@ import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import internetkaufhaus.model.ConcreteProduct;
+import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.model.Search;
 
 @Controller
@@ -37,5 +38,7 @@ public class ShopController {
 	public UserAccountManager getUserAccountManager() {
 		return userAccountManager;
 	}
+	
+
 
 }

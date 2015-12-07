@@ -7,6 +7,8 @@ import org.salespointframework.quantity.Quantity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import internetkaufhaus.repositories.ConcreteInventory;
+
 @Component
 public class StockManager {
 	private ConcreteInventory<InventoryItem> inventory;

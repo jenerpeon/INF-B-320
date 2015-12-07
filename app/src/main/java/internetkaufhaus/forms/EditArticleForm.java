@@ -2,7 +2,7 @@ package internetkaufhaus.forms;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import internetkaufhaus.model.ConcreteProduct;
+import internetkaufhaus.entities.ConcreteProduct;
 
 public class EditArticleForm {
 

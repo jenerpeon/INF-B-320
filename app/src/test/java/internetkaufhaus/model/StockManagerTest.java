@@ -28,6 +28,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import internetkaufhaus.Application;
 import internetkaufhaus.Initialize;
+import internetkaufhaus.entities.ConcreteProduct;
+import internetkaufhaus.repositories.ConcreteProductRepository;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)

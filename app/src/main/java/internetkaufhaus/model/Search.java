@@ -9,6 +9,9 @@ import org.salespointframework.catalog.Catalog;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import internetkaufhaus.entities.Comment;
+import internetkaufhaus.entities.ConcreteProduct;
+
 @Component
 public class Search implements Serializable {
 

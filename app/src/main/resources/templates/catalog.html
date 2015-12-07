@@ -28,21 +28,26 @@
 		<div id="mainframe">
 			<div id="topLine">
 				<div id="path">
-					<a th:if="${category != null}" th:text="@{'Kategorie'+ ' > ' +${category}}">Home &gt;</a>
-					<a th:if="${category == null}" th:text="@{'Suche'+ ' > ' +${search}}">Home &gt;</a>
+					<a th:if="${category != null}"
+						th:text="@{'Kategorie'+ ' > ' +${category}}">Home &gt;</a> <a
+						th:if="${category == null}" th:text="@{'Suche'+ ' > ' +${search}}">Home
+						&gt;</a>
 				</div>
 				<div id="articlesPerPage">
-					<form method="post" th:if="${split != null}" th:action="@{'/catalog/'+${category}+'/'+${split}+'/'+${number}+'/changedSetting'}">
+					<form method="post" th:if="${split != null}"
+						th:action="@{'/catalog/'+${category}+'/'+${split}+'/'+${number}+'/changedSetting'}">
 						<fieldset>
-							<label for="total">Artikel pro Seite:</label>
-							<select onchange="this.form.submit()" name="total" id="total" th:value="(${split} < ${maximum} ? ${split} : ${maximum})">
-								<option th:each="number : ${quantities}" th:text="${number}" th:value="${number}"></option>
+							<label for="total">Artikel pro Seite:</label> <select
+								onchange="this.form.submit()" name="total" id="total"
+								th:value="(${split} < ${maximum} ? ${split} : ${maximum})">
+								<option th:each="number : ${quantities}" th:text="${number}"
+									th:value="${number}"></option>
 							</select>
 						</fieldset>
 					</form>
 				</div>
 			</div>
-			
+
 			<div id="workframe">
 				<div id="catalognavigaton">
 					<a th:each="category: ${allCategory}"
@@ -51,29 +56,34 @@
 					</a>
 				</div>
 				<div id="catalogview">
-	
+
 					<ul id="articlelist">
-	
-						<li class="article" th:each="concreteproduct : ${prods}">
-							<a th:href="@{'/detail/'+${concreteproduct.identifier}}">
+
+						<li class="article" th:each="concreteproduct : ${prods}"><a
+							th:href="@{'/detail/'+${concreteproduct.identifier}}">
 								<h1 th:text="${concreteproduct.name}" class="name"></h1>
-							</a>
+						</a>
 							<div class="flex-container">
 								<div id="firstcolumn">
-									<img class="picture" th:href="@{'/detail/'+${concreteproduct.identifier}}" th:src="@{'/resources/Bilder/' + ${concreteproduct.imagefile}}" width="150" />
+									<img class="picture"
+										th:href="@{'/detail/'+${concreteproduct.identifier}}"
+										th:src="@{'/resources/Bilder/' + ${concreteproduct.imagefile}}"
+										width="150" />
 								</div>
 								<div id="secondcolumn">
-									<a class="description" th:text="${concreteproduct.description}">Beschreibung</a> 
+									<a class="description" th:text="${concreteproduct.description}">Beschreibung</a>
 									<a th:href="@{'/detail/'+${concreteproduct.identifier}}">Details</a>
 									<div class="rating">
-										<span th:each="i : ${#numbers.sequence( 1, 3)}">☆</span>
-										<span class="filled" th:each="i : ${#numbers.sequence( 1, 2)}">☆</span>
+										<!-- <span th:each="i : ${#numbers.sequence( 1, 3)}">☆</span> -->
+										<span class="filled" th:each="i : ${concreteproduct.rating}">☆</span>
+										<!--									<span class="filled" th:each="i : ${#numbers.sequence( 1, i)}">☆</span>//, th:value=${concreteproduct.rating}>☆</span>   -->
 									</div>
+									<span th:text="${concreteproduct.ratings}+': Bewertung(en)'"></span>
 								</div>
 							</div>
 							<p class="price" th:text="${concreteproduct.price}" /></li>
 					</ul>
-	
+
 				</div>
 			</div>
 			<table id="pageControl">

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Warenkorb</title>
+</head>
+
+<body>
+	<header>Warenkorb</header>
+	<table th:unless ="${cart.empty}">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Anzahl</th>
+				<th>Preis</th>
+				<th>Anzahl ändern</th>
+				<th>Entfernen</th>
+			</tr>
+		</thead>
+		<tbody th:remove="all-but-first">
+			<tr th:each="item : ${cart} ">
+				<td th:text="${item.productName}">Name</td>
+				<td th:text="${item.quantity}">Anzahl</td>
+				<td th:text="${item.price}">Preis</td>
+				<td>
+					<form action="changeAmount" method="post">
+						<input type ="hidden" name="cid" th:value="${item.identifier}" />	
+  						<select name="amount" id ="dropdown" size="1">
+  							<option>1</option>
+  							<option>2</option>
+  							<option>3</option>
+  							<option>4</option>
+  							<option>5</option>
+  						</select>
+						<input type="submit" value="Anzahl ändern" />
+					</form>
+				</td>
+				<td>
+					<form action="deleteItem" method="post">
+						<input type ="hidden" name="cid" th:value="${item.identifier}" />
+						<input type="submit" value="Artikel entfernen" />
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div th:text="'Summe: ' + ${cart.price}">Summe</div>
+	<div th:if ="${cart.empty}">Leer</div>
+	<div>
+		<form method="post" action="checkout" sec:authorize="hasRole('ROLE_CUSTOMER')" >
+			<input type="submit" value="Kaufen" />
+		</form>
+	</div>
+	<div>
+	<form action="clearCart" method ="post">
+		<input type="submit" value="Warenkorb leeren" />
+	</form>
+</div>
+</body>
+</html>
