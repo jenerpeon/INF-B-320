@@ -48,7 +48,12 @@ public class AuthController extends SalespointSecurityConfiguration {
 				formLogin().loginPage(LOGIN_ROUTE).loginProcessingUrl(LOGIN_ROUTE).and(). //
 				logout().logoutUrl("/logout").logoutSuccessUrl("/");
 	}
-
+	
+	@RequestMapping(value = "/login")
+	public String loginRedirection() {
+		return "redirect:/#login-modal";
+	}
+	
 	@RequestMapping(value = "/passreset")
 	public String resetPassword() {
 		return "passreset";

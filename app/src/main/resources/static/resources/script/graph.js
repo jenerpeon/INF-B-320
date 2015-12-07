@@ -1,6 +1,17 @@
 $(document).ready(function () {
 
 	// Graph Data ##############################################
+	var salesOneWeek = [[gd(2015, 12, 2), 20],[gd(2015, 12, 1), 12],[gd(2015, 11, 30), 8],[gd(2015, 11, 29), 15],[gd(2015, 11, 28), 16],[gd(2015, 11, 27), 9],[gd(2015, 11, 26), 6]];
+	
+	var salesDataSet = [{
+	    data: salesOneWeek,
+	    color: "#71c73e",
+	    points: { fillColor: "##71c73e", show: true },
+	    lines: { show: true }
+	}]
+	
+	var dayOfWeek = ["Son", "Mon", "Die", "Mit", "Don", "Fre", "Sam"];
+	
 	var graphData = [{
 			// Visits
 			data: [ [6, 1300], [7, 1600], [8, 1900], [9, 2100], [10, 2500], [11, 2200], [12, 2000], [13, 1950], [14, 1900], [15, 2000] ],
@@ -12,9 +23,62 @@ $(document).ready(function () {
 			points: { radius: 4, fillColor: '#77b7c5' }
 		}
 	];
+	
+	var options = {
+		    series: {
+		        shadowSize: 5
+		    },
+		    xaxes: [{
+		        mode: "time",                
+		        tickFormatter: function (val, axis) {
+		            return dayOfWeek[new Date(val).getDay()];
+		        },
+		        color: "black",
+		        position: "top",
+		        axisLabel: "Tag der Woche",
+		        axisLabelUseCanvas: true,
+		        axisLabelFontSizePixels: 12,
+		        axisLabelFontFamily: 'Verdana, Arial',
+		        axisLabelPadding: 5
+		    },
+		    {
+		        mode: "time",
+		        timeformat: "%m/%d",
+		        tickSize: [3, "day"],
+		        color: "black",
+		        position: "bottom",
+		        axisLabel: "Date",
+		        axisLabelUseCanvas: true,
+		        axisLabelFontSizePixels: 12,
+		        axisLabelFontFamily: 'Verdana, Arial',
+		        axisLabelPadding: 10
+		    }],
+		    yaxis: {        
+		        color: "black",
+		        tickDecimals: 2,
+		        axisLabel: "Gold Price  in USD/oz",
+		        axisLabelUseCanvas: true,
+		        axisLabelFontSizePixels: 12,
+		        axisLabelFontFamily: 'Verdana, Arial',
+		        axisLabelPadding: 5
+		    },
+		    grid: {
+		        hoverable: true,
+		        borderWidth: 1,
+		        mouseActiveRadius: 50,
+		        backgroundColor: { colors: ["#ffffff", "#EDF5FF"] },
+		        axisMargin: 20
+		    }
+		};
+	
+	
+	function gd(year, month, day) {
+	    return new Date(year, month - 1, day).getTime();
+	}
 
 	// Lines Graph #############################################
-	$.plot($('#graph-lines'), graphData, {
+	$.plot($("#graph-lines"), salesDataSet, options);
+	/*$.plot($('#graph-lines'), graphData, {
 		series: {
 			points: {
 				show: true,
@@ -63,7 +127,7 @@ $(document).ready(function () {
 		yaxis: {
 			tickSize: 1000
 		}
-	});
+	});*/
 
 	// Graph Toggle ############################################
 	$('#graph-bars').hide();

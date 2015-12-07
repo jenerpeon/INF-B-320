@@ -17,6 +17,7 @@ import org.apache.commons.collections.IteratorUtils;
 import org.javamoney.moneta.Money;
 import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
+import org.salespointframework.time.Interval;
 import org.salespointframework.useraccount.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -151,7 +152,6 @@ public class AdminController{
 	@RequestMapping(value="/admin/balance")
 	public String balance(ModelMap model)
 	{
-		
 		Collection<ConcreteOrder> ordersCompleted = IteratorUtils.toList(orderManager.findBy(OrderStatus.COMPLETED).iterator());
 		Collection<ConcreteOrder> ordersOpen = IteratorUtils.toList(orderManager.findBy(OrderStatus.OPEN).iterator());
 		
