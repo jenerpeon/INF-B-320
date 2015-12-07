@@ -81,11 +81,13 @@ public class AdminController{
 	}
 	
 	@RequestMapping(value ="/admin/changeuser/addedUser", method=RequestMethod.POST)
-	public String addedUser(@ModelAttribute("EditUserForm") @Valid CreateUserForm createuserform, BindingResult result)
+	public String addedUser(@ModelAttribute("CreateUserForm") @Valid CreateUserForm createuserform, BindingResult result)
 	{
 		if (result.hasErrors()) {
 			return "redirect:/admin/changeuser/";
 		}
+		usermanager.createUser(createuserform.getUsername(), createuserform.getRolename(),
+								createuserform.getPassword());
 		return "redirect:/admin/changeuser/";
 	}
 	
@@ -110,10 +112,4 @@ public class AdminController{
 		return "addUser";
 	}
 	
-	/*@RequestMapping(value="/userManagement")
-	public String userManagement(ModelMap model){
-		//model.addAttribute("customers", );
-		//model.addAttribute("admins",);
-		//model.addAttribute("employees",);
-	    return "index";*/
 }
