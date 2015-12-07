@@ -9,6 +9,8 @@ import org.javamoney.moneta.Money;
 import org.junit.Before;
 import org.junit.Test;
 
+import internetkaufhaus.entities.Comment;
+
 public class ConcreteCommentTest {
    
     private Comment model;
