@@ -40,7 +40,7 @@
 							<td ><a>Bearbeiten</a></td>
 						</tr>
 						<tr class="article" th:each="account : ${customers}">
-							<td ><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="User anzeigen" th:href="@{'/admin/changeuser/detail/'+${account.id}}"></a></td>
+							<td ><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="User anzeigen" th:href="@{'/admin/changeuser/displayUser/'+${account.id}}"></a></td>
 							<td ><a>Kunde</a></td>
 							<td >
 								<div class="btn-group" role="group">
@@ -50,7 +50,7 @@
 							</td>
 						</tr>
 						<tr class="article" th:each="account : ${employees}">
-							<td ><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="User anzeigen" th:href="@{'/admin/changeuser/detail/'+${account.id}}"></a></td>
+							<td ><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="User anzeigen" th:href="@{'/admin/changeuser/displayUser/'+${account.id}}"></a></td>
 							<td ><a>Mitarbeiter</a></td>
 							<td >
 								<div class="btn-group" role="group">
@@ -60,7 +60,7 @@
 							</td>
 						</tr>
 						<tr class="article" th:each="account : ${admins}">
-							<td ><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="User anzeigen" th:href="@{'/admin/changeuser/detail/'+${account.id}}"></a></td>
+							<td ><a target="newtab" th:text="${account.userAccount.Username}" class="name" title="User anzeigen" th:href="@{'/admin/changeuser/displayUser/'+${account.id}}"></a></td>
 							<td ><a>Administrator</a></td>
 							<td >
 								<div class="btn-group" role="group">

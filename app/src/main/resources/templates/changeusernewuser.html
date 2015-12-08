@@ -29,15 +29,46 @@
 			<div id="adminnavigaton" th:include="adminnavigation :: adminnavigation"></div>
 			
 			<div id="workframe">
+			<ul>
+				<li th:each="line : ${message}" th:text="${line.getDefaultMessage()}"></li>
+			</ul>
 				<form id="newuser" class="userform" th:action="@{'/admin/changeuser/addedUser'}" method="POST" enctype="multipart/form-data" onsubmit='return checkForm();'>
 					<ol>
 						<li>		
-								<label for="name">Name: </label>
-								<input type="text" name="username" id="namefield" placeholder="Name" required/>
+							<label for="name">Name: </label>
+							<input type="text" name="name" id="namefield" placeholder="Name" required/>
 						</li>
 						<li>		
-								<label for="password">Passwort: </label>
-								<input type="password" name="password" id="passwordfield" placeholder="Passwort" required/>
+							<label for="password">Passwort: </label>
+							<input type="password" name="password" id="passwordfield" placeholder="Passwort" required/>
+						</li>
+						<li>		
+							<label for="passwordrepeat">Passwort: </label>
+							<input type="password" name="passwordrepeat"  placeholder="Passwort wiederholen" required/>
+						</li>
+						<li>
+							<label for="firstname">Vorname</label>
+							<input type = "text" name ="firstname"  required />
+						</li>
+						<li>
+							<label for="lastname">Nachname</label>
+							<input type = "text" name ="lastname" required />
+						</li>
+						<li>
+							<label for="email">Email</label>
+							<input type = "text" name ="email" required />
+						</li>
+						<li>
+							<label for="address">Adresse</label>
+							<input type = "text" name ="address" required />
+						</li>
+						<li>
+							<label for="city">Ort</label>
+							<input type = "text" name ="city" required />
+						</li>
+						<li>
+							<label for="zipCode">Postleitzahl</label>
+							<input type = "text" name ="zipCode" required />
 						</li>
 						<li>
 								<label for="role">Rolle: </label>

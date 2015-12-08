@@ -9,6 +9,8 @@ import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import internetkaufhaus.forms.CreateUserForm;
+
 @Component
 public class UserManager {
 	
@@ -75,15 +77,25 @@ public class UserManager {
 		manager.changePassword(usacc, password);
 		return true;
 	}
-	public boolean createUser(String username, String rolename, String password)
+	public boolean createUser(CreateUserForm createuserform)
 	{
 //		UserAccount acc = manager.create(username, password, Role.of(rolename));
-		if(manager.findByUsername(username).isPresent())
-		{
-			return false;
-		}	
-		ConcreteUserAccount cacc = new ConcreteUserAccount(username, password, Role.of(rolename), 
-									manager);
+//		if(manager.findByUsername(createuserform.getUsername()).isPresent())
+//		{
+//			return false;
+//		}	
+		ConcreteUserAccount cacc = new ConcreteUserAccount(
+//															createuserform.getEmail(),
+//															createuserform.getUsername(),
+															createuserform.getName(),
+//															createuserform.getFirstname(),
+//															createuserform.getLastname(),
+//															createuserform.getAdress(),
+//															createuserform.getZipcode(),
+//															createuserform.getCity(),
+															createuserform.getPassword(), 
+															Role.of(createuserform.getRolename()), 
+															manager);
 		repo.save(cacc);
 		manager.save(cacc.getUserAccount());
 		return true;

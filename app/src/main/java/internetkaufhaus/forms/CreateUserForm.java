@@ -1,30 +1,13 @@
 package internetkaufhaus.forms;
 
-public class CreateUserForm {
-	private String username;
-	private String password;
+public class CreateUserForm extends StandardUserForm{
+
 	private String rolename;
-	
+
 
 	public CreateUserForm()
 	{
 		
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	public String getRolename() {
 		return rolename;

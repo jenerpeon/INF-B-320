@@ -81,13 +81,13 @@ public class AdminController{
 	}
 	
 	@RequestMapping(value ="/admin/changeuser/addedUser", method=RequestMethod.POST)
-	public String addedUser(@ModelAttribute("CreateUserForm") @Valid CreateUserForm createuserform, BindingResult result)
+	public String addedUser(@ModelAttribute("CreateUserForm") @Valid CreateUserForm createuserform, BindingResult result, ModelMap model)
 	{
 		if (result.hasErrors()) {
-			return "redirect:/admin/changeuser/";
+			model.addAttribute("message", result.getAllErrors());
+			return "changeusernewuser";
 		}
-		usermanager.createUser(createuserform.getUsername(), createuserform.getRolename(),
-								createuserform.getPassword());
+		usermanager.createUser(createuserform);
 		return "redirect:/admin/changeuser/";
 	}
 	
@@ -105,6 +105,11 @@ public class AdminController{
 		}
 		usermanager.changeUser(edituserform.getId(), edituserform.getRolename(), edituserform.getPassword());
 		return "redirect:/admin/changeuser/";
+	}
+	@RequestMapping(value="/admin/changeuser/displayUser/{id}")
+	public String displayUser(@PathVariable("id") ConcreteUserAccount acc, ModelMap model) {
+		model.addAttribute("account",acc);
+		return "changeUserDisplay";
 	}
 	@RequestMapping(value="/management/addUser")
 	public String addU()
