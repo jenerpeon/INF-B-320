@@ -9,10 +9,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -27,11 +25,11 @@ import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.quantity.Quantity;
+import org.salespointframework.time.Interval;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -48,16 +46,13 @@ import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.forms.EditArticleForm;
 import internetkaufhaus.forms.StockForm;
 import internetkaufhaus.model.ConcreteMailSender;
-import internetkaufhaus.model.ConcreteOrder;
-import internetkaufhaus.model.ConcreteProduct;
-import internetkaufhaus.model.ConcreteUserAccount;
 import internetkaufhaus.model.NewsletterManager;
 import internetkaufhaus.model.Search;
 import internetkaufhaus.model.Statistic;
 import internetkaufhaus.model.StockManager;
 
 @Controller
-//@PreAuthorize("hasRole('ROLE_EMPLOYEE')")
+@PreAuthorize("hasRole('ROLE_EMPLOYEE')")
 public class ManagementController {
 
 	private static final Quantity NONE = Quantity.of(0);
