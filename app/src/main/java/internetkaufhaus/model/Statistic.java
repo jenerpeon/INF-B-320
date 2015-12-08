@@ -1,15 +1,17 @@
 package internetkaufhaus.model;
 
+import static org.salespointframework.core.Currencies.EURO;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import static org.salespointframework.core.Currencies.EURO;
 
 import org.javamoney.moneta.Money;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
+import org.salespointframework.order.OrderStatus;
 import org.salespointframework.time.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,12 +26,13 @@ public class Statistic {
 		this.orderManager = orderManager;
 	}
 
-	public Money getTournover(Iterable<ConcreteOrder> orders) {
-		Money tournover = Money.of(0, EURO);
+	private Money getTournover(Iterable<ConcreteOrder> orders) {
+		Money turnover = Money.of(0, EURO);
 		for (Order o : orders) {
-			tournover.add(o.getTotalPrice());
+			if (o.getOrderStatus().equals(OrderStatus.COMPLETED))
+				turnover.add(o.getTotalPrice());
 		}
-		return tournover;
+		return turnover;
 	}
 
 	public List<Money> getTurnoverByInterval(Interval i, int q) {
@@ -47,6 +50,15 @@ public class Statistic {
 		return turnover;
 	}
 
+	private Integer getSales(Iterable<ConcreteOrder> orders) {
+		int sum = 0;
+		for (Order o : orders) {
+			if (o.getOrderStatus().equals(OrderStatus.COMPLETED))
+				sum += 1;
+		}
+		return sum;
+	}
+
 	public List<Integer> getSalesByInterval(Interval i, int q) {
 		List<Integer> sales = new ArrayList<Integer>();
 		long duration = i.getDuration().toDays();
@@ -57,7 +69,7 @@ public class Statistic {
 			LocalDateTime from = start.plusDays(j * q);
 			LocalDateTime to = start.plusDays(j * (q + 1));
 			orders = (Set<ConcreteOrder>) orderManager.findBy(Interval.from(from).to(to));
-			sales.add(orders.size());
+			sales.add(getSales(orders));
 		}
 		return sales;
 	}
