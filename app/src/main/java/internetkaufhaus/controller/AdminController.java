@@ -1,5 +1,4 @@
 package internetkaufhaus.controller;
-
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
