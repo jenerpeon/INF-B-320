@@ -1,13 +1,10 @@
 package internetkaufhaus.controller;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -31,15 +28,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import internetkaufhaus.model.Comment;
+import internetkaufhaus.entities.Comment;
+import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.model.ConcreteMailSender;
-import internetkaufhaus.model.ConcreteProduct;
-import internetkaufhaus.model.ConcreteProductRepository;
-
-import internetkaufhaus.model.ConcreteUserAccount;
-import internetkaufhaus.model.ConcreteUserAccountRepository;
 import internetkaufhaus.model.NewsletterManager;
-
 import internetkaufhaus.model.Search;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
