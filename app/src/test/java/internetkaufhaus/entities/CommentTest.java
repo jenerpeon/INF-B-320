@@ -31,13 +31,13 @@ public class CommentTest {
 		assertTrue("Id wird zurückgegeben", model.getCommentid()==number);	
 	}
 	
-	@Test
+/*	@Test
 	public void testRemove(){
 		model.setRemoved(true);
 		assertTrue("Kommentar ist auf remove gesetzt", model.isRemoved()==true);
 		model.setRemoved(false);
 		assertTrue("Kommentar ist nicht auf remove gesetzt", model.isRemoved()==false);
-	}
+	}*/
 
 	@Test
 	public void testProduct(){

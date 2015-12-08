@@ -54,10 +54,16 @@ public class AuthController extends SalespointSecurityConfiguration {
 				logout().logoutUrl("/logout").logoutSuccessUrl("/");
 	}
 
-	// Deprecated
-	/*
-	 * @RequestMapping(value = "/passreset") public String resetPassword() { return "passreset"; }
-	 */
+	@RequestMapping(value = "/login")
+	public String loginRedirection() {
+		return "redirect:/#login-modal";
+	}
+
+	@RequestMapping(value = "/passreset")
+	public String resetPassword() {
+		return "passreset";
+	}
+
 	@RequestMapping(value = "/NewPass", method = RequestMethod.POST)
 	public String newPass(@RequestParam("email") String email, @RequestParam("password") String pass) {
 		String key = this.accountAdministration.requestPass(pass, email);
