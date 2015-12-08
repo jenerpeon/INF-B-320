@@ -163,47 +163,15 @@ public class Initialize implements DataInitializer {
 			orderManager.payOrder(order);
 			orderManager.completeOrder(order);
 
-/*			System.out.println(u.toString());
-			if (u.getRole() != Role.of("ROLE_CUSTOMER"))
-				break;
-			ConcreteOrder o = new ConcreteOrder(u.getUserAccount());
-			c.addItemsTo(o);
-			o.setDateOrdered(LocalDateTime.now());
-
-			List<String> billingAdress = new ArrayList<String>();
-			billingAdress.add("firstanme");
-			billingAdress.add("lastname");
-			billingAdress.add("street");
-			billingAdress.add("housenumber");
-			billingAdress.add("addr2");
-			billingAdress.add("zip code");
-			billingAdress.add("town");
-
-			CreditCard paymentMethod = new CreditCard("cardname", "name", "cardnumber", "nameoncard", billingAdress.spliterator().toString(), LocalDateTime.now().minusDays(1), LocalDateTime.now(), "blafasel", Money.of(3, EURO), Money.of(3, EURO));
-			o.setPaymentMethod(paymentMethod);
-
-			o.setBillingAdress(billingAdress);
-			o.setShippingAdress(billingAdress);
-			o.setDateOrdered(LocalDateTime.now());
-
-			orderManager.save(o);
-			orderManager.completeOrder(o);
-			orderManager.payOrder(o);
-*/
-		}
-//		System.out.println(orderManager.toString());
-		// System.out.println(orderManager.findAll());
-		// System.out.println(orderManager.findBy(ConcreteUserAccountManager.findByRole(Role.of("ROLE_CUSTOMER")).iterator().next().getUserAccount()));
 		LocalDateTime t = LocalDateTime.now();
 		LocalDateTime p = t.minusDays(7); 
 		System.out.println(t+"###"+p);
         List<Order> orderInterval = new ArrayList<Order>();
         Interval interval = Interval.from(p).to(t);
         System.out.println(interval.getDuration().toDays());
-//		 System.out.println(orderManager.findBy(OrderStatus.OPEN)); System.out.println(orderManager.findBy(OrderStatus.PAID));
-//		 System.out.println(orderManager.findBy(OrderStatus.COMPLETED));
 		
 
 	}
 
+}
 }
