@@ -1,0 +1,257 @@
+@charset "utf-8";
+
+#mainframe {
+	width: 950px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 100px;
+	display: flex;
+}
+
+#employeenavigaton {
+	width: 20%;
+	border-right: 1px solid #000000;
+	flex: auto;
+}
+
+#employeenavigaton p {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+#employeenavigaton .active {
+	font-weight: bold;
+}
+
+#workframe {
+	padding-left: 20px;
+	width: 75%;
+	felx: auto;
+}
+
+#workframe h2{
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	margin: 0 0 0 0;
+}
+#workframe table {
+	table-layout: fixed;
+	width: 700px;
+}
+#workframe tbody {
+}
+#workframe th {
+	text-align: center;
+	padding: 10px 20px 10px 20px;
+	white-space: nowrap;
+}
+#workframe td {
+	text-align: center;
+	padding: 10px 10px 10px 10px;
+	white-space: nowrap;
+}
+#workframe thead > tr, #workframe thead{
+    display:block;
+}
+#workframe thead > tr, #workframe tbody{
+    display:block;
+}
+#workframe #welcome {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 40px;
+	text-align: center;
+}
+#workframe .article .picture {
+	width: 35px;
+}
+#workframe .edit-button {
+	width: 35px;
+	height: 35px;
+	background-image: url(/resources/Bilder/edit.png);
+	background-size: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 8px;
+	moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+#workframe .trash-button {
+	width: 35px;
+	height: 35px;
+	background-image: url(/resources/Bilder/trash.png);
+	background-size: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 8px;
+	moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+#workframe .order-button {
+	width: 35px;
+	height: 35px;
+	background-image: url(/resources/Bilder/order.png);
+	background-size: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 8px;
+	moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+#workframe .accept-button {
+	width: 35px;
+	height: 35px;
+	background-image: url(/resources/Bilder/accept.png);
+	background-size: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 8px;
+	moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+#workframe .cancel-button {
+	width: 35px;
+	height: 35px;
+	background-image: url(/resources/Bilder/cancel.png);
+	background-size: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 8px;
+	moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+#workframe .content {
+	padding-left: 20px;
+}
+#workframe .content tbody {
+	height: auto;
+}
+#workframe .content td {
+	text-align: left;
+	white-space: normal;
+}
+
+#workframe #newarticle {
+	margin: 10px 0px 0px 30px;
+}
+
+.itemform fieldset {
+	float: left;      
+	clear: both;      
+	width: 100%;      
+	margin: 0 0 -1em 0;      
+	padding: 0 0 1em 0;      
+	border-style: none;         
+	/*background-color: #F2EFE9;*/
+}
+
+.itemform label {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	float: left;
+	width: 20%;
+	margin-right:0.5em;
+    padding-top:0.2em;
+  	text-align:left;
+}
+
+.itemform ol {   
+	padding: 0 1em 0 1em;   
+	list-style: none;  
+}  
+.itemform li {   
+	padding-bottom: 0.5em;  
+}
+
+.itemform input[type='submit'] {   
+     
+	width: auto;      
+	margin-top: 0.5em;      
+	margin-left: 11.5em;       
+}
+
+#deleteitem input {
+	margin: 10px 0 0 20px;
+	background-color: red;
+	border-radius: 8px;
+	moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+} 
+
+#orderitem label {
+	float: none;
+}
+
+#orderitem input {
+	margin: 0 0 0 0;
+}
+
+#orderitem input[type='submit'] {
+	margin: 0 0 0 0;
+}
+
+.changeStartPageForm fieldset {
+	border: none;
+}
+
+.changeStartPageForm ol {
+	padding: 0 1em 0 1em;  
+	list-style: none;  
+}
+
+.changeStartPageForm li {
+	
+	padding-bottom: 0.5em;
+	
+}
+
+.changeStartPageForm label {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	float: left;
+	width: 40%;
+	margin-right:0.5em;
+    padding-top:0.2em;
+  	text-align:left;
+}
+
+.changeStartPageForm input {
+	width: 50px;
+}
+
+.changeStartPageForm input[type='submit'] {
+	width: auto;
+	margin: 0 0 0 0;
+}
+
+#changeStartPage label {
+	width: 25%;
+}
+#changeStartPage li {
+	float: left;
+	width: 50%;
+}
+
+#orderData {
+	display: flex;
+}
+
+#orderData label {
+	float: left;
+	width: 34%;
+	margin-right:0.5em;
+    padding-top:0.2em;
+  	text-align:left;
+}
+#orderData fieldset {   
+	border: none; 
+} 
+#orderData fieldset ol {   
+	padding: 0.5em 1em 0 1em;   
+	list-style: none;  
+}  
+#orderData fieldset li {   
+	padding-bottom: 0.5em;  
+}
+

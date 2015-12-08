@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title>Main Page</title>
+  <script src="/resources/script/jquery-1.11.2.min.js" type="text/javascript"></script>
+  <script src="/resources/script/bootstrap.min.js" type="text/javascript"></script>
+  <link href="/resources/css/main.css" rel="stylesheet" type=text/css>
+  <script src="http://use.edgefonts.net/clara:n4:default.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+	<div id="wrapper">
+		<div id="header" th:include="navigation :: navigation"></div>
+		<main>
+			<form method="post" th:action="@{/passreset}">
+				<fieldset>
+					<label for="email">E-Mail Adresse:</label>
+					<br />
+					<input type="email" name="email" placeholder="E-Mail-Adresse" required/>
+					<br />
+					<label for="password">neues Passwort:</label>
+					<br />
+					<input type="password" name="password" placeholder="Passwort" required/>
+					<br />
+					<input type="submit" value="Passwort bestätigen" />
+				</fieldset>
+			</form>
+		</main>
+		<div id="footer" th:include="footer :: footer"></div>
+	</div>
+</body>
+</html>
+

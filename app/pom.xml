@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>de.tudresden.inf.st.lab</groupId>
-	<artifactId>swt15w22-application</artifactId>
+	<artifactId>swt22-PoeonProject</artifactId>
 	<version>1.1.0.BUILD-SNAPSHOT</version>
 
 	<name>swt15w22 - Software Engineering Lab</name>
@@ -23,11 +23,27 @@
 		</dependency>
 
 		<!-- Persistence -->
-
 		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-		</dependency>
+			<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+           </dependency> 
+        <dependency>
+                <groupId>net.sourceforge.nekohtml</groupId>
+                    <artifactId>nekohtml</artifactId>
+                <version>1.9.22</version>
+        </dependency>
+        
+        <dependency>
+	    	<groupId>javax.mail</groupId>
+	    	<artifactId>mail</artifactId>
+	    	<version>1.4.3</version>
+    	</dependency>
+	<dependency>
+		<groupId>commons-collections</groupId>
+		<artifactId>commons-collections</artifactId>
+		<version>3.2.2</version>
+	</dependency>
 
 	</dependencies>
 

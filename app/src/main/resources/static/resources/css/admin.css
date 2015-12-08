@@ -1,0 +1,322 @@
+@charset "utf-8";
+
+#mainframe {
+	width: 950px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 100px;
+	display: flex;
+}
+
+#adminnavigaton {
+	width: 20%;
+	border-right: 1px solid #000000;
+	flex: auto;
+}
+
+#adminnavigaton p {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+#adminnavigaton .active {
+	font-weight: bold;
+}
+
+#workframe {
+	padding-left: 20px;
+	width: 75%;
+	felx: auto;
+}
+
+#workframe h2{
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	margin: 0 0 0 0;
+}
+#workframe table {
+	table-layout: fixed;
+	width: 700px;
+}
+#workframe tbody {
+}
+#workframe th {
+	text-align: center;
+	padding: 10px 20px 10px 20px;
+	white-space: nowrap;
+}
+#workframe td {
+	text-align: center;
+	padding: 10px 20px 10px 20px;
+	white-space: nowrap;
+}
+#workframe thead > tr, #workframe thead{
+    display:block;
+}
+#workframe thead > tr, #workframe tbody{
+    display:block;
+}
+#workframe #welcome {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 40px;
+	text-align: center;
+}
+#workframe .edit-button {
+	width: 35px;
+	height: 35px;
+	background-image: url(/resources/Bilder/edit.png);
+	background-size: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 8px;
+	moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+#workframe .fire-button {
+	width: 35px;
+	height: 35px;
+	background-image: url(/resources/Bilder/fire.png);
+	background-size: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 8px;
+	moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+#workframe #newuser {
+	margin: 10px 0px 0px 30px;
+}
+
+.userform fieldset {
+	float: left;      
+	clear: both;      
+	width: 100%;      
+	margin: 0 0 -1em 0;      
+	padding: 0 0 1em 0;      
+	border-style: none;         
+	/*background-color: #F2EFE9;*/
+}
+
+.userform label {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	float: left;
+	width: 20%;
+	margin-right:0.5em;
+    padding-top:0.2em;
+  	text-align:left;
+}
+
+.userform ol {   
+	padding: 0 1em 0 1em;   
+	list-style: none;  
+}  
+.userform li {   
+	padding-bottom: 0.5em;  
+}
+
+.userform input[type='submit'] {   
+     
+	width: auto;      
+	margin-top: 0.5em;      
+	margin-left: 11.5em;       
+}
+
+.orderTable {
+	width: 300px !important;
+}
+
+/* Resets */
+.graph-container,
+.graph-container div,
+.graph-container a,
+.graph-container span {
+	margin: 0;
+	padding: 0;
+}
+
+/* Gradinet and Rounded Corners */
+.graph-container, #tooltip, .graph-info a {
+	background: #ffffff;
+	background: -moz-linear-gradient(top,  #ffffff 0%, #f9f9f9 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f9f9f9));
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#f9f9f9 100%);
+	background: -o-linear-gradient(top,  #ffffff 0%,#f9f9f9 100%);
+	background: -ms-linear-gradient(top,  #ffffff 0%,#f9f9f9 100%);
+	background: linear-gradient(to bottom,  #ffffff 0%,#f9f9f9 100%);
+
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+/*  Graph Container */
+.graph-container {
+	position: relative;
+	width: 635px;
+	height: 350px;
+	padding: 20px;
+	
+	-webkit-box-shadow: 0px 1px 2px rgba(0,0,0,.1);
+	-moz-box-shadow: 0px 1px 2px rgba(0,0,0,.1);
+	box-shadow: 0px 1px 2px rgba(0,0,0,.1);
+}
+
+.graph-container > div {
+	position: absolute;
+	width: inherit;
+	height: inherit;
+	top: 10px;
+	left: 25px;
+}
+
+.graph-info {
+	width: 675px;
+	margin-bottom: 10px;
+}
+
+/* Text Styles */
+#tooltip, .graph-info a {
+	height: 20px;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 20px;
+	color: #646464;
+}
+
+.tickLabel {
+	font-weight: bold;
+	font-size: 12px;
+	color: #666;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+}
+
+/* Tooltip */
+#tooltip {
+	position: absolute;
+	display: none;
+	padding: 5px 10px;
+	border: 1px solid #e1e1e1;
+}
+
+/* Links */
+.graph-info a {
+	position: relative;
+	display: inline-block;
+	float: left;
+	padding: 7px 10px 5px 30px;
+	margin-right: 10px;
+	text-decoration: none;
+	cursor: default;
+}
+
+/* Color Circle for Links */
+.graph-info a:before {
+	position: absolute;
+	display: block;
+	content: '';
+	width: 8px;
+	height: 8px;
+	top: 13px;
+	left: 13px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+/* Colors For each Link */
+.graph-info #sales { border-bottom: 2px solid #71c73e; }
+.graph-info #refunds { border-bottom: 2px solid #ef2929; }
+.graph-info #purchases { border-bottom: 2px solid #77b7c5; }
+.graph-info #turnover { border-bottom: 2px solid #c4a000; }
+.graph-info #profit { border-bottom: 2px solid #75507b; }
+
+.graph-info #sales:before { background: #71c73e; }
+.graph-info #refunds:before { background: #ef2929; }
+.graph-info #purchases:before { background: #77b7c5; }
+.graph-info #turnover:before { background: #c4a000; }
+.graph-info #profit:before { background: #75507b; }
+
+/* Lines & Bars Buttons */
+#lines, #bars {
+	width: 34px;
+	height: 32px;
+	padding: 0;
+	margin-right: 0;
+	margin-left: 10px;
+	border-bottom: 2px solid #71c73e;
+	float: right;
+	cursor: pointer;
+}
+
+#lines.active, #bars.active {
+	background: #82d344;
+	background: -moz-linear-gradient(top,  #82d344 0%, #71c73e 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#82d344), color-stop(100%,#71c73e));
+	background: -webkit-linear-gradient(top,  #82d344 0%,#71c73e 100%);
+	background: -o-linear-gradient(top,  #82d344 0%,#71c73e 100%);
+	background: -ms-linear-gradient(top,  #82d344 0%,#71c73e 100%);
+	background: linear-gradient(to bottom,  #82d344 0%,#71c73e 100%);
+}
+
+#lines span, #bars span {
+	display: block;
+	width: 34px;
+	height: 32px;
+	background: url('/resources/Bilder/lines.png') no-repeat 9px 12px;
+}
+
+#bars span { background: url('/resources/Bilder/bars.png') no-repeat center 10px; }
+
+#lines.active span { background-image: url('/resources/Bilder/lines_active.png'); }
+#bars.active span { background-image: url('/resources/Bilder/bars_active.png'); }
+
+#sales.active {
+	background: #71c73e;
+	color: #ffffff;
+}
+#refunds.active {
+	background: #ef2929;
+	color: #ffffff;
+}
+#purchases.active {
+	background: #77b7c5;
+	color: #ffffff;
+}
+#turnover.active {
+	background: #c4a000;
+	color: #ffffff;
+}
+#profit.active {
+	background: #75507b;
+	color: #ffffff;
+}
+
+#sales.active:before {
+	background: #ffffff;
+}
+#refunds.active:before {
+	background: #ffffff;
+}
+#purchases.active:before {
+	background: #ffffff;
+}
+#turnover.active:before {
+	background: #ffffff;
+}
+#profit.active:before {
+	background: #ffffff;
+}
+
+/* Hide the First and Last Y Label */
+.yAxis .tickLabel:first-child,
+.yAxis .tickLabel:last-child { display: none; }
+
+/* Clear Floats */
+.graph-info:before, .graph-info:after,
+.graph-container:before, .graph-container:after {
+	content: '';
+	display: block;
+	clear: both;
+}

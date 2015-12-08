@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<title>Main Page</title>
+<script src="/resources/script/jquery-1.11.2.min.js"
+	type="text/javascript"></script>
+<script src="/resources/script/bootstrap.min.js" type="text/javascript"></script>
+<link href="/resources/css/main.css" rel="stylesheet" type=text/css>
+
+</head>
+<li sec:authorize="!isAuthenticated()" class="loginlogout"><a
+	th:href="@{/login}" th:text="#{nav.login}">Login</a></li>
+
+<li sec:authorize="isAuthenticated()" class="loginlogout">
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Logout" th:value="#{nav.logout}" />
+	</form>
+</li>
+
+<body th:fragment="navigation">
+	<script th:inline="javascript">
+		$(document).ready(function() {
+			$('.modalDialog').height($(document).height());
+		});
+	</script>
+	<div id="header">
+		<header>
+
+			<div id="login-modal" class="modalDialog">
+				<div>
+					<a href="#close" title="Close" class="close">X</a>
+					<h2>Anmeldung</h2>
+					<a th:if="${loginErrorUnknown}" class="errorMessage">Benutzername
+						unbekannt</a> <a th:if="${loginErrorWrong}" class="errorMessage">Benutzername/Passwort
+						falsch</a>
+					<form method="post" th:action="@{/login}">
+						<fieldset>
+							<label for="login-name">Benutzername:</label> <br /> <input
+								type="text" id="username" name="username" value="" required />
+							<br /> <label for="login-password">Passwort:</label> <br /> <input
+								type="password" id="password" name="password" value="" required />
+							<br /> <input type="submit" value="Anmelden" /> <a
+								href="#passwordReset-modal"><label for="login-password">Passwort
+									vergessen?</label></a>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+
+			<div id="recruit-modal" class="modalDialog">
+				<div>
+					<a href="#close" title="Close" class="close">X</a>
+					<h2>Anmeldung</h2>
+					<a th:if="${loginErrorUnknown}" class="errorMessage">Benutzername
+						unbekannt</a> <a th:if="${loginErrorWrong}" class="errorMessage">Benutzername/Passwort
+						falsch</a>
+					<form method="post" th:action="@{/recruit}">
+						<fieldset>
+							<label for="login-name">Email:</label> <br /> <input type="text"
+								id="email" name="email" value="" required /> <br /> <input
+								type="submit" value="Rekrutieren" />
+						</fieldset>
+					</form>
+				</div>
+			</div>
+
+			<div id="passwordReset-modal" class="modalDialog">
+				<div>
+					<a href="#close" title="Close" class="close">X</a>
+					<h2>Passwort zurücksetzen</h2>
+					<form method="post" th:action="@{/NewPass}">
+						<fieldset>
+							<label for="email">E-Mail Adresse:</label> <br /> <input
+								type="email" name="email" placeholder="E-Mail-Adresse" required />
+							<br /> <label for="password">neues Passwort:</label> <br /> <input
+								type="password" name="password" placeholder="Passwort" required />
+							<br /> <input type="submit" value="Passwort bestätigen" />
+						</fieldset>
+					</form>
+				</div>
+			</div>
+
+			<div id="registration-modal" class="modalDialog">
+				<div>
+					<a href="#close" title="Close" class="close">X</a>
+					<h2>Registrierung</h2>
+					<ul id="registration-error">
+						<li th:each="line : ${message}" th:text="${line.getDefaultMessage()}"></li>
+					</ul>
+					<form method="post" th:action="@{/registerNew}">
+						<fieldset>
+
+							<legend>
+								<span>Kontaktdetails</span>
+							</legend>
+							<ol>
+								<li><label for="name">Benutzername:</label> <input
+									type="text" id="name" name="name" value="" required /></li>
+								<li><label for="login-name">E-Mail Adresse:</label> <input
+									type="text" id="email" name="email" value="" required /></li>
+							</ol>
+						</fieldset>
+						<fieldset>
+							<legend>
+								<span>Login Daten</span>
+							</legend>
+							<ol>
+								<li><label for="login-password">Passwort:</label> <input
+									type="password" id="password" name="password" value="" required />
+								</li>
+								<li><label for="login-passwordrepeat">Passwort
+										wiederholen:</label> <input type="password" id="passwordrepeat"
+									name="passwordrepeat" value="" required /></li>
+							</ol>
+						</fieldset>
+						<fieldset>
+							<legend>
+								<span>Klarname</span>
+							</legend>
+							<ol>
+								<li><label for="firstname">Vorname:</label> <input
+									type="text" id="firstname" name="firstname" value="" required />
+								</li>
+								<li><label for="lastname">Nachname:</label> <input
+									type="text" id="lastname" name="lastname" value="" required />
+								</li>
+							</ol>
+						</fieldset>
+
+						<fieldset>
+							<legend>
+								<span>Adresse</span>
+							</legend>
+							<ol>
+								<li><label for="address">Adresszeile 1:</label> <input
+									type="text" id="address" name="address" value="" required /></li>
+								<li><label for="city">Stadt:</label> <input type="text"
+									id="city" name="city" value="" required /></li>
+								<li><label for="zipCode">Postleitzahl:</label> <input
+									type="text" id="zipCode" name="zipCode" value="" required /></li>
+							</ol>
+						</fieldset>
+						<fieldset class="submit">
+							<input type="submit" value="Registrieren" />
+						</fieldset>
+					</form>
+				</div>
+			</div>
+
+			<div id="header-row1">
+				<ul>
+					<li th:if="${info}"><p th:text="${info}"></p></li>
+				</ul>
+				<ul>
+					<li sec:authorize="isAuthenticated()"><a>Herzlich
+							Willkommen</a></li>
+					<li sec:authorize="!isAuthenticated()"><a href="#login-modal">Anmelden</a></li>
+					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a
+						href="#recruit-modal">Peon Rekrutieren</a></li>
+					<li sec:authorize="!isAuthenticated()"><a
+						href="#registration-modal">Registrieren</a></li>
+					<li sec:authorize="isAuthenticated()"><a
+						th:href="@{'/logout'}">Ausloggen</a></li>
+					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a>Service</a></li>
+					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a>Punktestand</a></li>
+					<li sec:authorize="hasRole('ROLE_EMPLOYEE')"><a
+						th:href="@{/employee}">Mitarbeiterportal</a></li>
+					<li sec:authorize="hasRole('ROLE_ADMIN')"><a
+						th:href="@{/admin}">Adminportal</a></li>
+					<li sec:authorize="isAuthenticated()"><a th:href="@{'/login'}">Mein
+							Konto</a></li>
+				</ul>
+			</div>
+
+			<div id="header-row2">
+				<table id="header-row2-table">
+					<tbody>
+						<tr>
+							<td align="left"><a th:href="@{'/'}" id="logo">Woods
+									Super Dooper Shop</a></td>
+							<td>
+								<div id="searchfield">
+									<form id="search" method="post" th:action="@{'/sufu'+'/1'}">
+										<table>
+											<tbody>
+												<tr id="searchcolumn">
+													<td><input type="search" id="search" name="search"
+														value="Suchbegriff" onFocus="value=''" /></td>
+													<td><input type="image"
+														src="/resources/Bilder/search.png" alt="Suche_Icon" /></td>
+												</tr>
+											</tbody>
+										</table>
+									</form>
+								</div>
+							</td>
+							<td align="right">
+								<table>
+									<tbody>
+										<tr>
+											<td><a th:href="@{'/cart'}"><img
+													src="/resources/Bilder/warenkorb_icon_dark.png" height="50"
+													alt="" /></a></td>
+											<td>
+												<ul id="cart-text-list">
+													<li><a>0 Artikel</a></li>
+													<li><a>Summe</a></li>
+													<li><a th:href="@{'/cart'}">Zum Warenkorb</a></li>
+												</ul>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</header>
+	</div>
+	<div id="navigation">
+		<ul class="nav">
+			<li th:each="c : ${categories}"><a
+				th:href="@{'/catalog/'+${c}+'/4'+'/1'}" th:text="${c}">test</a>
+				<div></div></li>
+		</ul>
+	</div>
+</body>
+</html>
