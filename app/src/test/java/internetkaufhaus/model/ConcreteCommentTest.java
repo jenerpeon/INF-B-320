@@ -27,6 +27,7 @@ public class ConcreteCommentTest {
 		assertTrue("Datum erhalten", model.getFormatedDate().equals("12"));
 	}
 	/*
+	 * 
 	 * @Test public void testSetFormatedDate() {
 	 * 
 	 * Date date = new Date("Jan 10, 1970"); date.setTime(10000); model.setFormatedDate(date);
