@@ -16,17 +16,20 @@ import org.salespointframework.time.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import internetkaufhaus.entities.ConcreteOrder;
+import internetkaufhaus.repositories.ConcreteOrderRepository;
 
 public class Statistic {
 
-	private final OrderManager<ConcreteOrder> orderManager;
+	private final OrderManager<Order> orderManager;
+//	private final ConcreteOrderRepository concreteOrderRepo;
 
 	@Autowired
-	public Statistic(OrderManager<ConcreteOrder> orderManager) {
+	public Statistic(OrderManager<Order> orderManager) {
 		this.orderManager = orderManager;
+//		this.concreteOrderRepo = concreteOrderRepo;
 	}
 
-	private Money getTournover(Iterable<ConcreteOrder> orders) {
+	private Money getTournover(Iterable<Order> orders) {
 		Money turnover = Money.of(0, EURO);
 		for (Order o : orders) {
 			if (o.getOrderStatus().equals(OrderStatus.COMPLETED))
@@ -41,16 +44,16 @@ public class Statistic {
 		int steps = (int) (duration / q);
 		LocalDateTime start = i.getStart();
 		for (int j = 0; j < steps; j += q) {
-			Set<ConcreteOrder> orders = new HashSet<ConcreteOrder>();
+			Set<Order> orders = new HashSet<Order>();
 			LocalDateTime from = start.plusDays(j * q);
 			LocalDateTime to = start.plusDays(j * (q + 1));
-			orders = (Set<ConcreteOrder>) orderManager.findBy(Interval.from(from).to(to));
+			orders = (Set<Order>) orderManager.findBy(Interval.from(from).to(to));
 			turnover.add(getTournover(orders));
 		}
 		return turnover;
 	}
 
-	private Integer getSales(Iterable<ConcreteOrder> orders) {
+	private Integer getSales(Iterable<Order> orders) {
 		int sum = 0;
 		for (Order o : orders) {
 			if (o.getOrderStatus().equals(OrderStatus.COMPLETED))
@@ -65,10 +68,10 @@ public class Statistic {
 		int steps = (int) (duration / q);
 		LocalDateTime start = i.getStart();
 		for (int j = 0; j < steps; j += q) {
-			Set<ConcreteOrder> orders = new HashSet<ConcreteOrder>();
+			Set<Order> orders = new HashSet<Order>();
 			LocalDateTime from = start.plusDays(j * q);
 			LocalDateTime to = start.plusDays(j * (q + 1));
-			orders = (Set<ConcreteOrder>) orderManager.findBy(Interval.from(from).to(to));
+			orders = (Set<Order>) orderManager.findBy(Interval.from(from).to(to));
 			sales.add(getSales(orders));
 		}
 		return sales;

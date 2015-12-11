@@ -1,9 +1,6 @@
 
 package internetkaufhaus.controller;
 
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-
 import static org.salespointframework.core.Currencies.EURO;
 
 import java.time.LocalDateTime;
@@ -16,16 +13,18 @@ import org.salespointframework.order.Cart;
 import org.salespointframework.order.CartItem;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
-import org.salespointframework.order.OrderIdentifier;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.payment.CreditCard;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,15 +33,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.mail.MailSender;
 
-import internetkaufhaus.forms.PaymentForm;
-import internetkaufhaus.forms.ShippingAdressForm;
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.forms.BillingAdressForm;
-import internetkaufhaus.model.ConcreteMailSender;
+import internetkaufhaus.forms.PaymentForm;
+import internetkaufhaus.forms.ShippingAdressForm;
 import internetkaufhaus.model.Search;
+import internetkaufhaus.repositories.ConcreteOrderRepository;
 @Controller
 @SessionAttributes("cart")
 class CartController {
@@ -50,13 +48,15 @@ class CartController {
 	private final OrderManager<Order> orderManager;
 	private final Search prodSearch;
 	private MailSender sender;
+	private final ConcreteOrderRepository concreteOrderRepo;
 
 	@Autowired
-	public CartController(OrderManager<Order> orderManager, Search prodSearch, MailSender sender) {
+	public CartController(ConcreteOrderRepository concreteOrderRepo,OrderManager<Order> orderManager, Search prodSearch, MailSender sender) {
 
 		Assert.notNull(orderManager, "OrderManager must not be null!");
 		this.orderManager = orderManager;
 		this.prodSearch = prodSearch;
+		this.concreteOrderRepo = concreteOrderRepo;
         this.sender = sender;
 	}
 
@@ -143,9 +143,10 @@ class CartController {
 			org.javamoney.moneta.Money creditLimit = Money.of(1000000000, EURO);
 			LocalDateTime validFrom = LocalDateTime.MIN;
 			
-			ConcreteOrder order = new ConcreteOrder(account);
+			ConcreteOrder order = new ConcreteOrder(account, Cash.CASH);
+			Order o = order.getOrder();
 			
-			cart.addItemsTo(order);
+			cart.addItemsTo(o);
 			
 			
 			String billingAdress = billingAdressForm.getBillingFirstName() + " " + billingAdressForm.getBillingLastName() + 
@@ -155,24 +156,19 @@ class CartController {
 			
 			CreditCard paymentMethod = new CreditCard(paymentForm.getCardName(), paymentForm.getCardAssociationName(), paymentForm.getCardNumber(), paymentForm.getNameOnCard(), billingAdress, validFrom, paymentForm.getExpiryDateLocalDateTime(), paymentForm.getCardVerificationCode(), dailyWithdrawalLimit, creditLimit);
 			
-			order.setPaymentMethod(paymentMethod);
+			o.setPaymentMethod(paymentMethod);
 			
 			order.setBillingAdress(billingAdressForm.getBillingAdress());
 			
 			order.setShippingAdress(shippingAdressForm.getShippingAdress());
 			
 			order.setDateOrdered(LocalDateTime.now());
-			
-			orderManager.save(order);
-			
-			orderManager.payOrder(order);
+			orderManager.save(o);
+			orderManager.payOrder(o);
 
-			//orderManager.payOrder(order);
-			//orderManager.completeOrder(order);
-
-            //ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);
-            //concreteMailSender.sendMail("heinztut@googlemail.com", "zu@googlemail.com", "subject", "text");
-            
+            order.setStatus(o.getOrderStatus()); 			
+			concreteOrderRepo.save(order);
+           
 			cart.clear();
 
 			return "redirect:/";

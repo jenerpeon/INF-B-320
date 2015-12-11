@@ -20,10 +20,11 @@ import org.salespointframework.catalog.Catalog;
 import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
-import org.salespointframework.order.OrderIdentifier;
+import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
+import org.salespointframework.payment.Cash;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.time.Interval;
 import org.salespointframework.useraccount.UserAccount;
@@ -51,6 +52,7 @@ import internetkaufhaus.model.NewsletterManager;
 import internetkaufhaus.model.Search;
 import internetkaufhaus.model.Statistic;
 import internetkaufhaus.model.StockManager;
+import internetkaufhaus.repositories.ConcreteOrderRepository;
 
 @Controller
 @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
@@ -60,7 +62,8 @@ public class ManagementController {
 	private final Catalog<ConcreteProduct> catalog;
 	private final Inventory<InventoryItem> inventory;
 	private final Search prodSearch;
-	private final OrderManager<ConcreteOrder> orderManager;
+	private final ConcreteOrderRepository concreteOrderRepo;
+	private final OrderManager<Order> orderManager;
 	private final StockManager stock;
 	private final NewsletterManager newsManager;
 	private final MailSender sender;
@@ -68,14 +71,15 @@ public class ManagementController {
 	//private final List<ConcreteProduct> selectionList;
 
 	@Autowired
-	public ManagementController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, OrderManager<ConcreteOrder> orderManager, StockManager stock,NewsletterManager newsManager, MailSender sender) {
+	public ManagementController(OrderManager<Order> orderManager, ConcreteOrderRepository concreteOrderRepo, Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, StockManager stock,NewsletterManager newsManager, MailSender sender) {
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.prodSearch = prodSearch;
-		this.orderManager = orderManager;
+		this.concreteOrderRepo = concreteOrderRepo;
 		this.stock = stock;
 		this.sender=sender;
 		this.newsManager=newsManager;
+		this.orderManager = orderManager;
 		//this.carousselList = carousselList;
 		//this.selectionList = selectionList;
 	}
@@ -267,15 +271,16 @@ public class ManagementController {
 		if (result.hasErrors()) {
 			return "redirect:/employee/changecatalog";
 		}
-		ConcreteOrder order = new ConcreteOrder(userAccount.get());
+		ConcreteOrder order = new ConcreteOrder(userAccount.get(), Cash.CASH);
 		
 		OrderLine orderLine = new OrderLine(catalog.findOne(stockForm.getProdId()).get(), Quantity.of(stockForm.getQuantity()));
 		
-		order.add(orderLine);
+		order.getOrder().add(orderLine);
+
 		
 		order.setDateOrdered(LocalDateTime.now());
 		
-		orderManager.save(order);
+		concreteOrderRepo.save(order);
 		
 		stock.orderArticle(stockForm.getProdId(), Quantity.of(stockForm.getQuantity()));
 		return "redirect:/employee/changecatalog";
@@ -322,33 +327,52 @@ public class ManagementController {
 	
 	@RequestMapping(value = "/employee/orders")
 	public String orders(ModelMap model) {
-		Collection<ConcreteOrder> ordersPaid = IteratorUtils.toList(orderManager.findBy(OrderStatus.PAID).iterator());
-		Collection<ConcreteOrder> ordersCancelled = IteratorUtils.toList(orderManager.findBy(OrderStatus.CANCELLED).iterator());
-		Collection<ConcreteOrder> ordersCompleted = IteratorUtils.toList(orderManager.findBy(OrderStatus.COMPLETED).iterator());
+		Iterable<ConcreteOrder> ordersPaid = concreteOrderRepo.findByStatus(OrderStatus.PAID);
+		Iterable<ConcreteOrder> ordersCancelled = concreteOrderRepo.findByStatus(OrderStatus.CANCELLED);
+		Iterable<ConcreteOrder> ordersCompleted = concreteOrderRepo.findByStatus(OrderStatus.COMPLETED);
+		System.out.println(
+				"Paid Orders:"+ordersPaid
+				+"Cancelled Orders:"+ordersCancelled
+				+"Completed Orders:"+ordersCompleted);
 		
 		model.addAttribute("ordersPaid", ordersPaid);
 		model.addAttribute("ordersCancelled", ordersCancelled);
 		model.addAttribute("ordersCompleted", ordersCompleted);
 		return "orders";
+		
 	}
 	
 	@RequestMapping(value="/employee/orders/accept/{orderId}", method = RequestMethod.GET)
-	public String acceptOrder(@PathVariable("orderId") OrderIdentifier orderId) {
-		orderManager.completeOrder(orderManager.get(orderId).get());
+	public String acceptOrder(@PathVariable("orderId") Long orderId, ModelMap model) {
+        ConcreteOrder o = concreteOrderRepo.findById(orderId);
+        if(o == null){
+        	model.addAttribute("msg", "error in acceptOrder, no Order with qualifier"+orderId+"found");
+        	return "index";
+        }
+        orderManager.completeOrder(o.getOrder());
 		return "redirect:/employee/orders";
 	}
 	
 	@RequestMapping(value="/employee/orders/cancel/{orderId}", method = RequestMethod.GET)
-	public String cancelOrder(@PathVariable("orderId") OrderIdentifier orderId) {
-		orderManager.cancelOrder(orderManager.get(orderId).get());
+	public String cancelOrder(ModelMap model, @PathVariable("orderId") Long orderId) {
+        ConcreteOrder o = concreteOrderRepo.findById(orderId);
+      if(o == null){
+        	model.addAttribute("msg", "error in acceptOrder, no Order with qualifier"+orderId+"found");
+        	return "index";
+        }
+		orderManager.cancelOrder(o.getOrder());
 		return "redirect:/employee/orders";
 	}
 	
 	@RequestMapping(value="/employee/orders/detail/{orderId}")
-	public String detailOrder(@PathVariable("orderId") OrderIdentifier orderId, ModelMap model) {
-		ConcreteOrder order = orderManager.get(orderId).get();
-		Collection<ConcreteOrder> orderLines = IteratorUtils.toList(order.getOrderLines().iterator());
-		model.addAttribute("order", order);
+	public String detailOrder(@PathVariable("orderId") Long orderId, ModelMap model) {
+		ConcreteOrder o = concreteOrderRepo.findById(orderId);
+	    if(o == null){
+	        	model.addAttribute("msg", "error in acceptOrder, no Order with qualifier"+orderId+"found");
+	        	return "index";
+	    }
+		Collection<Order> orderLines = IteratorUtils.toList(o.getOrder().getOrderLines().iterator());
+		model.addAttribute("order", o);
 		model.addAttribute("orderLines", orderLines);
 		return "orderdetail";
 	}

@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.collections.IteratorUtils;
 import org.javamoney.moneta.Money;
+import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.useraccount.Role;
@@ -29,6 +30,7 @@ import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.forms.CreateUserForm;
 import internetkaufhaus.forms.EditUserForm;
 import internetkaufhaus.model.UserManager;
+import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
 
@@ -36,16 +38,15 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AdminController{
 	private final ConcreteUserAccountRepository manager;
-	private final UserAccountManager umanager;
+
 	private final UserManager usermanager;
-	private final OrderManager<ConcreteOrder> orderManager;
+	private final ConcreteOrderRepository concreteOrderRepo;
 
 	@Autowired
-	public AdminController(ConcreteUserAccountRepository manager, UserAccountManager umanager, OrderManager<ConcreteOrder> orderManager, UserManager user){
-		this.manager=manager;	
-		this.umanager = umanager;
-		this.orderManager = orderManager;
+	public AdminController(ConcreteOrderRepository concreteOrderRepo, ConcreteUserAccountRepository manager, UserAccountManager umanager, OrderManager<Order> orderManager, UserManager user){
+		this.manager=manager;
 		this.usermanager = user;
+		this.concreteOrderRepo = concreteOrderRepo;
 	}
 
 	
@@ -121,19 +122,19 @@ public class AdminController{
 	public String balance(ModelMap model)
 
 	{
-		Collection<ConcreteOrder> ordersCompleted = IteratorUtils.toList(orderManager.findBy(OrderStatus.COMPLETED).iterator());
-		Collection<ConcreteOrder> ordersOpen = IteratorUtils.toList(orderManager.findBy(OrderStatus.OPEN).iterator());
+		Collection<ConcreteOrder> ordersCompleted = IteratorUtils.toList(concreteOrderRepo.findByStatus(OrderStatus.COMPLETED).iterator());
+		Collection<ConcreteOrder> ordersOpen = IteratorUtils.toList(concreteOrderRepo.findByStatus(OrderStatus.OPEN).iterator());
 		
 		double totalPaid = 0;
 		for (ConcreteOrder order : ordersCompleted) {
 			if (order.getReturned() == false) {
-				totalPaid += order.getTotalPrice().getNumberStripped().doubleValue();
+				totalPaid += order.getOrder().getTotalPrice().getNumberStripped().doubleValue();
 			}
 		}
 		
 		double totalOpen = 0;
 		for (ConcreteOrder order : ordersOpen) {
-			totalOpen += order.getTotalPrice().getNumberStripped().doubleValue();
+			totalOpen += order.getOrder().getTotalPrice().getNumberStripped().doubleValue();
 		}
 		
 		double balance = Math.round((totalPaid - totalOpen) * 100.00) / 100.00;

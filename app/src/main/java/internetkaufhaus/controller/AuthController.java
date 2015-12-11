@@ -34,7 +34,7 @@ public class AuthController extends SalespointSecurityConfiguration {
 	private static final String LOGIN_ROUTE = "/login";
 	private final UserAccountManager userAccountManager;
 	private final ConcreteUserAccountRepository concreteUserAccountManager;
-	private final MailSender sender;
+
 	private final AccountAdministration accountAdministration;
 	ModelAndView modelAndView = new ModelAndView();
 
@@ -43,7 +43,7 @@ public class AuthController extends SalespointSecurityConfiguration {
 		this.userAccountManager = userAccountManager;
 		this.concreteUserAccountManager = concreteUserAccountManager;
 		this.accountAdministration = accountAdministration;
-		this.sender = sender;
+		
 	}
 
 	@Override

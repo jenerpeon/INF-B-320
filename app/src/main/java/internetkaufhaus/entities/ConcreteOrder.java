@@ -1,21 +1,35 @@
 package internetkaufhaus.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.apache.commons.collections.IteratorUtils;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderStatus;
+import org.salespointframework.payment.Cash;
 import org.salespointframework.useraccount.UserAccount;
 
 @Entity
 @Table(name = "CORDER")
-public class ConcreteOrder extends Order {
+public class ConcreteOrder implements Serializable{
 	private static final long serialVersionUID = 1L;
+//	private OrderManager<Order> orderManager;
+	private OrderStatus status;
+	@OneToOne
+	private UserAccount user;
+	
+	@Id
+    @GeneratedValue
+    private Long id;
 
 	private String billingGender;
 	private String billingFirstName;
@@ -36,6 +50,9 @@ public class ConcreteOrder extends Order {
 	private String shippingTown;
 	
 	private LocalDateTime dateOrdered;
+
+	@OneToOne
+	private Order order;
 	
 	boolean returned = false;
 
@@ -44,15 +61,19 @@ public class ConcreteOrder extends Order {
 
 	}
 	
-	public ConcreteOrder(UserAccount account) {
-		super(account);
+	public ConcreteOrder(UserAccount account, Cash cash) {
+		this.order = new Order(account, cash);
+		this.status = this.order.getOrderStatus();
+		this.user=account;
+//		System.out.println("Hi, i am a Concrete Order. My status:"+this.status+"xyz");
 	}
 	
+
 	@SuppressWarnings("deprecation")
 	public ConcreteOrder(String billingGender, String billingFirstName, String billingLastName, String billingStreet, 
 			String billingHouseNumber, String billingAdressLine2, String billingZipCode, String billingTown, 
 			String shippingGender, String shippingFirstName, String shippingLastName, String shippingStreet, 
-			String shippingHouseNumber, String shippingAdressLine2, String shippingZipCode, String shippingTown, LocalDateTime dateOrdered) {
+			String shippingHouseNumber, String shippingAdressLine2, String shippingZipCode, String shippingTown, LocalDateTime dateOrdered, Order order) {
 		 this.billingGender = billingGender;
 		 this.billingFirstName = billingFirstName;
 		 this.billingLastName = billingLastName;
@@ -72,10 +93,17 @@ public class ConcreteOrder extends Order {
 		 this.shippingTown = shippingTown;
 		 
 		 this.dateOrdered = dateOrdered;
+		 this.order = order;
+		 this.status = order.getOrderStatus();
+//		 System.out.println("Hi, i am a Concrete Order. My status:"+this.status+"xyz");
 	}
 
 	public String getBillingGender() {
 		return billingGender;
+	}
+	
+	public Order getOrder(){
+		return this.order;
 	}
 	
 	public String getBillingFirstName() {
@@ -138,15 +166,18 @@ public class ConcreteOrder extends Order {
 	public String getShippingTown() {
 		return shippingTown;
 	}
+	public void setDateOrdered(LocalDateTime dateOrdered){
+		this.dateOrdered = dateOrdered;
+	}
 	
 	public int getOrderLinesSize() {
-		Collection<OrderLine> orderLines = IteratorUtils.toList(this.getOrderLines().iterator());
+		Collection<OrderLine> orderLines = IteratorUtils.toList(this.order.getOrderLines().iterator());
 		return orderLines.size();
 	}
 	
 	public int getTotalProductNumber() {
 		int total = 0;
-		Collection<OrderLine> orderLines = IteratorUtils.toList(this.getOrderLines().iterator());
+		Collection<OrderLine> orderLines = IteratorUtils.toList(this.order.getOrderLines().iterator());
 		for (OrderLine orderLine : orderLines) {
 			total += Integer.parseInt(orderLine.getQuantity().toString());
 		}
@@ -250,12 +281,24 @@ public class ConcreteOrder extends Order {
 		this.shippingZipCode = shippingAdress.get(6);
 		this.shippingTown = shippingAdress.get(7);
 	}
-	
-	public void setDateOrdered(LocalDateTime dateTime) {
-		this.dateOrdered = dateTime;
-	}
-	
+
 	public void setReturned(boolean returned) {
 		this.returned = returned;
+	}
+	
+	public UserAccount getUser() {
+		return user;
+	}
+/*	public void setOrderManager(OrderManager<Order> orderManager){
+		this.orderManager = orderManager;
+	}
+	public OrderManager<Order> getOrderManager(){
+		return this.orderManager;
+	}*/
+	public OrderStatus getStatus(){
+	    return this.status;	
+	}
+	public void setStatus(OrderStatus state){
+	    this.status = state;	
 	}
 }
