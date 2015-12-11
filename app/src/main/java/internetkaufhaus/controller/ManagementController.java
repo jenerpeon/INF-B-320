@@ -267,7 +267,7 @@ public class ManagementController {
 		return "changecatalogorderitem";
 	}
 
-	@RequestMapping(value = "/employee/changecatalog/orderedArticle", method = RequestMethod.POST)
+	@RequestMapping(value = "/employee/changecatalog/orderedArticle", method = RequestMethod.GET)
 	public String orderedArticle(@ModelAttribute("StockForm") @Valid StockForm stockForm, BindingResult result, ModelMap model, @LoggedIn Optional<UserAccount> userAccount) {
 		if (result.hasErrors()) {
 			return "redirect:/employee/changecatalog";
@@ -280,8 +280,9 @@ public class ManagementController {
 
 		
 		order.setDateOrdered(LocalDateTime.now());
-		
+		orderManager.save(order.getOrder());
 		concreteOrderRepo.save(order);
+		
 		
 		stock.orderArticle(stockForm.getProdId(), Quantity.of(stockForm.getQuantity()));
 		return "redirect:/employee/changecatalog";
