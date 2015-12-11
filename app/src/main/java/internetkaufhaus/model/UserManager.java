@@ -76,6 +76,7 @@ public class UserManager {
 		manager.save(usacc);
 		acc.setUserAccount(usacc);
 		manager.changePassword(usacc, password);
+		repo.save(acc);
 		return true;
 	}
 	public boolean createUser(CreateUserForm createuserform)
