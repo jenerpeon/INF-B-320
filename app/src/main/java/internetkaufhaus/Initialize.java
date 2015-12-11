@@ -156,8 +156,7 @@ public class Initialize implements DataInitializer {
 	// }
 
 	private void initializeOrders(ConcreteOrderRepository concreteOrderRepo, ConcreteProductRepository prods, OrderManager<Order> orderManager, ConcreteUserAccountRepository ConcreteUserAccountManager) {
-		Order outa_order=null;
-		ConcreteOrder c_outa_order=null;
+		
 		Cart c = new Cart();
 		for (ConcreteProduct p : prods.findAll()) {
 			c.addOrUpdateItem(p, Quantity.of(1));
@@ -171,10 +170,24 @@ public class Initialize implements DataInitializer {
             Order o = order.getOrder();
 			c.addItemsTo(o);
 
+			order.setBillingGender("Herr");
+			order.setBillingFirstName(u.getUserAccount().getFirstname());
+			order.setBillingLastName(u.getUserAccount().getLastname());
+			order.setBillingStreet(u.getAddress());
+			order.setBillingHouseNumber("2");
+			order.setBillingTown(u.getCity());
+			order.setBillingZipCode(u.getZipCode());
+			
+			order.setShippingGender("Herr");
+			order.setShippingFirstName(u.getUserAccount().getFirstname());
+			order.setShippingLastName(u.getUserAccount().getLastname());
+			order.setShippingStreet(u.getAddress());
+			order.setShippingHouseNumber("2");
+			order.setShippingTown(u.getCity());
+			order.setShippingZipCode(u.getZipCode());
+			
 			orderManager.payOrder(o);// only set orderManager.payOrder(o), do not use orderManager.completeOrder(0), to complete Order look at the next line!
-		
-		
-            order.setStatus(OrderStatus.COMPLETED); //to complete Order do not use orderManager.completeOrder
+			order.setStatus(OrderStatus.COMPLETED); //to complete Order do not use orderManager.completeOrder
             order.setDateOrdered(LocalDateTime.now().minusDays(31));
         	concreteOrderRepo.save(order);
     		orderManager.save(o);
