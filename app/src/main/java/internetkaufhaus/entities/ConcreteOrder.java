@@ -56,7 +56,7 @@ public class ConcreteOrder implements Serializable{
 	
 	boolean returned = false;
 
-	@SuppressWarnings({ "unused", "deprecation" })
+	@SuppressWarnings({ "unused" })
 	private ConcreteOrder() {
 
 	}
@@ -65,11 +65,10 @@ public class ConcreteOrder implements Serializable{
 		this.order = new Order(account, cash);
 		this.status = this.order.getOrderStatus();
 		this.user=account;
-//		System.out.println("Hi, i am a Concrete Order. My status:"+this.status+"xyz");
+		
 	}
 	
 
-	@SuppressWarnings("deprecation")
 	public ConcreteOrder(String billingGender, String billingFirstName, String billingLastName, String billingStreet, 
 			String billingHouseNumber, String billingAdressLine2, String billingZipCode, String billingTown, 
 			String shippingGender, String shippingFirstName, String shippingLastName, String shippingStreet, 
@@ -95,7 +94,7 @@ public class ConcreteOrder implements Serializable{
 		 this.dateOrdered = dateOrdered;
 		 this.order = order;
 		 this.status = order.getOrderStatus();
-//		 System.out.println("Hi, i am a Concrete Order. My status:"+this.status+"xyz");
+		 
 	}
 
 	public String getBillingGender() {
@@ -177,7 +176,7 @@ public class ConcreteOrder implements Serializable{
 	
 	public int getTotalProductNumber() {
 		int total = 0;
-		Collection<OrderLine> orderLines = IteratorUtils.toList(this.order.getOrderLines().iterator());
+		Iterable<OrderLine> orderLines = this.order.getOrderLines();
 		for (OrderLine orderLine : orderLines) {
 			total += Integer.parseInt(orderLine.getQuantity().toString());
 		}
@@ -260,6 +259,16 @@ public class ConcreteOrder implements Serializable{
 		this.setUserAccount(account);
 	}
 	
+
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public void setBillingAdress(List<String> billingAdress) {
 		this.billingGender = billingAdress.get(0);
 		this.billingFirstName = billingAdress.get(1);
@@ -289,6 +298,8 @@ public class ConcreteOrder implements Serializable{
 	public UserAccount getUser() {
 		return user;
 	}
+	
+
 /*	public void setOrderManager(OrderManager<Order> orderManager){
 		this.orderManager = orderManager;
 	}

@@ -178,8 +178,7 @@ public class Initialize implements DataInitializer {
             order.setDateOrdered(LocalDateTime.now().minusDays(31));
         	concreteOrderRepo.save(order);
     		orderManager.save(o);
-            System.out.println(u.getUserAccount().getUsername()+"hat bestellungen"+concreteOrderRepo.findByUser(u.getUserAccount()));
-            System.out.println(order.getDateOrdered());
+           
 
 
 		}

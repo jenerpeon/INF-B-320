@@ -21,6 +21,7 @@ import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderIdentifier;
 import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
@@ -334,7 +335,7 @@ public class ManagementController {
 				"Paid Orders:"+ordersPaid
 				+"Cancelled Orders:"+ordersCancelled
 				+"Completed Orders:"+ordersCompleted);
-		
+	
 		model.addAttribute("ordersPaid", ordersPaid);
 		model.addAttribute("ordersCancelled", ordersCancelled);
 		model.addAttribute("ordersCompleted", ordersCompleted);
@@ -344,17 +345,23 @@ public class ManagementController {
 	
 	@RequestMapping(value="/employee/orders/accept/{orderId}", method = RequestMethod.GET)
 	public String acceptOrder(@PathVariable("orderId") Long orderId, ModelMap model) {
+		
         ConcreteOrder o = concreteOrderRepo.findById(orderId);
         if(o == null){
         	model.addAttribute("msg", "error in acceptOrder, no Order with qualifier"+orderId+"found");
         	return "index";
         }
-        orderManager.completeOrder(o.getOrder());
+        
+        Order order=o.getOrder();
+        o.setStatus(OrderStatus.COMPLETED);
+        concreteOrderRepo.save(o);
+		
+        //orderManager.completeOrder(o.getOrder());
 		return "redirect:/employee/orders";
 	}
 	
 	@RequestMapping(value="/employee/orders/cancel/{orderId}", method = RequestMethod.GET)
-	public String cancelOrder(ModelMap model, @PathVariable("orderId") Long orderId) {
+	public String cancelOrder(ModelMap model, @PathVariable("orderId")Long orderId) {
         ConcreteOrder o = concreteOrderRepo.findById(orderId);
       if(o == null){
         	model.addAttribute("msg", "error in acceptOrder, no Order with qualifier"+orderId+"found");
@@ -365,13 +372,15 @@ public class ManagementController {
 	}
 	
 	@RequestMapping(value="/employee/orders/detail/{orderId}")
-	public String detailOrder(@PathVariable("orderId") Long orderId, ModelMap model) {
+	public String detailOrder(@PathVariable("orderId")Long orderId, ModelMap model) {
 		ConcreteOrder o = concreteOrderRepo.findById(orderId);
 	    if(o == null){
 	        	model.addAttribute("msg", "error in acceptOrder, no Order with qualifier"+orderId+"found");
 	        	return "index";
 	    }
-		Collection<Order> orderLines = IteratorUtils.toList(o.getOrder().getOrderLines().iterator());
+	   
+	    
+		Iterable<OrderLine> orderLines = o.getOrder().getOrderLines();
 		model.addAttribute("order", o);
 		model.addAttribute("orderLines", orderLines);
 		return "orderdetail";

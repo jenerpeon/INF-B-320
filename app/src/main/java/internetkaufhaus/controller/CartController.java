@@ -166,7 +166,8 @@ class CartController {
 			orderManager.save(o);
 			orderManager.payOrder(o);
 
-            order.setStatus(o.getOrderStatus()); 			
+            order.setStatus(o.getOrderStatus()); 		
+            System.out.println(order.getStatus()+"="+o.getOrderStatus());
 			concreteOrderRepo.save(order);
            
 			cart.clear();
