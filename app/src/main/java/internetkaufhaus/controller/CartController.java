@@ -41,6 +41,7 @@ import internetkaufhaus.forms.PaymentForm;
 import internetkaufhaus.forms.ShippingAdressForm;
 import internetkaufhaus.model.Search;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
+import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 @Controller
 @SessionAttributes("cart")
 class CartController {
@@ -49,15 +50,17 @@ class CartController {
 	private final Search prodSearch;
 	private MailSender sender;
 	private final ConcreteOrderRepository concreteOrderRepo;
+	private final ConcreteUserAccountRepository userRepo;
 
 	@Autowired
-	public CartController(ConcreteOrderRepository concreteOrderRepo,OrderManager<Order> orderManager, Search prodSearch, MailSender sender) {
+	public CartController(ConcreteUserAccountRepository userRepo,ConcreteOrderRepository concreteOrderRepo,OrderManager<Order> orderManager, Search prodSearch, MailSender sender) {
 
 		Assert.notNull(orderManager, "OrderManager must not be null!");
 		this.orderManager = orderManager;
 		this.prodSearch = prodSearch;
 		this.concreteOrderRepo = concreteOrderRepo;
         this.sender = sender;
+        this.userRepo=userRepo;
 	}
 
 	@ModelAttribute("cart")
@@ -88,6 +91,7 @@ class CartController {
 	public Cart getCart(){
 	   return new Cart(); 
 	}
+
 
 	
 	@RequestMapping(value = "/clearCart", method = RequestMethod.POST)
