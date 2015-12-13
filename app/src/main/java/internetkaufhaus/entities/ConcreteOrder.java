@@ -20,7 +20,7 @@ import org.salespointframework.useraccount.UserAccount;
 
 @Entity
 @Table(name = "CORDER")
-public class ConcreteOrder implements Serializable{
+public class ConcreteOrder implements Serializable {
 	private static final long serialVersionUID = 1L;
 //	private OrderManager<Order> orderManager;
 	private OrderStatus status;
@@ -54,8 +54,9 @@ public class ConcreteOrder implements Serializable{
 	@OneToOne
 	private Order order;
 	
-	boolean returned = false;
-
+    private boolean returned = false;
+    private String returnReason;
+    
 	@SuppressWarnings({ "unused" })
 	private ConcreteOrder() {
 
@@ -311,5 +312,13 @@ public class ConcreteOrder implements Serializable{
 	}
 	public void setStatus(OrderStatus state){
 	    this.status = state;	
+	}
+    
+    public String getReturnReason() {
+		return returnReason;
+	}
+
+	public void setReturnReason(String returnReason) {
+		this.returnReason = returnReason;
 	}
 }

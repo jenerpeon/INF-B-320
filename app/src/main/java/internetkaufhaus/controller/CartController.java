@@ -4,18 +4,23 @@ package internetkaufhaus.controller;
 import static org.salespointframework.core.Currencies.EURO;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.apache.commons.collections.IteratorUtils;
 import org.javamoney.moneta.Money;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.CartItem;
 import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderIdentifier;
 import org.salespointframework.order.OrderManager;
+import org.salespointframework.order.OrderStatus;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.payment.CreditCard;
 import org.salespointframework.quantity.Quantity;
+import org.salespointframework.time.Interval;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -178,6 +183,33 @@ class CartController {
 
 			return "redirect:/";
 		}).orElse("redirect:/login");
+	}
+    
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+	@RequestMapping(value = "/returOrders", method = RequestMethod.GET)
+	public String returnRedirect(Model model, @LoggedIn Optional<UserAccount> userAccount) {
+		
+		LocalDateTime timeStart = LocalDateTime.now().minusWeeks(2);
+		LocalDateTime timeEnd = LocalDateTime.now();
+		
+		Interval interval  = Interval.from(timeStart).to(timeEnd);
+		
+		Iterable<ConcreteOrder> ordersCompletedInReturnedTime = concreteOrderRepo.findByUser(userAccount.get());
+		
+		model.addAttribute("ordersCompletedInReturnTime", ordersCompletedInReturnedTime);
+		return "returOrders";
+	}
+	
+	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
+	@RequestMapping(value = "/returOrders", method = RequestMethod.POST)
+	public String returnOrder(@RequestParam("orderId") Long orderId, 
+			@RequestParam("dropDown") String reason, @ModelAttribute Cart cart) {
+		
+		concreteOrderRepo.findById(orderId).setReturned(true);
+		concreteOrderRepo.findById(orderId).setReturnReason(reason);
+		
+    return "redirect:/";
+
 	}
 	
 }
