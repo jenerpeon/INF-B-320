@@ -22,8 +22,8 @@
 				<table>
 					<thead></thead>
 					<tbody>	
-						<tr th:each="account: ${winnerlist}">
-							<td th:text="${account.username}"></td>
+						<tr th:each="account: ${winners}">
+							<td th:text="${account.userAccount.username}"></td>
 							<td th:text="${account.credits}"></td>
 						</tr>
 					</tbody>

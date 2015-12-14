@@ -29,6 +29,9 @@ import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.forms.CreateUserForm;
 import internetkaufhaus.forms.EditUserForm;
+import internetkaufhaus.model.Competition;
+import internetkaufhaus.model.ConcreteMailSender;
+import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.model.UserManager;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
@@ -38,15 +41,19 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AdminController{
 	private final ConcreteUserAccountRepository manager;
-
 	private final UserManager usermanager;
 	private final ConcreteOrderRepository concreteOrderRepo;
+	private final Creditmanager creditmanager;
 
+	private final ConcreteMailSender sender;
 	@Autowired
-	public AdminController(ConcreteOrderRepository concreteOrderRepo, ConcreteUserAccountRepository manager, UserAccountManager umanager, OrderManager<Order> orderManager, UserManager user){
+	public AdminController(ConcreteOrderRepository concreteOrderRepo, ConcreteUserAccountRepository manager, UserAccountManager umanager, OrderManager<Order> orderManager, UserManager user, ConcreteMailSender sender,
+							Creditmanager creditmanager){
 		this.manager=manager;
 		this.usermanager = user;
 		this.concreteOrderRepo = concreteOrderRepo;
+		this.sender = sender;
+		this.creditmanager = creditmanager;
 	}
 
 	
@@ -159,5 +166,22 @@ public class AdminController{
 		//model.addAttribute("admins",);
 		//model.addAttribute("employees",);
 	    return "index";*/
+	@RequestMapping(value="/admin/lottery")
+	public String competition(ModelMap model)
+	{
+		
+		return "competition";
+	}
+	@RequestMapping(value="/admin/competitionButton")
+	public String getWinners(ModelMap model)
+	{
+		
+		Competition com = new Competition(manager.findByRole(Role.of("ROLE_CUSTOMER")), creditmanager);
+		
+		model.addAttribute("winners", com.getWinners());
+		com.getWinners().forEach(x->System.out.println(x.getUserAccount().getUsername()+" "+x.getCredits()));
+//		com.notifyWinners(sender);
+		return "competition";
+	}
 
 }
