@@ -129,8 +129,8 @@ public class AdminController{
 	public String balance(ModelMap model)
 
 	{
-		Collection<ConcreteOrder> ordersCompleted = IteratorUtils.toList(concreteOrderRepo.findByStatus(OrderStatus.COMPLETED).iterator());
-		Collection<ConcreteOrder> ordersOpen = IteratorUtils.toList(concreteOrderRepo.findByStatus(OrderStatus.OPEN).iterator());
+		Iterable<ConcreteOrder> ordersCompleted = concreteOrderRepo.findByStatus(OrderStatus.COMPLETED);
+		Iterable<ConcreteOrder> ordersOpen = concreteOrderRepo.findByStatus(OrderStatus.OPEN);
 		
 		double totalPaid = 0;
 		for (ConcreteOrder order : ordersCompleted) {
@@ -149,7 +149,7 @@ public class AdminController{
 		model.addAttribute("customerOrders",ordersCompleted);
 		model.addAttribute("StockOrders",ordersOpen);
 		model.addAttribute("customerOrdersTotal",Money.of(totalPaid, EURO));
-		model.addAttribute("StockOrdersTotal",Money.of(totalOpen, EURO));
+		model.addAttribute("StockOrdersTotal",Money.of(totalOpen, EURO).getNumber().doubleValue());
 		model.addAttribute("balance",Money.of(balance, EURO));
 		return "balance";
 	}

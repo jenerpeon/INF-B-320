@@ -20,7 +20,7 @@
 				<h1 th:text="${concreteproduct.name}">Produktname</h1>
 				<p th:text="'Lagerstand: '+${quantity}">Lagerstand: 10</p>
 				<p th:text="'Preis: '+${concreteproduct.price}">Preis</p>
-				<form id="orderitem" class="itemform" th:action="@{'/employee/changecatalog/orderedArticle/'}" method="POST">
+				<form id="orderitem" class="itemform" th:action="@{'/employee/changecatalog/orderedArticle/'}" method="GET">
 					<label for="quantity">Menge: </label>
 					<input type="number" name="quantity" id="quantityfield" value="1" min="1" max="100" step="1"/>
 					<input type ="hidden" name="prodId" th:value="${concreteproduct.identifier}" />
