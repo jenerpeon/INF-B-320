@@ -39,7 +39,7 @@ public class AccountAdministration {
     
     public String RecruitCustomer(String recruit, String invitator){
         if(this.isRegistered(recruit)){
-        	return "your friend is allready a member";
+        	return "your friend is already a member";
         }
         String invitation = "http://localhost:8080/register";
         this.concreteSender.sendMail(recruit, invitator+" recruited you. Join now! "+invitation, "unnecessaryfield", "Click to join");
