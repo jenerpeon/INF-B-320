@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -20,6 +21,7 @@ import org.salespointframework.catalog.Catalog;
 import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.order.CartItem;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderIdentifier;
 import org.salespointframework.order.OrderLine;
@@ -356,6 +358,19 @@ public class ManagementController {
         Order order=o.getOrder();
         o.setStatus(OrderStatus.COMPLETED);
         concreteOrderRepo.save(o);
+        
+        String mail = "Sehr geehrte(r) " + order.getUserAccount().getFirstname() + " " + order.getUserAccount().getLastname() + "!\n";
+        mail += "Ihre unten aufgeführte Bestellung vom " + order.getDateCreated().toString() + " wurde von einem unserer Mitarbeiter bearbeitet und ist nun auf dem Weg zu Ihnen!\n";
+        mail += "Es handelt sich um Ihre Bestellung folgender Artikel:";
+		Iterator<OrderLine> i = order.getOrderLines().iterator();
+		OrderLine current;
+		while (i.hasNext()) {
+			current = i.next();
+			mail += "\n" + current.getQuantity().toString() + "x " + current.getProductName() + " für gesamt " + current.getPrice().toString();
+		}
+		mail += "\nGesamtpreis: " + order.getTotalPrice().toString();
+        
+        new ConcreteMailSender(this.sender).sendMail(order.getUserAccount().getEmail(), mail, "nobody@nothing.com", "Bestellung bearbeitet!");
 		
         //orderManager.completeOrder(o.getOrder());
 		return "redirect:/employee/orders";
@@ -387,7 +402,7 @@ public class ManagementController {
 		return "orderdetail";
 	}
 	
-	@RequestMapping(value="employee/newsletter")
+	@RequestMapping(value="/employee/newsletter")
 	public String newsletter(ModelMap model){
 		model.addAttribute("newsUser",newsManager.getMap());
 		return "newsletter";

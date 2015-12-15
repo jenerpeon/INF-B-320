@@ -13,7 +13,7 @@ public class PaymentForm {
 	private String cardName;
 
 	@NotEmpty(message = "cardAssociationName field is mandatory")
-	@Pattern(regexp = "([A-Za-z])+", message = "cardAssociationName contains illegal characters")
+	@Pattern(regexp = "([A-Za-z ])+", message = "cardAssociationName contains illegal characters")
 	private String cardAssociationName;
 
 	@NotEmpty(message = "cardNumber field is mandatory")
@@ -21,7 +21,7 @@ public class PaymentForm {
 	private String cardNumber;
 
 	@NotEmpty(message = "nameOnCard field is mandatory")
-	@Pattern(regexp = "([A-Za-z])+", message = "nameOnCard contains illegal characters")
+	@Pattern(regexp = "([A-Za-z ])+", message = "nameOnCard contains illegal characters")
 	private String nameOnCard;
 
 	@NotEmpty(message = "expiryDate field is mandatory")

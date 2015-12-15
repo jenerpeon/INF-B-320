@@ -43,9 +43,12 @@
 								<label for="role">Rolle: </label>
 								<select th:switch="${account.role.name}" name="rolename" id="rolefield" size="1">
 									<option th:case="'ROLE_EMPLOYEE'" value="ROLE_EMPLOYEE" selected>Mitarbeiter</option>
-									<option value="ROLE_EMPLOYEE">Mitarbeiter</option>
+									<option th:if="${account.role.name}!='ROLE_EMPLOYEE'"value="ROLE_EMPLOYEE">Mitarbeiter</option>
 									<option th:case="'ROLE_ADMIN'" value="ROLE_ADMIN" selected>Administrator</option>
-									<option value="ROLE_ADMIN">Administrator</option>
+									<option th:if="${account.role.name}!='ROLE_ADMIN'" value="ROLE_ADMIN">Administrator</option>
+									<option th:case="'ROLE_CUSTOMER'" value="ROLE_CUSTOMER" selected>Kunde</option>
+									<option th:if="${account.role.name}!='ROLE_CUSTOMER'" value="ROLE_CUSTOMER">Kunde</option>
+									
 								</select>
 						</li>
 					</ol>

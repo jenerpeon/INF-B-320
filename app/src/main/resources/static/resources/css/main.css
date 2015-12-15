@@ -259,7 +259,7 @@ table   {
 	text-align: center;
 }
 
-.nav a { text-decoration: none; }
+nav a { text-decoration: none; }
 
 .nav li { list-style: none; }
 
@@ -301,10 +301,8 @@ table   {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
-.nav > li:hover > a {
+/*.nav > li:hover > a {
 	background: #ffffff;
-	/* [disabled]border-left: 1px solid #000000; */
-	/* [disabled]border-right: 1px solid #000000; */
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -371,7 +369,7 @@ table   {
 
 .nav .nav-column li a:hover { color: #666666; }
 .nav .nav-column li a:hover:before{content:"> ";color:#666666;}
-
+*/
 
 
 #wrapper #footer {
