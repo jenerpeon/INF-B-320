@@ -10,6 +10,7 @@ import java.util.stream.IntStream;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -27,7 +28,11 @@ public class ConcreteProduct extends Product {
 	@Column(name = "CATEGORY")
 	private String category;
 	private String imagefile;
+	
+	@Lob
+	@Column( length = 100000 )
 	private String description;
+	
 	private String webLink;
 
 
