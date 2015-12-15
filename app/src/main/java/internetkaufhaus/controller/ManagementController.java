@@ -402,7 +402,7 @@ public class ManagementController {
 		return "orderdetail";
 	}
 	
-	@RequestMapping(value="employee/newsletter")
+	@RequestMapping(value="/employee/newsletter")
 	public String newsletter(ModelMap model){
 		model.addAttribute("newsUser",newsManager.getMap());
 		return "newsletter";
