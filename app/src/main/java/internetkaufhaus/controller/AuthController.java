@@ -103,9 +103,11 @@ public class AuthController extends SalespointSecurityConfiguration {
 			ConcreteUserAccount invitator=concreteUserAccountRepo.findByEmail(this.accountAdministration.getRecruit2invite().get(user.getEmail()));
 			invitator.setRecruits(user);
 		}
+
 		
 		this.accountAdministration.RegisterCustomer(user.getEmail());
 		modelmap.addAttribute("info", "account has been generate. Check your Email to validate");
+
 		return "index";
 	}
 

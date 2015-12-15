@@ -4,6 +4,7 @@ package internetkaufhaus.controller;
 import static org.salespointframework.core.Currencies.EURO;
 
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -12,10 +13,12 @@ import org.javamoney.moneta.Money;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.CartItem;
 import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderManager;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.payment.CreditCard;
 import org.salespointframework.quantity.Quantity;
+import org.salespointframework.time.Interval;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +36,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.forms.BillingAdressForm;
 import internetkaufhaus.forms.PaymentForm;
 import internetkaufhaus.forms.ShippingAdressForm;
+import internetkaufhaus.model.ConcreteMailSender;
 import internetkaufhaus.model.Search;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
@@ -141,7 +146,11 @@ class CartController {
 	}
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 	@RequestMapping(value="/payed", method = RequestMethod.POST)
-	public String payed(@ModelAttribute Cart cart, @ModelAttribute("paymentForm") @Valid PaymentForm paymentForm, @ModelAttribute("shippingAdressForm") @Valid ShippingAdressForm shippingAdressForm, @ModelAttribute("billingAdressForm") @Valid BillingAdressForm billingAdressForm, BindingResult result, @LoggedIn Optional<UserAccount> userAccount) {
+	public String payed(ModelMap modelmap, @ModelAttribute Cart cart, @ModelAttribute("paymentForm") @Valid PaymentForm paymentForm, BindingResult result, @ModelAttribute("shippingAdressForm") @Valid ShippingAdressForm shippingAdressForm, @ModelAttribute("billingAdressForm") @Valid BillingAdressForm billingAdressForm, @LoggedIn Optional<UserAccount> userAccount, RedirectAttributes redir) {
+		if (result.hasErrors()) {
+			redir.addFlashAttribute("message", result.getAllErrors());
+			return "redirect:/orderdata/1";
+		}
 		return userAccount.map(account -> {
 			org.javamoney.moneta.Money dailyWithdrawalLimit = Money.of(1000000000, EURO);
 			org.javamoney.moneta.Money creditLimit = Money.of(1000000000, EURO);
@@ -173,11 +182,49 @@ class CartController {
             order.setStatus(o.getOrderStatus()); 		
             System.out.println(order.getStatus()+"="+o.getOrderStatus());
 			concreteOrderRepo.save(order);
-           
+
+			String articles = "";
+			Iterator<OrderLine> i = order.getOrder().getOrderLines().iterator();
+			OrderLine current;
+			while (i.hasNext()) {
+				current = i.next();
+				articles += "\n" + current.getQuantity().toString() + "x " + current.getProductName() + " für gesamt " + current.getPrice().toString();
+			}
+			articles += "\nGesamtpreis: " + order.getOrder().getTotalPrice().toString();
+			
 			cart.clear();
+			
+			new ConcreteMailSender(this.sender).sendMail(account.getEmail(), "Sehr geehrte(r) " + account.getFirstname() + " " + account.getLastname() + "!\nIhre Bestellung ist soeben bei uns eingetroffen und wird nun bearbeitet!\nIhre Bestellung umfasst folgende Artikel:" + articles, "nobody@nothing.com", "Bestellung eingetroffen!");
 
 			return "redirect:/";
 		}).orElse("redirect:/login");
+	}
+    
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+	@RequestMapping(value = "/returOrders", method = RequestMethod.GET)
+	public String returnRedirect(Model model, @LoggedIn Optional<UserAccount> userAccount) {
+		
+		LocalDateTime timeStart = LocalDateTime.now().minusWeeks(2);
+		LocalDateTime timeEnd = LocalDateTime.now();
+		
+		Interval interval  = Interval.from(timeStart).to(timeEnd);
+		
+		Iterable<ConcreteOrder> ordersCompletedInReturnedTime = concreteOrderRepo.findByUser(userAccount.get());
+		
+		model.addAttribute("ordersCompletedInReturnTime", ordersCompletedInReturnedTime);
+		return "returOrders";
+	}
+	
+	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
+	@RequestMapping(value = "/returOrders", method = RequestMethod.POST)
+	public String returnOrder(@RequestParam("orderId") Long orderId, 
+			@RequestParam("dropDown") String reason, @ModelAttribute Cart cart) {
+		
+		concreteOrderRepo.findById(orderId).setReturned(true);
+		concreteOrderRepo.findById(orderId).setReturnReason(reason);
+		
+    return "redirect:/";
+
 	}
 	
 }
