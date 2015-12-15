@@ -33,7 +33,7 @@ public class AuthController extends SalespointSecurityConfiguration {
 
 	private static final String LOGIN_ROUTE = "/login";
 	private final UserAccountManager userAccountManager;
-	private final ConcreteUserAccountRepository concreteUserAccountManager;
+	private final ConcreteUserAccountRepository concreteUserAccountRepo;
 
 	private final AccountAdministration accountAdministration;
 	ModelAndView modelAndView = new ModelAndView();
@@ -41,7 +41,7 @@ public class AuthController extends SalespointSecurityConfiguration {
 	@Autowired
 	public AuthController(AccountAdministration accountAdministration, UserAccountManager userAccountManager, ConcreteUserAccountRepository concreteUserAccountManager, MailSender sender) {
 		this.userAccountManager = userAccountManager;
-		this.concreteUserAccountManager = concreteUserAccountManager;
+		this.concreteUserAccountRepo = concreteUserAccountManager;
 		this.accountAdministration = accountAdministration;
 		
 	}
@@ -91,16 +91,20 @@ public class AuthController extends SalespointSecurityConfiguration {
 		}
 
 		/* catch if mail address allready taken */
-		if (concreteUserAccountManager.findByEmail(registrationForm.getEmail()) == null)
+		if (concreteUserAccountRepo.findByEmail(registrationForm.getEmail()) != null)
 			return "redirect:/#login-modal";
 
 		ConcreteUserAccount user = new ConcreteUserAccount(registrationForm.getEmail(), registrationForm.getName(), registrationForm.getFirstname(), registrationForm.getLastname(), registrationForm.getAddress(), registrationForm.getZipCode(), registrationForm.getCity(), registrationForm.getPassword(), Role.of("ROLE_CUSTOMER"), this.userAccountManager);
-		if (this.accountAdministration.isRecruit(registrationForm.getEmail())) {
-			user.setRecruitedBy(registrationForm.getEmail());
-		}
-		concreteUserAccountManager.save(user);
 		userAccountManager.save(user.getUserAccount());
-
+		concreteUserAccountRepo.save(user);
+		//userAccountManager.save(user.getUserAccount());
+		
+		if (this.accountAdministration.isRecruit(registrationForm.getEmail())) {
+			ConcreteUserAccount invitator=concreteUserAccountRepo.findByEmail(this.accountAdministration.getRecruit2invite().get(user.getEmail()));
+			invitator.setRecruits(user);
+		}
+		
+		this.accountAdministration.RegisterCustomer(user.getEmail());
 		modelmap.addAttribute("info", "account has been generate. Check your Email to validate");
 		return "index";
 	}
@@ -111,6 +115,7 @@ public class AuthController extends SalespointSecurityConfiguration {
 		if (!(userAccount.get().getEmail() == null))
 			invitator = userAccount.get().getEmail();
 		String msg = this.accountAdministration.RecruitCustomer(recruit, invitator);
+		
 		modelmap.addAttribute("info", msg);
 		return "/index";
 	}

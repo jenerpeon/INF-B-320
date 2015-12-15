@@ -1,12 +1,10 @@
 package internetkaufhaus.controller;
 import static org.salespointframework.core.Currencies.EURO;
 
-import java.util.Collection;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.apache.commons.collections.IteratorUtils;
 import org.javamoney.moneta.Money;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
@@ -29,7 +27,7 @@ import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.forms.CreateUserForm;
 import internetkaufhaus.forms.EditUserForm;
-import internetkaufhaus.model.UserManager;
+import internetkaufhaus.forms.NewUserAccountForm;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
@@ -38,15 +36,16 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AdminController{
 	private final ConcreteUserAccountRepository manager;
-
-	private final UserManager usermanager;
 	private final ConcreteOrderRepository concreteOrderRepo;
+	private final UserAccountManager umanager;
+	private final NewUserAccountForm form;
 
 	@Autowired
-	public AdminController(ConcreteOrderRepository concreteOrderRepo, ConcreteUserAccountRepository manager, UserAccountManager umanager, OrderManager<Order> orderManager, UserManager user){
+	public AdminController(NewUserAccountForm form, ConcreteOrderRepository concreteOrderRepo, ConcreteUserAccountRepository manager, UserAccountManager umanager, OrderManager<Order> orderManager){
 		this.manager=manager;
-		this.usermanager = user;
+		this.umanager=umanager;
 		this.concreteOrderRepo = concreteOrderRepo;
+		this.form=form;
 	}
 
 	
@@ -69,9 +68,12 @@ public class AdminController{
 	
 	@RequestMapping(value="/admin/changeuser/deleteUser/{id}")
 	public String deleteUser(@PathVariable("id") Long id)
-	{
-
-		usermanager.deleteUser(id);
+	{	
+//		manager.delete(id);
+		umanager.disable((manager.findOne(id).getUserAccount().getId()));
+		manager.delete(id);
+		
+		
 		return "redirect:/admin/changeuser";
 	}
 	
@@ -93,7 +95,7 @@ public class AdminController{
 			model.addAttribute("message", result.getAllErrors());
 			return "changeusernewuser";
 		}
-		usermanager.createUser(createuserform);
+		form.createUser(createuserform);
 		return "redirect:/admin/changeuser/";
 	}
 	
@@ -109,7 +111,7 @@ public class AdminController{
 		if (result.hasErrors()) {
 			return "redirect:/admin/changeuser/";
 		}
-		usermanager.changeUser(edituserform.getId(), edituserform.getRolename(), edituserform.getPassword());
+		form.changeUser(edituserform.getId(), edituserform.getRolename(), edituserform.getPassword());
 		return "redirect:/admin/changeuser/";
 	}
 	@RequestMapping(value="/admin/changeuser/displayUser/{id}")
@@ -141,8 +143,8 @@ public class AdminController{
 		
 		model.addAttribute("customerOrders",ordersCompleted);
 		model.addAttribute("StockOrders",ordersOpen);
-		model.addAttribute("customerOrdersTotal",Money.of(totalPaid, EURO));
-		model.addAttribute("StockOrdersTotal",Money.of(totalOpen, EURO).getNumber().doubleValue());
+		model.addAttribute("customerOrdersTotal",Money.of(Math.round(totalPaid*100)/100, EURO));
+		model.addAttribute("StockOrdersTotal",Money.of(Math.round(totalOpen), EURO));
 		model.addAttribute("balance",Money.of(balance, EURO));
 		return "balance";
 	}
