@@ -101,7 +101,7 @@ public class AuthController extends SalespointSecurityConfiguration {
 		concreteUserAccountManager.save(user);
 		userAccountManager.save(user.getUserAccount());
 
-		modelmap.addAttribute("info", "account has been generate. Check your Email to validate");
+		modelmap.addAttribute("info", "account has been generated. Check your Email to validate");
 		return "index";
 	}
 
