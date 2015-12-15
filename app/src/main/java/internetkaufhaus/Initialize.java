@@ -160,12 +160,16 @@ public class Initialize implements DataInitializer {
 		final Role customerRole = Role.of("ROLE_CUSTOMER");
 		final Role employeeRole = Role.of("ROLE_EMPLOYEE");
 
+		
+
 		List<ConcreteUserAccount> userAccounts = new ArrayList<ConcreteUserAccount>();
 		userAccounts.add(new ConcreteUserAccount("peon", "peon", adminRole, userAccountManager));
 		userAccounts.add(new ConcreteUserAccount("saul", "saul", employeeRole, userAccountManager));
 		userAccounts.add(new ConcreteUserAccount("adminBehrens@todesstern.ru", "admin", "admin", "Behrens", "Musterstraße", "01069", "Definitiv nicht Dresden", "admin", customerRole, userAccountManager));
 		userAccounts.add(new ConcreteUserAccount("behrens_lars@gmx.de", "lars", "Lars", "Behrens", "Musterstraße", "01069", "Definitiv nicht Dresden", "lars", customerRole, userAccountManager));
 		
+
+
 //		100 weitere ConcreteUserAccounts; auskommentiert aus Zeitgründen
 //		
 //		int i = 0;
@@ -176,6 +180,7 @@ public class Initialize implements DataInitializer {
 		
 	
 		
+
 		/*
 		 * RegistrationForm reg = new RegistrationForm(); reg.setEmail("behrens_lars@gmx.de"); reg.setName("peons"); reg.setPassword("asdf"); reg.setPasswordrepeat("asdf");
 		 * 
@@ -184,16 +189,19 @@ public class Initialize implements DataInitializer {
 		for (ConcreteUserAccount acc : userAccounts) {
 			userAccountManager.save(acc.getUserAccount());
 			ConcreteUserAccountManager.save(acc);
-		}
-		ConcreteUserAccountManager.findByUserAccount(userAccountManager.findByUsername("lars").get()).setRecruitedBy("adminBehrens@todesstern.ru");
-		ConcreteUserAccountManager.findByUserAccount(userAccountManager.findByUsername("admin").get()).setRecruitedBy("behrens_lars@gmx.de");
-		// System.out.println("###############"+ConcreteUserAccountManager.findByEmail("behrens_lars@gmx.de").toString());
+				
+				}
+		
+		ConcreteUserAccountManager.findByUserAccount(userAccountManager.findByUsername("lars").get()).setRecruits(ConcreteUserAccountManager.findByEmail("adminBehrens@todesstern.ru"));
+		ConcreteUserAccountManager.findByUserAccount(userAccountManager.findByUsername("admin").get()).setRecruits(ConcreteUserAccountManager.findByEmail("behrens_lars@gmx.de"));
+	
 	}
 
-	// public OrderManager<Order> getOrderManager() {
-	// return orderManager;
-	//
-	// }
+		
+		
+
+
+	
 
 	private void initializeOrders(ConcreteOrderRepository concreteOrderRepo, ConcreteProductRepository prods, OrderManager<Order> orderManager, ConcreteUserAccountRepository ConcreteUserAccountManager) {
 		
