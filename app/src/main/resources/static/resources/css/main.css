@@ -308,7 +308,7 @@ nav a { text-decoration: none; }
 	z-index: 500;
 	margin-top: 0px;
 	min-width: 915px;
-	padding: 0 0 0 55px;
+	padding: 0 0 0 50px;
 }
 .nav > li {
 	display: block;

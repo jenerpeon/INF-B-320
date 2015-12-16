@@ -125,7 +125,7 @@
 }
 #articlelist-thumbnail .article-container {
 	flex: 1 1 auto;
-	width: 280px;
+	width: 260px;
 	height: 350px;
   	padding: 4px;
   	margin: 20px 10px 20px 10px;
@@ -149,6 +149,7 @@
 }
 
 .rating {
+	height: 30px;
     unicode-bidi: bidi-override;
     direction: rtl;
     padding: 20px 0 0 0;
