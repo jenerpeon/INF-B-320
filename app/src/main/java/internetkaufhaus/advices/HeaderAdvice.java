@@ -70,6 +70,7 @@ public class HeaderAdvice {
 		int size = 0;
 		while (i.hasNext()) {
 			size++;
+			i.next();
 		}
 		return size;
 	}
