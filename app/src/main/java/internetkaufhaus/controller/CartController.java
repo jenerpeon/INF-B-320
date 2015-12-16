@@ -88,7 +88,7 @@ class CartController {
 
 		cart.addOrUpdateItem(concreteproduct, Quantity.of(amount));
 		// get first Category of product and redirect to associated catalog search
-    return "redirect:catalog/"+concreteproduct.getCategories().iterator().next()+"/5/1";
+    return "redirect:catalog/"+concreteproduct.getCategories().iterator().next()+"/1/5/1";
 
 	}
 
@@ -102,8 +102,6 @@ class CartController {
 	   return new Cart(); 
 	}
 
-
-	
 	@RequestMapping(value = "/clearCart", method = RequestMethod.POST)
 	public String clearCart(@ModelAttribute Cart cart,@LoggedIn Optional<UserAccount> userAccount)
 	{	

@@ -14,11 +14,12 @@ import org.junit.Test;
 
 import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteProduct;
+import internetkaufhaus.entities.ConcreteUserAccount;
 
 public class CommentTest {
 	
-	private Comment model;
-	 
+	Comment model;
+	
 	@Before 
 	public void init(){
 		model= new Comment("Das hier ist ein Kommentar",5, new Date(200000),"t");
@@ -30,14 +31,6 @@ public class CommentTest {
 		model.setCommentid(number);
 		assertTrue("Id wird zurückgegeben", model.getCommentid()==number);	
 	}
-	
-/*	@Test
-	public void testRemove(){
-		model.setRemoved(true);
-		assertTrue("Kommentar ist auf remove gesetzt", model.isRemoved()==true);
-		model.setRemoved(false);
-		assertTrue("Kommentar ist nicht auf remove gesetzt", model.isRemoved()==false);
-	}*/
 
 	@Test
 	public void testProduct(){
@@ -47,9 +40,17 @@ public class CommentTest {
 	}
 
 	@Test
+	public void testUser(){
+		ConcreteUserAccount account = new ConcreteUserAccount();
+		model.setUser(account);
+		assertTrue("Account gesetzt", model.getUserAccount()==account);
+	}
+	
+	@Test
 	public void testText(){
 		String text="Dieser Text soll angezeigt werden";
-		model.setText(text); assertTrue("Text gesetzt", model.getText()==text);
+		model.setText(text);
+		assertTrue("Text gesetzt", model.getText()==text);
 		assertTrue("Text gesetzt", model.toString()==text);
 	}
 	
