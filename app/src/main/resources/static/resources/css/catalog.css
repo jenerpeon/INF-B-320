@@ -3,7 +3,7 @@
 #mainframe {
 	width: 930px;
 	margin: 0 auto 0 auto;
-	padding-left: 40px;
+	padding-left: 60px;
 }
 
 #topLine {
@@ -16,7 +16,7 @@
 }
 #articlesPerPage {
 	flex: auto;
-	text-align: right;
+	text-align: left;
 }
 #articlesPerPage fieldset {
 	padding: 0;
@@ -53,8 +53,36 @@
 	width: 75%;
 	flex: auto;
 }
+#articleRepresentation {
+	flex: 1 1 auto;
+	text-align: center;
+	display: flex;
+	align-items: center;
+}
+#articleRepresentation img{
+	width: 25px;
+	margin: 0 5px 0 5px;
+}
+#catalogSite {
+	flex: 1 1 auto;
+}
+#catalogSite ul {
+	list-style-type: none;
+	padding-left: 0px;
+	text-align: right;
+	margin: 0px;
+}
+#catalogSite ul li {
+	display: inline;
+}
+#catalogSite ul li img {
+	height: 15px;
+	padding: 0 2px 0 2px;
+	opacity: 0.6;
+}
 #articlelist {
 	list-style-type: none;
+	padding-left: 0px;
 }
 #articlelist .article h1 {
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
@@ -62,12 +90,16 @@
 }
 #articlelist .flex-container{
 	display: flex;
+	align-items: center;
 }
 #articlelist .article .picture {
 	float: left;
 	margin-right: 20px;
-	width: 150px;
-	height: auto;
+	height: 250px;
+
+}
+#articlelist .article .clamping-container {
+	height: 6em;
 }
 #articlelist .article .description {
     text-align: justify;
@@ -76,9 +108,46 @@
 	padding-bottom: 25px;
 }
 
+#articlelist .article .price {
+    text-align: right;
+    font-weight: bold;
+    float: right;
+}
+
 #articlelist .article:last-child {
 	padding-bottom: 0px;
 }
+#articlelist-thumbnail {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 0px;
+	list-style-type: none;
+}
+#articlelist-thumbnail .article-container {
+	flex: 1 1 auto;
+	width: 280px;
+	height: 350px;
+  	padding: 4px;
+  	margin: 20px 10px 20px 10px;
+}
+#articlelist-thumbnail .picture-thumbnail {
+	width: 300px;
+	display: block;
+	margin: 0 auto 0 auto;
+}
+#articlelist-thumbnail .name-container-thumbnail {
+	height: 60px;
+}
+#articlelist-thumbnail .name-thumbnail {
+	font-size: 16px;
+	font-weight: normal;
+}
+#articlelist-thumbnail .price-thumbnail {
+	font-size: 16px;
+	font-weight: normal;
+	float: right;
+}
+
 .rating {
     unicode-bidi: bidi-override;
     direction: rtl;
@@ -102,8 +171,9 @@
 	clear: both;
 }
 #pageControl {
-	padding-top: 20px;
-	padding-left: 260px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 #pageControl a{
