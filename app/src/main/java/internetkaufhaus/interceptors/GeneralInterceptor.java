@@ -15,14 +15,15 @@ import internetkaufhaus.model.Search;
 
 public class GeneralInterceptor extends HandlerInterceptorAdapter {
 	private Search prodSearch;
-	
+
 	@Autowired
-	public GeneralInterceptor(Search prodSearch){
+	public GeneralInterceptor(Search prodSearch) {
 		this.prodSearch = prodSearch;
 	}
-    @Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView){
-			ModelMap modelMap = modelAndView.getModelMap();
-			modelMap.addAttribute("categories", prodSearch.getCagegories());
-		}
-	} 
+	/*
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
+		ModelMap modelMap = modelAndView.getModelMap();
+		modelMap.addAttribute("categories", prodSearch.getCategories());
+	}*/
+}

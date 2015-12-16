@@ -103,7 +103,7 @@ public class ManagementController {
 
 	@RequestMapping("/employee/changecatalog/addArticle")
 	public String addArticle(Optional<UserAccount> userAccount, ModelMap model) {
-		model.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("categories", prodSearch.getCategories());
 		return "changecatalognewitem";
 	}
 
@@ -155,7 +155,7 @@ public class ManagementController {
 
 	@RequestMapping("/employee/changecatalog/editArticle/{prodId}")
 	public String editArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
-		model.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("categories", prodSearch.getCategories());
 		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("price", prod.getPrice().getNumber());
 		return "changecatalogchangeitem";
@@ -238,7 +238,7 @@ public class ManagementController {
 
 	@RequestMapping("/employee/changecatalog/deleteArticle/{prodId}")
 	public String deleteArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
-		model.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("categories", prodSearch.getCategories());
 		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("price", prod.getPrice().getNumber());
 		return "changecatalogdeleteitem";
@@ -262,7 +262,7 @@ public class ManagementController {
 
 		Optional<InventoryItem> item = inventory.findByProductIdentifier(prod.getIdentifier());
 		Quantity quantity = item.map(InventoryItem::getQuantity).orElse(NONE);
-		model.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("categories", prodSearch.getCategories());
 		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("quantity", quantity);
 		model.addAttribute("price", prod.getPrice().getNumber());
@@ -410,7 +410,7 @@ public class ManagementController {
 	
 	@RequestMapping("/employee/newsletter/changeNewsletter")
 	public String changeNewsletter(Optional<UserAccount> userAccount, ModelMap model) {
-		model.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("categories", prodSearch.getCategories());
 		return "changenewsletter";
 	}
 	

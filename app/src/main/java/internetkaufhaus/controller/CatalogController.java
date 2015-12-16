@@ -69,7 +69,7 @@ public class CatalogController {
 		model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
 		model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
 		model.addAttribute("search", lookup);
-		model.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("categories", prodSearch.getCategories());
 
 		return "catalog";
 	}
@@ -82,7 +82,7 @@ public class CatalogController {
 		model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
 		model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
 		model.addAttribute("search", lookup);
-		model.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("categories", prodSearch.getCategories());
 
 		return "catalog";
 	}
@@ -92,7 +92,7 @@ public class CatalogController {
 
 		model.addAttribute("category", category);
 		model.addAttribute("ProdsOfCategory", prodSearch.getProdsByCategory(category));
-		model.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("categories", prodSearch.getCategories());
 
 		return "catalog";
 	}
@@ -120,13 +120,13 @@ public class CatalogController {
 		model.addAttribute("prods", page);
 		model.addAttribute("numbers", numbers);
 		model.addAttribute("sites", numbers.size());
-		model.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("categories", prodSearch.getCategories());
 		return "catalog";
 	}
 
 	@RequestMapping(value = "/catalog/{type}/{representation}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)
 	public String changeStartPageSetting(Pageable pagable, @PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split, @PathVariable("representation") int representation, ModelMap model) {
-		model.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("categories", prodSearch.getCategories());
 		return "redirect:/catalog/"+category+'/'+representation+'/'+split+'/'+number;
 	}
 
@@ -139,7 +139,7 @@ public class CatalogController {
 		model.addAttribute("quantity", quantity);
 		model.addAttribute("orderable", quantity.isGreaterThan(NONE));
 		model.addAttribute("comments", prod.getAcceptedComments());
-		model.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("categories", prodSearch.getCategories());
 		return "detail";
 	}
 
@@ -170,7 +170,7 @@ public class CatalogController {
 		concreteMailSender.sendMail(sendTo, text,"zu@googlemail.com", "NewsletterAbonnement");
 	
 		model.addAttribute("prodList", catalog.findAll());
-		model.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("categories", prodSearch.getCategories());
 		
 		return "index";
 		

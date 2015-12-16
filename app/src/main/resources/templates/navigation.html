@@ -204,8 +204,8 @@
 													alt="" /></a></td>
 											<td>
 												<ul id="cart-text-list">
-													<li><a>0 Artikel</a></li>
-													<li><a>Summe</a></li>
+													<li><a th:text="${cartsize}+' Artikel'"></a></li>
+													<li><a th:text="'Summe: '+${cartprice}"></a></li>
 													<li><a th:href="@{'/cart'}">Zum Warenkorb</a></li>
 												</ul>
 											</td>

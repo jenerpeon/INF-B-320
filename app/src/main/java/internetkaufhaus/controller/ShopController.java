@@ -30,7 +30,7 @@ public class ShopController {
 	public String index(ModelMap model) {
 
 		model.addAttribute("prodList", catalog.findAll());
-		model.addAttribute("categories", prodSearch.getCagegories());
+		model.addAttribute("categories", prodSearch.getCategories());
 
 		return "index";
 	}
