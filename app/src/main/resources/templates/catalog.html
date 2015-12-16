@@ -19,7 +19,7 @@
   			ellipsis: '... ',
   			wrap: 'word',
   			watch: "window",
-  			height: 100
+  			height: 90
   		});
   		$('.description-thumbnail').dotdotdot({
   			ellipsis: '... ',
@@ -85,10 +85,10 @@
 						<div id="articleRepresentation">
 							<a>Artikeldarstellung:</a>
 							<a th:href="@{'/catalog/'+${category}+'/'+'1/'+${split}+'/'+${number}}">
-							<img src="/resources/Bilder/details.png" />
+								<img src="/resources/Bilder/details.png" />
 							</a>
 							<a th:href="@{'/catalog/'+${category}+'/'+'2/'+${split}+'/'+${number}}">
-							<img src="/resources/Bilder/thumbnails.png" />
+								<img src="/resources/Bilder/thumbnails.png" />
 							</a>
 						</div>
 						<div id="catalogSite">
@@ -140,7 +140,7 @@
 									</div>
 									<div class="rating">
 										<span class="filled" th:each="i : ${concreteproduct.rating}">☆</span>
-										</div>
+									</div>
 									<a th:text="${concreteproduct.ratings}+' Bewertung(en)'"></a>
 									<a class="price" th:text="${concreteproduct.price}"></a>
 								</div>

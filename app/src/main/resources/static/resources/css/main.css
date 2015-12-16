@@ -18,6 +18,7 @@ p {
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
 	text-decoration: none;
 	font-weight: normal;
+	font-size: 14px;
 	color: #000000;
 }
 
@@ -54,6 +55,16 @@ select {
   	width: 20%;*/
 }
 
+input[type=submit] {
+	border:1px solid #eeeeec;
+	border-radius: 2px;
+	background-color: #eeeeec;
+	padding: 2px 20px;
+}
+
+input[type=submit]:hover {
+	background-color: lightgray;
+}
 option {
 	background-color: white;
 }
@@ -279,8 +290,8 @@ option {
 
 #wrapper #navigation {
 	background-color: #E1E1E1;
-	-webkit-box-shadow: inset 0px 20px 20px -20px;
-	box-shadow: inset 0px 20px 20px -20px;
+	-webkit-box-shadow: inset 0px 10px 10px -10px;
+	box-shadow: inset 0px 10px 10px -10px;
 	height: 54px;
 	width: 100%;
 	text-align: center;
@@ -296,8 +307,8 @@ nav a { text-decoration: none; }
 	cursor: default;
 	z-index: 500;
 	margin-top: 0px;
-	min-width: 1000px;
-	padding-left: 100px;
+	min-width: 915px;
+	padding: 0 0 0 55px;
 }
 .nav > li {
 	display: block;
@@ -307,34 +318,21 @@ nav a { text-decoration: none; }
 	position: relative;
 	display: inline-block;
 	z-index: 510;
-	height: 54px;
 	padding-top: 0;
 	padding-right: 14px;
 	padding-left: 14px;
 	padding-bottom: 0;
 	line-height: 54px;
-	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
-	font-size: 16px;
-	color: #000000;
-	background-color: #E1E1E1;
-	-webkit-transition: all .3s ease;
-	-moz-transition: all .3s ease;
-	-o-transition: all .3s ease;
-	-ms-transition: all .3s ease;
-	transition: all .3s ease;
-	-webkit-box-shadow: inset 0px 20px 20px -20px;
-	box-shadow: inset 0px 20px 20px -20px;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
+	/*-webkit-box-shadow: inset 0px 20px 20px -20px;
+	box-shadow: inset 0px 20px 20px -20px;*/
 }
-/*.nav > li:hover > a {
+.nav > li:hover > a {
 	background: #ffffff;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
-
+/*
 .nav > li > div {
 	position: absolute;
 	display: block;
