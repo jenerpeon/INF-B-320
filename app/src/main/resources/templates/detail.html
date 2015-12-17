@@ -16,7 +16,16 @@
 	<div id="wrapper">
 		<div id="header" th:include="navigation :: navigation"></div>
 		<main>
-		<div id="main-wrapper">
+		<div id="mainframe">
+			<div id="topLine">
+				<div id="path">
+					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a th:text="${concreteproduct.category}"></a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a th:text="${concreteproduct.name}"></a>
+				</div>
+			</div>
 			<div class="workframe">
 				<div id="firstcolumn">
 					<img class="picture" th:src="@{'/resources/Bilder/Produkte/' + ${concreteproduct.imagefile}}" />

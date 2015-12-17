@@ -1,19 +1,5 @@
 @charset "utf-8";
 
-#mainframe {
-	width: 915px;
-	margin: 0 auto 0 auto;
-	padding-left: 55px;
-}
-
-#topLine {
-	padding: 10px 0 20px 0;
-	display: flex;
-}
-#path {
-	flex: auto;
-	text-align: left;
-}
 #articlesPerPage {
 	flex: auto;
 	text-align: left;

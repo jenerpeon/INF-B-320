@@ -53,10 +53,10 @@
 		<div id="mainframe">
 			<div id="topLine">
 				<div id="path">
-					<a th:if="${category != null}"
-						th:text="@{'Kategorie'+ ' > ' +${category}}">Home &gt;</a> <a
-						th:if="${category == null}" th:text="@{'Suche'+ ' > ' +${search}}">Home
-						&gt;</a>
+					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a th:if="${category != null}" th:text="@{${category}}">Home &gt;</a>
+					<a th:if="${category == null}" th:text="@{'Suche'+ ' > ' +${search}}">Home &gt;</a>
 				</div>
 			</div>
 
