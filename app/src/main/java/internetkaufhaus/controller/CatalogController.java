@@ -69,8 +69,6 @@ public class CatalogController {
 		model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
 		model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
 		model.addAttribute("search", lookup);
-		model.addAttribute("categories", prodSearch.getCategories());
-
 		return "catalog";
 	}
 
@@ -82,8 +80,6 @@ public class CatalogController {
 		model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
 		model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
 		model.addAttribute("search", lookup);
-		model.addAttribute("categories", prodSearch.getCategories());
-
 		return "catalog";
 	}
 
@@ -92,7 +88,6 @@ public class CatalogController {
 
 		model.addAttribute("category", category);
 		model.addAttribute("ProdsOfCategory", prodSearch.getProdsByCategory(category));
-		model.addAttribute("categories", prodSearch.getCategories());
 
 		return "catalog";
 	}
@@ -117,6 +112,14 @@ public class CatalogController {
 		model.addAttribute("quantities", new TreeSet<Integer>(quantities));
 		model.addAttribute("representation",representation);
 		model.addAttribute("split", split);
+		model.addAttribute("prods", page = concreteCatalog.findByCategory(category, new PageRequest(number-1,split)));
+		model.addAttribute("numbers", IntStream.range(1, page.getTotalPages()+1).boxed().collect(Collectors.toList()));
+		return "catalog";
+	}
+
+	@RequestMapping(value = "/catalog/{type}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)
+	public String changeStartPageSetting(Pageable pagable, @PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split, ModelMap model) {
+		return "redirect:/catalog/"+category+'/'+split+'/'+number;
 		model.addAttribute("prods", page);
 		model.addAttribute("numbers", numbers);
 		model.addAttribute("sites", numbers.size());
@@ -139,7 +142,6 @@ public class CatalogController {
 		model.addAttribute("quantity", quantity);
 		model.addAttribute("orderable", quantity.isGreaterThan(NONE));
 		model.addAttribute("comments", prod.getAcceptedComments());
-		model.addAttribute("categories", prodSearch.getCategories());
 		return "detail";
 	}
 
@@ -170,7 +172,6 @@ public class CatalogController {
 		concreteMailSender.sendMail(sendTo, text,"zu@googlemail.com", "NewsletterAbonnement");
 	
 		model.addAttribute("prodList", catalog.findAll());
-		model.addAttribute("categories", prodSearch.getCategories());
 		
 		return "index";
 		
