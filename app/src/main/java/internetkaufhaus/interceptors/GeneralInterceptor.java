@@ -17,12 +17,13 @@ public class GeneralInterceptor extends HandlerInterceptorAdapter {
 	public GeneralInterceptor(Search prodSearch) {
 		this.prodSearch = prodSearch;
 	}
-    @Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView){
-            try{
-			    ModelMap modelmap = modelAndView.getModelMap();
-			    modelmap.put("categories", prodSearch.getCategories());
-            }catch (NullPointerException npe){}
-		}
-	} 
 
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
+		try {
+			ModelMap modelmap = modelAndView.getModelMap();
+			modelmap.addAttribute("categories", prodSearch.getCategories());
+		} catch (NullPointerException npe) {
+		}
+	}
+}
