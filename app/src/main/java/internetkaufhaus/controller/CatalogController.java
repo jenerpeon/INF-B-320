@@ -1,7 +1,9 @@
 package internetkaufhaus.controller;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -67,8 +69,6 @@ public class CatalogController {
 		model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
 		model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
 		model.addAttribute("search", lookup);
-//		model.addAttribute("categories", prodSearch.getCagegories());
-
 		return "catalog";
 	}
 
@@ -80,8 +80,6 @@ public class CatalogController {
 		model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
 		model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
 		model.addAttribute("search", lookup);
-//		model.addAttribute("categories", prodSearch.getCagegories());
-
 		return "catalog";
 	}
 
@@ -90,35 +88,49 @@ public class CatalogController {
 
 		model.addAttribute("category", category);
 		model.addAttribute("ProdsOfCategory", prodSearch.getProdsByCategory(category));
-//		model.addAttribute("categories", prodSearch.getCagegories());
 
 		return "catalog";
 	}
 	
-	@RequestMapping(path = "/catalog/{type}/{split}/{pagenumber}", method = { RequestMethod.POST, RequestMethod.GET })
-	public String list50(Pageable pagable, @RequestParam(value = "total", defaultValue = "0") Integer total, @PathVariable("type") String category, @PathVariable("split") int split, @PathVariable("pagenumber") int number, ModelMap model) {
+	@RequestMapping(path = "/catalog/{type}/{representation}/{split}/{pagenumber}", method = { RequestMethod.POST, RequestMethod.GET })
+	public String list50(Pageable pagable, @RequestParam(value = "total", defaultValue = "0") Integer total, @PathVariable("type") String category, @PathVariable("split") int split, @PathVariable("pagenumber") int number, @PathVariable("representation") int representation, ModelMap model) {
 		if (split == 0)
 			split = 3;
 		if (total != 0)
 			split = total;
-		Page page;
+		Page<ConcreteProduct> page = concreteCatalog.findByCategory(category, new PageRequest(number-1,split));
+		List<Integer> numbers = IntStream.range(1, page.getTotalPages()+1).boxed().collect(Collectors.toList());
+		if(number == 0)
+			number = 1;
+		if(number > numbers.size())
+			number = numbers.size();
 		model.addAttribute("category", category);
 		model.addAttribute("number", number);
 		Set<Integer> quantities = Sets.newSet(split, 2, 5, 10, 20, 50, 100, 200, prodSearch.getProdsByCategory(category).size());
 		quantities.removeIf(i -> i > prodSearch.getProdsByCategory(category).size());
 		model.addAttribute("maximum", prodSearch.getProdsByCategory(category).size());
 		model.addAttribute("quantities", new TreeSet<Integer>(quantities));
+		model.addAttribute("representation",representation);
 		model.addAttribute("split", split);
 		model.addAttribute("prods", page = concreteCatalog.findByCategory(category, new PageRequest(number-1,split)));
 		model.addAttribute("numbers", IntStream.range(1, page.getTotalPages()+1).boxed().collect(Collectors.toList()));
-//		model.addAttribute("categories", prodSearch.getCagegories());
 		return "catalog";
 	}
 
 	@RequestMapping(value = "/catalog/{type}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)
 	public String changeStartPageSetting(Pageable pagable, @PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split, ModelMap model) {
-//		model.addAttribute("categories", prodSearch.getCagegories());
 		return "redirect:/catalog/"+category+'/'+split+'/'+number;
+		model.addAttribute("prods", page);
+		model.addAttribute("numbers", numbers);
+		model.addAttribute("sites", numbers.size());
+		model.addAttribute("categories", prodSearch.getCategories());
+		return "catalog";
+	}
+
+	@RequestMapping(value = "/catalog/{type}/{representation}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)
+	public String changeStartPageSetting(Pageable pagable, @PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split, @PathVariable("representation") int representation, ModelMap model) {
+		model.addAttribute("categories", prodSearch.getCategories());
+		return "redirect:/catalog/"+category+'/'+representation+'/'+split+'/'+number;
 	}
 
 	@RequestMapping("/detail/{prodId}")
@@ -130,7 +142,6 @@ public class CatalogController {
 		model.addAttribute("quantity", quantity);
 		model.addAttribute("orderable", quantity.isGreaterThan(NONE));
 		model.addAttribute("comments", prod.getAcceptedComments());
-//		model.addAttribute("categories", prodSearch.getCagegories());
 		return "detail";
 	}
 
@@ -161,7 +172,6 @@ public class CatalogController {
 		concreteMailSender.sendMail(sendTo, text,"zu@googlemail.com", "NewsletterAbonnement");
 	
 		model.addAttribute("prodList", catalog.findAll());
-//		model.addAttribute("categories", prodSearch.getCagegories());
 		
 		return "index";
 		

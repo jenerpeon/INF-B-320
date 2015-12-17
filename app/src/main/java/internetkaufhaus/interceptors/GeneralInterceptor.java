@@ -12,9 +12,9 @@ import internetkaufhaus.model.Search;
 
 public class GeneralInterceptor extends HandlerInterceptorAdapter {
 	private Search prodSearch;
-	
+
 	@Autowired
-	public GeneralInterceptor(Search prodSearch){
+	public GeneralInterceptor(Search prodSearch) {
 		this.prodSearch = prodSearch;
 	}
     @Override
@@ -25,3 +25,4 @@ public class GeneralInterceptor extends HandlerInterceptorAdapter {
             }catch (NullPointerException npe){}
 		}
 	} 
+

@@ -31,7 +31,7 @@ public class Search implements Serializable {
     }
     
     @ModelAttribute("categories") 
-    public Iterable<String> getCagegories(){
+    public Iterable<String> getCategories(){
       return searchType.keySet();
     }
     public List<ConcreteProduct> getProdsByCategory(String cat){

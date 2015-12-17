@@ -4,7 +4,10 @@ package internetkaufhaus.controller;
 import static org.salespointframework.core.Currencies.EURO;
 
 import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -44,9 +47,11 @@ import internetkaufhaus.forms.BillingAdressForm;
 import internetkaufhaus.forms.PaymentForm;
 import internetkaufhaus.forms.ShippingAdressForm;
 import internetkaufhaus.model.ConcreteMailSender;
+import internetkaufhaus.model.ReturnManager;
 import internetkaufhaus.model.Search;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
+import javassist.expr.NewArray;
 @Controller
 @SessionAttributes("cart")
 class CartController {
@@ -83,7 +88,7 @@ class CartController {
 
 		cart.addOrUpdateItem(concreteproduct, Quantity.of(amount));
 		// get first Category of product and redirect to associated catalog search
-    return "redirect:catalog/"+concreteproduct.getCategories().iterator().next()+"/5/1";
+    return "redirect:catalog/"+concreteproduct.getCategories().iterator().next()+"/1/5/1";
 
 	}
 
@@ -97,8 +102,6 @@ class CartController {
 	   return new Cart(); 
 	}
 
-
-	
 	@RequestMapping(value = "/clearCart", method = RequestMethod.POST)
 	public String clearCart(@ModelAttribute Cart cart,@LoggedIn Optional<UserAccount> userAccount)
 	{	
@@ -204,14 +207,7 @@ class CartController {
 	@RequestMapping(value = "/returOrders", method = RequestMethod.GET)
 	public String returnRedirect(Model model, @LoggedIn Optional<UserAccount> userAccount) {
 		
-		LocalDateTime timeStart = LocalDateTime.now().minusWeeks(2);
-		LocalDateTime timeEnd = LocalDateTime.now();
-		
-		Interval interval  = Interval.from(timeStart).to(timeEnd);
-		
-		Iterable<ConcreteOrder> ordersCompletedInReturnedTime = concreteOrderRepo.findByUser(userAccount.get());
-		
-		model.addAttribute("ordersCompletedInReturnTime", ordersCompletedInReturnedTime);
+		model.addAttribute("ordersCompletedInReturnTime", ReturnManager.getConcreteOrderDuringLastTwoWeeks(concreteOrderRepo, userAccount));
 		return "returOrders";
 	}
 	
@@ -222,6 +218,7 @@ class CartController {
 		
 		concreteOrderRepo.findById(orderId).setReturned(true);
 		concreteOrderRepo.findById(orderId).setReturnReason(reason);
+		concreteOrderRepo.save(concreteOrderRepo.findById(orderId));
 		
     return "redirect:/";
 
