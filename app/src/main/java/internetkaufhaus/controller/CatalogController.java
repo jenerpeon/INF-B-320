@@ -120,11 +120,11 @@ public class CatalogController {
 	@RequestMapping(value = "/catalog/{type}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)
 	public String changeStartPageSetting(Pageable pagable, @PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split, ModelMap model) {
 		return "redirect:/catalog/"+category+'/'+split+'/'+number;
-		model.addAttribute("prods", page);
+/*		model.addAttribute("prods", page);
 		model.addAttribute("numbers", numbers);
 		model.addAttribute("sites", numbers.size());
 		model.addAttribute("categories", prodSearch.getCategories());
-		return "catalog";
+		return "catalog";*/
 	}
 
 	@RequestMapping(value = "/catalog/{type}/{representation}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)

@@ -21,7 +21,7 @@ public class GeneralInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView){
             try{
 			    ModelMap modelmap = modelAndView.getModelMap();
-			    modelmap.put("categories", prodSearch.getCagegories());
+			    modelmap.addAttribute("categories", prodSearch.getCategories());
             }catch (NullPointerException npe){}
 		}
 	} 
