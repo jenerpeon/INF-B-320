@@ -359,6 +359,20 @@ public class ManagementController {
         o.setStatus(OrderStatus.COMPLETED);
         concreteOrderRepo.save(o);
         
+        Iterable<OrderLine> orders = order.getOrderLines();
+        Collection<OrderLine> orderLines = IteratorUtils.toList(orders.iterator());
+        for (OrderLine orderLine : orderLines) {
+        	ConcreteProduct prod = catalog.findOne(orderLine.getProductIdentifier()).get();
+        	prod.increaseSelled(orderLine.getQuantity().getAmount().intValue());
+        	
+    		prodSearch.delete(prod);
+    		catalog.save(prod);
+
+    		List<ConcreteProduct> prods = new ArrayList<ConcreteProduct>();
+    		prods.add(prod);
+    		prodSearch.addProds(prods);
+        }
+        
         String mail = "Sehr geehrte(r) " + order.getUserAccount().getFirstname() + " " + order.getUserAccount().getLastname() + "!\n";
         mail += "Ihre unten aufgeführte Bestellung vom " + order.getDateCreated().toString() + " wurde von einem unserer Mitarbeiter bearbeitet und ist nun auf dem Weg zu Ihnen!\n";
         mail += "Es handelt sich um Ihre Bestellung folgender Artikel:";

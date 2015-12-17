@@ -221,9 +221,10 @@
 	</div>
 	<div id="navigation">
 		<ul class="nav">
-			<li th:each="c : ${categories}"><a
-				th:href="@{'/catalog/'+${c}+'/1'+'/4'+'/1'}" th:text="${c}">test</a>
-				<div></div></li>
+			<li th:each="c : ${categories}">
+				<a th:href="@{'/catalog/'+${c}+'/1'+'/4'+'/1'}" th:text="${c}" th:id="${c}" >test</a>
+				<div></div>
+			</li>
 		</ul>
 	</div>
 </body>

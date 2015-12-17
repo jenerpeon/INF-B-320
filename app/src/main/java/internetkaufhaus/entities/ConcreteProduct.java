@@ -33,6 +33,8 @@ public class ConcreteProduct extends Product {
 	private String description;
 	
 	private String webLink;
+	
+	private long selled = 0;
 
 
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE }, mappedBy = "product", orphanRemoval = true)
@@ -168,5 +170,14 @@ public class ConcreteProduct extends Product {
 		Optional<InventoryItem> item = inventory.findByProductIdentifier(this.getIdentifier());
 		return item.map(InventoryItem::getQuantity).orElse(Quantity.of(0));
 	}
+	
+	public void increaseSelled(int sell) {
+		this.selled += sell;
+	}
+	
+	public long getSelled() {
+		return this.selled;
+	}
+	
 	
 }

@@ -45,6 +45,7 @@
 					</div>
 					<p th:text="${concreteproduct.ratings}+' Bewertung(en)'"></p>
 					<p class="price" th:text="@{'Preis: '+${concreteproduct.price}}">1 Euro</p>
+					<p th:text="@{'Verkauft: '+${concreteproduct.selled}}"></p>
 					<table id="comments" th:if="${not #lists.isEmpty(comments)}">
 						<tr>
 							<th><a >Kommentar</a></th>
