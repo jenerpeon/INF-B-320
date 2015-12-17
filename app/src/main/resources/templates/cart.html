@@ -13,50 +13,53 @@
 	<div id="wrapper">
 		<div id="header" th:include="navigation :: navigation"></div>
 		<main>
-
-		<div id="main-wrapper">
+		<div id="mainframe">
+			<div id="topLine">
+				<div id="path">
+					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a>Warenkorb</a>
+				</div>
+			</div>
 			<div id="workframe">
-				<table th:unless="${cart.empty}">
+				<table th:unless="${cart.empty}" id="cart">
 					<tbody >
 						<tr>
-							<td>Name</td>
-							<td>Anzahl</td>
-							<td>Preis</td>
-							<td>Anzahl ändern</td>
-							<td>Entfernen</td>
+							<td class="head"><a>Name</a></td>
+							<td class="head"><a>Anzahl</a></td>
+							<td class="head"><a>Preis</a></td>
+							<td class="head"><a>Anzahl ändern</a></td>
+							<td class="head"><a>Entfernen</a></td>
 						</tr>
 						<tr th:each="item : ${cart} ">
-							<td th:text="${item.productName}">Name</td>
-							<td th:text="${item.quantity}">Anzahl</td>
-							<td th:text="${item.price}">Preis</td>
-							<td>
+							<td class="name"><a th:text="${item.productName}">Name</a></td>
+							<td class="quantity"><a th:text="${item.quantity}">Anzahl</a></td>
+							<td class="price"><a th:text="${item.price}">Preis</a></td>
+							<td class="change">
 								<form action="changeAmount" method="post">
 									<input type="hidden" name="cid" th:value="${item.identifier}" />
-									<select onchange="this.form.submit()" name="amount" id="dropdown" size="1">
+									<select name="amount" id="dropdown" size="1">
 										<option>1</option>
 										<option>2</option>
 										<option>3</option>
 										<option>4</option>
 										<option>5</option>
-									</select> <input type="submit" value="Anzahl ändern" />
+									</select>
+									<input type="image" src="/resources/Bilder/update.png" value="Anzahl ändern" width="25px"/>
 								</form>
 							</td>
-							<td>
+							<td class="delete">
 								<form action="deleteItem" method="post">
-									<input type="hidden" name="cid" th:value="${item.identifier}" /> <input type="submit" value="Artikel entfernen" />
+									<input type="hidden" name="cid" th:value="${item.identifier}" />
+									<input type="image" src="/resources/Bilder/cancel.png" value="Artikel entfernen" width="25px"/>
 								</form>
 							</td>
 						</tr>
 					</tbody>
 				</table>
-				<br />
-				<div th:text="'Summe: ' + ${cart.price}">Summe</div>
-				<div th:if="${cart.empty}">Leer</div>
-				
-				
-				<br />
-				<div>
-				</div>
+
+				<p th:text="'Summe: ' + ${cart.price}">Summe</p>
+				<p th:if="${cart.empty}">Leer</p>
 	
 				<div>
 					<form class="form" method="post" action="orderdata/1">
