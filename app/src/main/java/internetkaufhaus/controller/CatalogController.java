@@ -106,7 +106,7 @@ public class CatalogController {
 			number = numbers.size();
 		model.addAttribute("category", category);
 		model.addAttribute("number", number);
-		Set<Integer> quantities = Sets.newSet(split, 2, 5, 10, 20, 50, 100, 200, prodSearch.getProdsByCategory(category).size());
+		Set<Integer> quantities = Sets.newSet(split, 3, 6, 9, 18, 45, 90, 180, prodSearch.getProdsByCategory(category).size());
 		quantities.removeIf(i -> i > prodSearch.getProdsByCategory(category).size());
 		model.addAttribute("maximum", prodSearch.getProdsByCategory(category).size());
 		model.addAttribute("quantities", new TreeSet<Integer>(quantities));
