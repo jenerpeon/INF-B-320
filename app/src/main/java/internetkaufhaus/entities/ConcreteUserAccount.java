@@ -1,9 +1,12 @@
 package internetkaufhaus.entities;
 
+import static org.salespointframework.core.Currencies.EURO;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.javamoney.moneta.Money;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
@@ -25,18 +29,22 @@ public class ConcreteUserAccount implements Serializable{
 	@ManyToMany
 	@JoinColumn(name = "COMMENT", nullable = false)
     private List<Comment> comments = new ArrayList<Comment>();
-	
+	@ManyToMany
+	private List<UserAccount> recruits = new ArrayList<UserAccount>();
 	@Id
     @GeneratedValue
     private Long id;
     
 	@OneToOne
 	private UserAccount userAccount;
+
 	private String email;
 	private String address;
 	private String zipCode;
 	private String city;
-    private String recruitedby;
+    
+    @Column(length = 2000)
+    private Money credits;
     private Role role;
     
 
@@ -44,11 +52,12 @@ public class ConcreteUserAccount implements Serializable{
 	
 	public ConcreteUserAccount(String username, String password, Role role, UserAccountManager u){
 		this.userAccount = u.create(username, password, role);
+		this.credits=Money.of(0, EURO);
 	}
 	
-	public ConcreteUserAccount(String email, String username, String firstname, String lastname, String address, String zipCode, String city, String password, Role role, UserAccountManager u, String recruitedby) {
+	public ConcreteUserAccount(String email, String username, String firstname, String lastname, String address, String zipCode, String city, String password, Role role, UserAccountManager u,int credits, List<UserAccount> recruits) {
 		this.userAccount = u.create(username, password, role);
-		this.recruitedby = recruitedby;
+		this.recruits = recruits;
 		this.userAccount.setFirstname(firstname);
 		this.userAccount.setLastname(lastname);
 		this.address = address;
@@ -56,6 +65,7 @@ public class ConcreteUserAccount implements Serializable{
 		this.city = city;
 		this.userAccount.setEmail(email);
 		this.email = email;
+		this.credits=Money.of(0, EURO);
 		this.role = role;
 	}
 
@@ -68,7 +78,7 @@ public class ConcreteUserAccount implements Serializable{
 		this.city = city;
 		this.userAccount.setEmail(email);
 		this.email = email;
-		this.recruitedby = "none";
+		this.credits=Money.of(0,EURO);
 		this.role = role;
 	}
 
@@ -90,6 +100,10 @@ public class ConcreteUserAccount implements Serializable{
 
 	public String getZipCode() {
 		return zipCode;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	public void setZipCode(String zipCode) {
@@ -127,15 +141,37 @@ public class ConcreteUserAccount implements Serializable{
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public void setRecruitedBy(String email){
-		this.recruitedby = email;
-	}
+	
     	
-    public String getRecruitedBy(){
-    	return this.recruitedby;
+    public List<UserAccount> getRecruits(){
+    	return this.recruits;
     }
     public Role getRole(){
     	return this.userAccount.getRoles().iterator().next();
     }
 
+	public int getCredits() {
+		return (int)((double)credits.getNumber().intValue()+(0.5));
+	}
+
+	public void setCredits(Money credits) {
+		this.credits = credits;
+	}
+
+	public void setRecruits(ConcreteUserAccount user){
+		
+		
+		if(recruits==null){
+			List<UserAccount> recruit=new ArrayList<UserAccount>();
+			recruit.add(user.getUserAccount());
+			this.recruits=recruit;
+		}
+		else{
+			this.recruits.add(user.getUserAccount());
+		}
+		
+	}
+
+
 }
+

@@ -37,9 +37,19 @@ public class AccountAdministration {
         this.recruit2invite = new HashMap<String, String>();
     }
     
+    public void RegisterCustomer(String email){
+        if(this.isRegistered(email)){
+        	
+        }
+        String invitation = "http://localhost:8080/login";
+        this.concreteSender.sendMail(email,"You have been sucessful registered. Click here"+invitation+" to login." ,"unnecessaryfield", "Shop Now!");
+        
+       
+    }
+    
     public String RecruitCustomer(String recruit, String invitator){
         if(this.isRegistered(recruit)){
-        	return "your friend is allready a member";
+        	return "your friend is already a member";
         }
         String invitation = "http://localhost:8080/register";
         this.concreteSender.sendMail(recruit, invitator+" recruited you. Join now! "+invitation, "unnecessaryfield", "Click to join");
@@ -69,7 +79,15 @@ public class AccountAdministration {
         this.concreteSender.sendMail(key2email.get(key),validLink,"unnecessaryfield","Verify your changes");
     }
     
-    public void setConcreteUserAccountManager(ConcreteUserAccountRepository concreteUserAccountManager){
+    public Map<String, String> getRecruit2invite() {
+		return recruit2invite;
+	}
+
+	public void setRecruit2invite(Map<String, String> recruit2invite) {
+		this.recruit2invite = recruit2invite;
+	}
+
+	public void setConcreteUserAccountManager(ConcreteUserAccountRepository concreteUserAccountManager){
        this.ConcreteUserAccountManager = concreteUserAccountManager; 
     }
     
@@ -103,4 +121,9 @@ public class AccountAdministration {
     public void setMailSender(MailSender sender){
         this.concreteSender = new ConcreteMailSender(sender); 
     }
+
+	
+	
+
+	
 }

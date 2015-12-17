@@ -20,7 +20,7 @@
 			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
 			
 			<div id="workframe">
-				<h2 id="orderUser" th:text="@{'Bestellung von '+${order.getUserAccount().getUsername()}}">Account:</h2>
+				<h2 id="orderUser" th:text="@{'Bestellung von '+${order.getUser().getUsername()}}">Account:</h2>
 				<table>
 					<tr>
 						<td><a>Name</a></td>
@@ -33,9 +33,9 @@
 					</tr>
 				</table>
 				
-				<p th:text="@{'Preis der Bestellung: '+${order.getTotalPrice()}}">Preis: </p>
-				<p th:text="@{'Kunde der Bestellung: '+${order.getUserAccount().getUsername()}}">Kunde: </p>
-				<p th:text="@{'Status der Bestellung: '+${order.getOrderStatus()}}">Status: </p>
+				<p th:text="@{'Preis der Bestellung: '+${order.getOrder().getTotalPrice()}}">Preis: </p>
+				<p th:text="@{'Kunde der Bestellung: '+${order.getUser().getUsername()}}">Kunde: </p>
+				<p th:text="@{'Status der Bestellung: '+${order.getStatus()}}">Status: </p>
 				<form id="orderData">
 					<fieldset class="orderDataGroup">
 						<h2>Versandadresse:</h2>

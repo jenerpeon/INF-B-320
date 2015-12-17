@@ -1,13 +1,12 @@
 package internetkaufhaus.controller;
 import static org.salespointframework.core.Currencies.EURO;
 
-import java.util.Collection;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.apache.commons.collections.IteratorUtils;
 import org.javamoney.moneta.Money;
+import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.useraccount.Role;
@@ -28,7 +27,11 @@ import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.forms.CreateUserForm;
 import internetkaufhaus.forms.EditUserForm;
-import internetkaufhaus.model.UserManager;
+import internetkaufhaus.forms.NewUserAccountForm;
+import internetkaufhaus.model.Competition;
+import internetkaufhaus.model.ConcreteMailSender;
+import internetkaufhaus.model.Creditmanager;
+import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
 
@@ -36,16 +39,30 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AdminController{
 	private final ConcreteUserAccountRepository manager;
-	private final UserAccountManager umanager;
-	private final UserManager usermanager;
-	private final OrderManager<ConcreteOrder> orderManager;
 
+	private final ConcreteOrderRepository concreteOrderRepo;
+	private final UserAccountManager umanager;
+	private final NewUserAccountForm form;
+
+
+	private final Creditmanager creditmanager;
+
+
+	private final ConcreteMailSender sender;
 	@Autowired
-	public AdminController(ConcreteUserAccountRepository manager, UserAccountManager umanager, OrderManager<ConcreteOrder> orderManager, UserManager user){
-		this.manager=manager;	
-		this.umanager = umanager;
-		this.orderManager = orderManager;
-		this.usermanager = user;
+
+	public AdminController(ConcreteOrderRepository concreteOrderRepo, ConcreteUserAccountRepository manager, UserAccountManager umanager, OrderManager<Order> orderManager, ConcreteMailSender sender,
+							Creditmanager creditmanager, NewUserAccountForm form){
+
+		this.manager=manager;
+		this.umanager=umanager;
+		this.concreteOrderRepo = concreteOrderRepo;
+
+		this.form=form;
+
+		this.sender = sender;
+		this.creditmanager = creditmanager;
+
 	}
 
 	
@@ -68,9 +85,12 @@ public class AdminController{
 	
 	@RequestMapping(value="/admin/changeuser/deleteUser/{id}")
 	public String deleteUser(@PathVariable("id") Long id)
-	{
+	{	
 
-		usermanager.deleteUser(id);
+		umanager.disable((manager.findOne(id).getUserAccount().getId()));
+		manager.delete(id);
+		
+		
 		return "redirect:/admin/changeuser";
 	}
 	
@@ -92,7 +112,7 @@ public class AdminController{
 			model.addAttribute("message", result.getAllErrors());
 			return "changeusernewuser";
 		}
-		usermanager.createUser(createuserform);
+		form.createUser(createuserform);
 		return "redirect:/admin/changeuser/";
 	}
 	
@@ -108,7 +128,7 @@ public class AdminController{
 		if (result.hasErrors()) {
 			return "redirect:/admin/changeuser/";
 		}
-		usermanager.changeUser(edituserform.getId(), edituserform.getRolename(), edituserform.getPassword());
+		form.changeUser(edituserform.getId(), edituserform.getRolename(), edituserform.getPassword());
 		return "redirect:/admin/changeuser/";
 	}
 	@RequestMapping(value="/admin/changeuser/displayUser/{id}")
@@ -121,27 +141,27 @@ public class AdminController{
 	public String balance(ModelMap model)
 
 	{
-		Collection<ConcreteOrder> ordersCompleted = IteratorUtils.toList(orderManager.findBy(OrderStatus.COMPLETED).iterator());
-		Collection<ConcreteOrder> ordersOpen = IteratorUtils.toList(orderManager.findBy(OrderStatus.OPEN).iterator());
+		Iterable<ConcreteOrder> ordersCompleted = concreteOrderRepo.findByStatus(OrderStatus.COMPLETED);
+		Iterable<ConcreteOrder> ordersOpen = concreteOrderRepo.findByStatus(OrderStatus.OPEN);
 		
 		double totalPaid = 0;
 		for (ConcreteOrder order : ordersCompleted) {
 			if (order.getReturned() == false) {
-				totalPaid += order.getTotalPrice().getNumberStripped().doubleValue();
+				totalPaid += order.getOrder().getTotalPrice().getNumberStripped().doubleValue();
 			}
 		}
 		
 		double totalOpen = 0;
 		for (ConcreteOrder order : ordersOpen) {
-			totalOpen += order.getTotalPrice().getNumberStripped().doubleValue();
+			totalOpen += order.getOrder().getTotalPrice().getNumberStripped().doubleValue();
 		}
 		
 		double balance = Math.round((totalPaid - totalOpen) * 100.00) / 100.00;
 		
 		model.addAttribute("customerOrders",ordersCompleted);
 		model.addAttribute("StockOrders",ordersOpen);
-		model.addAttribute("customerOrdersTotal",Money.of(totalPaid, EURO));
-		model.addAttribute("StockOrdersTotal",Money.of(totalOpen, EURO));
+		model.addAttribute("customerOrdersTotal",Money.of(Math.round(totalPaid*100)/100, EURO));
+		model.addAttribute("StockOrdersTotal",Money.of(Math.round(totalOpen), EURO));
 		model.addAttribute("balance",Money.of(balance, EURO));
 		return "balance";
 	}
@@ -158,5 +178,22 @@ public class AdminController{
 		//model.addAttribute("admins",);
 		//model.addAttribute("employees",);
 	    return "index";*/
+	@RequestMapping(value="/admin/lottery")
+	public String competition(ModelMap model)
+	{
+		
+		return "competition";
+	}
+	@RequestMapping(value="/admin/competitionButton")
+	public String getWinners(ModelMap model)
+	{
+		
+		Competition com = new Competition(manager.findByRole(Role.of("ROLE_CUSTOMER")), creditmanager);
+		
+		model.addAttribute("winners", com.getWinners());
+		com.getWinners().forEach(x->System.out.println(x.getUserAccount().getUsername()+" "+x.getCredits()));
+//		com.notifyWinners(sender);
+		return "competition";
+	}
 
 }
