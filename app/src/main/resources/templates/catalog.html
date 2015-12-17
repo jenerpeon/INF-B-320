@@ -173,7 +173,7 @@
 					<div id="pageControl">
 						<div id="articlesPerPage">
 							<form method="post" th:if="${split != null}"
-							th:action="@{'/catalog/'+${category}+'/'+${split}+'/'+${number}+'/changedSetting'}">
+							th:action="@{'/catalog/'+${category}+'/'+${representation}+'/'+${split}+'/'+${number}+'/changedSetting'}">
 								<fieldset>
 									<label for="total">Artikel pro Seite:</label> <select
 										onchange="this.form.submit()" name="total" id="total"
@@ -186,20 +186,40 @@
 						</div>
 						<div id="articleRepresentation">
 							<a>Artikeldarstellung:</a>
-							<img src="/resources/Bilder/details.png" />
-							<img src="/resources/Bilder/thumbnails.png" />
+							<a th:href="@{'/catalog/'+${category}+'/'+'1/'+${split}+'/'+${number}}">
+								<img src="/resources/Bilder/details.png" />
+							</a>
+							<a th:href="@{'/catalog/'+${category}+'/'+'2/'+${split}+'/'+${number}}">
+								<img src="/resources/Bilder/thumbnails.png" />
+							</a>
 						</div>
 						<div id="catalogSite">
 							<ul>
 								<li><a th:text="@{'Artikel '+${split * (number-1) + 1}+' bis '+${split * number}}+' von '+${maximum}"></a></li>
-								<li><img src="/resources/Bilder/backward-last.png" /></li>
-								<li><img src="/resources/Bilder/backward.png" /></li>
+								<li>
+									<a id="backward-last" th:href="@{'/catalog/'+${category}+'/'+${representation}+'/'+${split}+'/1'}">
+										<img src="/resources/Bilder/backward-last.png" />
+									</a>
+								</li>
+								<li>
+									<a id="backward" th:href="@{'/catalog/'+${category}+'/'+${representation}+'/'+${split}+'/'+${number-1}}">
+										<img src="/resources/Bilder/backward.png" />
+									</a>
+								</li>
 								<li th:each="number:${numbers}">
 									<a class="articlePages" th:if="${category == null}"	th:text="${number}" th:href="@{'/sufu/'+${search}+'/'+${number}}"></a>
-									<a class="articlePages" th:if="${category != null}"	th:text="${number}" th:href="@{'/catalog/'+${category}+'/'+${split}+'/'+${number}}"></a>
+									<a class="articlePages" th:if="${category != null}"	th:text="${number}" th:href="@{'/catalog/'+${category}+'/'+${representation}+'/'+${split}+'/'+${number}}"></a>
 								</li>
-								<li><img src="/resources/Bilder/forward-last.png" /></li>
-								<li><img src="/resources/Bilder/forward.png" /></li>
+								<li>
+									<a id="forward" th:href="@{'/catalog/'+${category}+'/'+${representation}+'/'+${split}+'/'+${number+1}}">
+										<img src="/resources/Bilder/forward.png" />
+									</a>
+								</li>
+								<li>
+									<a id="forward-last" th:href="@{'/catalog/'+${category}+'/'+${representation}+'/'+${split}+'/'+${sites}}">
+										<img src="/resources/Bilder/forward-last.png" />
+									</a>
+								</li>
 							</ul>
 						</div>
 					</div>
