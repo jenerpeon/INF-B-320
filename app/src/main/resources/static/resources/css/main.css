@@ -256,7 +256,11 @@ option {
 	font-size: 20px;
 	font-weight: bold;
 	font-style: normal;
-	color: #000000;
+	color: #888a85;
+}
+
+#logo:hover {
+	color: #204a87;
 }
 
 #search tbody tr td {
@@ -308,7 +312,7 @@ nav a { text-decoration: none; }
 	z-index: 500;
 	margin-top: 0px;
 	min-width: 915px;
-	padding: 0 0 0 50px;
+	padding: 0 0 0 25px;
 }
 .nav > li {
 	display: block;
