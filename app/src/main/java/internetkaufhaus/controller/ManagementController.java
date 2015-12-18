@@ -31,6 +31,7 @@ import org.salespointframework.time.Interval;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.mail.MailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -54,6 +55,7 @@ import internetkaufhaus.model.Search;
 import internetkaufhaus.model.Statistic;
 import internetkaufhaus.model.StockManager;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
+import internetkaufhaus.repositories.ConcreteProductRepository;
 
 @Controller
 @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')")
@@ -64,6 +66,7 @@ public class ManagementController {
 	private final Inventory<InventoryItem> inventory;
 	private final Search prodSearch;
 	private final ConcreteOrderRepository concreteOrderRepo;
+	private final ConcreteProductRepository concreteProductRepository;
 	private final OrderManager<Order> orderManager;
 	private final StockManager stock;
 	private final NewsletterManager newsManager;
@@ -72,7 +75,8 @@ public class ManagementController {
 	// private final List<ConcreteProduct> selectionList;
 
 	@Autowired
-	public ManagementController(OrderManager<Order> orderManager, ConcreteOrderRepository concreteOrderRepo, Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, StockManager stock, NewsletterManager newsManager, MailSender sender) {
+	public ManagementController(ConcreteProductRepository concreteProductRepository, OrderManager<Order> orderManager, ConcreteOrderRepository concreteOrderRepo, Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, StockManager stock, NewsletterManager newsManager, MailSender sender) {
+		this.concreteProductRepository = concreteProductRepository;
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.prodSearch = prodSearch;
@@ -91,9 +95,15 @@ public class ManagementController {
 		return "employee";
 	}
 
+	/**
+	 * gives The catalog in ascending order by its Product name.  
+	 * @param userAccount
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/employee/changecatalog")
 	public String articleManagement(Optional<UserAccount> userAccount, ModelMap model) {
-		model.addAttribute("prod50", catalog.findAll());
+		model.addAttribute("prod50", concreteProductRepository.findAllByOrderByName());
 		model.addAttribute("inventory", inventory);
 
 		return "changecatalog";
@@ -189,12 +199,8 @@ public class ManagementController {
 			prodId.setImagefile(img.getOriginalFilename());
 		}
 
-		prodSearch.delete(prodId);
 		catalog.save(prodId);
-
-		List<ConcreteProduct> prods = new ArrayList<ConcreteProduct>();
-		prods.add(prodId); // TODO: das hier ist offensichtlich.
-		prodSearch.addProds(prods);
+		concreteProductRepository.save(prodId);
 
 		return "redirect:/employee/changecatalog";
 	}
@@ -335,21 +341,20 @@ public class ManagementController {
 		Order order = o.getOrder();
 		o.setStatus(OrderStatus.COMPLETED);
 		concreteOrderRepo.save(o);
-		
-		 Iterable<OrderLine> orders = order.getOrderLines();
-	        Collection<OrderLine> orderLines = IteratorUtils.toList(orders.iterator());
-	        for (OrderLine orderLine : orderLines) {
-	        	ConcreteProduct prod = catalog.findOne(orderLine.getProductIdentifier()).get();
-	        	prod.increaseSelled(orderLine.getQuantity().getAmount().intValue());
-	        	
-	    		prodSearch.delete(prod);
-	    		catalog.save(prod);
 
-	    		List<ConcreteProduct> prods = new ArrayList<ConcreteProduct>();
-	    		prods.add(prod);
-	    		prodSearch.addProds(prods);
-	        }
-	        
+		Iterable<OrderLine> orders = order.getOrderLines();
+		Collection<OrderLine> orderLines = IteratorUtils.toList(orders.iterator());
+		for (OrderLine orderLine : orderLines) {
+			ConcreteProduct prod = catalog.findOne(orderLine.getProductIdentifier()).get();
+			prod.increaseSelled(orderLine.getQuantity().getAmount().intValue());
+
+			prodSearch.delete(prod);
+			catalog.save(prod);
+
+			List<ConcreteProduct> prods = new ArrayList<ConcreteProduct>();
+			prods.add(prod);
+			prodSearch.addProds(prods);
+		}
 
 		String mail = "Sehr geehrte(r) " + order.getUserAccount().getFirstname() + " " + order.getUserAccount().getLastname() + "!\n";
 		mail += "Ihre unten aufgeführte Bestellung vom " + order.getDateCreated().toString() + " wurde von einem unserer Mitarbeiter bearbeitet und ist nun auf dem Weg zu Ihnen!\n";

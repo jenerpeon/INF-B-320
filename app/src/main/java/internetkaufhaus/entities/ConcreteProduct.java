@@ -9,12 +9,15 @@ import java.util.stream.IntStream;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Product;
+import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
@@ -36,12 +39,8 @@ public class ConcreteProduct extends Product {
 	
 	private long selled = 0;
 
-
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE }, mappedBy = "product", orphanRemoval = true)
 	private List<Comment> comments = new LinkedList<Comment>();
-	/*@Column(name = "COMMENTS")
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE }, mappedBy = "product", orphanRemoval = true)
-	private List<Comment> comments = new ArrayList<Comment>();*/
 
 	@SuppressWarnings({ "unused", "deprecation" })
 	private ConcreteProduct() {}
