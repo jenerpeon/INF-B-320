@@ -19,7 +19,7 @@
 				<div id="path">
 					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
 					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
-					<a th:href="@{'/catalog/'+${concreteproduct.category}+'/1'+'/3'+'/1'}" th:text="${concreteproduct.category}"></a>
+					<a th:href="@{'/catalog/'+${concreteproduct.category}+'/name'+'/1'+'/6'+'/1'}" th:text="${concreteproduct.category}"></a>
 					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
 					<a th:text="${concreteproduct.name}"></a>
 				</div>
@@ -53,6 +53,7 @@
 					<p th:text="${concreteproduct.ratings}+' Bewertung(en)'"></p>
 					<p class="price" th:text="@{'Preis: '+${concreteproduct.price}}">1 Euro</p>
 					<p th:text="@{'Verkauft: '+${concreteproduct.selled}}"></p>
+					<p th:text="@{'Durchschnittswertung: '+${concreteproduct.averageRating}}"></p>
 					<table id="comments" th:if="${not #lists.isEmpty(comments)}">
 						<tr>
 							<th><a >Kommentar</a></th>

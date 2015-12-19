@@ -121,6 +121,7 @@ public class ManagementController {
 			for (Comment c : prods.getUnacceptedComments()) {
 				if (c.getId() == comId) {
 					c.accept();
+					c.getProduct().updateAverageRating();
 				}
 			}
 			this.catalog.save(prods);
@@ -137,6 +138,7 @@ public class ManagementController {
 			for (Comment c : prods.getComments()) {
 				if (c.getId() == comId) {
 					prods.removeComment(c);
+					c.getProduct().updateAverageRating();
 					break_outer = true;
 					// prevents modification while interation
 					break;

@@ -43,6 +43,8 @@ public class ConcreteProduct extends Product {
 	private long selled = 0;
 	
 	private float priceFloat;
+	
+	private float averageRating = 0;
 
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE }, mappedBy = "product", orphanRemoval = true)
 	private List<Comment> comments = new LinkedList<Comment>();
@@ -83,6 +85,18 @@ public class ConcreteProduct extends Product {
 		System.out.println("size:"+this.getAcceptedComments().size());
 		System.out.println("rating"+rating);
 		return IntStream.range(0, (int)rating).boxed().collect(Collectors.toList());
+	}
+	
+	public void updateAverageRating() {
+		int rating = 0;
+		for (Comment comm : this.getAcceptedComments()) {
+			rating += comm.getRating();
+		}
+		this.averageRating = rating/this.getAcceptedComments().size();
+	}
+	
+	public float getAverageRating() {
+		return this.averageRating;
 	}
 
 	public Iterable<Comment> getComments() {
@@ -189,11 +203,5 @@ public class ConcreteProduct extends Product {
 	public long getSelled() {
 		return this.selled;
 	}
-	
-	public static float round(float d, int decimalPlace) {
-        BigDecimal bd = new BigDecimal(Float.toString(d));
-        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
-        return bd.floatValue();
-    }
 	
 }

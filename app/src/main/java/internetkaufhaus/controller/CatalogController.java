@@ -106,6 +106,12 @@ public class CatalogController {
 		Sort sorting = null;
 		
 		switch(sort) {
+			case "selled":
+				sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "selled", Sort.NullHandling.NATIVE),new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE));
+				break;
+			case "rating":
+				sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "averageRating", Sort.NullHandling.NATIVE),new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE));
+				break;
 			case "name,asc":
 				sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE));
 				break;
