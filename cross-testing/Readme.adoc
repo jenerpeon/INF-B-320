@@ -22,7 +22,7 @@ Features:
 	Übersicht nach Rollen:
 		-Admin:
 			Userverwaltung, Bilanz, Statistik und Gewinnspiel (Zugriff über header: Adminportal)
-		
+			Katalog/Lagerübersicht, Bestellungen, Newsletter, Kommentare, Startseite konfiguieren (Zuriff über header: 				Mitarbeiterportal)
 		-Mitarbeiter:
 			Katalog/Lagerübersicht, Bestellungen, Newsletter, Kommentare, Startseite konfiguieren (Zuriff über header: 				Mitarbeiterportal)
 
