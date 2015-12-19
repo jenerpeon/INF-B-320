@@ -82,8 +82,10 @@
 								<fieldset>
 									<select onchange="this.form.submit()" name="sort" id="sort">
 										<option selected="true" style="display:none;">Sortieren nach</option>
-										<option value="name">Name</option>
-										<option value="price">Preis</option>
+										<option value="name,asc">Name, aufsteigend</option>
+										<option value="name,desc">Name, absteigend</option>
+										<option value="price,asc">Preis, aufsteigend</option>
+										<option value="price,desc">Preis, absteigend</option>
 									</select>
 								</fieldset>
 							</form>
@@ -147,7 +149,7 @@
 										<span class="filled" th:each="i : ${concreteproduct.rating}">☆</span>
 									</div>
 									<a th:text="${concreteproduct.ratings}+' Bewertung(en)'"></a>
-									<a class="price" th:text="${concreteproduct.price}"></a>
+									<a class="price" th:text="${concreteproduct.priceFloat}"></a>
 								</div>
 							</div>
 							</li>
@@ -168,7 +170,7 @@
 								<span class="filled" th:each="i : ${concreteproduct.rating}">☆</span>
 							</div>
 							<a th:text="${concreteproduct.ratings}+' Bewertung(en)'"></a>
-							<a class="price-thumbnail" th:text="${concreteproduct.price}"></a>
+							<a class="price-thumbnail" th:text="${concreteproduct.priceFloat}"></a>
 							</div>
 						</li>
 					</ul>
@@ -189,8 +191,10 @@
 								<fieldset>
 									<select onchange="this.form.submit()" name="sort" id="sort">
 										<option selected="true" style="display:none;">Sortieren nach</option>
-										<option value="name">Name</option>
-										<option value="price">Preis</option>
+										<option value="name,asc">Name, aufsteigend</option>
+										<option value="name,desc">Name, absteigend</option>
+										<option value="price,asc">Preis, aufsteigend</option>
+										<option value="price,desc">Preis, absteigend</option>
 									</select>
 								</fieldset>
 							</form>

@@ -1,5 +1,8 @@
 package internetkaufhaus.entities;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -127,6 +130,12 @@ public class ConcreteProduct extends Product {
 		return imagefile;
 	}
 
+	public String getPriceFloat() {
+		DecimalFormat formatter = new DecimalFormat("0.00€");
+		System.out.println(); // print: $2.50
+		return formatter.format(priceFloat);
+	}
+	
 	public void setImagefile(String imagefile) {
 		if (imagefile.length() == 0) {
 			throw new IllegalArgumentException();
@@ -181,5 +190,10 @@ public class ConcreteProduct extends Product {
 		return this.selled;
 	}
 	
+	public static float round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd.floatValue();
+    }
 	
 }

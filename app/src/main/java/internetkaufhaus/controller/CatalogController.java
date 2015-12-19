@@ -101,19 +101,24 @@ public class CatalogController {
 	public String list50(Pageable pagable, @PathVariable("type") String category, @PathVariable("split") int split, @PathVariable("pagenumber") int number, @PathVariable("representation") int representation, @PathVariable("sort") String sort, ModelMap model) {
 		if (split == 0)
 			split = 3;
-		
-		Sort.Order sortOrderName = new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE);
-		Sort.Order sortOrderPrice = new Sort.Order(Sort.Direction.ASC, "priceFloat", Sort.NullHandling.NATIVE);
+
 		Sort sorting = null;
 		
-		if (sort.equals("name")) {
-			sorting = new Sort(sortOrderName);
-		}
-		if (sort.equals("price")) {
-			sorting = new Sort(sortOrderPrice);
-		}
-		else {
-			sorting = new Sort(sortOrderName);
+		switch(sort) {
+			case "name,asc":
+				sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE));
+				break;
+			case "name,desc":
+				sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "name", Sort.NullHandling.NATIVE));
+				break;
+			case "price,asc":
+				sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "price", Sort.NullHandling.NATIVE));
+				break;
+			case "price,desc":
+				sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "price", Sort.NullHandling.NATIVE));
+				break;
+			default:
+				sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE));
 		}
 		
 		Page<ConcreteProduct> page = concreteCatalog.findByCategory(category, new PageRequest(number-1,split, sorting));
