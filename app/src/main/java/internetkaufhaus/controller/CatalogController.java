@@ -10,6 +10,8 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.hibernate.criterion.Order;
+import org.javamoney.moneta.Money;
 import org.mockito.internal.util.collections.Sets;
 import org.salespointframework.catalog.Catalog;
 import org.salespointframework.inventory.Inventory;
@@ -21,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +40,8 @@ import internetkaufhaus.model.NewsletterManager;
 import internetkaufhaus.model.Search;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
+import utils.com.ipillars.sorter.ListSorter;
+import utils.com.ipillars.sorter.SortKeys;
 
 @Controller
 public class CatalogController {
@@ -92,13 +97,28 @@ public class CatalogController {
 		return "catalog";
 	}
 	
-	@RequestMapping(path = "/catalog/{type}/{representation}/{split}/{pagenumber}", method = { RequestMethod.POST, RequestMethod.GET })
-	public String list50(Pageable pagable, @RequestParam(value = "total", defaultValue = "0") Integer total, @PathVariable("type") String category, @PathVariable("split") int split, @PathVariable("pagenumber") int number, @PathVariable("representation") int representation, ModelMap model) {
+	@RequestMapping(path = "/catalog/{type}/{sort}/{representation}/{split}/{pagenumber}", method = { RequestMethod.POST, RequestMethod.GET })
+	public String list50(Pageable pagable, @PathVariable("type") String category, @PathVariable("split") int split, @PathVariable("pagenumber") int number, @PathVariable("representation") int representation, @PathVariable("sort") String sort, ModelMap model) {
 		if (split == 0)
 			split = 3;
-		if (total != 0)
-			split = total;
-		Page<ConcreteProduct> page = concreteCatalog.findByCategory(category, new PageRequest(number-1,split));
+		
+		Sort.Order sortOrderName = new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE);
+		Sort.Order sortOrderPrice = new Sort.Order(Sort.Direction.ASC, "priceFloat", Sort.NullHandling.NATIVE);
+		Sort sorting = null;
+		
+		if (sort.equals("name")) {
+			sorting = new Sort(sortOrderName);
+		}
+		if (sort.equals("price")) {
+			sorting = new Sort(sortOrderPrice);
+		}
+		else {
+			sorting = new Sort(sortOrderName);
+		}
+		
+		Page<ConcreteProduct> page = concreteCatalog.findByCategory(category, new PageRequest(number-1,split, sorting));
+		List<ConcreteProduct> prods = page.getContent();
+		
 		List<Integer> numbers = IntStream.range(1, page.getTotalPages()+1).boxed().collect(Collectors.toList());
 		if(number == 0)
 			number = 1;
@@ -110,9 +130,10 @@ public class CatalogController {
 		quantities.removeIf(i -> i > prodSearch.getProdsByCategory(category).size());
 		model.addAttribute("maximum", prodSearch.getProdsByCategory(category).size());
 		model.addAttribute("quantities", new TreeSet<Integer>(quantities));
+		model.addAttribute("sort",sort);
 		model.addAttribute("representation",representation);
 		model.addAttribute("split", split);
-		model.addAttribute("prods", page = concreteCatalog.findByCategory(category, new PageRequest(number-1,split)));
+		model.addAttribute("prods", prods);
 		model.addAttribute("numbers", IntStream.range(1, page.getTotalPages()+1).boxed().collect(Collectors.toList()));
 		return "catalog";
 	}
@@ -127,10 +148,10 @@ public class CatalogController {
 		return "catalog";*/
 	}
 
-	@RequestMapping(value = "/catalog/{type}/{representation}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)
-	public String changeStartPageSetting(Pageable pagable, @PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split, @PathVariable("representation") int representation, ModelMap model) {
+	@RequestMapping(value = "/catalog/{type}/{sort}/{representation}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)
+	public String changeStartPageSetting(Pageable pagable, @PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split, @RequestParam(value = "sort", defaultValue = "name") String sort, @PathVariable("representation") int representation, ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCategories());
-		return "redirect:/catalog/"+category+'/'+representation+'/'+split+'/'+number;
+		return "redirect:/catalog/"+category+'/'+sort+'/'+representation+'/'+split+'/'+number;
 	}
 
 	@RequestMapping("/detail/{prodId}")

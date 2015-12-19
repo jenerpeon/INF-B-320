@@ -348,12 +348,8 @@ public class ManagementController {
 			ConcreteProduct prod = catalog.findOne(orderLine.getProductIdentifier()).get();
 			prod.increaseSelled(orderLine.getQuantity().getAmount().intValue());
 
-			prodSearch.delete(prod);
 			catalog.save(prod);
-
-			List<ConcreteProduct> prods = new ArrayList<ConcreteProduct>();
-			prods.add(prod);
-			prodSearch.addProds(prods);
+			concreteProductRepository.save(prod);
 		}
 
 		String mail = "Sehr geehrte(r) " + order.getUserAccount().getFirstname() + " " + order.getUserAccount().getLastname() + "!\n";

@@ -38,6 +38,8 @@ public class ConcreteProduct extends Product {
 	private String webLink;
 	
 	private long selled = 0;
+	
+	private float priceFloat;
 
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE }, mappedBy = "product", orphanRemoval = true)
 	private List<Comment> comments = new LinkedList<Comment>();
@@ -52,6 +54,7 @@ public class ConcreteProduct extends Product {
 		this.webLink = webLink;
 		this.imagefile = imagefile;
 		this.category = category;
+		this.priceFloat = price.getNumberStripped().floatValue();
 	}
 
 	public int getRatings() {
