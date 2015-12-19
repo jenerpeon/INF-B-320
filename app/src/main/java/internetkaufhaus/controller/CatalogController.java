@@ -2,6 +2,7 @@ package internetkaufhaus.controller;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -112,10 +113,10 @@ public class CatalogController {
 				sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "name", Sort.NullHandling.NATIVE));
 				break;
 			case "price,asc":
-				sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "price", Sort.NullHandling.NATIVE));
+				sorting = new Sort(Arrays.asList(new Sort.Order(Sort.Direction.ASC, "price", Sort.NullHandling.NATIVE),new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE)));
 				break;
 			case "price,desc":
-				sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "price", Sort.NullHandling.NATIVE));
+				sorting = new Sort(Arrays.asList(new Sort.Order(Sort.Direction.DESC, "price", Sort.NullHandling.NATIVE),new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE)));
 				break;
 			default:
 				sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE));
