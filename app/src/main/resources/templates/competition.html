@@ -19,8 +19,14 @@
 			<div id="workframe">
 				<h1>Gewinnspiel</h1>
 				<a th:href="@{'/admin/competitionButton'}">Gewinnspiel auslösen </a>
+				<p th:if="${competitionmessage}" th:text="${competitionmessage.success}"></p>
 				<table>
-					<thead></thead>
+					<thead>
+						<tr th:if="${competitionmessage}">
+							<td th:text="${competitionmessage.name}"></td>
+							<td th:text="${competitionmessage.credits}"></td>
+						</tr>
+					</thead>
 					<tbody>	
 						<tr th:each="account: ${winners}">
 							<td th:text="${account.userAccount.username}"></td>

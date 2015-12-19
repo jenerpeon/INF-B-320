@@ -1,6 +1,7 @@
 package internetkaufhaus.controller;
 import static org.salespointframework.core.Currencies.EURO;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -192,7 +193,12 @@ public class AdminController{
 		
 		model.addAttribute("winners", com.getWinners());
 		com.getWinners().forEach(x->System.out.println(x.getUserAccount().getUsername()+" "+x.getCredits()));
-//		com.notifyWinners(sender);
+		com.notifyWinners(sender);
+		HashMap<String, String> msg = new HashMap<String, String>();
+		msg.put("success", "Die folgenden Gewinner wurden benachrichtigt");
+		msg.put("name", "Name");
+		msg.put("credits", "Punktestand");
+		model.addAttribute("competitionmessage", msg);
 		return "competition";
 	}
 

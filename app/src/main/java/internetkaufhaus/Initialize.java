@@ -216,7 +216,7 @@ public class Initialize implements DataInitializer {
 //		int i = 0;
 //		for(i=0;i<100;i++)
 //		{
-//			userAccounts.add(new ConcreteUserAccount("kunde"+i+"@todesstern.ru", "kunde"+i, "Kunde"+i, "Kundenname"+i, "Kundenstraße"+i, "12345", "Definitiv nicht Dresden", "kunde"+i, customerRole, userAccountManager,"lars", i));
+//			userAccounts.add(new ConcreteUserAccount("kunde"+i+"@todesstern.ru", "kunde"+i, "Kunde"+i, "Kundenname"+i, "Kundenstraße"+i, "12345", "Definitiv nicht Dresden", "kunde"+i, customerRole, userAccountManager));
 //		}
 		
 	
