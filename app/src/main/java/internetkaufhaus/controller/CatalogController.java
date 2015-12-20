@@ -44,6 +44,12 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 import utils.com.ipillars.sorter.ListSorter;
 import utils.com.ipillars.sorter.SortKeys;
 
+/**
+ * This is the catalog controller. It controls the catalog. Or does it catalog the controller? You never know...
+ * In this class you may find the controllers for the catalog and artible pages, should you choose to look for them.
+ * @author max
+ *
+ */
 @Controller
 public class CatalogController {
 	private static final Quantity NONE = Quantity.of(0);
@@ -55,6 +61,17 @@ public class CatalogController {
 	private final MailSender sender;
 	private final ConcreteUserAccountRepository usermanager;
 
+	/**
+	 * This is the constructor. It's neither used nor does it contain any functionality other than storing function arguments as class attribute, what do you expect me to write here?
+	 * 
+	 * @param catalog
+	 * @param inventory
+	 * @param prodSearch
+	 * @param concreteCatalog
+	 * @param newsManager
+	 * @param sender
+	 * @param usermanager
+	 */
 	@Autowired
 	public CatalogController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, ConcreteProductRepository concreteCatalog, NewsletterManager newsManager, MailSender sender, ConcreteUserAccountRepository usermanager) {
 
@@ -67,6 +84,14 @@ public class CatalogController {
 		this.usermanager = usermanager;
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param lookup
+	 * @param number
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/sufu/{pagenumber}")
 	public String sufu(@RequestParam("search") String lookup, @PathVariable("pagenumber") int number, ModelMap model) {
 
@@ -77,6 +102,14 @@ public class CatalogController {
 		return "catalog";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param lookup
+	 * @param number
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/sufu/{search}/{pagenumber}")
 	public String postsufu(@PathVariable("search") String lookup, @PathVariable("pagenumber") int number, ModelMap model) {
 
@@ -88,6 +121,13 @@ public class CatalogController {
 		return "catalog";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param category
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/catalog/{type}")
 	public String category(@PathVariable("type") String category, ModelMap model) {
 
@@ -97,6 +137,17 @@ public class CatalogController {
 		return "catalog";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param category
+	 * @param split
+	 * @param number
+	 * @param representation
+	 * @param sort
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(path = "/catalog/{type}/{sort}/{representation}/{split}/{pagenumber}", method = { RequestMethod.POST, RequestMethod.GET })
 	public String list50(@PathVariable("type") String category, @PathVariable("split") int split, @PathVariable("pagenumber") int number, @PathVariable("representation") int representation, @PathVariable("sort") String sort, ModelMap model) {
 		if (split == 0) {
@@ -150,6 +201,16 @@ public class CatalogController {
 		return "catalog";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param pagable
+	 * @param category
+	 * @param number
+	 * @param split
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/catalog/{type}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)
 	public String changeStartPageSetting(Pageable pagable, @PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split, ModelMap model) {
 		return "redirect:/catalog/" + category + '/' + split + '/' + number;
@@ -158,12 +219,31 @@ public class CatalogController {
 		 */
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param pagable
+	 * @param category
+	 * @param number
+	 * @param split
+	 * @param sort
+	 * @param representation
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/catalog/{type}/{sort}/{representation}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)
 	public String changeStartPageSetting(Pageable pagable, @PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split, @RequestParam(value = "sort", defaultValue = "name") String sort, @PathVariable("representation") int representation, ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCategories());
 		return "redirect:/catalog/" + category + '/' + sort + '/' + representation + '/' + split + '/' + number;
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param prod
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/detail/{prodId}")
 	public String detail(@PathVariable("prodId") ConcreteProduct prod, Model model) {
 
@@ -176,6 +256,16 @@ public class CatalogController {
 		return "detail";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param prod
+	 * @param comment
+	 * @param rating
+	 * @param model
+	 * @param user
+	 * @return
+	 */
 	@RequestMapping(value = "/comment", method = RequestMethod.POST)
 	public String comment(@RequestParam("prodId") ConcreteProduct prod, @RequestParam("comment") String comment, @RequestParam("rating") int rating, Model model, @LoggedIn Optional<UserAccount> user) {
 		Comment c = new Comment(comment, rating, new Date(), "");
@@ -188,6 +278,14 @@ public class CatalogController {
 		return "redirect:detail/" + prod.getIdentifier();
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param sendTo
+	 * @param model
+	 * @return
+	 * @throws ParseException
+	 */
 	@RequestMapping(value = "/newsletter", method = RequestMethod.GET)
 	public String newsletter(@RequestParam("email") String sendTo, ModelMap model) throws ParseException {
 		ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);

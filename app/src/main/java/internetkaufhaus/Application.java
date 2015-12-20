@@ -12,12 +12,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import internetkaufhaus.interceptors.GeneralInterceptor;
 import internetkaufhaus.model.Search;
 
+/**
+ * This is the main class. Who would've thought!
+ * @author max
+ *
+ */
 @EnableSalespoint
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
 public class Application {
 
+	/**
+	 * This is the main function. Who would've thought!
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}

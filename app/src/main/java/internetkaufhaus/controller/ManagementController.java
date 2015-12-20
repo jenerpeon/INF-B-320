@@ -56,6 +56,13 @@ import internetkaufhaus.model.StockManager;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 
+/**
+ * This is the management controller. It controls the management. Or does it manage the controls? You never know...
+ * In this class you may find the controllers for the employee interfaces, should you choose to look for them.
+ * 
+ * @author max
+ *
+ */
 @Controller
 @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')")
 public class ManagementController {
@@ -73,6 +80,19 @@ public class ManagementController {
 	// private final List<ConcreteProduct> carousselList;
 	// private final List<ConcreteProduct> selectionList;
 
+	/**
+	 * This is the constructor. It's neither used nor does it contain any functionality other than storing function arguments as class attribute, what do you expect me to write here?
+	 * 
+	 * @param concreteProductRepository
+	 * @param orderManager
+	 * @param concreteOrderRepo
+	 * @param catalog
+	 * @param inventory
+	 * @param prodSearch
+	 * @param stock
+	 * @param newsManager
+	 * @param sender
+	 */
 	@Autowired
 	public ManagementController(ConcreteProductRepository concreteProductRepository, OrderManager<Order> orderManager, ConcreteOrderRepository concreteOrderRepo, Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, StockManager stock, NewsletterManager newsManager, MailSender sender) {
 		this.concreteProductRepository = concreteProductRepository;
@@ -88,6 +108,13 @@ public class ManagementController {
 		// this.selectionList = selectionList;
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param userAccount
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/employee")
 	public String employeeStart(@LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
 		model.addAttribute("account", userAccount.get());
@@ -109,12 +136,24 @@ public class ManagementController {
 		return "changecatalog";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/employee/changecatalog/addArticle")
 	public String addArticle(ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCategories());
 		return "changecatalognewitem";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param comId
+	 * @return
+	 */
 	@RequestMapping("/employee/acceptComment/{comId}")
 	public String acceptComments(@PathVariable("comId") long comId) {
 		for (ConcreteProduct prods : catalog.findAll()) {
@@ -129,6 +168,12 @@ public class ManagementController {
 		return "redirect:/employee/comments";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param comId
+	 * @return
+	 */
 	@RequestMapping("/employee/deleteComment/{comId}")
 	public String deleteComments(@PathVariable("comId") long comId) {
 		boolean break_outer = false;
@@ -150,6 +195,12 @@ public class ManagementController {
 		return "redirect:/employee/comments";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/employee/comments")
 	public String comments(ModelMap model) {
 		List<Comment> comlist = new ArrayList<Comment>();
@@ -163,6 +214,13 @@ public class ManagementController {
 		return "changecatalogcomment";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param prod
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/employee/changecatalog/editArticle/{prodId}")
 	public String editArticle(@PathVariable("prodId") ConcreteProduct prod, ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCategories());
@@ -171,6 +229,14 @@ public class ManagementController {
 		return "changecatalogchangeitem";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param editForm
+	 * @param img
+	 * @param result
+	 * @return
+	 */
 	@RequestMapping(value = "/employee/changecatalog/editedArticle", method = RequestMethod.POST)
 	public String editedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm, @RequestParam("image") MultipartFile img, BindingResult result) {
 		if (result.hasErrors()) {
@@ -206,6 +272,14 @@ public class ManagementController {
 		return "redirect:/employee/changecatalog";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param editForm
+	 * @param img
+	 * @param result
+	 * @return
+	 */
 	@RequestMapping(value = "/employee/changecatalog/addedArticle", method = RequestMethod.POST)
 	public String addedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm, @RequestParam("image") MultipartFile img, BindingResult result) {
 		if (result.hasErrors()) {
@@ -240,6 +314,13 @@ public class ManagementController {
 
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param prod
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/employee/changecatalog/deleteArticle/{prodId}")
 	public String deleteArticle(@PathVariable("prodId") ConcreteProduct prod, ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCategories());
@@ -248,6 +329,12 @@ public class ManagementController {
 		return "changecatalogdeleteitem";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param prod
+	 * @return
+	 */
 	@RequestMapping(value = "/employee/changecatalog/deletedArticle/{prodId}", method = RequestMethod.GET)
 	public String deletedArticle(@PathVariable("prodId") ProductIdentifier prod) {
 
@@ -259,6 +346,13 @@ public class ManagementController {
 
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param prod
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/employee/changecatalog/orderArticle/{prodId}")
 	public String orderArticle(@PathVariable("prodId") ConcreteProduct prod, ModelMap model) {
 
@@ -271,6 +365,15 @@ public class ManagementController {
 		return "changecatalogorderitem";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param stockForm
+	 * @param result
+	 * @param model
+	 * @param userAccount
+	 * @return
+	 */
 	@RequestMapping(value = "/employee/changecatalog/orderedArticle", method = RequestMethod.GET)
 	public String orderedArticle(@ModelAttribute("StockForm") @Valid StockForm stockForm, BindingResult result, ModelMap model, @LoggedIn Optional<UserAccount> userAccount) {
 		if (result.hasErrors()) {
@@ -290,6 +393,13 @@ public class ManagementController {
 		return "redirect:/employee/changecatalog";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param stockForm
+	 * @param result
+	 * @return
+	 */
 	@RequestMapping(value = "/employee/changecatalog/decreasedArticle/{prodId}", method = RequestMethod.POST)
 	public String decreasedArticle(@ModelAttribute("StockForm") @Valid StockForm stockForm, BindingResult result) {
 		if (result.hasErrors()) {
@@ -299,6 +409,14 @@ public class ManagementController {
 		return "redirect:/employee/changecatalog";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param totalCaroussel
+	 * @param totalSelection
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/employee/startpage/{totalCaroussel}/{totalSelection}")
 	public String editStartPage(@PathVariable("totalCaroussel") int totalCaroussel, @PathVariable("totalSelection") int totalSelection, ModelMap model) {
 		model.addAttribute("prod50", catalog.findAll());
@@ -307,6 +425,13 @@ public class ManagementController {
 		return "changestartpage";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param totalCaroussel
+	 * @param totalSelection
+	 * @return
+	 */
 	@RequestMapping(value = "/employee/startpage/changedSetting", method = RequestMethod.POST)
 	public String changeStartPageSetting(@RequestParam("totalCaroussel") int totalCaroussel, @RequestParam("totalSelection") int totalSelection) {
 		return "redirect:/employee/startpage/" + totalCaroussel + '/' + totalSelection;
@@ -315,6 +440,12 @@ public class ManagementController {
 	 * @RequestMapping(value = "/employee/startpage/changedstartpage", method = RequestMethod.POST) public String changeStartpage(@ModelAttribute ChangeStartPageForm changeStartPageForm) { List<ProductIdentifier> carousselProdsId = changeStartPageForm.getCarousselArticle(); List<ProductIdentifier> selectionProdsId = changeStartPageForm.getSelectionArticle(); int index = 0; for (ProductIdentifier prodId : carousselProdsId) { carousselList.set(index, catalog.findOne(prodId).get()); index ++; } index = 0; for (ProductIdentifier prodId : selectionProdsId) { selectionList.set(index, catalog.findOne(prodId).get()); index ++; } return "redirect:/"; }
 	 */
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/employee/orders")
 	public String orders(ModelMap model) {
 		Iterable<ConcreteOrder> ordersPaid = concreteOrderRepo.findByStatus(OrderStatus.PAID);
@@ -329,6 +460,13 @@ public class ManagementController {
 
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param orderId
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/employee/orders/accept/{orderId}", method = RequestMethod.GET)
 	public String acceptOrder(@PathVariable("orderId") Long orderId, ModelMap model) {
 
@@ -369,6 +507,13 @@ public class ManagementController {
 		return "redirect:/employee/orders";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param model
+	 * @param orderId
+	 * @return
+	 */
 	@RequestMapping(value = "/employee/orders/cancel/{orderId}", method = RequestMethod.GET)
 	public String cancelOrder(ModelMap model, @PathVariable("orderId") Long orderId) {
 		ConcreteOrder o = concreteOrderRepo.findById(orderId);
@@ -380,6 +525,13 @@ public class ManagementController {
 		return "redirect:/employee/orders";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param orderId
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/employee/orders/detail/{orderId}")
 	public String detailOrder(@PathVariable("orderId") Long orderId, ModelMap model) {
 		ConcreteOrder o = concreteOrderRepo.findById(orderId);
@@ -394,24 +546,51 @@ public class ManagementController {
 		return "orderdetail";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/employee/newsletter")
 	public String newsletter(ModelMap model) {
 		model.addAttribute("newsUser", newsManager.getMap());
 		return "newsletter";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param userAccount
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/employee/newsletter/changeNewsletter")
 	public String changeNewsletter(Optional<UserAccount> userAccount, ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCategories());
 		return "changenewsletter";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param mail
+	 * @param name
+	 * @return
+	 */
 	@RequestMapping(value = "/employee/newsletter/deleteUserAbo/{mail}/{username}")
 	public String deleteUserAbo(@PathVariable("mail") String mail, @PathVariable("username") String name) {
 		newsManager.getMap().remove(name);
 		return "redirect:/employee/newsletter";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param subject
+	 * @param mailBody
+	 * @return
+	 */
 	@RequestMapping(value = "/employee/newsletter/changeNewsletter/sendNewsletter", method = RequestMethod.GET)
 	public String sendNewsletter(@RequestParam("subject") String subject, @RequestParam("mailBody") String mailBody) {
 		Map<Date, String> maildetails = new HashMap<Date, String>();
@@ -426,6 +605,12 @@ public class ManagementController {
 		return "redirect:/employee/newsletter";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/employee/newsletter/oldAbos")
 	public String oldAbos(ModelMap model) {
 
@@ -434,6 +619,14 @@ public class ManagementController {
 		return "oldnewsletterstable";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param date
+	 * @param subject
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/employee/newsletter/oldAbos/{date}/{subject}")
 	public String oldAbosdetails(@PathVariable("date") String date, @PathVariable("subject") String subject, ModelMap model) {
 		model.addAttribute("date", date);
@@ -451,6 +644,19 @@ public class ManagementController {
 		return NONE;
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param model
+	 * @param f_year
+	 * @param f_month
+	 * @param f_day
+	 * @param t_year
+	 * @param t_month
+	 * @param t_day
+	 * @param quantize
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/statistic")
 	public String getStatistic(ModelMap model, @RequestParam(value = "f_year") int f_year, @RequestParam(value = "f_month") int f_month, @RequestParam(value = "f_day") int f_day, @RequestParam(value = "t_year") int t_year, @RequestParam(value = "t_month") int t_month, @RequestParam(value = "t_day") int t_day, @RequestParam(value = "quantize") int quantize) {
 		Statistic stat = new Statistic(orderManager);

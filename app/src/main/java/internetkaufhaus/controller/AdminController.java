@@ -34,6 +34,13 @@ import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
+/**
+ * This is the admin controller. It controls the admin. Or maybe it admins the controls? You never know...
+ * In this class you may find the controllers for the admin interfaces, should you choose to look for them.
+ * 
+ * @author max
+ *
+ */
 @Controller
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AdminController {
@@ -45,8 +52,16 @@ public class AdminController {
 
 	private final Creditmanager creditmanager;
 
+	/**
+	 * This is the constructor. It's neither used nor does it contain any functionality other than storing function arguments as class attribute, what do you expect me to write here?
+	 * 
+	 * @param concreteOrderRepo
+	 * @param manager
+	 * @param umanager
+	 * @param creditmanager
+	 * @param form
+	 */
 	@Autowired
-
 	public AdminController(ConcreteOrderRepository concreteOrderRepo, ConcreteUserAccountRepository manager, UserAccountManager umanager, Creditmanager creditmanager, NewUserAccountForm form) {
 
 		this.manager = manager;
@@ -59,12 +74,25 @@ public class AdminController {
 
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param userAccount
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/admin")
 	public String adminStart(@LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
 		model.addAttribute("account", userAccount.get());
 		return "admin";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/changeuser")
 	public String changeUser(ModelMap model) {
 		Role roleCustomer = Role.of("ROLE_CUSTOMER");
@@ -76,6 +104,12 @@ public class AdminController {
 		return "changeuser";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/changeuser/deleteUser/{id}")
 	public String deleteUser(@PathVariable("id") Long id) {
 
@@ -85,17 +119,37 @@ public class AdminController {
 		return "redirect:/admin/changeuser";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param acc
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/changeuser/detail/{id}")
 	public String detailUser(@PathVariable("id") ConcreteUserAccount acc, ModelMap model) {
 		model.addAttribute("account", acc);
 		return "changeuserdetailuser";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @return
+	 */
 	@RequestMapping("/admin/changeuser/addUser")
 	public String addArticle() {
 		return "changeusernewuser";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param createuserform
+	 * @param result
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/changeuser/addedUser", method = RequestMethod.POST)
 	public String addedUser(@ModelAttribute("CreateUserForm") @Valid CreateUserForm createuserform, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
@@ -106,12 +160,26 @@ public class AdminController {
 		return "redirect:/admin/changeuser/";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param acc
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/changeuser/editUser/{id}")
 	public String editUser(@PathVariable("id") ConcreteUserAccount acc, ModelMap model) {
 		model.addAttribute("account", acc);
 		return "changeuseredituser";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param edituserform
+	 * @param result
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/changeuser/editedUser", method = RequestMethod.POST)
 	public String editedUserUser(@ModelAttribute("EditUserForm") @Valid EditUserForm edituserform, BindingResult result) {
 		if (result.hasErrors()) {
@@ -121,12 +189,25 @@ public class AdminController {
 		return "redirect:/admin/changeuser/";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param acc
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/changeuser/displayUser/{id}")
 	public String displayUser(@PathVariable("id") ConcreteUserAccount acc, ModelMap model) {
 		model.addAttribute("account", acc);
 		return "changeUserDisplay";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/balance")
 	public String balance(ModelMap model)
 
@@ -156,6 +237,12 @@ public class AdminController {
 		return "balance";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/statistics")
 	public String statistics(ModelMap model) {
 		return "statistics";
@@ -166,9 +253,15 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/admin/lottery")
 	public String competition() {
-		return "competition";
+		return "competition"; // TODO: what does this even do?
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/competitionButton")
 	public String getWinners(ModelMap model) {
 
