@@ -49,24 +49,24 @@ public class RegistrationForm {
 	@Email(message = "email is not a valid email")
 	private String email;
 
-//	@NotEmpty(message = "address field is mandatory")
+	// @NotEmpty(message = "address field is mandatory")
 	@Pattern(regexp = "([A-Za-z0-9 ,.-])+", message = "address contains illegal characters")
 	private String address;
 
-//	@NotEmpty(message = "zipCode field is mandatory")
+	// @NotEmpty(message = "zipCode field is mandatory")
 	@Length(min = 5, max = 5, message = "zip-code is not 5 characters long, but should be")
 	@Pattern(regexp = "([0-9])+", message = "zip-code contains illegal characters")
 	private String zipCode;
 
-//	@NotEmpty(message = "city field is mandatory")
+	// @NotEmpty(message = "city field is mandatory")
 	@Pattern(regexp = "([A-Za-z0-9,.-])+", message = "city contains illegal characters")
 	private String city;
 
-//	@NotEmpty(message = "first-name field is mandatory")
+	// @NotEmpty(message = "first-name field is mandatory")
 	@Pattern(regexp = "([A-Za-z])+", message = "first name contains illegal characters")
 	private String firstname;
 
-//	@NotEmpty(message = "last-name field is mandatory")
+	// @NotEmpty(message = "last-name field is mandatory")
 	@Pattern(regexp = "([A-Za-z])+", message = "last name contains illegal characters")
 	private String lastname;
 

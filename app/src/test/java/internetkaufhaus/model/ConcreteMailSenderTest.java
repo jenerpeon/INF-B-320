@@ -18,17 +18,15 @@ import org.springframework.util.Assert;
 
 import internetkaufhaus.Application;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 public class ConcreteMailSenderTest {
-	
+
 	@Autowired
 	private MailSender sender;
-	
-	
+
 	@Test
-	public void wiredTest () throws Exception{
+	public void wiredTest() throws Exception {
 		ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);
 		concreteMailSender.sendMail("heinzerluds@googlemail.com", "Hallo Heinz", "me@web.de", "tescht");
 		assertTrue("empty test", true);

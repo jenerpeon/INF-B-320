@@ -4,7 +4,10 @@ package internetkaufhaus.controller;
 import static org.salespointframework.core.Currencies.EURO;
 
 import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -44,9 +47,12 @@ import internetkaufhaus.forms.BillingAdressForm;
 import internetkaufhaus.forms.PaymentForm;
 import internetkaufhaus.forms.ShippingAdressForm;
 import internetkaufhaus.model.ConcreteMailSender;
+import internetkaufhaus.model.ReturnManager;
 import internetkaufhaus.model.Search;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
+import javassist.expr.NewArray;
+
 @Controller
 @SessionAttributes("cart")
 class CartController {
@@ -57,95 +63,147 @@ class CartController {
 	private final ConcreteOrderRepository concreteOrderRepo;
 	private final ConcreteUserAccountRepository userRepo;
 
+	/**
+	 * This is the constructor. It's neither used nor does it contain any functionality other than storing function arguments as class attribute, what do you expect me to write here?
+	 * 
+	 * @param userRepo
+	 * @param concreteOrderRepo
+	 * @param orderManager
+	 * @param prodSearch
+	 * @param sender
+	 */
 	@Autowired
-	public CartController(ConcreteUserAccountRepository userRepo,ConcreteOrderRepository concreteOrderRepo,OrderManager<Order> orderManager, Search prodSearch, MailSender sender) {
-
+	public CartController(ConcreteUserAccountRepository userRepo, ConcreteOrderRepository concreteOrderRepo, OrderManager<Order> orderManager, Search prodSearch, MailSender sender) {
 		Assert.notNull(orderManager, "OrderManager must not be null!");
 		this.orderManager = orderManager;
 		this.prodSearch = prodSearch;
 		this.concreteOrderRepo = concreteOrderRepo;
-        this.sender = sender;
-        this.userRepo=userRepo;
+		this.sender = sender;
+		this.userRepo = userRepo;
 	}
 
-	@ModelAttribute("cart")
-	public Cart initializeCart() {
-		return new Cart();
-	}
-
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param concreteproduct
+	 * @param number
+	 * @param cart
+	 * @return
+	 */
 	@RequestMapping(value = "/cart", method = RequestMethod.POST)
-	public String addProduct(@RequestParam("prodId") ConcreteProduct concreteproduct, 
-			@RequestParam("dropDown") int number, @ModelAttribute Cart cart) {
-
-		int amount = number;	
-		if(number < 0 || number > 5)
+	public String addProduct(@RequestParam("prodId") ConcreteProduct concreteproduct, @RequestParam("dropDown") int number, @ModelAttribute Cart cart) {
+		int amount = number;
+		if (number < 0 || number > 5)
 			amount = 1;
-
 		cart.addOrUpdateItem(concreteproduct, Quantity.of(amount));
 		// get first Category of product and redirect to associated catalog search
-    return "redirect:catalog/"+concreteproduct.getCategories().iterator().next()+"/5/1";
-
+		return "redirect:catalog/" + concreteproduct.getCategories().iterator().next() + "/1/5/1";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String cartRedirect(Model model) {
 		return "cart";
 	}
-	
-	@ModelAttribute("cart")
-	public Cart getCart(){
-	   return new Cart(); 
+
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param cart
+	 * @param userAccount
+	 * @return
+	 */
+	@RequestMapping(value = "/clearCart", method = RequestMethod.POST)
+	public String clearCart(@ModelAttribute Cart cart, @LoggedIn Optional<UserAccount> userAccount) {
+		cart.clear();
+		return "redirect:/cart";
 	}
 
-
-	
-	@RequestMapping(value = "/clearCart", method = RequestMethod.POST)
-	public String clearCart(@ModelAttribute Cart cart,@LoggedIn Optional<UserAccount> userAccount)
-	{	
-			cart.clear();
-			return "redirect:/cart";
-
-	}	
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param cart
+	 * @param identifier
+	 * @return
+	 */
 	@RequestMapping(value = "/deleteItem", method = RequestMethod.POST)
-	public String deleteItem(@ModelAttribute Cart cart, @RequestParam("cid") String identifier)
-	{
+	public String deleteItem(@ModelAttribute Cart cart, @RequestParam("cid") String identifier) {
 		cart.removeItem(identifier);
 		return "redirect:/cart";
 	}
-	@RequestMapping(value ="/changeAmount", method = RequestMethod.POST)
-	public String changeAmount(@ModelAttribute Cart cart, @RequestParam("cid") String identifier, @RequestParam("amount") int amount )
-	{
-		Optional <CartItem> cartitem = cart.getItem(identifier);		
 
-		if(!cartitem.isPresent())
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param cart
+	 * @param identifier
+	 * @param amount
+	 * @return
+	 */
+	@RequestMapping(value = "/changeAmount", method = RequestMethod.POST)
+	public String changeAmount(@ModelAttribute Cart cart, @RequestParam("cid") String identifier, @RequestParam("amount") int amount) {
+		Optional<CartItem> cartitem = cart.getItem(identifier);
+		if (!cartitem.isPresent())
 			return "redirect:/cart";
-
 		cart.removeItem(identifier);
 		cart.addOrUpdateItem(cartitem.get().getProduct(), Quantity.of(amount));
-
 		return "redirect:/cart";
 	}
-	@RequestMapping(value="/orderdata/{option}", method = RequestMethod.POST)
+
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param option
+	 * @param userAccount
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/orderdata/{option}", method = RequestMethod.POST)
 	public String orderdata(@PathVariable("option") int option, @LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
-		
 		return userAccount.map(account -> {
-
 			model.addAttribute("option", option);
-
 			return "orderdata";
 		}).orElse("redirect:/login");
 	}
+
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param option
+	 * @param cart
+	 * @param userAccount
+	 * @param model
+	 * @return
+	 */
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
-	@RequestMapping(value="/orderdata/{option}", method = RequestMethod.GET)
+	@RequestMapping(value = "/orderdata/{option}", method = RequestMethod.GET)
 	public String orderdataredirect(@PathVariable("option") int option, @ModelAttribute Cart cart, @LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
-		
 		return userAccount.map(account -> {
 			model.addAttribute("option", option);
 			return "orderdata";
 		}).orElse("redirect:/login");
 	}
+
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param modelmap
+	 * @param cart
+	 * @param paymentForm
+	 * @param result
+	 * @param shippingAdressForm
+	 * @param billingAdressForm
+	 * @param userAccount
+	 * @param redir
+	 * @return
+	 */
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
-	@RequestMapping(value="/payed", method = RequestMethod.POST)
+	@RequestMapping(value = "/payed", method = RequestMethod.POST)
 	public String payed(ModelMap modelmap, @ModelAttribute Cart cart, @ModelAttribute("paymentForm") @Valid PaymentForm paymentForm, BindingResult result, @ModelAttribute("shippingAdressForm") @Valid ShippingAdressForm shippingAdressForm, @ModelAttribute("billingAdressForm") @Valid BillingAdressForm billingAdressForm, @LoggedIn Optional<UserAccount> userAccount, RedirectAttributes redir) {
 		if (result.hasErrors()) {
 			redir.addFlashAttribute("message", result.getAllErrors());
@@ -155,32 +213,27 @@ class CartController {
 			org.javamoney.moneta.Money dailyWithdrawalLimit = Money.of(1000000000, EURO);
 			org.javamoney.moneta.Money creditLimit = Money.of(1000000000, EURO);
 			LocalDateTime validFrom = LocalDateTime.MIN;
-			
+
 			ConcreteOrder order = new ConcreteOrder(account, Cash.CASH);
 			Order o = order.getOrder();
-			
+
 			cart.addItemsTo(o);
-			
-			
-			String billingAdress = billingAdressForm.getBillingFirstName() + " " + billingAdressForm.getBillingLastName() + 
-					"\n" + billingAdressForm.getBillingStreet() + " " + billingAdressForm.getBillingHouseNumber() + "\n" +
-					billingAdressForm.getBillingAdressLine2() + "\n" + billingAdressForm.getBillingZipCode() + "" +
-					billingAdressForm.getBillingTown();
-			
+
+			String billingAdress = billingAdressForm.getBillingFirstName() + " " + billingAdressForm.getBillingLastName() + "\n" + billingAdressForm.getBillingStreet() + " " + billingAdressForm.getBillingHouseNumber() + "\n" + billingAdressForm.getBillingAdressLine2() + "\n" + billingAdressForm.getBillingZipCode() + "" + billingAdressForm.getBillingTown();
+
 			CreditCard paymentMethod = new CreditCard(paymentForm.getCardName(), paymentForm.getCardAssociationName(), paymentForm.getCardNumber(), paymentForm.getNameOnCard(), billingAdress, validFrom, paymentForm.getExpiryDateLocalDateTime(), paymentForm.getCardVerificationCode(), dailyWithdrawalLimit, creditLimit);
-			
+
 			o.setPaymentMethod(paymentMethod);
-			
+
 			order.setBillingAdress(billingAdressForm.getBillingAdress());
-			
+
 			order.setShippingAdress(shippingAdressForm.getShippingAdress());
-			
+
 			order.setDateOrdered(LocalDateTime.now());
 			orderManager.save(o);
 			orderManager.payOrder(o);
 
-            order.setStatus(o.getOrderStatus()); 		
-            System.out.println(order.getStatus()+"="+o.getOrderStatus());
+			order.setStatus(o.getOrderStatus());
 			concreteOrderRepo.save(order);
 
 			String articles = "";
@@ -191,40 +244,44 @@ class CartController {
 				articles += "\n" + current.getQuantity().toString() + "x " + current.getProductName() + " für gesamt " + current.getPrice().toString();
 			}
 			articles += "\nGesamtpreis: " + order.getOrder().getTotalPrice().toString();
-			
+
 			cart.clear();
-			
+
 			new ConcreteMailSender(this.sender).sendMail(account.getEmail(), "Sehr geehrte(r) " + account.getFirstname() + " " + account.getLastname() + "!\nIhre Bestellung ist soeben bei uns eingetroffen und wird nun bearbeitet!\nIhre Bestellung umfasst folgende Artikel:" + articles, "nobody@nothing.com", "Bestellung eingetroffen!");
 
 			return "redirect:/";
 		}).orElse("redirect:/login");
 	}
-    
-    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param model
+	 * @param userAccount
+	 * @return
+	 */
+	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 	@RequestMapping(value = "/returOrders", method = RequestMethod.GET)
 	public String returnRedirect(Model model, @LoggedIn Optional<UserAccount> userAccount) {
-		
-		LocalDateTime timeStart = LocalDateTime.now().minusWeeks(2);
-		LocalDateTime timeEnd = LocalDateTime.now();
-		
-		Interval interval  = Interval.from(timeStart).to(timeEnd);
-		
-		Iterable<ConcreteOrder> ordersCompletedInReturnedTime = concreteOrderRepo.findByUser(userAccount.get());
-		
-		model.addAttribute("ordersCompletedInReturnTime", ordersCompletedInReturnedTime);
+		model.addAttribute("ordersCompletedInReturnTime", ReturnManager.getConcreteOrderDuringLastTwoWeeks(concreteOrderRepo, userAccount));
 		return "returOrders";
 	}
-	
+
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * 
+	 * @param orderId
+	 * @param reason
+	 * @param cart
+	 * @return
+	 */
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 	@RequestMapping(value = "/returOrders", method = RequestMethod.POST)
-	public String returnOrder(@RequestParam("orderId") Long orderId, 
-			@RequestParam("dropDown") String reason, @ModelAttribute Cart cart) {
-		
+	public String returnOrder(@RequestParam("orderId") Long orderId, @RequestParam("dropDown") String reason, @ModelAttribute Cart cart) {
 		concreteOrderRepo.findById(orderId).setReturned(true);
 		concreteOrderRepo.findById(orderId).setReturnReason(reason);
-		
-    return "redirect:/";
-
+		concreteOrderRepo.save(concreteOrderRepo.findById(orderId));
+		return "redirect:/";
 	}
-	
+
 }

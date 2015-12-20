@@ -1,29 +1,77 @@
 @charset "utf-8";
 
-.content table {
-	width: 600px;
+.workframe {
+	display: flex;
+	align-items: flex-start;
+}
+#firstcolumn img {
+	width: 300px;
+}
+#secondcolumn h1 {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 24px;
+	text-align: left;
+	font-weight: bold;
+}
+#secondcolumn label {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 14px;
+}
+#secondcolumn .description {
+	text-align: justify;
+}
+#secondcolumn #quantities {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+#secondcolumn .quantity {
+	font-size: 14px;
+}
+#secondcolumn .quantity-selection {
+	text-align: right;
+	width: 350px;
 }
 
-.content table td {
-	padding-right: 20px;
+#secondcolumn .rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: left;
 }
+#secondcolumn .rating span {
+    display: inline-block;
+    position: relative;
+    width:1.1em;
+    font-size:1.4em;
+    color: gold;
+}
+#secondcolumn .rating .filled:before {
+    content: "\2605";
+    position: absolute;
+    color: gold;
+    text-shadow:0 0 1px #666;
+}
+#secondcolumn table { border-collapse: collapse; }
 
+#secondcolumn td + td,
+#secondcolumn th + th { border-left: 1px solid; }
+#secondcolumn tr + tr { border-top: 1px solid; }
 #comments {
-	border: 1;
+	width: 100%;
 }
 
 #comments td {
 	padding-top: 10px;
 }
 
-#comments #comment {
-	width: 450px;
+#comments .comment {
+	text-align: justify;
 }
 
-#comments #rating {
-	width: 50px;
+#comments .rating {
+	text-align: center;
 }
 
-#comments #time {
-	width: 200px;
+#comments .time {
+	text-align: center;
 }

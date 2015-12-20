@@ -21,12 +21,12 @@ import internetkaufhaus.repositories.ConcreteOrderRepository;
 public class Statistic {
 
 	private final OrderManager<Order> orderManager;
-//	private final ConcreteOrderRepository concreteOrderRepo;
+	// private final ConcreteOrderRepository concreteOrderRepo;
 
 	@Autowired
 	public Statistic(OrderManager<Order> orderManager) {
 		this.orderManager = orderManager;
-//		this.concreteOrderRepo = concreteOrderRepo;
+		// this.concreteOrderRepo = concreteOrderRepo;
 	}
 
 	private Money getTournover(Iterable<Order> orders) {
