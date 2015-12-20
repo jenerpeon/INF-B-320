@@ -51,6 +51,9 @@ public class ConcreteUserAccount implements Serializable {
 	 * This comment is just here because sonarcube is a little bitch.
 	 */
 	public ConcreteUserAccount() {
+		/**
+		 * This comment is just here because sonarcube is a little bitch.
+		 */
 	}
 
 	public ConcreteUserAccount(String username, String password, Role role, UserAccountManager u) {

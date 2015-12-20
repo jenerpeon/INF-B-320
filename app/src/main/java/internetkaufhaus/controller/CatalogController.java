@@ -183,10 +183,12 @@ public class CatalogController {
 		List<ConcreteProduct> prods = page.getContent();
 
 		List<Integer> numbers = IntStream.range(1, page.getTotalPages() + 1).boxed().collect(Collectors.toList());
-		if (number == 0)
+		if (number == 0) {
 			number = 1;
-		if (number > numbers.size())
+		}
+		if (number > numbers.size()) {
 			number = numbers.size();
+		}
 		model.addAttribute("category", category);
 		model.addAttribute("number", number);
 		Set<Integer> quantities = Sets.newSet(split, 3, 6, 9, 18, 45, 90, 180, prodSearch.getProdsByCategory(category).size());
@@ -212,7 +214,7 @@ public class CatalogController {
 	 * @return
 	 */
 	@RequestMapping(value = "/catalog/{type}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)
-	public String changeStartPageSetting(Pageable pagable, @PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split, ModelMap model) {
+	public String changeStartPageSetting(@PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split) {
 		return "redirect:/catalog/" + category + '/' + split + '/' + number;
 		/*
 		 * model.addAttribute("prods", page); model.addAttribute("numbers", numbers); model.addAttribute("sites", numbers.size()); model.addAttribute("categories", prodSearch.getCategories()); return "catalog";
@@ -232,7 +234,7 @@ public class CatalogController {
 	 * @return
 	 */
 	@RequestMapping(value = "/catalog/{type}/{sort}/{representation}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)
-	public String changeStartPageSetting(Pageable pagable, @PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split, @RequestParam(value = "sort", defaultValue = "name") String sort, @PathVariable("representation") int representation, ModelMap model) {
+	public String changeStartPageSetting(@PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split, @RequestParam(value = "sort", defaultValue = "name") String sort, @PathVariable("representation") int representation, ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCategories());
 		return "redirect:/catalog/" + category + '/' + sort + '/' + representation + '/' + split + '/' + number;
 	}
@@ -269,7 +271,7 @@ public class CatalogController {
 	@RequestMapping(value = "/comment", method = RequestMethod.POST)
 	public String comment(@RequestParam("prodId") ConcreteProduct prod, @RequestParam("comment") String comment, @RequestParam("rating") int rating, Model model, @LoggedIn Optional<UserAccount> user) {
 		Comment c = new Comment(comment, rating, new Date(), "");
-		if (!(comment == "") && user.isPresent()) {
+		if (!(comment.equals("")) && user.isPresent()) {
 			c.setFormatedDate(c.getDate());
 			prod.addComment(c, usermanager.findByUserAccount(user.get()));
 			catalog.save(prod);

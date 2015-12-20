@@ -91,7 +91,7 @@ public class ConcreteProduct extends Product {
 		for (Comment comm : this.getAcceptedComments()) {
 			rating += comm.getRating();
 		}
-		this.averageRating = rating / this.getAcceptedComments().size();
+		this.averageRating = (float) rating / this.getAcceptedComments().size();
 	}
 
 	public float getAverageRating() {
