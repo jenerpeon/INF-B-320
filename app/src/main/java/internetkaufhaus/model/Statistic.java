@@ -1,7 +1,5 @@
 package internetkaufhaus.model;
 
-import static org.salespointframework.core.Currencies.EURO;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -19,9 +17,6 @@ import org.salespointframework.order.OrderStatus;
 import org.salespointframework.time.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import internetkaufhaus.entities.ConcreteOrder;
-import internetkaufhaus.repositories.ConcreteOrderRepository;
-
 public class Statistic {
 
 	private final OrderManager<Order> orderManager;
@@ -33,14 +28,14 @@ public class Statistic {
 		// this.concreteOrderRepo = concreteOrderRepo;
 	}
 
-	private Money getTournover(Iterable<Order> orders) {
+	/*private Money getTournover(Iterable<Order> orders) {
 		Money turnover = Money.of(0, EURO);
 		for (Order o : orders) {
 			if (o.getOrderStatus().equals(OrderStatus.COMPLETED))
 				turnover.add(o.getTotalPrice());
 		}
 		return turnover;
-	}
+	}*/
 
 	public Map<LocalDate, Money> getTurnoverByInterval(Interval i, String unit) {
 		Map<LocalDate, Money> turnover = new HashMap<LocalDate, Money>();

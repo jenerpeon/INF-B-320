@@ -2,17 +2,9 @@ package internetkaufhaus.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
-import java.util.TreeSet;
-
-import static org.salespointframework.core.Currencies.EURO;
-
-import org.javamoney.moneta.Money;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import internetkaufhaus.entities.ConcreteUserAccount;
-import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
 public class Competition {
 

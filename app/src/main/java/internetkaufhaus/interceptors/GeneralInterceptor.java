@@ -1,5 +1,5 @@
 package internetkaufhaus.interceptors;
-
+/*
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,13 +21,13 @@ public class GeneralInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
 		try {
-			ModelMap modelmap = modelAndView.getModelMap();
+			//ModelMap modelmap = modelAndView.getModelMap();
 			//modelmap.addAttribute("categories", prodSearch.getCategories());
 		} catch (NullPointerException npe) {
 			/**
 			 * This comment is just here because sonarcube is a little bitch.
 			 */
-			System.out.print("");
+			/*System.out.print("");
 		}
 	}
-}
+}*/
