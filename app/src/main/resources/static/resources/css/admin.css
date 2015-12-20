@@ -104,7 +104,8 @@
      
 	width: auto;      
 	margin-top: 0.5em;      
-	margin-left: 11.5em;       
+	margin-left: 11.5em;
+	clear: both;  
 }
 
 .orderTable {

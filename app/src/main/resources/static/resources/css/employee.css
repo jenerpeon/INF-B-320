@@ -11,10 +11,16 @@
 	display: flex;
 	flex-direction: column;
 }
-
+#workframe h1{
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	margin: 0 0 0 0;
+}
 #workframe h2{
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
 	margin: 0 0 0 0;
+}
+#workframe label {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
 }
 #workframe table {
 	table-layout: fixed;
@@ -130,7 +136,9 @@
 #workframe #newarticle {
 	margin: 10px 0px 0px 30px;
 }
-
+.itemform {
+	padding: 10px 0;
+}
 .itemform fieldset {
 	float: left;      
 	clear: both;      
@@ -164,7 +172,36 @@
 	margin-top: 0.5em;      
 	margin-left: 11.5em;       
 }
-
+#firstcolumn img {
+	width: 300px;
+}
+#secondcolumn h1 {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 24px;
+	text-align: left;
+	font-weight: bold;
+}
+#secondcolumn .description {
+	text-align: justify;
+}
+#secondcolumn .rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: left;
+}
+#secondcolumn .rating span {
+    display: inline-block;
+    position: relative;
+    width:1.1em;
+    font-size:1.4em;
+    color: gold;
+}
+#secondcolumn .rating .filled:before {
+    content: "\2605";
+    position: absolute;
+    color: gold;
+    text-shadow:0 0 1px #666;
+}
 #deleteitem input {
 	margin: 10px 0 0 20px;
 	background-color: red;

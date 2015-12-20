@@ -14,8 +14,6 @@
 		$('label.tree-toggler').click(function() {
 			$(this).parent().children('ul.tree').toggle(300);
 		});
-		document.getElementById("mainframe").style.height = "460px";
-		
 	});
 </script>
 </head>
@@ -23,10 +21,20 @@
 <body>
 	<div id="wrapper">
 		<div id="header" th:include="navigation :: navigation"></div>
-		<br>
+
 		<main>
 		<div id="mainframe">
-			<div id="adminnavigaton" th:include="adminnavigation :: adminnavigation"></div>
+			<div id="topLine">
+				<div id="path">
+					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/admin" >Adminportal</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/admin/changeuser" >Userverwaltung</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a >User ändern</a>
+				</div>
+			</div>
 			
 			<div id="workframe">
 				<form id="edituser" class="userform" th:action="@{'/admin/changeuser/editedUser'}" method="POST" enctype="multipart/form-data" onsubmit='return checkForm();'>
@@ -38,6 +46,10 @@
 						<li>		
 								<label for="password">Passwort: </label>
 								<input type="text" name="password" id="passwordfield" placeholder="Passwort" required/>
+						</li>
+						<li>		
+								<label for="password">Passwort wiederholen: </label>
+								<input type="text" name="password-repetition" id="password-repetition-field" placeholder="Passwort wiederholen" required/>
 						</li>
 						<li>
 								<label for="role">Rolle: </label>

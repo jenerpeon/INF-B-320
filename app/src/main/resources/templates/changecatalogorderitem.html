@@ -12,14 +12,25 @@
 </head>
 <div id="wrapper">
 		<div id="header" th:include="navigation :: navigation"></div>
-		<br/>
+
 		<main>
 		<div id="mainframe">
-			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
+			<div id="topLine">
+				<div id="path">
+					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/employee" >Mitarbeiterportal</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/employee/changecatalog" >Katalog/Lager</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a >Artikel bestellen</a>
+				</div>
+			</div>
+			
 			<div id="workframe">
 				<h1 th:text="${concreteproduct.name}">Produktname</h1>
 				<p th:text="'Lagerstand: '+${quantity}">Lagerstand: 10</p>
-				<p th:text="'Preis: '+${concreteproduct.price}">Preis</p>
+				<p th:text="'Preis: '+${concreteproduct.priceFloat}">Preis</p>
 				<form id="orderitem" class="itemform" th:action="@{'/employee/changecatalog/orderedArticle/'}" method="GET">
 					<label for="quantity">Menge: </label>
 					<input type="number" name="quantity" id="quantityfield" value="1" min="1" max="100" step="1"/>
@@ -34,6 +45,6 @@
 			</div>
 		</div>
 		</main>
-		<br/>
+
 		<div id="footer" th:include="footer :: footer"></div>
 </div>
