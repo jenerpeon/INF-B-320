@@ -96,7 +96,8 @@ public class ManagementController {
 	}
 
 	/**
-	 * gives The catalog in ascending order by its Product name.  
+	 * gives The catalog in ascending order by its Product name.
+	 * 
 	 * @param userAccount
 	 * @param model
 	 * @return
@@ -183,7 +184,6 @@ public class ManagementController {
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("filename"))); // TODO: generate filename
 				stream.write(bytes);
 				stream.close();
-				System.out.println("success (yay) !!!"); // TODO: validation
 			} catch (Exception e) {
 				System.out.println("error (" + e.getMessage() + ") !!!");
 			}
@@ -219,7 +219,6 @@ public class ManagementController {
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("filename"))); // TODO: generate filename
 				stream.write(bytes);
 				stream.close();
-				System.out.println("success (yay) !!!"); // TODO: validation
 			} catch (Exception e) {
 				System.out.println("error (" + e.getMessage() + ") !!!");
 			}
@@ -322,7 +321,7 @@ public class ManagementController {
 		Iterable<ConcreteOrder> ordersPaid = concreteOrderRepo.findByStatus(OrderStatus.PAID);
 		Iterable<ConcreteOrder> ordersCancelled = concreteOrderRepo.findByStatus(OrderStatus.CANCELLED);
 		Iterable<ConcreteOrder> ordersCompleted = concreteOrderRepo.findByStatus(OrderStatus.COMPLETED);
-		System.out.println("Paid Orders:" + ordersPaid + "Cancelled Orders:" + ordersCancelled + "Completed Orders:" + ordersCompleted);
+		// System.out.println("Paid Orders:" + ordersPaid + "Cancelled Orders:" + ordersCancelled + "Completed Orders:" + ordersCompleted);
 
 		model.addAttribute("ordersPaid", ordersPaid);
 		model.addAttribute("ordersCancelled", ordersCancelled);

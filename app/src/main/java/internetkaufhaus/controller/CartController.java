@@ -234,7 +234,6 @@ class CartController {
 			orderManager.payOrder(o);
 
 			order.setStatus(o.getOrderStatus());
-			System.out.println(order.getStatus() + "=" + o.getOrderStatus());
 			concreteOrderRepo.save(order);
 
 			String articles = "";

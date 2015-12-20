@@ -22,14 +22,14 @@ import org.salespointframework.useraccount.UserAccount;
 @Table(name = "CORDER")
 public class ConcreteOrder implements Serializable {
 	private static final long serialVersionUID = 1L;
-//	private OrderManager<Order> orderManager;
+	// private OrderManager<Order> orderManager;
 	private OrderStatus status;
 	@OneToOne
 	private UserAccount user;
-	
+
 	@Id
-    @GeneratedValue
-    private Long id;
+	@GeneratedValue
+	private Long id;
 
 	private String billingGender;
 	private String billingFirstName;
@@ -39,7 +39,7 @@ public class ConcreteOrder implements Serializable {
 	private String billingAdressLine2;
 	private String billingZipCode;
 	private String billingTown;
-	
+
 	private String shippingGender;
 	private String shippingFirstName;
 	private String shippingLastName;
@@ -48,133 +48,129 @@ public class ConcreteOrder implements Serializable {
 	private String shippingAdressLine2;
 	private String shippingZipCode;
 	private String shippingTown;
-	
+
 	private LocalDateTime dateOrdered;
 
 	@OneToOne
 	private Order order;
-	
-    private boolean returned = false;
-    private String returnReason;
-    
+
+	private boolean returned = false;
+	private String returnReason;
+
 	@SuppressWarnings({ "unused" })
 	private ConcreteOrder() {
 
 	}
-	
+
 	public ConcreteOrder(UserAccount account, Cash cash) {
 		this.order = new Order(account, cash);
 		this.status = this.order.getOrderStatus();
-		this.user=account;
-		
-	}
-	
+		this.user = account;
 
-	public ConcreteOrder(String billingGender, String billingFirstName, String billingLastName, String billingStreet, 
-			String billingHouseNumber, String billingAdressLine2, String billingZipCode, String billingTown, 
-			String shippingGender, String shippingFirstName, String shippingLastName, String shippingStreet, 
-			String shippingHouseNumber, String shippingAdressLine2, String shippingZipCode, String shippingTown, LocalDateTime dateOrdered, Order order) {
-		 this.billingGender = billingGender;
-		 this.billingFirstName = billingFirstName;
-		 this.billingLastName = billingLastName;
-		 this.billingStreet = billingStreet;
-		 this.billingHouseNumber = billingHouseNumber;
-		 this.billingAdressLine2 = billingAdressLine2;
-		 this.billingZipCode = billingZipCode;
-		 this.billingTown = billingTown;
-		
-		 this.shippingGender = shippingGender;
-		 this.shippingFirstName = shippingFirstName;
-		 this.shippingLastName = shippingLastName;
-		 this.shippingStreet = shippingStreet;
-		 this.shippingHouseNumber = shippingHouseNumber;
-		 this.shippingAdressLine2 = shippingAdressLine2;
-		 this.shippingZipCode = shippingZipCode;
-		 this.shippingTown = shippingTown;
-		 
-		 this.dateOrdered = dateOrdered;
-		 this.order = order;
-		 this.status = order.getOrderStatus();
-		 
+	}
+
+	public ConcreteOrder(String billingGender, String billingFirstName, String billingLastName, String billingStreet, String billingHouseNumber, String billingAdressLine2, String billingZipCode, String billingTown, String shippingGender, String shippingFirstName, String shippingLastName, String shippingStreet, String shippingHouseNumber, String shippingAdressLine2, String shippingZipCode, String shippingTown, LocalDateTime dateOrdered, Order order) {
+		this.billingGender = billingGender;
+		this.billingFirstName = billingFirstName;
+		this.billingLastName = billingLastName;
+		this.billingStreet = billingStreet;
+		this.billingHouseNumber = billingHouseNumber;
+		this.billingAdressLine2 = billingAdressLine2;
+		this.billingZipCode = billingZipCode;
+		this.billingTown = billingTown;
+
+		this.shippingGender = shippingGender;
+		this.shippingFirstName = shippingFirstName;
+		this.shippingLastName = shippingLastName;
+		this.shippingStreet = shippingStreet;
+		this.shippingHouseNumber = shippingHouseNumber;
+		this.shippingAdressLine2 = shippingAdressLine2;
+		this.shippingZipCode = shippingZipCode;
+		this.shippingTown = shippingTown;
+
+		this.dateOrdered = dateOrdered;
+		this.order = order;
+		this.status = order.getOrderStatus();
+
 	}
 
 	public String getBillingGender() {
 		return billingGender;
 	}
-	
-	public Order getOrder(){
+
+	public Order getOrder() {
 		return this.order;
 	}
-	
+
 	public String getBillingFirstName() {
 		return billingFirstName;
 	}
-	
+
 	public String getBillingLastName() {
 		return billingLastName;
 	}
-	
+
 	public String getBillingStreet() {
 		return billingStreet;
 	}
-	
+
 	public String getBillingHouseNumber() {
 		return billingHouseNumber;
 	}
-	
+
 	public String getBillingAdressLine2() {
 		return billingAdressLine2;
 	}
-	
+
 	public String getBillingZipCode() {
 		return billingZipCode;
 	}
-	
+
 	public String getBillingTown() {
 		return billingTown;
 	}
-	
-	
+
 	public String getShippingGender() {
 		return shippingGender;
 	}
-	
+
 	public String getShippingFirstName() {
 		return shippingFirstName;
 	}
-	
+
 	public String getShippingLastName() {
 		return shippingLastName;
 	}
-	
+
 	public String getShippingStreet() {
 		return shippingStreet;
 	}
-	
+
 	public String getShippingHouseNumber() {
 		return shippingHouseNumber;
 	}
-	
+
 	public String getShippingAdressLine2() {
 		return shippingAdressLine2;
 	}
-	
+
 	public String getShippingZipCode() {
 		return shippingZipCode;
 	}
-	
+
 	public String getShippingTown() {
 		return shippingTown;
 	}
-	public void setDateOrdered(LocalDateTime dateOrdered){
+
+	public void setDateOrdered(LocalDateTime dateOrdered) {
 		this.dateOrdered = dateOrdered;
 	}
-	
+
 	public int getOrderLinesSize() {
 		Collection<OrderLine> orderLines = IteratorUtils.toList(this.order.getOrderLines().iterator());
 		return orderLines.size();
 	}
-	
+
 	public int getTotalProductNumber() {
 		int total = 0;
 		Iterable<OrderLine> orderLines = this.order.getOrderLines();
@@ -183,85 +179,83 @@ public class ConcreteOrder implements Serializable {
 		}
 		return total;
 	}
-	
+
 	public LocalDateTime getDateOrdered() {
 		return this.dateOrdered;
 	}
-	
+
 	public boolean getReturned() {
 		return this.returned;
 	}
-	
+
 	public void setBillingGender(String billingGender) {
 		this.billingGender = billingGender;
 	}
-	
+
 	public void setBillingFirstName(String billingFirstName) {
 		this.billingFirstName = billingFirstName;
 	}
-	
+
 	public void setBillingLastName(String billingLastName) {
 		this.billingLastName = billingLastName;
 	}
-	
+
 	public void setBillingStreet(String billingStreet) {
 		this.billingStreet = billingStreet;
 	}
-	
+
 	public void setBillingHouseNumber(String billingHouseNumber) {
 		this.billingHouseNumber = billingHouseNumber;
 	}
-	
+
 	public void setBillingAdressLine2(String billingAdressLine2) {
 		this.billingAdressLine2 = billingAdressLine2;
 	}
-	
+
 	public void setBillingZipCode(String billingZipCode) {
-		this.billingZipCode= billingZipCode;
+		this.billingZipCode = billingZipCode;
 	}
-	
+
 	public void setBillingTown(String billingTown) {
 		this.billingTown = billingTown;
 	}
-	
+
 	public void setShippingGender(String shippingGender) {
 		this.shippingGender = shippingGender;
 	}
-	
+
 	public void setShippingFirstName(String shippingFirstName) {
 		this.shippingFirstName = shippingFirstName;
 	}
-	
+
 	public void setShippingLastName(String shippingLastName) {
 		this.shippingLastName = shippingLastName;
 	}
-	
+
 	public void setShippingStreet(String shippingStreet) {
 		this.shippingStreet = shippingStreet;
 	}
-	
+
 	public void setShippingHouseNumber(String shippingHouseNumber) {
 		this.shippingHouseNumber = shippingHouseNumber;
 	}
-	
+
 	public void setShippingAdressLine2(String shippingAdressLine2) {
 		this.shippingAdressLine2 = shippingAdressLine2;
 	}
-	
+
 	public void setShippingZipCode(String shippingZipCode) {
-		this.shippingZipCode= shippingZipCode;
+		this.shippingZipCode = shippingZipCode;
 	}
-	
+
 	public void setShippingTown(String shippingTown) {
 		this.shippingTown = shippingTown;
 	}
-	
+
 	public void setUserAccount(UserAccount account) {
 		this.setUserAccount(account);
 	}
-	
 
-	
 	public Long getId() {
 		return id;
 	}
@@ -280,7 +274,7 @@ public class ConcreteOrder implements Serializable {
 		this.billingZipCode = billingAdress.get(6);
 		this.billingTown = billingAdress.get(7);
 	}
-	
+
 	public void setShippingAdress(List<String> shippingAdress) {
 		this.shippingGender = shippingAdress.get(0);
 		this.shippingFirstName = shippingAdress.get(1);
@@ -295,26 +289,23 @@ public class ConcreteOrder implements Serializable {
 	public void setReturned(boolean returned) {
 		this.returned = returned;
 	}
-	
+
 	public UserAccount getUser() {
 		return user;
 	}
-	
 
-/*	public void setOrderManager(OrderManager<Order> orderManager){
-		this.orderManager = orderManager;
+	/*
+	 * public void setOrderManager(OrderManager<Order> orderManager){ this.orderManager = orderManager; } public OrderManager<Order> getOrderManager(){ return this.orderManager; }
+	 */
+	public OrderStatus getStatus() {
+		return this.status;
 	}
-	public OrderManager<Order> getOrderManager(){
-		return this.orderManager;
-	}*/
-	public OrderStatus getStatus(){
-	    return this.status;	
+
+	public void setStatus(OrderStatus state) {
+		this.status = state;
 	}
-	public void setStatus(OrderStatus state){
-	    this.status = state;	
-	}
-    
-    public String getReturnReason() {
+
+	public String getReturnReason() {
 		return returnReason;
 	}
 

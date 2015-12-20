@@ -103,7 +103,9 @@ public class HeaderAdvice {
 	 * 
 	 * @param exception
 	 * @return
-	 *
-	 * @ExceptionHandler(value = Exception.class) public String handleExceptions(Exception exception) { return "/error"; }
 	 */
+	@ExceptionHandler(value = Exception.class)
+	public String handleExceptions(Exception exception) {
+		return "error500";
+	}
 }

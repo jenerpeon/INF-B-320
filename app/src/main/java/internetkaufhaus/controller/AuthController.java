@@ -43,7 +43,7 @@ public class AuthController extends SalespointSecurityConfiguration {
 		this.userAccountManager = userAccountManager;
 		this.concreteUserAccountRepo = concreteUserAccountManager;
 		this.accountAdministration = accountAdministration;
-		
+
 	}
 
 	@Override
@@ -97,14 +97,13 @@ public class AuthController extends SalespointSecurityConfiguration {
 		ConcreteUserAccount user = new ConcreteUserAccount(registrationForm.getEmail(), registrationForm.getName(), registrationForm.getFirstname(), registrationForm.getLastname(), registrationForm.getAddress(), registrationForm.getZipCode(), registrationForm.getCity(), registrationForm.getPassword(), Role.of("ROLE_CUSTOMER"), this.userAccountManager);
 		userAccountManager.save(user.getUserAccount());
 		concreteUserAccountRepo.save(user);
-		//userAccountManager.save(user.getUserAccount());
-		
+		// userAccountManager.save(user.getUserAccount());
+
 		if (this.accountAdministration.isRecruit(registrationForm.getEmail())) {
-			ConcreteUserAccount invitator=concreteUserAccountRepo.findByEmail(this.accountAdministration.getRecruit2invite().get(user.getEmail()));
+			ConcreteUserAccount invitator = concreteUserAccountRepo.findByEmail(this.accountAdministration.getRecruit2invite().get(user.getEmail()));
 			invitator.setRecruits(user);
 		}
 
-		
 		this.accountAdministration.RegisterCustomer(user.getEmail());
 		modelmap.addAttribute("info", "account has been generate. Check your Email to validate");
 
@@ -117,7 +116,7 @@ public class AuthController extends SalespointSecurityConfiguration {
 		if (!(userAccount.get().getEmail() == null))
 			invitator = userAccount.get().getEmail();
 		String msg = this.accountAdministration.RecruitCustomer(recruit, invitator);
-		
+
 		modelmap.addAttribute("info", msg);
 		return "/index";
 	}

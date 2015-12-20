@@ -17,22 +17,21 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 @Controller
 @PreAuthorize("hasRole('ROLE_CUSTOMER')")
 
-public class CustomerController{
+public class CustomerController {
 	private final Creditmanager creditmanager;
 	private final ConcreteUserAccountRepository userRepo;
-	
+
 	@Autowired
-	public CustomerController(Creditmanager creditmanager, ConcreteUserAccountRepository userRepo){
-		this.creditmanager=creditmanager;
-	
-		this.userRepo=userRepo;
+	public CustomerController(Creditmanager creditmanager, ConcreteUserAccountRepository userRepo) {
+		this.creditmanager = creditmanager;
+
+		this.userRepo = userRepo;
 	}
-	
-	
+
 	@RequestMapping("/customer")
-	public String customer(@LoggedIn Optional<UserAccount> userAccount, ModelMap model){
+	public String customer(@LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
 		creditmanager.udateCreditpointsByUser(userRepo.findByUserAccount(userAccount.get()));
-		model.addAttribute("points",userRepo.findByUserAccount(userAccount.get()).getCredits());
+		model.addAttribute("points", userRepo.findByUserAccount(userAccount.get()).getCredits());
 		model.addAttribute("account", userAccount.get());
 		return "points";
 	}

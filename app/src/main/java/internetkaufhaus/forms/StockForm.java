@@ -8,29 +8,30 @@ import org.salespointframework.catalog.ProductIdentifier;
 
 public class StockForm {
 
-	@NotNull(message="leer") @Min(1)
+	@NotNull(message = "leer")
+	@Min(1)
 	private int quantity;
 
 	private ProductIdentifier prodId;
-	
-	public StockForm()
-	{
-		
+
+	public StockForm() {
+
 	}
+
 	public int getQuantity() {
 		return quantity;
 	}
+
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+
 	public ProductIdentifier getProdId() {
 		return prodId;
 	}
+
 	public void setProdId(ProductIdentifier prodId) {
 		this.prodId = prodId;
 	}
-	
-	
-	
-	
+
 }

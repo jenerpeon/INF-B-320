@@ -1,14 +1,13 @@
 package internetkaufhaus.forms;
 
-public class CreateUserForm extends StandardUserForm{
+public class CreateUserForm extends StandardUserForm {
 
 	private String rolename;
 
+	public CreateUserForm() {
 
-	public CreateUserForm()
-	{
-		
 	}
+
 	public String getRolename() {
 		return rolename;
 	}

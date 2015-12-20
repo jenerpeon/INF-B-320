@@ -1,4 +1,5 @@
 package internetkaufhaus;
+
 import org.salespointframework.EnableSalespoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -20,16 +21,15 @@ public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
-	
-	
+
 	@Configuration
-	static class InterceptorConfiguration extends WebMvcConfigurerAdapter{
+	static class InterceptorConfiguration extends WebMvcConfigurerAdapter {
 		@Autowired
 		private Search search;
-		
+
 		@Override
 		public void addInterceptors(InterceptorRegistry registry) {
-		    registry.addInterceptor(new GeneralInterceptor(search));
-		} 
+			registry.addInterceptor(new GeneralInterceptor(search));
+		}
 	}
 }

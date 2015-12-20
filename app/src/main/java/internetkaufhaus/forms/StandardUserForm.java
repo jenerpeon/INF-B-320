@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class StandardUserForm {
-	
+
 	@NotEmpty(message = "username is mandatory")
 	@Pattern(regexp = "([A-Za-z0-9])+", message = "username contains illegal characters")
 	private String name;
@@ -121,6 +121,5 @@ public class StandardUserForm {
 	public void setCity(String city) {
 		this.city = city;
 	}
-
 
 }
