@@ -215,9 +215,14 @@
 	</div>
 	<div id="navigation">
 		<ul class="nav">
-			<li th:each="c : ${categories}">
-				<a th:href="@{'/catalog/'+${c}+'/name'+'/1'+'/6'+'/1'}" th:text="${c}" th:id="${c}" >test</a>
-				<div></div>
+			<li th:if="${employeeNaviagtion == null and adminNaviagtion == null}" th:each="c : ${categories}">
+				<a th:href="@{'/catalog/'+${c.link}+'/name'+'/1'+'/6'+'/1'}" th:text="${c.name}" th:id="${c.name}" ></a>
+			</li>
+			<li th:if="${adminNaviagtion != null}" th:each="c : ${adminNaviagtion}">
+				<a th:href="${c.link}" th:text="${c.name}" th:id="${c.name}" ></a>
+			</li>
+			<li th:if="${employeeNaviagtion != null}" th:each="c : ${employeeNaviagtion}">
+				<a th:href="${c.link}" th:text="${c.name}" th:id="${c.name}" ></a>
 			</li>
 		</ul>
 	</div>

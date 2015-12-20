@@ -20,10 +20,19 @@
 <body>
 	<div id="wrapper">
 		<div id="header" th:include="navigation :: navigation"></div>
-		<br/>
+
 		<main>
 		<div id="mainframe">
-			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
+			<div id="topLine">
+				<div id="path">
+					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/employee" >Mitarbeiterportal</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/employee/comments" >Bewertungen</a>
+				</div>
+			</div>
+			
 			<div id="workframe" >
 			
 						<table >
@@ -33,7 +42,6 @@
 									<td><a>Text</a></td>
 									<td><a>Bewertung</a></td>
 									<td><a>Datum</a></td>
-									<td><a></a></td>
 									<td><a>Löschen/Akzeptieren</a></td>
 								</tr>
 								<tr class="article" th:each="comment : ${Comments}"style="padding: 6px;">
@@ -41,7 +49,6 @@
 										<td><a th:text="${comment.text}">Kommentar</a></td>
 										<td><a th:text="${comment.rating}">5 Sterne</a></td>
 										<td><a th:text="${comment.formatedDate}">Zeitpunkt</a></td>
-										<td></td>
 										<td>
 											<div class="btn-group" role="group">
 												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/deleteComment/'+${comment.id}}" class="btn btn-default" style="padding: 3px 6px;"> <!--href=... '+${concreteproduct.identifier}}" darüber deltete ausführen comment -->
@@ -52,13 +59,12 @@
 												</button>
 											</div>
 										</td>
-								<tr>
+								</tr>
 							</tbody>
 						</table>
 					</div>
 		</div>
 		</main>
-		<br>
 
 		<div id="footer" th:include="footer :: footer"></div>
 	</div>

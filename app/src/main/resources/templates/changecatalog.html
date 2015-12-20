@@ -22,10 +22,18 @@
 <body>
 	<div id="wrapper">
 		<div id="header" th:include="navigation :: navigation"></div>
-		<br>
+
 		<main>
 		<div id="mainframe">
-			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
+			<div id="topLine">
+				<div id="path">
+					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/employee" >Mitarbeiterportal</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/employee/changecatalog" >Katalog/Lager</a>
+				</div>
+			</div>
 			
 			<div id="workframe">
 				
@@ -39,12 +47,12 @@
 							<td><a>Bearbeiten</a></td>
 						</tr>
 						<tr class="article" th:each="concreteproduct : ${prod50}">
-							<td ><a target="newtab" th:text="${concreteproduct.name}" class="name" title="Artikel in Katalog anzeigen" th:href="@{'/detail/'+${concreteproduct.identifier}}"></a></td>
-							<td ><img class="picture" th:href="@{'/detail/'+${concreteproduct.identifier}}" th:src="@{'/resources/Bilder/' + ${concreteproduct.imagefile}}"/></td>
-							<td ><a class="price" th:text="${concreteproduct.price}"></a></td>
-							<td ><a class="quantity" th:text="${concreteproduct.getQuantity(inventory)}"></a></td>
-							<td >
-								<div class="btn-group" role="group">
+							<td class="name" ><a target="newtab" th:text="${concreteproduct.name}" title="Artikel in Katalog anzeigen" th:href="@{'/detail/'+${concreteproduct.identifier}}"></a></td>
+							<td class="picture" ><img  th:href="@{'/detail/'+${concreteproduct.identifier}}" th:src="@{'/resources/Bilder/Produkte/' + ${concreteproduct.imagefile}}"/></td>
+							<td class="price" ><a  th:text="${concreteproduct.priceFloat}"></a></td>
+							<td class="quantity"><a  th:text="${concreteproduct.getQuantity(inventory)}"></a></td>
+							<td class="btn-group" >
+								<div  role="group">
 									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/changecatalog/editArticle/'+${concreteproduct.identifier}}" class="edit-button" title="Edit Article"></button>
 									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/changecatalog/deleteArticle/'+${concreteproduct.identifier}}" class="trash-button" title="Delete Article"></button>
 									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/changecatalog/orderArticle/'+${concreteproduct.identifier}}" class="order-button" title="Order Article"></button>
@@ -53,13 +61,13 @@
 						</tr>
 					</tbody>
 				</table>
-				
+				<div>
 				<button id="newarticle" type="button" onclick="self.location.href = this.getAttribute('href');" href="/employee/changecatalog/addArticle">Neuen Artikel hinzufügen</button>
+				</div>
 			</div>
 
 		</div>
 		</main>
-		<br>
 
 		<div id="footer" th:include="footer :: footer"></div>
 	</div>

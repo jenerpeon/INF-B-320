@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Artikelverwaltung</title>
+<title>Userverwaltung</title>
 <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
 <link href="/resources/css/admin.css" rel="stylesheet" type="text/css">
 
@@ -22,10 +22,18 @@
 <body>
 	<div id="wrapper">
 		<div id="header" th:include="navigation :: navigation"></div>
-		<br>
+
 		<main>
 		<div id="mainframe">
-			<div id="adminnavigaton" th:include="adminnavigation :: adminnavigation"></div>
+			<div id="topLine">
+				<div id="path">
+					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/admin" >Adminportal</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/admin/changeuser" >Userverwaltung</a>
+				</div>
+			</div>
 			
 			<div id="workframe">
 				
@@ -68,13 +76,13 @@
 						</tr>
 					</tbody>
 				</table>
-				
+				<div>
 				<button id="newuser" type="button" onclick="self.location.href = this.getAttribute('href');" href="/admin/changeuser/addUser">Neuen User hinzufügen</button>
+				</div>
 			</div>
 
 		</div>
 		</main>
-		<br>
 
 		<div id="footer" th:include="footer :: footer"></div>
 	</div>

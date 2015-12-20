@@ -1,6 +1,9 @@
 package internetkaufhaus.advices;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import internetkaufhaus.model.NavItem;
 import internetkaufhaus.model.Search;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
@@ -66,8 +70,14 @@ public class HeaderAdvice {
 	 * @return
 	 */
 	@ModelAttribute("categories")
-	public Iterable<String> addCatalog() {
-		return prodSearch.getCategories();
+	public List<NavItem> addCatalog() { 
+		Iterable<String> categories = prodSearch.getCategories();
+		List<NavItem> navigation = new ArrayList<NavItem>();
+		for (String category : categories) {
+			NavItem nav = new NavItem(category,category,"category");
+			navigation.add(nav);
+		}
+		return navigation;
 	}
 
 	@ModelAttribute("cart")

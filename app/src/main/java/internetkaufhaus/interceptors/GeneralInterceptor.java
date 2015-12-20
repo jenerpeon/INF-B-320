@@ -22,7 +22,7 @@ public class GeneralInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
 		try {
 			ModelMap modelmap = modelAndView.getModelMap();
-			modelmap.addAttribute("categories", prodSearch.getCategories());
+			//modelmap.addAttribute("categories", prodSearch.getCategories());
 		} catch (NullPointerException npe) {
 			/**
 			 * This comment is just here because sonarcube is a little bitch.

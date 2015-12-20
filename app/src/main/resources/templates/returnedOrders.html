@@ -20,10 +20,19 @@
 <body>
 	<div id="wrapper">
 		<div id="header" th:include="navigation :: navigation"></div>
-		<br/>
+		
 		<main>
 		<div id="mainframe">
-			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
+			<div id="topLine">
+				<div id="path">
+					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/employee" >Mitarbeiterportal</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/employee/returnedOrders" >Retouren</a>
+				</div>
+			</div>
+			
 			<div id="workframe" class="panel panel-default">
 			
 						<table class="table" style="font-size: 12pt;">
@@ -39,14 +48,11 @@
 										<td><a th:text="${order.getTotalProductNumber()}">Artikelanzahl</a></td>
 										<td th:case="null"><a th:text="${order.getUser().getUsername()}">Anzahl Artikel:</a></td>
 										<td th:case="*" ><a th:text="@{${order.getUser().getFirstname()}+' '+${order.getUser().getLastname()}}">Anzahl Artikel:</a></td>
-										
-
 							</tbody>
 						</table>
 					</div>
 		</div>
 		</main>
-		<br>
 
 		<div id="footer" th:include="footer :: footer"></div>
 	</div>

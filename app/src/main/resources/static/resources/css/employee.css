@@ -5,28 +5,11 @@
 	margin-left: auto;
 	margin-right: auto;
 	padding-left: 100px;
-	display: flex;
-}
-
-#employeenavigaton {
-	width: 20%;
-	border-right: 1px solid #000000;
-	flex: auto;
-}
-
-#employeenavigaton p {
-	margin-top: 20px;
-	margin-bottom: 20px;
-}
-
-#employeenavigaton .active {
-	font-weight: bold;
 }
 
 #workframe {
-	padding-left: 20px;
-	width: 75%;
-	felx: auto;
+	display: flex;
+	flex-direction: column;
 }
 
 #workframe h2{
@@ -35,10 +18,12 @@
 }
 #workframe table {
 	table-layout: fixed;
-	width: 700px;
+	width: 100%;
+	border-collapse: collapse;
 }
-#workframe tbody {
-}
+#workframe td + td,
+#workframe th + th { border-left: 1px solid; }
+#workframe tr + tr { border-top: 1px solid; }
 #workframe th {
 	text-align: center;
 	padding: 10px 20px 10px 20px;
@@ -46,7 +31,7 @@
 }
 #workframe td {
 	text-align: center;
-	padding: 10px 10px 10px 10px;
+	padding: 20px;
 	white-space: nowrap;
 }
 #workframe thead > tr, #workframe thead{
@@ -59,9 +44,17 @@
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
 	font-size: 40px;
 	text-align: center;
+	padding: 0 0 0 0;
 }
-#workframe .article .picture {
-	width: 35px;
+#workframe .article .name {
+	max-width: 400px;
+	overflow: hidden;
+	white-space: nowrap; 
+	text-overflow: ellipsis;
+	text-align: left;
+}
+#workframe .article .picture img{
+	width: 50px;
 }
 #workframe .edit-button {
 	width: 35px;
@@ -253,5 +246,9 @@
 }  
 #orderData fieldset li {   
 	padding-bottom: 0.5em;  
+}
+
+#changeStartPage select {
+	width: 200px;
 }
 

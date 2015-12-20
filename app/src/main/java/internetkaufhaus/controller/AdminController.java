@@ -2,7 +2,9 @@ package internetkaufhaus.controller;
 
 import static org.salespointframework.core.Currencies.EURO;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -34,6 +36,7 @@ import internetkaufhaus.forms.NewUserAccountForm;
 import internetkaufhaus.model.Competition;
 import internetkaufhaus.model.ConcreteMailSender;
 import internetkaufhaus.model.Creditmanager;
+import internetkaufhaus.model.NavItem;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
@@ -75,6 +78,18 @@ public class AdminController {
 		this.sender = sender;
 		this.creditmanager = creditmanager;
 
+	}
+	
+	@ModelAttribute("adminNaviagtion")
+	public List<NavItem> addAdminNavigation() {
+		String adminNavigationName[] = {"Userverwaltung","Bilanzen","Statistiken","Gewinnspiel"};
+		String adminNavigationLink[] = {"/admin/changeuser","/admin/balance","/admin/statistics","/admin/lottery"};
+		List<NavItem> navigation = new ArrayList<NavItem>();
+		for (int i=0; i < adminNavigationName.length; i++) {
+			NavItem nav = new NavItem(adminNavigationName[i],adminNavigationLink[i],"non-category");
+			navigation.add(nav);
+		}
+		return navigation;
 	}
 
 	/**

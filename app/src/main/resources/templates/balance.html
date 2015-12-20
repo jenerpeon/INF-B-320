@@ -22,10 +22,18 @@
 <body>
 	<div id="wrapper">
 		<div id="header" th:include="navigation :: navigation"></div>
-		<br>
+
 		<main>
 		<div id="mainframe">
-			<div id="adminnavigaton" th:include="adminnavigation :: adminnavigation"></div>
+			<div id="topLine">
+				<div id="path">
+					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/admin" >Adminportal</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/admin/balance" >Bilanzen</a>
+				</div>
+			</div>
 			
 			<div id="workframe">
 				<table border="1" frame="void" rules="all">
@@ -71,7 +79,6 @@
 
 		</div>
 		</main>
-		<br>
 
 		<div id="footer" th:include="footer :: footer"></div>
 	</div>

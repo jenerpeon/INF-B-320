@@ -14,10 +14,18 @@
 <body>
 <div id="wrapper">
 	<div id="header" th:include="navigation :: navigation"></div>
-	<br>
+
 	<main>
 		<div id="mainframe">
-			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
+			<div id="topLine">
+				<div id="path">
+					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/employee" >Mitarbeiterportal</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/employee/changestartpage" >Startseite ändern</a>
+				</div>
+			</div>
 			
 			<div id="workframe">
 				<form id="changeSettings" class="changeStartPageForm" th:action="@{'/employee/startpage/changedSetting'}" method="POST">

@@ -49,6 +49,7 @@ import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.forms.EditArticleForm;
 import internetkaufhaus.forms.StockForm;
 import internetkaufhaus.model.ConcreteMailSender;
+import internetkaufhaus.model.NavItem;
 import internetkaufhaus.model.NewsletterManager;
 import internetkaufhaus.model.Search;
 import internetkaufhaus.model.Statistic;
@@ -107,7 +108,20 @@ public class ManagementController {
 		// this.carousselList = carousselList;
 		// this.selectionList = selectionList;
 	}
-
+	
+	@ModelAttribute("employeeNaviagtion")
+	public List<NavItem> addEmployeeNavigation() {
+		String employeeNavigationName[] = {"Katalog/Lager","Bestellungen","Bewertungen","Retouren","Newsletter","Startseite"};
+		String employeeNavigationLink[] = {"/employee/changecatalog","/employee/orders","/employee/comments","/employee/returnedOrders","/employee/newsletter","/employee/startpage/3/8"};
+		List<NavItem> navigation = new ArrayList<NavItem>();
+		for (int i=0; i < employeeNavigationName.length; i++) {
+			NavItem nav = new NavItem(employeeNavigationName[i],employeeNavigationLink[i],"non-category");
+			navigation.add(nav);
+		}
+		System.out.println("Hier werden keine Kategorien abgerufen");
+		return navigation;
+	}
+	
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * 
@@ -211,7 +225,7 @@ public class ManagementController {
 		model.addAttribute("Comments", comlist);
 		// model.addAttribute("concretProduct", com.getKey(com.values));
 
-		return "changecatalogcomment";
+		return "comments";
 	}
 
 	/**
