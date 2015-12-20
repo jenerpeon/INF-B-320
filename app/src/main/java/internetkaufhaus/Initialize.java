@@ -4,7 +4,6 @@ import static org.salespointframework.core.Currencies.EURO;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.javamoney.moneta.Money;
@@ -33,9 +32,14 @@ import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
+/**
+ * This class initializes default data which is used to test the functionality of the whole project.
+ * @author max
+ *
+ */
 @Component
 public class Initialize implements DataInitializer {
-	private final ConcreteUserAccountRepository ConcreteUserAccountManager;
+	private final ConcreteUserAccountRepository concreteUserAccountManager;
 	private final UserAccountManager userAccountManager;
 	private final Inventory<InventoryItem> inventory;
 	private final Catalog<ConcreteProduct> productCatalog;
@@ -46,10 +50,24 @@ public class Initialize implements DataInitializer {
 	private final ConcreteOrderRepository concreteOrderRepo;
 	private final Search productSearch;
 
+	/**
+	 * This is the constructor. It's neither used nor does it contain any functionality other than storing function arguments as class attribute, what do you expect me to write here?
+	 * 
+	 * @param concreteOrderRepo
+	 * @param productCatalog
+	 * @param userAccountManager
+	 * @param ConcreteUserAccountManager
+	 * @param inventory
+	 * @param orderManager
+	 * @param productSearch
+	 * @param accountAdministration
+	 * @param sender
+	 * @param concreteProductRepository
+	 */
 	@Autowired
 	public Initialize(ConcreteOrderRepository concreteOrderRepo, Catalog<ConcreteProduct> productCatalog, UserAccountManager userAccountManager, ConcreteUserAccountRepository ConcreteUserAccountManager, Inventory<InventoryItem> inventory, OrderManager<Order> orderManager, Search productSearch, AccountAdministration accountAdministration, MailSender sender, ConcreteProductRepository concreteProductRepository) {
 		this.inventory = inventory;
-		this.ConcreteUserAccountManager = ConcreteUserAccountManager;
+		this.concreteUserAccountManager = ConcreteUserAccountManager;
 		this.userAccountManager = userAccountManager;
 		this.productCatalog = productCatalog;
 		this.productSearch = productSearch;
@@ -59,26 +77,34 @@ public class Initialize implements DataInitializer {
 		this.sender = sender;
 		this.accountAdministration = accountAdministration;
 		this.accountAdministration.setUserAccountManager(this.userAccountManager);
-		this.accountAdministration.setConcreteUserAccountManager(this.ConcreteUserAccountManager);
+		this.accountAdministration.setConcreteUserAccountManager(this.concreteUserAccountManager);
 		this.accountAdministration.setMailSender(this.sender);
 		this.concreteOrderRepo = concreteOrderRepo;
 	}
 
+	/**
+	 * This function calls other functions that initialize certain data types.
+	 */
 	@Override
 	public void initialize() {
 		// fill the user database
-		initializeUsers(userAccountManager, ConcreteUserAccountManager);
+		initializeUsers(userAccountManager, concreteUserAccountManager);
 		// fill the Catalog with Items
-		initializeCatalog(productCatalog, inventory, productSearch);
+		initializeCatalog(productCatalog, productSearch);
 		// fill inventory with Inventory items
 		// Inventory Items consist of one ConcreteProduct and a number
 		// representing the stock
 		initializeInventory(productCatalog, inventory);
-		initializeOrders(concreteOrderRepo, concreteProductRepository, orderManager, ConcreteUserAccountManager);
+		initializeOrders(concreteOrderRepo, concreteProductRepository, orderManager, concreteUserAccountManager);
 
 	}
 
-	private void initializeCatalog(Catalog<ConcreteProduct> productCatalog, Inventory<InventoryItem> inventory, Search productSearch) {
+	/**
+	 * This function initializes the catalog. Who would've thought!
+	 * @param productCatalog
+	 * @param productSearch
+	 */
+	private void initializeCatalog(Catalog<ConcreteProduct> productCatalog, Search productSearch) {
 		// prevents the Initializer to run in case of data persistance
 		if (productCatalog.count() > 0) {
 			return;
@@ -198,6 +224,11 @@ public class Initialize implements DataInitializer {
 		productSearch.addProds(productCatalog.findAll());
 	}
 
+	/**
+	 * This function initializes the inventory. Who would've thought!
+	 * @param productCatalog
+	 * @param inventory
+	 */
 	private void initializeInventory(Catalog<ConcreteProduct> productCatalog, Inventory<InventoryItem> inventory) {
 		// prevents the Initializer to run in case of data persistance
 		for (ConcreteProduct prod : productCatalog.findAll()) {
@@ -206,6 +237,11 @@ public class Initialize implements DataInitializer {
 		}
 	}
 
+	/**
+	 * This function initializes the users. Who would've thought!
+	 * @param userAccountManager
+	 * @param ConcreteUserAccountManager
+	 */
 	private void initializeUsers(UserAccountManager userAccountManager, ConcreteUserAccountRepository ConcreteUserAccountManager) {
 		// prevents the Initializer to run in case of data persistance
 		if (userAccountManager.findByUsername("peon").isPresent()) {
@@ -246,6 +282,14 @@ public class Initialize implements DataInitializer {
 
 	}
 
+	/**
+	 * This function initializes the orders. Who would've thought!
+	 * 
+	 * @param concreteOrderRepo
+	 * @param prods
+	 * @param orderManager
+	 * @param ConcreteUserAccountManager
+	 */
 	private void initializeOrders(ConcreteOrderRepository concreteOrderRepo, ConcreteProductRepository prods, OrderManager<Order> orderManager, ConcreteUserAccountRepository ConcreteUserAccountManager) {
 
 		Cart c = new Cart();

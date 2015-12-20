@@ -4,10 +4,7 @@ package internetkaufhaus.controller;
 import static org.salespointframework.core.Currencies.EURO;
 
 import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -21,7 +18,6 @@ import org.salespointframework.order.OrderManager;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.payment.CreditCard;
 import org.salespointframework.quantity.Quantity;
-import org.salespointframework.time.Interval;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,20 +44,15 @@ import internetkaufhaus.forms.PaymentForm;
 import internetkaufhaus.forms.ShippingAdressForm;
 import internetkaufhaus.model.ConcreteMailSender;
 import internetkaufhaus.model.ReturnManager;
-import internetkaufhaus.model.Search;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
-import internetkaufhaus.repositories.ConcreteUserAccountRepository;
-import javassist.expr.NewArray;
 
 @Controller
 @SessionAttributes("cart")
 class CartController {
 
 	private final OrderManager<Order> orderManager;
-	private final Search prodSearch;
 	private MailSender sender;
 	private final ConcreteOrderRepository concreteOrderRepo;
-	private final ConcreteUserAccountRepository userRepo;
 
 	/**
 	 * This is the constructor. It's neither used nor does it contain any functionality other than storing function arguments as class attribute, what do you expect me to write here?
@@ -73,13 +64,11 @@ class CartController {
 	 * @param sender
 	 */
 	@Autowired
-	public CartController(ConcreteUserAccountRepository userRepo, ConcreteOrderRepository concreteOrderRepo, OrderManager<Order> orderManager, Search prodSearch, MailSender sender) {
+	public CartController(ConcreteOrderRepository concreteOrderRepo, OrderManager<Order> orderManager, MailSender sender) {
 		Assert.notNull(orderManager, "OrderManager must not be null!");
 		this.orderManager = orderManager;
-		this.prodSearch = prodSearch;
 		this.concreteOrderRepo = concreteOrderRepo;
 		this.sender = sender;
-		this.userRepo = userRepo;
 	}
 
 	/**
@@ -103,11 +92,10 @@ class CartController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * 
-	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
-	public String cartRedirect(Model model) {
+	public String cartRedirect() {
 		return "cart";
 	}
 
@@ -204,7 +192,7 @@ class CartController {
 	 */
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 	@RequestMapping(value = "/payed", method = RequestMethod.POST)
-	public String payed(ModelMap modelmap, @ModelAttribute Cart cart, @ModelAttribute("paymentForm") @Valid PaymentForm paymentForm, BindingResult result, @ModelAttribute("shippingAdressForm") @Valid ShippingAdressForm shippingAdressForm, @ModelAttribute("billingAdressForm") @Valid BillingAdressForm billingAdressForm, @LoggedIn Optional<UserAccount> userAccount, RedirectAttributes redir) {
+	public String payed(@ModelAttribute Cart cart, @ModelAttribute("paymentForm") @Valid PaymentForm paymentForm, BindingResult result, @ModelAttribute("shippingAdressForm") @Valid ShippingAdressForm shippingAdressForm, @ModelAttribute("billingAdressForm") @Valid BillingAdressForm billingAdressForm, @LoggedIn Optional<UserAccount> userAccount, RedirectAttributes redir) {
 		if (result.hasErrors()) {
 			redir.addFlashAttribute("message", result.getAllErrors());
 			return "redirect:/orderdata/1";

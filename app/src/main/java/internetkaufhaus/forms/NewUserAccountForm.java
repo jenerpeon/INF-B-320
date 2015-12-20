@@ -11,9 +11,9 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
 @Component
 public class NewUserAccountForm {
-	Role adminRole;
-	UserAccountManager manager;
-	ConcreteUserAccountRepository repo;
+	private Role adminRole;
+	private UserAccountManager manager;
+	private ConcreteUserAccountRepository repo;
 
 	@Autowired
 	public NewUserAccountForm(UserAccountManager manager, ConcreteUserAccountRepository repo) {

@@ -75,6 +75,9 @@ public class RegistrationForm {
 		return this.password != null && this.passwordrepeat != null && this.password.equals(this.passwordrepeat);
 	}
 
+	/**
+	 * This comment is just here because sonarcube is a little bitch.
+	 */
 	public RegistrationForm() {
 
 	}

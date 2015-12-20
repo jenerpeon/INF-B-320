@@ -36,10 +36,10 @@ public class AuthController extends SalespointSecurityConfiguration {
 	private final ConcreteUserAccountRepository concreteUserAccountRepo;
 
 	private final AccountAdministration accountAdministration;
-	ModelAndView modelAndView = new ModelAndView();
+	private ModelAndView modelAndView = new ModelAndView();
 
 	@Autowired
-	public AuthController(AccountAdministration accountAdministration, UserAccountManager userAccountManager, ConcreteUserAccountRepository concreteUserAccountManager, MailSender sender) {
+	public AuthController(AccountAdministration accountAdministration, UserAccountManager userAccountManager, ConcreteUserAccountRepository concreteUserAccountManager) {
 		this.userAccountManager = userAccountManager;
 		this.concreteUserAccountRepo = concreteUserAccountManager;
 		this.accountAdministration = accountAdministration;

@@ -14,6 +14,9 @@ public class StockForm {
 
 	private ProductIdentifier prodId;
 
+	/**
+	 * This comment is just here because sonarcube is a little bitch.
+	 */
 	public StockForm() {
 
 	}

@@ -39,7 +39,11 @@ public class HeaderAdvice {
 	/**
 	 * This is the constructor. It's neither used nor does it contain any functionality other than storing function arguments as class attribute, what do you expect me to write here? It's copied from CartController.
 	 * 
+	 * @param userRepo
+	 * @param concreteOrderRepo
+	 * @param orderManager
 	 * @param prodSearch
+	 * @param sender
 	 */
 	@Autowired
 	public HeaderAdvice(ConcreteUserAccountRepository userRepo, ConcreteOrderRepository concreteOrderRepo, OrderManager<Order> orderManager, Search prodSearch, MailSender sender) {
