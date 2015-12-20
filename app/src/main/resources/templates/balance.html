@@ -5,10 +5,8 @@
 <title>Artikelverwaltung</title>
 <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
 <link href="/resources/css/admin.css" rel="stylesheet" type="text/css">
+<script src="/resources/script/jquery.min.js" type="text/javascript"></script>
 
-<link href="/resources/js/bootstrap.min.js" rel="stylesheet" type=text/css>
-<script src="/resources/js/jquery.min.js" type="text/javascript"></script>
-<script src="/resources/script/emplyeenavigation.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('label.tree-toggler').click(function() {
@@ -49,7 +47,7 @@
 										<tr th:each="order : ${customerOrders}">
 											<td><a target="newtab" th:href="@{'/employee/orders/detail/'+${order.getId()}}" th:text="@{${order.getTotalProductNumber()}+' Artikel'}"></a></td>
 											<td><a th:text="@{'Gesamt: '+${order.getOrder().getTotalPrice()}}"></a></td>
-											<td><img th:if="${order.getReturned()}" src="/resources/Bilder/return.png" width="30px"/></td>
+											<td th:if="${order.getReturned()}"><img  src="/resources/Bilder/return.png" width="30px"/></td>
 										</tr>
 									</tbody>
 								</table>

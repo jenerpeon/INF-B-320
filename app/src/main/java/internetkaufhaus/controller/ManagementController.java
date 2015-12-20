@@ -118,7 +118,6 @@ public class ManagementController {
 			NavItem nav = new NavItem(employeeNavigationName[i],employeeNavigationLink[i],"non-category");
 			navigation.add(nav);
 		}
-		System.out.println("Hier werden keine Kategorien abgerufen");
 		return navigation;
 	}
 	
@@ -649,40 +648,6 @@ public class ManagementController {
 
 		return "oldnewsletterdetail";
 	}
-
-	public Inventory<InventoryItem> getInventory() {
-		return inventory;
-	}
-
-	public static Quantity getNone() {
-		return NONE;
-	}
-
-	/**
-	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * 
-	 * @param model
-	 * @param f_year
-	 * @param f_month
-	 * @param f_day
-	 * @param t_year
-	 * @param t_month
-	 * @param t_day
-	 * @param quantize
-	 * @return
-	 */
-	@RequestMapping(value = "/admin/statistic")
-	public String getStatistic(ModelMap model, @RequestParam(value = "f_year") int f_year, @RequestParam(value = "f_month") int f_month, @RequestParam(value = "f_day") int f_day, @RequestParam(value = "t_year") int t_year, @RequestParam(value = "t_month") int t_month, @RequestParam(value = "t_day") int t_day, @RequestParam(value = "quantize") int quantize) {
-		Statistic stat = new Statistic(orderManager);
-		LocalDateTime f = LocalDateTime.of(f_year, f_month, f_day, 0, 0);
-		LocalDateTime t = LocalDateTime.of(t_year, t_month, t_day, 0, 0);
-		Interval i = Interval.from(f).to(t);
-		model.addAttribute("turnover", stat.getTurnoverByInterval(i, quantize));
-		model.addAttribute("sales", stat.getSalesByInterval(i, quantize));
-		model.addAttribute("purchases", null);
-		model.addAttribute("profit", null);
-		return "statistics";
-	}
 	
 	@RequestMapping(value="/employee/returnedOrders")
 	public String getRetourList(ModelMap model){
@@ -694,6 +659,14 @@ public class ManagementController {
 		}
 		model.addAttribute("retourList", retourList);
 		return "returnedOrders";
+	}
+
+	public Inventory<InventoryItem> getInventory() {
+		return inventory;
+	}
+
+	public static Quantity getNone() {
+		return NONE;
 	}
 
 }

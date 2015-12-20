@@ -2,9 +2,12 @@ package internetkaufhaus.controller;
 
 import static org.salespointframework.core.Currencies.EURO;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -13,6 +16,7 @@ import org.javamoney.moneta.Money;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
+import org.salespointframework.time.Interval;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
@@ -27,6 +31,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteUserAccount;
@@ -37,6 +42,7 @@ import internetkaufhaus.model.Competition;
 import internetkaufhaus.model.ConcreteMailSender;
 import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.model.NavItem;
+import internetkaufhaus.model.Statistic;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
@@ -52,6 +58,7 @@ public class AdminController {
 	private final ConcreteUserAccountRepository manager;
 
 	private final ConcreteOrderRepository concreteOrderRepo;
+	private final OrderManager<Order> orderManager;
 	private final UserAccountManager umanager;
 	private final NewUserAccountForm form;
 
@@ -68,12 +75,13 @@ public class AdminController {
 	 * @param form
 	 */
 	@Autowired
-	public AdminController(ConcreteOrderRepository concreteOrderRepo, ConcreteUserAccountRepository manager, UserAccountManager umanager, Creditmanager creditmanager, NewUserAccountForm form, ConcreteMailSender sender) {
+	public AdminController(ConcreteOrderRepository concreteOrderRepo, OrderManager<Order> orderManager ,ConcreteUserAccountRepository manager, UserAccountManager umanager, Creditmanager creditmanager, NewUserAccountForm form, ConcreteMailSender sender) {
 
 		this.manager = manager;
 		this.umanager = umanager;
 		this.concreteOrderRepo = concreteOrderRepo;
-
+		this.orderManager = orderManager;
+		
 		this.form = form;
 		this.sender = sender;
 		this.creditmanager = creditmanager;
@@ -260,7 +268,37 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value = "/admin/statistics")
-	public String statistics() {
+	public String getStatistics(ModelMap model) {
+		Statistic stat = new Statistic(orderManager);
+		LocalDateTime to = LocalDateTime.now();
+		LocalDateTime from7Days = to.minusDays(7);
+		LocalDateTime from1Month = to.minusMonths(1);
+		LocalDateTime from3Month = to.minusMonths(3);
+		LocalDateTime from1Year = to.minusYears(1);
+		LocalDateTime from3Year = to.minusYears(3);
+		LocalDateTime from5Year = to.minusYears(5);
+		LocalDateTime from10Year = to.minusYears(10);
+		
+		Map<Interval, String> intervals = new HashMap<Interval, String>();
+		
+		intervals.put(Interval.from(from7Days).to(to), "day");
+		intervals.put(Interval.from(from1Month).to(to), "week");
+		intervals.put(Interval.from(from3Month).to(to), "month");
+		intervals.put(Interval.from(from1Year).to(to), "month");
+		intervals.put(Interval.from(from3Year).to(to), "year");
+		intervals.put(Interval.from(from5Year).to(to), "year");
+		intervals.put(Interval.from(from10Year).to(to), "year");
+		
+		/*List<Map<LocalDate, Money>> turnovers= new ArrayList<Map<LocalDate, Money>>();
+		for (Map.Entry<Interval, String> entry : intervals.entrySet()) {
+			turnovers.add(stat.getTurnoverByInterval(entry.getKey(), entry.getValue()));
+		}
+		
+		model.addAttribute("turnover", turnovers);*/
+		
+		/*model.addAttribute("sales", stat.getSalesByInterval(i, quantize));
+		model.addAttribute("purchases", null);
+		model.addAttribute("profit", null);*/
 		return "statistics";
 	}
 

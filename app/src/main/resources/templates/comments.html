@@ -5,9 +5,7 @@
 <title>Kommentarverwaltung</title>
 <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
 <link href="/resources/css/employee.css" rel="stylesheet" type="text/css">
-
-<link href="/resources/js/bootstrap.min.js" rel="stylesheet" type=text/css>
-<script src="/resources/js/jquery.min.js" type="text/javascript"></script>
+<script src="/resources/script/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('label.tree-toggler').click(function() {
@@ -53,7 +51,7 @@
 											<div class="btn-group" role="group">	
 												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/acceptComment/'+${comment.id}}" class="accept-button" style="padding: 3px 6px;">	
 												</button>
-												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/deleteComment/'+${comment.id}}" class="cancel-button" style="padding: 3px 6px;"> <!--href=... '+${concreteproduct.identifier}}" darüber deltete ausführen comment -->
+												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/deleteComment/'+${comment.id}}" class="cancel-button" style="padding: 3px 6px;">
 												</button>
 											</div>
 										</td>
