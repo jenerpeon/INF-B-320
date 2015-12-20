@@ -23,10 +23,10 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 @Component
 public class Creditmanager {
 
-	OrderManager<Order> orderManager;
-	UserAccountManager userManager;
-	ConcreteUserAccountRepository userRepo;
-	ConcreteOrderRepository concreteOrderRepo;
+	private OrderManager<Order> orderManager;
+	private UserAccountManager userManager;
+	private ConcreteUserAccountRepository userRepo;
+	private ConcreteOrderRepository concreteOrderRepo;
 
 	@Autowired
 	public Creditmanager(OrderManager<Order> orderManager, UserAccountManager userManager, ConcreteUserAccountRepository userRepo, ConcreteOrderRepository concreteOrderRepo) {

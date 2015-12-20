@@ -21,11 +21,11 @@ public class AccountAdministration {
 	private ConcreteMailSender concreteSender;
 	private SecureRandom random;
 	// Maps key to email. Used in Password reset and registration
-	Map<String, String> key2email;
+	private Map<String, String> key2email;
 	// Maps emails to passwords. Used in Password reset
-	Map<String, String> email2pass;
+	private Map<String, String> email2pass;
 	// Maps recruits to invitators. Used in Registration with recruitation link
-	Map<String, String> recruit2invite;
+	private Map<String, String> recruit2invite;
 
 	@OneToOne
 	private ConcreteUserAccountRepository ConcreteUserAccountManager;

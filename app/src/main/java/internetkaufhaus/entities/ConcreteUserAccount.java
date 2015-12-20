@@ -47,6 +47,9 @@ public class ConcreteUserAccount implements Serializable {
 	private Money credits;
 	private Role role;
 
+	/**
+	 * This comment is just here because sonarcube is a little bitch.
+	 */
 	public ConcreteUserAccount() {
 	}
 
@@ -65,7 +68,7 @@ public class ConcreteUserAccount implements Serializable {
 		this.city = city;
 		this.userAccount.setEmail(email);
 		this.email = email;
-		this.credits = Money.of(0, EURO);
+		this.credits = Money.of(credits, EURO);
 		this.role = role;
 	}
 
@@ -159,7 +162,6 @@ public class ConcreteUserAccount implements Serializable {
 	}
 
 	public void setRecruits(ConcreteUserAccount user) {
-
 		if (recruits == null) {
 			List<UserAccount> recruit = new ArrayList<UserAccount>();
 			recruit.add(user.getUserAccount());

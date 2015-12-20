@@ -30,7 +30,6 @@ import internetkaufhaus.forms.CreateUserForm;
 import internetkaufhaus.forms.EditUserForm;
 import internetkaufhaus.forms.NewUserAccountForm;
 import internetkaufhaus.model.Competition;
-import internetkaufhaus.model.ConcreteMailSender;
 import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
@@ -46,11 +45,9 @@ public class AdminController {
 
 	private final Creditmanager creditmanager;
 
-	private final ConcreteMailSender sender;
-
 	@Autowired
 
-	public AdminController(ConcreteOrderRepository concreteOrderRepo, ConcreteUserAccountRepository manager, UserAccountManager umanager, OrderManager<Order> orderManager, ConcreteMailSender sender, Creditmanager creditmanager, NewUserAccountForm form) {
+	public AdminController(ConcreteOrderRepository concreteOrderRepo, ConcreteUserAccountRepository manager, UserAccountManager umanager, Creditmanager creditmanager, NewUserAccountForm form) {
 
 		this.manager = manager;
 		this.umanager = umanager;
@@ -58,7 +55,6 @@ public class AdminController {
 
 		this.form = form;
 
-		this.sender = sender;
 		this.creditmanager = creditmanager;
 
 	}
@@ -96,7 +92,7 @@ public class AdminController {
 	}
 
 	@RequestMapping("/admin/changeuser/addUser")
-	public String addArticle(Optional<UserAccount> userAccount) {
+	public String addArticle() {
 		return "changeusernewuser";
 	}
 
@@ -169,8 +165,7 @@ public class AdminController {
 	 * @RequestMapping(value="/userManagement") public String userManagement(ModelMap model){ //model.addAttribute("customers", ); //model.addAttribute("admins",); //model.addAttribute("employees",); return "index";
 	 */
 	@RequestMapping(value = "/admin/lottery")
-	public String competition(ModelMap model) {
-
+	public String competition() {
 		return "competition";
 	}
 
@@ -180,8 +175,6 @@ public class AdminController {
 		Competition com = new Competition(manager.findByRole(Role.of("ROLE_CUSTOMER")), creditmanager);
 
 		model.addAttribute("winners", com.getWinners());
-		// com.getWinners().forEach(x->System.out.println(x.getUserAccount().getUsername()+" "+x.getCredits()));
-		// com.notifyWinners(sender);
 		return "competition";
 	}
 

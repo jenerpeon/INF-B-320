@@ -31,7 +31,6 @@ import org.salespointframework.time.Interval;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.mail.MailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -103,7 +102,7 @@ public class ManagementController {
 	 * @return
 	 */
 	@RequestMapping("/employee/changecatalog")
-	public String articleManagement(Optional<UserAccount> userAccount, ModelMap model) {
+	public String articleManagement(ModelMap model) {
 		model.addAttribute("prod50", concreteProductRepository.findAllByOrderByName());
 		model.addAttribute("inventory", inventory);
 
@@ -111,7 +110,7 @@ public class ManagementController {
 	}
 
 	@RequestMapping("/employee/changecatalog/addArticle")
-	public String addArticle(Optional<UserAccount> userAccount, ModelMap model) {
+	public String addArticle(ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCategories());
 		return "changecatalognewitem";
 	}
@@ -165,7 +164,7 @@ public class ManagementController {
 	}
 
 	@RequestMapping("/employee/changecatalog/editArticle/{prodId}")
-	public String editArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
+	public String editArticle(@PathVariable("prodId") ConcreteProduct prod, ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCategories());
 		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("price", prod.getPrice().getNumber());
@@ -208,7 +207,7 @@ public class ManagementController {
 	}
 
 	@RequestMapping(value = "/employee/changecatalog/addedArticle", method = RequestMethod.POST)
-	public String addedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm, @RequestParam("image") MultipartFile img, BindingResult result, ModelMap model) {
+	public String addedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm, @RequestParam("image") MultipartFile img, BindingResult result) {
 		if (result.hasErrors()) {
 			return "redirect:/employee/changecatalog/addArticle/";
 		}
@@ -242,7 +241,7 @@ public class ManagementController {
 	}
 
 	@RequestMapping("/employee/changecatalog/deleteArticle/{prodId}")
-	public String deleteArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
+	public String deleteArticle(@PathVariable("prodId") ConcreteProduct prod, ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCategories());
 		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("price", prod.getPrice().getNumber());
@@ -261,7 +260,7 @@ public class ManagementController {
 	}
 
 	@RequestMapping("/employee/changecatalog/orderArticle/{prodId}")
-	public String orderArticle(@PathVariable("prodId") ConcreteProduct prod, Optional<UserAccount> userAccount, ModelMap model) {
+	public String orderArticle(@PathVariable("prodId") ConcreteProduct prod, ModelMap model) {
 
 		Optional<InventoryItem> item = inventory.findByProductIdentifier(prod.getIdentifier());
 		Quantity quantity = item.map(InventoryItem::getQuantity).orElse(NONE);
@@ -417,7 +416,7 @@ public class ManagementController {
 	public String sendNewsletter(@RequestParam("subject") String subject, @RequestParam("mailBody") String mailBody) {
 		Map<Date, String> maildetails = new HashMap<Date, String>();
 		ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);
-		if (!(mailBody == "")) {
+		if (!(mailBody.equals(""))) {
 			for (String mail : this.newsManager.getMap().values()) {
 				concreteMailSender.sendMail(mail, mailBody, "zu@googlemail.com", subject);
 			}

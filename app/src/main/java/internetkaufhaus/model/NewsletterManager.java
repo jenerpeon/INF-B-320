@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class NewsletterManager {
 
-	MailSender sender;
+	private MailSender sender;
 
-	Map<String, String> map = new HashMap<String, String>(); // Map with User and Email
-	Map<String, Map<Date, String>> oldAbos = new HashMap<String, Map<Date, String>>();// Map with subject and text of email
+	private Map<String, String> map = new HashMap<String, String>(); // Map with User and Email
+	private Map<String, Map<Date, String>> oldAbos = new HashMap<String, Map<Date, String>>();// Map with subject and text of email
 
 	@Autowired
 	public NewsletterManager(MailSender sender) {

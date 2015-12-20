@@ -98,9 +98,10 @@ public class CatalogController {
 	}
 
 	@RequestMapping(path = "/catalog/{type}/{sort}/{representation}/{split}/{pagenumber}", method = { RequestMethod.POST, RequestMethod.GET })
-	public String list50(Pageable pagable, @PathVariable("type") String category, @PathVariable("split") int split, @PathVariable("pagenumber") int number, @PathVariable("representation") int representation, @PathVariable("sort") String sort, ModelMap model) {
-		if (split == 0)
+	public String list50(@PathVariable("type") String category, @PathVariable("split") int split, @PathVariable("pagenumber") int number, @PathVariable("representation") int representation, @PathVariable("sort") String sort, ModelMap model) {
+		if (split == 0) {
 			split = 3;
+		}
 
 		Sort sorting = null;
 
@@ -195,9 +196,9 @@ public class CatalogController {
 
 		if (usermanager.findByEmail(sendTo) == null) {
 			username = "Nicht registierter Abonnet";
-		} else
+		} else {
 			username = usermanager.findByEmail(sendTo).getUserAccount().getUsername();
-
+		}
 		newsManager.getMap().put(username, sendTo);
 		concreteMailSender.sendMail(sendTo, text, "zu@googlemail.com", "NewsletterAbonnement");
 

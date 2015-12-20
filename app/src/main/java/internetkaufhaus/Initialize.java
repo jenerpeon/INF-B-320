@@ -4,7 +4,6 @@ import static org.salespointframework.core.Currencies.EURO;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.javamoney.moneta.Money;
@@ -35,7 +34,7 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
 @Component
 public class Initialize implements DataInitializer {
-	private final ConcreteUserAccountRepository ConcreteUserAccountManager;
+	private final ConcreteUserAccountRepository concreteUserAccountManager;
 	private final UserAccountManager userAccountManager;
 	private final Inventory<InventoryItem> inventory;
 	private final Catalog<ConcreteProduct> productCatalog;
@@ -49,7 +48,7 @@ public class Initialize implements DataInitializer {
 	@Autowired
 	public Initialize(ConcreteOrderRepository concreteOrderRepo, Catalog<ConcreteProduct> productCatalog, UserAccountManager userAccountManager, ConcreteUserAccountRepository ConcreteUserAccountManager, Inventory<InventoryItem> inventory, OrderManager<Order> orderManager, Search productSearch, AccountAdministration accountAdministration, MailSender sender, ConcreteProductRepository concreteProductRepository) {
 		this.inventory = inventory;
-		this.ConcreteUserAccountManager = ConcreteUserAccountManager;
+		this.concreteUserAccountManager = ConcreteUserAccountManager;
 		this.userAccountManager = userAccountManager;
 		this.productCatalog = productCatalog;
 		this.productSearch = productSearch;
@@ -59,7 +58,7 @@ public class Initialize implements DataInitializer {
 		this.sender = sender;
 		this.accountAdministration = accountAdministration;
 		this.accountAdministration.setUserAccountManager(this.userAccountManager);
-		this.accountAdministration.setConcreteUserAccountManager(this.ConcreteUserAccountManager);
+		this.accountAdministration.setConcreteUserAccountManager(this.concreteUserAccountManager);
 		this.accountAdministration.setMailSender(this.sender);
 		this.concreteOrderRepo = concreteOrderRepo;
 	}
@@ -67,18 +66,18 @@ public class Initialize implements DataInitializer {
 	@Override
 	public void initialize() {
 		// fill the user database
-		initializeUsers(userAccountManager, ConcreteUserAccountManager);
+		initializeUsers(userAccountManager, concreteUserAccountManager);
 		// fill the Catalog with Items
-		initializeCatalog(productCatalog, inventory, productSearch);
+		initializeCatalog(productCatalog, productSearch);
 		// fill inventory with Inventory items
 		// Inventory Items consist of one ConcreteProduct and a number
 		// representing the stock
 		initializeInventory(productCatalog, inventory);
-		initializeOrders(concreteOrderRepo, concreteProductRepository, orderManager, ConcreteUserAccountManager);
+		initializeOrders(concreteOrderRepo, concreteProductRepository, orderManager, concreteUserAccountManager);
 
 	}
 
-	private void initializeCatalog(Catalog<ConcreteProduct> productCatalog, Inventory<InventoryItem> inventory, Search productSearch) {
+	private void initializeCatalog(Catalog<ConcreteProduct> productCatalog, Search productSearch) {
 		// prevents the Initializer to run in case of data persistance
 		if (productCatalog.count() > 0) {
 			return;
