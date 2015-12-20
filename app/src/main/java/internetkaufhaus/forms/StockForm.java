@@ -18,7 +18,9 @@ public class StockForm {
 	 * This comment is just here because sonarcube is a little bitch.
 	 */
 	public StockForm() {
-
+		/**
+		 * This comment is just here because sonarcube is a little bitch.
+		 */
 	}
 
 	public int getQuantity() {

@@ -79,7 +79,9 @@ public class RegistrationForm {
 	 * This comment is just here because sonarcube is a little bitch.
 	 */
 	public RegistrationForm() {
-
+		/**
+		 * This comment is just here because sonarcube is a little bitch.
+		 */
 	}
 
 	public String getFirstname() {

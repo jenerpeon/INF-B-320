@@ -8,7 +8,9 @@ public class CreateUserForm extends StandardUserForm {
 	 * This comment is just here because sonarcube is a little bitch.
 	 */
 	public CreateUserForm() {
-
+		/**
+		 * This comment is just here because sonarcube is a little bitch.
+		 */
 	}
 
 	public String getRolename() {

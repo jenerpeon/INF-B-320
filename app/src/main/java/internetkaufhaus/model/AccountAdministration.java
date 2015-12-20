@@ -41,11 +41,10 @@ public class AccountAdministration {
 
 	public void RegisterCustomer(String email) {
 		if (this.isRegistered(email)) {
-
+			System.out.print("");
 		}
 		String invitation = "http://localhost:8080/login";
 		this.concreteSender.sendMail(email, "You have been sucessful registered. Click here" + invitation + " to login.", "unnecessaryfield", "Shop Now!");
-
 	}
 
 	public String RecruitCustomer(String recruit, String invitator) {

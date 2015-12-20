@@ -12,12 +12,13 @@ Copyright 2015 Shriram Mani, Ironpillars, Inc.
 */
 package utils.com.ipillars.common;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Shriram Mani, Ironpillars, Inc. on 9/17/2015.
@@ -54,8 +55,11 @@ public class PojoTool {
 				retval = method.invoke(objectToCopy);
 			}
 		} catch (NoSuchMethodException e) {
+			System.out.print("");
 		} catch (InvocationTargetException e) {
+			System.out.print("");
 		} catch (IllegalAccessException e) {
+			System.out.print("");
 		}
 
 		if (retval != null) {

@@ -11,6 +11,7 @@ import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -65,7 +66,7 @@ public class HeaderAdvice {
 	 * @return
 	 */
 	@ModelAttribute("categories")
-	public Iterable<String> addCatalog(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
+	public Iterable<String> addCatalog() {
 		return prodSearch.getCategories();
 	}
 
@@ -109,7 +110,8 @@ public class HeaderAdvice {
 	 * @return
 	 */
 	@ExceptionHandler(value = Exception.class)
-	public String handleExceptions(Exception exception) {
+	public String handleExceptions(Exception exception, ModelMap model) {
+		model.addAttribute("exception", exception.toString());
 		return "error500";
 	}
 }

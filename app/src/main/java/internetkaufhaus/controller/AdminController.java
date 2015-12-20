@@ -35,8 +35,7 @@ import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
 /**
- * This is the admin controller. It controls the admin. Or maybe it admins the controls? You never know...
- * In this class you may find the controllers for the admin interfaces, should you choose to look for them.
+ * This is the admin controller. It controls the admin. Or maybe it admins the controls? You never know... In this class you may find the controllers for the admin interfaces, should you choose to look for them.
  * 
  * @author max
  *
@@ -209,9 +208,7 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value = "/admin/balance")
-	public String balance(ModelMap model)
-
-	{
+	public String balance(ModelMap model) {
 		Iterable<ConcreteOrder> ordersCompleted = concreteOrderRepo.findByStatus(OrderStatus.COMPLETED);
 		Iterable<ConcreteOrder> ordersOpen = concreteOrderRepo.findByStatus(OrderStatus.OPEN);
 
@@ -244,7 +241,7 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value = "/admin/statistics")
-	public String statistics(ModelMap model) {
+	public String statistics() {
 		return "statistics";
 	}
 

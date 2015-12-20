@@ -375,7 +375,7 @@ public class ManagementController {
 	 * @return
 	 */
 	@RequestMapping(value = "/employee/changecatalog/orderedArticle", method = RequestMethod.GET)
-	public String orderedArticle(@ModelAttribute("StockForm") @Valid StockForm stockForm, BindingResult result, ModelMap model, @LoggedIn Optional<UserAccount> userAccount) {
+	public String orderedArticle(@ModelAttribute("StockForm") @Valid StockForm stockForm, BindingResult result, @LoggedIn Optional<UserAccount> userAccount) {
 		if (result.hasErrors()) {
 			return "redirect:/employee/changecatalog";
 		}
@@ -566,7 +566,7 @@ public class ManagementController {
 	 * @return
 	 */
 	@RequestMapping("/employee/newsletter/changeNewsletter")
-	public String changeNewsletter(Optional<UserAccount> userAccount, ModelMap model) {
+	public String changeNewsletter(ModelMap model) {
 		model.addAttribute("categories", prodSearch.getCategories());
 		return "changenewsletter";
 	}
@@ -580,7 +580,7 @@ public class ManagementController {
 	 */
 	@RequestMapping(value = "/employee/newsletter/deleteUserAbo/{mail}/{username}")
 	public String deleteUserAbo(@PathVariable("mail") String mail, @PathVariable("username") String name) {
-		newsManager.getMap().remove(name);
+		newsManager.getMap().remove(name); // TODO: why do I need the mail here?
 		return "redirect:/employee/newsletter";
 	}
 

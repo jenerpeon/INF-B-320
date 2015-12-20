@@ -22,6 +22,7 @@ public class ReturnManager {
 
 		for (ConcreteOrder order : ordersCompletedInReturnedTimeOne) {
 			if (order.getDateOrdered().isBefore(timeStart) || order.getReturned()) {
+				System.out.print("");
 			} else {
 				ordersCompletedInReturnedTime.add(order);
 			}

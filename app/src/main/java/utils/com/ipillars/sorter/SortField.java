@@ -4,9 +4,9 @@ package utils.com.ipillars.sorter;
  * Created by shriram on 9/19/2015.
  */
 public class SortField {
-	String fieldName;
-	Boolean descending = false;
-	Class fieldClass;
+	private String fieldName;
+	private Boolean descending = false;
+	private Class fieldClass;
 
 	public SortField() {
 	}

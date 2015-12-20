@@ -103,11 +103,10 @@ class CartController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * 
 	 * @param cart
-	 * @param userAccount
 	 * @return
 	 */
 	@RequestMapping(value = "/clearCart", method = RequestMethod.POST)
-	public String clearCart(@ModelAttribute Cart cart, @LoggedIn Optional<UserAccount> userAccount) {
+	public String clearCart(@ModelAttribute Cart cart) {
 		cart.clear();
 		return "redirect:/cart";
 	}
@@ -163,14 +162,13 @@ class CartController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * 
 	 * @param option
-	 * @param cart
 	 * @param userAccount
 	 * @param model
 	 * @return
 	 */
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 	@RequestMapping(value = "/orderdata/{option}", method = RequestMethod.GET)
-	public String orderdataredirect(@PathVariable("option") int option, @ModelAttribute Cart cart, @LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
+	public String orderdataredirect(@PathVariable("option") int option, @LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
 		return userAccount.map(account -> {
 			model.addAttribute("option", option);
 			return "orderdata";
@@ -265,7 +263,7 @@ class CartController {
 	 */
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 	@RequestMapping(value = "/returOrders", method = RequestMethod.POST)
-	public String returnOrder(@RequestParam("orderId") Long orderId, @RequestParam("dropDown") String reason, @ModelAttribute Cart cart) {
+	public String returnOrder(@RequestParam("orderId") Long orderId, @RequestParam("dropDown") String reason) {
 		concreteOrderRepo.findById(orderId).setReturned(true);
 		concreteOrderRepo.findById(orderId).setReturnReason(reason);
 		concreteOrderRepo.save(concreteOrderRepo.findById(orderId));
