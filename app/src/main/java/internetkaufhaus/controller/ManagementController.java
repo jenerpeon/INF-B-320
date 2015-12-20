@@ -670,4 +670,15 @@ public class ManagementController {
 		return "statistics";
 	}
 
+	@RequestMapping(value="/employee/returnedOrders")
+	public String getRetourList(ModelMap model){
+		List<ConcreteOrder>retourList= new ArrayList<ConcreteOrder>();
+		for( ConcreteOrder o :concreteOrderRepo.findAll()){
+			if(o.getReturned()==true){
+				retourList.add(o);
+			}
+		}
+		model.addAttribute("retourList", retourList);
+		return "returnedOrders";
+	}
 }
