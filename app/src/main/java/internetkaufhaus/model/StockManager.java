@@ -1,7 +1,6 @@
 package internetkaufhaus.model;
 
 import org.salespointframework.catalog.ProductIdentifier;
-import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
 import org.springframework.beans.factory.annotation.Autowired;

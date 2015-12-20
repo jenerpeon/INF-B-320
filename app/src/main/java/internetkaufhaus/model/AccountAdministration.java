@@ -8,11 +8,9 @@ import java.util.Map;
 
 import javax.persistence.OneToOne;
 
-import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.ModelMap;
 
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 

@@ -1,30 +1,19 @@
 package internetkaufhaus.advices;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.CartItem;
-import org.salespointframework.order.Order;
-import org.salespointframework.order.OrderManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.servlet.ModelAndView;
 
 import internetkaufhaus.model.NavItem;
 import internetkaufhaus.model.Search;
-import internetkaufhaus.repositories.ConcreteOrderRepository;
-import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
 /**
  * This is a Header Advice. It Advices Headers. Or does it Head Advices?
@@ -35,11 +24,7 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 @ControllerAdvice
 public class HeaderAdvice {
 
-	private final OrderManager<Order> orderManager;
 	private final Search prodSearch;
-	private MailSender sender;
-	private final ConcreteOrderRepository concreteOrderRepo;
-	private final ConcreteUserAccountRepository userRepo;
 
 	/**
 	 * This is the constructor. It's neither used nor does it contain any functionality other than storing function arguments as class attribute, what do you expect me to write here? It's copied from CartController.
@@ -51,13 +36,8 @@ public class HeaderAdvice {
 	 * @param sender
 	 */
 	@Autowired
-	public HeaderAdvice(ConcreteUserAccountRepository userRepo, ConcreteOrderRepository concreteOrderRepo, OrderManager<Order> orderManager, Search prodSearch, MailSender sender) {
-		Assert.notNull(orderManager, "OrderManager must not be null!");
-		this.orderManager = orderManager;
+	public HeaderAdvice(Search prodSearch) {
 		this.prodSearch = prodSearch;
-		this.concreteOrderRepo = concreteOrderRepo;
-		this.sender = sender;
-		this.userRepo = userRepo;
 	}
 
 	/**

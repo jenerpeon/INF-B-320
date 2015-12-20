@@ -2,7 +2,6 @@ package internetkaufhaus.controller;
 
 import static org.salespointframework.core.Currencies.EURO;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +21,6 @@ import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,7 +29,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteUserAccount;
@@ -42,7 +39,6 @@ import internetkaufhaus.model.Competition;
 import internetkaufhaus.model.ConcreteMailSender;
 import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.model.NavItem;
-import internetkaufhaus.model.Statistic;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
@@ -269,7 +265,7 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/admin/statistics")
 	public String getStatistics(ModelMap model) {
-		Statistic stat = new Statistic(orderManager);
+		//Statistic stat = new Statistic(orderManager);
 		LocalDateTime to = LocalDateTime.now();
 		LocalDateTime from7Days = to.minusDays(7);
 		LocalDateTime from1Month = to.minusMonths(1);

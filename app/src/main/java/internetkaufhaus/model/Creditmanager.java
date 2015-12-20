@@ -6,33 +6,24 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.javamoney.moneta.Money;
-import org.salespointframework.order.Order;
-import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.time.Interval;
 import org.salespointframework.useraccount.UserAccount;
-import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
-import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
 @Component
 public class Creditmanager {
 
-	private OrderManager<Order> orderManager;
-	private UserAccountManager userManager;
-	private ConcreteUserAccountRepository userRepo;
 	private ConcreteOrderRepository concreteOrderRepo;
 
 	@Autowired
-	public Creditmanager(OrderManager<Order> orderManager, UserAccountManager userManager, ConcreteUserAccountRepository userRepo, ConcreteOrderRepository concreteOrderRepo) {
-		this.orderManager = orderManager;
-		this.userManager = userManager;
-		this.userRepo = userRepo;
+	public Creditmanager(ConcreteOrderRepository concreteOrderRepo) {
+
 		this.concreteOrderRepo = concreteOrderRepo;
 	}
 

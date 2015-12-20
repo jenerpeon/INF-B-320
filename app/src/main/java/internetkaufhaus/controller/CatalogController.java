@@ -1,7 +1,6 @@
 package internetkaufhaus.controller;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -11,8 +10,6 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import org.hibernate.criterion.Order;
-import org.javamoney.moneta.Money;
 import org.mockito.internal.util.collections.Sets;
 import org.salespointframework.catalog.Catalog;
 import org.salespointframework.inventory.Inventory;
@@ -23,7 +20,6 @@ import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Controller;
@@ -41,8 +37,6 @@ import internetkaufhaus.model.NewsletterManager;
 import internetkaufhaus.model.Search;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
-import utils.com.ipillars.sorter.ListSorter;
-import utils.com.ipillars.sorter.SortKeys;
 
 /**
  * This is the catalog controller. It controls the catalog. Or does it catalog the controller? You never know...
