@@ -6,9 +6,9 @@
 <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
 <link href="/resources/css/employee.css" rel="stylesheet" type="text/css">
 
-<link href="/resources/js/bootstrap.min.js" rel="stylesheet" type=text/css>
-<script src="/resources/js/jquery.min.js" type="text/javascript"></script>
-<script src="/resources/script/emplyeenavigation.js" type="text/javascript"></script>
+
+<script src="/resources/script/jquery.min.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('label.tree-toggler').click(function() {
@@ -22,10 +22,18 @@
 <body>
 	<div id="wrapper">
 		<div id="header" th:include="navigation :: navigation"></div>
-		<br>
+
 		<main>
 		<div id="mainframe">
-			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
+			<div id="topLine">
+				<div id="path">
+					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/employee" >Mitarbeiterportal</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/employee/newsletter" >Newsletter</a>
+				</div>
+			</div>
 			
 			<div id="workframe">
 				
@@ -47,13 +55,16 @@
 						</tr>
 					</tbody>
 				</table>
+				<div>
 				<button id="oldNewsletter" type="button" onclick="self.location.href = this.getAttribute('href');" href="/employee/newsletter/oldAbos">Alte Newsletter</button>
+				</div>
+				<div>
 				<button id="newNewsletter" type="button" onclick="self.location.href = this.getAttribute('href');" href="/employee/newsletter/changeNewsletter">Neuen Newsletter versenden</button>
+				</div>
 			</div>
 
 		</div>
 		</main>
-		<br>
 
 		<div id="footer" th:include="footer :: footer"></div>
 	</div>

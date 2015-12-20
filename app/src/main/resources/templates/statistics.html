@@ -5,19 +5,26 @@
 <title>Statistiken</title>
 <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
 <link href="/resources/css/admin.css" rel="stylesheet" type="text/css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script src="/resources/script/jquery.flot.min.js" type="text/javascript"></script>
+<script src="/resources/script/jquery.min.js"></script>
 <script src="/resources/script/graph.js" type="text/javascript"></script>
 </head>
 
 <body>
 <div id="wrapper">
 	<div id="header" th:include="navigation :: navigation"></div>
-	<br/>
+
 	<main>
 		<div id="mainframe">
-			<div id="adminnavigaton" th:include="adminnavigation :: adminnavigation"></div>
-		
+			<div id="topLine">
+				<div id="path">
+					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/admin" >Adminportal</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/admin/statistics" >Statistiken</a>
+				</div>
+			</div>
+			
 			<div id="workframe">
 				<div id="graph-wrapper">
 					<div class="graph-info">

@@ -235,7 +235,6 @@ public class CatalogController {
 	 */
 	@RequestMapping(value = "/catalog/{type}/{sort}/{representation}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)
 	public String changeStartPageSetting(@PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split, @RequestParam(value = "sort", defaultValue = "name") String sort, @PathVariable("representation") int representation, ModelMap model) {
-		model.addAttribute("categories", prodSearch.getCategories());
 		return "redirect:/catalog/" + category + '/' + sort + '/' + representation + '/' + split + '/' + number;
 	}
 

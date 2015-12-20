@@ -258,13 +258,14 @@ public class Initialize implements DataInitializer {
 		userAccounts.add(new ConcreteUserAccount("adminBehrens@todesstern.ru", "admin", "admin", "Behrens", "Musterstraße", "01069", "Definitiv nicht Dresden", "admin", customerRole, userAccountManager));
 		userAccounts.add(new ConcreteUserAccount("behrens_lars@gmx.de", "lars", "Lars", "Behrens", "Musterstraße", "01069", "Definitiv nicht Dresden", "lars", customerRole, userAccountManager));
 
-		// 100 weitere ConcreteUserAccounts; auskommentiert aus Zeitgründen
-		//
-		// int i = 0;
-		// for(i=0;i<100;i++)
-		// {
-		// userAccounts.add(new ConcreteUserAccount("kunde"+i+"@todesstern.ru", "kunde"+i, "Kunde"+i, "Kundenname"+i, "Kundenstraße"+i, "12345", "Definitiv nicht Dresden", "kunde"+i, customerRole, userAccountManager,"lars", i));
-		// }
+
+//		100 weitere ConcreteUserAccounts; auskommentiert aus Zeitgründen
+//		
+//		int i = 0;
+//		for(i=0;i<100;i++)
+//		{
+//			userAccounts.add(new ConcreteUserAccount("kunde"+i+"@todesstern.ru", "kunde"+i, "Kunde"+i, "Kundenname"+i, "Kundenstraße"+i, "12345", "Definitiv nicht Dresden", "kunde"+i, customerRole, userAccountManager));
+//		}
 
 		/*
 		 * RegistrationForm reg = new RegistrationForm(); reg.setEmail("behrens_lars@gmx.de"); reg.setName("peons"); reg.setPassword("asdf"); reg.setPasswordrepeat("asdf");

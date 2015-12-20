@@ -14,20 +14,30 @@
 <body>
 	<div id="wrapper">
 		<div id="header" th:include="navigation :: navigation"></div>
-		<br/>
+
 		<main>
 		<div id="mainframe">
-			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
+			<div id="topLine">
+				<div id="path">
+					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/employee" >Mitarbeiterportal</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/employee/orders" >Bestellungen</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a >Details zur Bestellung</a>
+				</div>
+			</div>
 			
 			<div id="workframe">
 				<h2 id="orderUser" th:text="@{'Bestellung von '+${order.getUser().getUsername()}}">Account:</h2>
-				<table>
+				<table class="article">
 					<tr>
 						<td><a>Name</a></td>
 						<td><a>Preis</a></td>
 						<td><a>Anzahl</a></td>
 					<tr th:each="orderLine : ${orderLines}">
-						<td><a th:href="@{'/detail/'+${orderLine.getProductIdentifier()}}" th:text="${orderLine.getProductName()}">Name</a></td>
+						<td class="name" style="max-width: 600px"><a th:href="@{'/detail/'+${orderLine.getProductIdentifier()}}" th:text="${orderLine.getProductName()}">Name</a></td>
 						<td><a th:text="${orderLine.getPrice()}">Preis</a></td>
 						<td><a th:text="${orderLine.getQuantity()}">Anzahl</a></td>
 					</tr>

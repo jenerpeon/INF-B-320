@@ -5,28 +5,11 @@
 	margin-left: auto;
 	margin-right: auto;
 	padding-left: 100px;
-	display: flex;
-}
-
-#adminnavigaton {
-	width: 20%;
-	border-right: 1px solid #000000;
-	flex: auto;
-}
-
-#adminnavigaton p {
-	margin-top: 20px;
-	margin-bottom: 20px;
-}
-
-#adminnavigaton .active {
-	font-weight: bold;
 }
 
 #workframe {
-	padding-left: 20px;
-	width: 75%;
-	felx: auto;
+	display: flex;
+	flex-direction: column;
 }
 
 #workframe h2{
@@ -35,10 +18,12 @@
 }
 #workframe table {
 	table-layout: fixed;
-	width: 700px;
+	width: 100%px;
+	border-collapse: collapse;
 }
-#workframe tbody {
-}
+#workframe td + td,
+#workframe th + th { border-left: 1px solid; }
+#workframe tr + tr { border-top: 1px solid; }
 #workframe th {
 	text-align: center;
 	padding: 10px 20px 10px 20px;
@@ -119,11 +104,12 @@
      
 	width: auto;      
 	margin-top: 0.5em;      
-	margin-left: 11.5em;       
+	margin-left: 11.5em;
+	clear: both;  
 }
 
 .orderTable {
-	width: 300px !important;
+	border: 0;
 }
 
 /* Resets */
@@ -153,8 +139,8 @@
 /*  Graph Container */
 .graph-container {
 	position: relative;
-	width: 635px;
-	height: 350px;
+	width: 850px;
+	height: 500px;
 	padding: 20px;
 	
 	-webkit-box-shadow: 0px 1px 2px rgba(0,0,0,.1);
@@ -171,7 +157,7 @@
 }
 
 .graph-info {
-	width: 675px;
+	width: 890px;
 	margin-bottom: 10px;
 }
 

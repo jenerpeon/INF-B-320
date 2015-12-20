@@ -5,18 +5,26 @@
 <title>changecatalochangeitem</title>
 <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
 <link href="/resources/css/employee.css" rel="stylesheet" type="text/css">
-
-<link href="/resources/js/bootstrap.min.js" rel="stylesheet" type=text/css>
-<script src="/resources/js/jquery.min.js" type="text/javascript"></script>
+<script src="/resources/script/jquery.min.js" type="text/javascript"></script>
 </head>
 
 <body>
 	<div id="wrapper">
 		<div id="header" th:include="navigation :: navigation"></div>
-		<br/>
+
 		<main>
 		<div id="mainframe">
-			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
+			<div id="topLine">
+				<div id="path">
+					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/employee" >Mitarbeiterportal</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/employee/changecatalog" >Katalog/Lager</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a >Artikel bearbeiten</a>
+				</div>
+			</div>
 			
 			<div id="workframe">
 				<form id="changeitem" class="itemform" th:action="@{'/employee/changecatalog/editedArticle'}" method="POST" enctype="multipart/form-data">
