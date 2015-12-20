@@ -16,35 +16,29 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
 public class Competition {
 
-	
 	private ArrayList<ConcreteUserAccount> accs = new ArrayList<ConcreteUserAccount>();
 	private ArrayList<ConcreteUserAccount> winners = new ArrayList<ConcreteUserAccount>();
 	private Creditmanager creditmanager;
-	
-	
-	public Competition(Iterable<ConcreteUserAccount> accs, Creditmanager creditmanager)
-	{
-		for(ConcreteUserAccount acc:accs)
-		{
+
+	public Competition(Iterable<ConcreteUserAccount> accs, Creditmanager creditmanager) {
+		for (ConcreteUserAccount acc : accs) {
 			this.accs.add(acc);
 		}
 		this.creditmanager = creditmanager;
 	}
-	
-	public ArrayList<ConcreteUserAccount> getWinners()
-	{		
+
+	public ArrayList<ConcreteUserAccount> getWinners() {
 		winners.clear();
-		for(ConcreteUserAccount acc: accs)
-		{
+		for (ConcreteUserAccount acc : accs) {
 			creditmanager.udateCreditpointsByUser(acc);
 		}
 		int accsize = this.accs.size();
-		int numberofwinners = accsize/10;
+		int numberofwinners = accsize / 10;
 		int i = 0;
 		Collections.sort(accs, new CreditComparator());
 		Collections.reverse(accs);
 		Iterator<ConcreteUserAccount> iter = this.accs.iterator();
-		if(this.accs.size()==0)
+		if (this.accs.size() == 0)
 			return winners;
 		if(this.accs.size()<10 && iter.hasNext())
 		{
@@ -56,13 +50,12 @@ public class Competition {
 			winners.add(iter.next());
 			i++;
 		}
-		
+
 		return winners;
 	}
-	public void notifyWinners(ConcreteMailSender sender)
-	{
-		for(ConcreteUserAccount acc: winners)
-		{
+
+	public void notifyWinners(ConcreteMailSender sender) {
+		for (ConcreteUserAccount acc : winners) {
 			sender.sendMail(acc.getEmail(), "Herzlichen Glückwunsch", "wood@shop.de", "Gewonnen");
 		}
 	}

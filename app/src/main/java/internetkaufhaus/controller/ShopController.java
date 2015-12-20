@@ -41,7 +41,5 @@ public class ShopController {
 	public UserAccountManager getUserAccountManager() {
 		return userAccountManager;
 	}
-	
-
 
 }

@@ -21,20 +21,20 @@ import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 
 @Entity
-@Table(name="CACCOUNT")
-public class ConcreteUserAccount implements Serializable{
+@Table(name = "CACCOUNT")
+public class ConcreteUserAccount implements Serializable {
 
 	private static final long serialVersionUID = 3L;
 
 	@ManyToMany
 	@JoinColumn(name = "COMMENT", nullable = false)
-    private List<Comment> comments = new ArrayList<Comment>();
+	private List<Comment> comments = new ArrayList<Comment>();
 	@ManyToMany
 	private List<UserAccount> recruits = new ArrayList<UserAccount>();
 	@Id
-    @GeneratedValue
-    private Long id;
-    
+	@GeneratedValue
+	private Long id;
+
 	@OneToOne
 	private UserAccount userAccount;
 
@@ -42,20 +42,26 @@ public class ConcreteUserAccount implements Serializable{
 	private String address;
 	private String zipCode;
 	private String city;
-    
-    @Column(length = 2000)
-    private Money credits;
-    private Role role;
-    
 
-	public ConcreteUserAccount() {}
-	
-	public ConcreteUserAccount(String username, String password, Role role, UserAccountManager u){
-		this.userAccount = u.create(username, password, role);
-		this.credits=Money.of(0, EURO);
+	@Column(length = 2000)
+	private Money credits;
+	private Role role;
+
+	/**
+	 * This comment is just here because sonarcube is a little bitch.
+	 */
+	public ConcreteUserAccount() {
+		/**
+		 * This comment is just here because sonarcube is a little bitch.
+		 */
 	}
-	
-	public ConcreteUserAccount(String email, String username, String firstname, String lastname, String address, String zipCode, String city, String password, Role role, UserAccountManager u,int credits, List<UserAccount> recruits) {
+
+	public ConcreteUserAccount(String username, String password, Role role, UserAccountManager u) {
+		this.userAccount = u.create(username, password, role);
+		this.credits = Money.of(0, EURO);
+	}
+
+	public ConcreteUserAccount(String email, String username, String firstname, String lastname, String address, String zipCode, String city, String password, Role role, UserAccountManager u, int credits, List<UserAccount> recruits) {
 		this.userAccount = u.create(username, password, role);
 		this.recruits = recruits;
 		this.userAccount.setFirstname(firstname);
@@ -65,7 +71,7 @@ public class ConcreteUserAccount implements Serializable{
 		this.city = city;
 		this.userAccount.setEmail(email);
 		this.email = email;
-		this.credits=Money.of(0, EURO);
+		this.credits = Money.of(credits, EURO);
 		this.role = role;
 	}
 
@@ -78,19 +84,19 @@ public class ConcreteUserAccount implements Serializable{
 		this.city = city;
 		this.userAccount.setEmail(email);
 		this.email = email;
-		this.credits=Money.of(0,EURO);
+		this.credits = Money.of(0, EURO);
 		this.role = role;
 	}
 
 	public Long getId() {
 		return id;
 	}
-	
-	public List<Comment> getComments(){
+
+	public List<Comment> getComments() {
 		return this.comments;
 	}
-	
-	public void addComment(Comment c){
+
+	public void addComment(Comment c) {
 		this.comments.add(c);
 	}
 
@@ -141,37 +147,32 @@ public class ConcreteUserAccount implements Serializable{
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-    	
-    public List<UserAccount> getRecruits(){
-    	return this.recruits;
-    }
-    public Role getRole(){
-    	return this.userAccount.getRoles().iterator().next();
-    }
+
+	public List<UserAccount> getRecruits() {
+		return this.recruits;
+	}
+
+	public Role getRole() {
+		return this.userAccount.getRoles().iterator().next();
+	}
 
 	public int getCredits() {
-		return (int)((double)credits.getNumber().intValue()+(0.5));
+		return (int) ((double) credits.getNumber().intValue() + (0.5));
 	}
 
 	public void setCredits(Money credits) {
 		this.credits = credits;
 	}
 
-	public void setRecruits(ConcreteUserAccount user){
-		
-		
-		if(recruits==null){
-			List<UserAccount> recruit=new ArrayList<UserAccount>();
+	public void setRecruits(ConcreteUserAccount user) {
+		if (recruits == null) {
+			List<UserAccount> recruit = new ArrayList<UserAccount>();
 			recruit.add(user.getUserAccount());
-			this.recruits=recruit;
-		}
-		else{
+			this.recruits = recruit;
+		} else {
 			this.recruits.add(user.getUserAccount());
 		}
-		
+
 	}
 
-
 }
-

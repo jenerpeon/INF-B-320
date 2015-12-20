@@ -12,18 +12,25 @@ import internetkaufhaus.repositories.ConcreteInventory;
 @Component
 public class StockManager {
 	private ConcreteInventory<InventoryItem> inventory;
-	
+
 	@Autowired
-	public StockManager(ConcreteInventory<InventoryItem> inventory)
-	{
+	public StockManager(ConcreteInventory<InventoryItem> inventory) {
 		this.inventory = inventory;
 	}
-	public void orderArticle(ProductIdentifier prodId, Quantity quantity)
-	{
-		inventory.findByProductIdentifier(prodId).ifPresent(x->{x.increaseQuantity(quantity);inventory.save(x);});
+
+	public void orderArticle(ProductIdentifier prodId, Quantity quantity) {
+		inventory.findByProductIdentifier(prodId).ifPresent(x -> {
+			x.increaseQuantity(quantity);
+			inventory.save(x);
+		});
 	}
-	public void removeArticle(ProductIdentifier prodId, Quantity quantity)
-	{
-		inventory.findByProductIdentifier(prodId).ifPresent(x->{if(x.hasSufficientQuantity(quantity)){x.decreaseQuantity(quantity);inventory.save(x);}});
+
+	public void removeArticle(ProductIdentifier prodId, Quantity quantity) {
+		inventory.findByProductIdentifier(prodId).ifPresent(x -> {
+			if (x.hasSufficientQuantity(quantity)) {
+				x.decreaseQuantity(quantity);
+				inventory.save(x);
+			}
+		});
 	}
 }

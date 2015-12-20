@@ -1,7 +1,7 @@
   $( document ).ready(function() {
 		var activeSite = parseInt(getQueryVariable(1),10);
 		var articlesPerPage = parseInt(getQueryVariable(2),10);
-		var category = getQueryVariable(4);
+		var category = getQueryVariable(5);
 	  	var sites = document.getElementsByClassName("articlePages");
 	  	var articlesPerPageInput = document.getElementsByName("total");
 	  	var activeSite2 = activeSite + sites.length/2;

@@ -1,14 +1,18 @@
 package internetkaufhaus.forms;
 
-public class CreateUserForm extends StandardUserForm{
+public class CreateUserForm extends StandardUserForm {
 
 	private String rolename;
 
-
-	public CreateUserForm()
-	{
-		
+	/**
+	 * This comment is just here because sonarcube is a little bitch.
+	 */
+	public CreateUserForm() {
+		/**
+		 * This comment is just here because sonarcube is a little bitch.
+		 */
 	}
+
 	public String getRolename() {
 		return rolename;
 	}

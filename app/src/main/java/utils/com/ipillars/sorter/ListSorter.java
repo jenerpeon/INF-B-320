@@ -28,135 +28,141 @@ import java.util.*;
  */
 public class ListSorter {
 
-    /**
-     * Sort a list of objects, on the fieldNames (Properties) defined
-     * @param list - List of objects (POJO)
-     * @param fieldNames - Array List of property names to sort by
-     * @return List of sorted objects
-     */
-    public List sortList(List list, List<String> fieldNames) {
+	/**
+	 * Sort a list of objects, on the fieldNames (Properties) defined
+	 * 
+	 * @param list
+	 *            - List of objects (POJO)
+	 * @param fieldNames
+	 *            - Array List of property names to sort by
+	 * @return List of sorted objects
+	 */
+	public List sortList(List list, List<String> fieldNames) {
 
-        SortKeys sortKeys = new SortKeys();
+		SortKeys sortKeys = new SortKeys();
 
-        fieldNames.forEach((String fieldName) -> sortKeys.addField(fieldName));
+		fieldNames.forEach((String fieldName) -> sortKeys.addField(fieldName));
 
-        return sortList(list, sortKeys);
-    }
+		return sortList(list, sortKeys);
+	}
 
-    /**
-     * Sort a list of objects, on the fieldNames (Properties) defined
-     * @param list - List of objects (POJO)
-     * @param sortKeys - SortKeys is a special object, which can be used to tell the sorter, if a property should be sorted in descending order or to specify the class type of the property
-     * @return List of sorted objects
-     */
-    public List sortList(List list, SortKeys sortKeys) {
+	/**
+	 * Sort a list of objects, on the fieldNames (Properties) defined
+	 * 
+	 * @param list
+	 *            - List of objects (POJO)
+	 * @param sortKeys
+	 *            - SortKeys is a special object, which can be used to tell the sorter, if a property should be sorted in descending order or to specify the class type of the property
+	 * @return List of sorted objects
+	 */
+	public List sortList(List list, SortKeys sortKeys) {
 
-        List retval = null;
+		List retval = null;
 
-        // Get the class name of the objects in the collection
-        Class aClass = getElementClassName(list);
+		// Get the class name of the objects in the collection
+		Class aClass = getElementClassName(list);
 
-        SortHelper sortHelper = new SortHelper();
+		SortHelper sortHelper = new SortHelper();
 
-        Integer recNo = 0;
-        for (Object object : list) {
+		Integer recNo = 0;
+		for (Object object : list) {
 
-            List sortValues = new ArrayList<>();
+			List sortValues = new ArrayList<>();
 
-            // Loop through the field names to sort by and sort at each stage
-            for (SortField sortField : sortKeys.getSortFields()) {
+			// Loop through the field names to sort by and sort at each stage
+			for (SortField sortField : sortKeys.getSortFields()) {
 
-                String fieldName = sortField.getFieldName();
+				String fieldName = sortField.getFieldName();
 
-                Boolean useGetter = false, useField = false;
-                Method getterMethod = null;
-                Field valueField = null;
+				Boolean useGetter = false, useField = false;
+				Method getterMethod = null;
+				Field valueField = null;
 
-                // Lets see if there is a method for the field. If so just use it.
-                try {
+				// Lets see if there is a method for the field. If so just use it.
+				try {
 
-                    String methodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+					String methodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
 
-                    getterMethod = aClass.getMethod(methodName);
+					getterMethod = aClass.getMethod(methodName);
 
-                    if (getterMethod != null) {
+					if (getterMethod != null) {
 
-                        // If not set then IllegalAccessException is thrown
-                        if (!getterMethod.isAccessible()) {
-                            getterMethod.setAccessible(true);
-                        }
+						// If not set then IllegalAccessException is thrown
+						if (!getterMethod.isAccessible()) {
+							getterMethod.setAccessible(true);
+						}
 
-                        useGetter = true;
-                    }
-                } catch (NoSuchMethodException e) {
-                    useGetter = false;
-                }
+						useGetter = true;
+					}
+				} catch (NoSuchMethodException e) {
+					useGetter = false;
+				}
 
-                // If there is no getter method, then use the field itself to sort
-                if (!useGetter) {
+				// If there is no getter method, then use the field itself to sort
+				if (!useGetter) {
 
-                    useField = false;
+					useField = false;
 
-                    // Get the field first direct.
-                    valueField = PojoTool.getFieldByName(aClass, fieldName);
+					// Get the field first direct.
+					valueField = PojoTool.getFieldByName(aClass, fieldName);
 
-                    // Get the data type of the field
-                    Class dataType = valueField.getType();
+					// Get the data type of the field
+					Class dataType = valueField.getType();
 
-                    // Simple Object
-                    if (PojoTool.isSimpleObject(dataType)) {
-                        useField = true;
+					// Simple Object
+					if (PojoTool.isSimpleObject(dataType)) {
+						useField = true;
 
-                        // If not set then IllegalAccessException is thrown
-                        if (!valueField.isAccessible()) {
-                            valueField.setAccessible(true);
-                        }
+						// If not set then IllegalAccessException is thrown
+						if (!valueField.isAccessible()) {
+							valueField.setAccessible(true);
+						}
 
-                    } else {
-                        useField = false;
-                        throw new RuntimeException("Cannot sort the list on a complex type : " + dataType);
-                    }
-                }
+					} else {
+						useField = false;
+						throw new RuntimeException("Cannot sort the list on a complex type : " + dataType);
+					}
+				}
 
-                try {
-                    if (useGetter) {
-                        sortValues.add(getterMethod.invoke(object));
-                    } else if (useField) {
-                        sortValues.add(valueField.get(object));
-                    }
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                }
-            }
+				try {
+					if (useGetter) {
+						sortValues.add(getterMethod.invoke(object));
+					} else if (useField) {
+						sortValues.add(valueField.get(object));
+					}
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+			}
 
-            sortHelper.addObjectsToSort(recNo++, sortValues);
-        }
+			sortHelper.addObjectsToSort(recNo++, sortValues);
+		}
 
-        sortHelper.setSortKeys(sortKeys);
-        sortHelper.sort();
+		sortHelper.setSortKeys(sortKeys);
+		sortHelper.sort();
 
-        if (retval == null) {
-            retval = new ArrayList<>();
-        }
+		if (retval == null) {
+			retval = new ArrayList<>();
+		}
 
-        for (Integer index : sortHelper.getSortedIndexList()) {
-            retval.add(list.get(index));
-        }
-        return retval;
-    }
+		for (Integer index : sortHelper.getSortedIndexList()) {
+			retval.add(list.get(index));
+		}
+		return retval;
+	}
 
-    public Class getElementClassName(Collection list) {
+	public Class getElementClassName(Collection list) {
 
-        Class retval = null;
+		Class retval = null;
 
-        if (list != null) {
-            Iterator iterator = list.iterator();
-            Object first = iterator.next();
-            retval = first.getClass();
-        }
+		if (list != null) {
+			Iterator iterator = list.iterator();
+			Object first = iterator.next();
+			retval = first.getClass();
+		}
 
-        return retval;
-    }
+		return retval;
+	}
 }

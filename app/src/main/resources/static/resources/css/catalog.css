@@ -1,12 +1,13 @@
 @charset "utf-8";
 
 #articlesPerPage {
-	flex: auto;
+	flex: 1 1 25em;
 	text-align: left;
 }
 #articlesPerPage fieldset {
 	padding: 0;
 	border: none;
+	float: left;
 }
 #articlesPerPage label {
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
@@ -106,6 +107,7 @@
 #articlelist-thumbnail {
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: space-between;
 	padding: 0px;
 	list-style-type: none;
 }
