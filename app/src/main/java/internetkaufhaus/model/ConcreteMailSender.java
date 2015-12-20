@@ -8,7 +8,7 @@ import org.springframework.mail.MailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Service("mailService")
-public class ConcreteMailSender{
+public class ConcreteMailSender {
 	@Autowired
 	private final MailSender mailSender;
 
@@ -16,8 +16,8 @@ public class ConcreteMailSender{
 	public ConcreteMailSender(MailSender mailSender) {
 		this.mailSender = mailSender;
 	}
-	
-	public void sendMail(String sendTo, String text, String from, String subject){
+
+	public void sendMail(String sendTo, String text, String from, String subject) {
 
 		SimpleMailMessage msg = new SimpleMailMessage();
 
@@ -25,16 +25,13 @@ public class ConcreteMailSender{
 		msg.setFrom(from);
 		msg.setSubject(subject);
 		msg.setText(text);
-		
-		try{
+
+		try {
 			mailSender.send(msg);
-			System.out.println("Mail versendet");
-        }
-        catch (MailException ex) {
-            System.err.println(ex.getMessage());
-        }
+		} catch (MailException ex) {
+			System.err.println(ex.getMessage());
+		}
 
 	}
-
 
 }

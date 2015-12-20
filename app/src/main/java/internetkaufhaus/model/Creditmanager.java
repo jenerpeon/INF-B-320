@@ -20,48 +20,36 @@ import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
-
 @Component
 public class Creditmanager {
-	
-	OrderManager<Order> orderManager;
-	UserAccountManager userManager;
-	ConcreteUserAccountRepository userRepo;
-	ConcreteOrderRepository concreteOrderRepo;
-	
+
+	private OrderManager<Order> orderManager;
+	private UserAccountManager userManager;
+	private ConcreteUserAccountRepository userRepo;
+	private ConcreteOrderRepository concreteOrderRepo;
+
 	@Autowired
-	public Creditmanager(OrderManager<Order> orderManager, UserAccountManager userManager, ConcreteUserAccountRepository userRepo,ConcreteOrderRepository concreteOrderRepo){
-		this.orderManager=orderManager;
-		this.userManager=userManager;
-		this.userRepo=userRepo;
-		this.concreteOrderRepo=concreteOrderRepo;
+	public Creditmanager(OrderManager<Order> orderManager, UserAccountManager userManager, ConcreteUserAccountRepository userRepo, ConcreteOrderRepository concreteOrderRepo) {
+		this.orderManager = orderManager;
+		this.userManager = userManager;
+		this.userRepo = userRepo;
+		this.concreteOrderRepo = concreteOrderRepo;
 	}
 
+	// Method to update the credit amount of the given ConcreteUserAccount
+	// to get the credits of the User, use the method User.getCredits of ConcreteUserAccount--Class
+	public void udateCreditpointsByUser(ConcreteUserAccount recruiter) {
+		List<UserAccount> recruits = recruiter.getRecruits();
 
-//Method to update the credit amount of the given ConcreteUserAccount 
-//to get the credits of the User, use the method User.getCredits of ConcreteUserAccount--Class
-	public void udateCreditpointsByUser(ConcreteUserAccount recruiter){		
-		List<UserAccount>recruits= recruiter.getRecruits();
-		
-		
-		Money credits=Money.of(0, EURO);
-		System.out.println(recruits);
-		for( UserAccount user : recruits){
-			
-			for(ConcreteOrder order : concreteOrderRepo.findByUser(user)){
-				System.out.println(order);
-//				System.out.println("Step 1");
-//				System.out.println("Periode"+Interval.from(order.getDateOrdered()).to(LocalDateTime.now()).getDuration().toDays());
-				if(Interval.from(order.getDateOrdered()).to(LocalDateTime.now()).getDuration().toDays()>=30 && order.getStatus().equals(OrderStatus.COMPLETED)){
+		Money credits = Money.of(0, EURO);
+		for (UserAccount user : recruits) {
+
+			for (ConcreteOrder order : concreteOrderRepo.findByUser(user)) {
+				if (Interval.from(order.getDateOrdered()).to(LocalDateTime.now()).getDuration().toDays() >= 30 && order.getStatus().equals(OrderStatus.COMPLETED)) {
 					credits = credits.add(order.getOrder().getTotalPrice().multiply(20).divide(100));
-//					System.out.println(order.getOrder().getTotalPrice().toString());
 				}
 			}
-		
-		
-
-		System.out.println(credits);
-		recruiter.setCredits(credits);
+			recruiter.setCredits(credits);
 		}
 	}
 }

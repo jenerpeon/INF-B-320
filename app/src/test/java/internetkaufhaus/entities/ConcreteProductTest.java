@@ -21,52 +21,26 @@ import org.salespointframework.useraccount.UserAccountManager;
 import internetkaufhaus.entities.ConcreteProduct;
 
 public class ConcreteProductTest {
-	
+
 	private ConcreteProduct model;
-//	private UserAccountManager manager;
-//	private ConcreteUserAccountRepository concretemanager;
-	
+	// private UserAccountManager manager;
+	// private ConcreteUserAccountRepository concretemanager;
+
 	@Before
-	public void init(){
-		//UserAccount dummy = new UserAccount("hans","schranz", Role.of("ROLE_CUSTOMER"));
-		model = new ConcreteProduct("Zigarre", Money.of(1.99, EURO), "Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");		
+	public void init() {
+		// UserAccount dummy = new UserAccount("hans","schranz", Role.of("ROLE_CUSTOMER"));
+		model = new ConcreteProduct("Zigarre", Money.of(1.99, EURO), "Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
 	}
-	
+
 	@Test
 	public void testGetName() {
 		assertTrue("Beschreibung erhalten", model.getName().equals("Zigarre"));
 	}
-/*	
-	@Test
-	public void testComments() {
-        ConcreteUserAccount dummdummy = new ConcreteUserAccount("peon", "peon",Role.of("ROLE_CUSTOMER"), manager);
-        concretemanager.save(dummdummy);  
-		Comment comment = new Comment("das Produkt ist ekelerregend", 1, new Date(200000), "t");
-		model.addComment(comment, dummdummy.getUserAccount().getIdentifier());
-		assertTrue("Kommentar gesetzt", model.getComments().contains(comment));
-		assertTrue("Kommentareigenschaft gesetzt", comment.getParent() == model);
-		assertTrue("Kommentar in der Liste der nicht akzeptierten Kommentare", model.getUnacceptedComments().contains(comment));
-		assertFalse("Kommentar nicht in der Liste der akzeptierten Kommentare", model.getAcceptedComments().contains(comment));
-		comment.accept();
-		assertFalse("Kommentar nicht in der Liste der nicht akzeptierten Kommentare", model.getUnacceptedComments().contains(comment));
-		assertTrue("Kommentar in der Liste der akzeptierten Kommentare", model.getAcceptedComments().contains(comment));
-		model.removeComment(comment);
-		assertFalse("Kommentar geloescht", model.getComments().contains(comment));
-		assertTrue("Kommentareigenschaft geloescht", comment.getParent() == null);
-		Comment comment2 = new Comment("Ich liebe dieses Produkt!", 5, new Date(200001), "t");
-		List<Comment> commentList = new ArrayList<Comment>();
-		commentList.add(comment);
-		commentList.add(comment2);
-		model.setComments(commentList);
-		assertTrue("Kommentarliste gesetzt", model.getComments() == commentList);
-		assertTrue("Kommentar 1 gesetzt", model.getComments().contains(comment));
-		assertTrue("Kommentar 2 gesetzt", model.getComments().contains(comment2));
-		model.removeCommentAt(1);
-		assertTrue("Kommentar 2 geloescht", model.getComments().size() == 1 && !model.getComments().contains(comment2) && model.getComments().contains(comment));
-		model.removeCommentAt(0);
-		assertTrue("Kommentar 1 geloescht", model.getComments().size() == 0 && !model.getComments().contains(comment) && !model.getComments().contains(comment2));
-	}
-*/	
+
+	/*
+	 * @Test public void testComments() { ConcreteUserAccount dummdummy = new ConcreteUserAccount("peon", "peon",Role.of("ROLE_CUSTOMER"), manager); concretemanager.save(dummdummy); Comment comment = new Comment("das Produkt ist ekelerregend", 1, new Date(200000), "t"); model.addComment(comment, dummdummy.getUserAccount().getIdentifier()); assertTrue("Kommentar gesetzt", model.getComments().contains(comment)); assertTrue("Kommentareigenschaft gesetzt", comment.getParent() == model); assertTrue("Kommentar in der Liste der nicht akzeptierten Kommentare", model.getUnacceptedComments().contains(comment)); assertFalse("Kommentar nicht in der Liste der akzeptierten Kommentare", model.getAcceptedComments().contains(comment)); comment.accept(); assertFalse("Kommentar nicht in der Liste der nicht akzeptierten Kommentare", model.getUnacceptedComments().contains(comment)); assertTrue("Kommentar in der Liste der akzeptierten Kommentare", model.getAcceptedComments().contains(comment)); model.removeComment(comment); assertFalse("Kommentar geloescht", model.getComments().contains(comment)); assertTrue("Kommentareigenschaft geloescht", comment.getParent() == null); Comment comment2 = new Comment(
+	 * "Ich liebe dieses Produkt!", 5, new Date(200001), "t"); List<Comment> commentList = new ArrayList<Comment>(); commentList.add(comment); commentList.add(comment2); model.setComments(commentList); assertTrue("Kommentarliste gesetzt", model.getComments() == commentList); assertTrue("Kommentar 1 gesetzt", model.getComments().contains(comment)); assertTrue("Kommentar 2 gesetzt", model.getComments().contains(comment2)); model.removeCommentAt(1); assertTrue("Kommentar 2 geloescht", model.getComments().size() == 1 && !model.getComments().contains(comment2) && model.getComments().contains(comment)); model.removeCommentAt(0); assertTrue("Kommentar 1 geloescht", model.getComments().size() == 0 && !model.getComments().contains(comment) && !model.getComments().contains(comment2)); }
+	 */
 	@Test
 	public void testImagefile() {
 		String imagefile = "";
@@ -82,8 +56,8 @@ public class ConcreteProductTest {
 		}
 	}
 
-	@Test(expected=IllegalArgumentException.class)
-	public void testEmptyImageFile() throws Exception{
+	@Test(expected = IllegalArgumentException.class)
+	public void testEmptyImageFile() throws Exception {
 		model.setImagefile("");
 	}
 
@@ -102,8 +76,8 @@ public class ConcreteProductTest {
 		}
 	}
 
-	@Test(expected=IllegalArgumentException.class)
-	public void testEmptyDescription() throws Exception{
+	@Test(expected = IllegalArgumentException.class)
+	public void testEmptyDescription() throws Exception {
 		model.setDescription("");
 	}
 
@@ -122,8 +96,8 @@ public class ConcreteProductTest {
 		}
 	}
 
-	@Test(expected=IllegalArgumentException.class)
-	public void testEmptyWebLink() throws Exception{
+	@Test(expected = IllegalArgumentException.class)
+	public void testEmptyWebLink() throws Exception {
 		model.setWebLink("");
 	}
 
@@ -142,8 +116,8 @@ public class ConcreteProductTest {
 		}
 	}
 
-	@Test(expected=IllegalArgumentException.class)
-	public void testEmptyCategory() throws Exception{
+	@Test(expected = IllegalArgumentException.class)
+	public void testEmptyCategory() throws Exception {
 		model.setCategory("");
 	}
 
@@ -152,8 +126,8 @@ public class ConcreteProductTest {
 		// TODO: Keine Ahnung, wie man das hier macht => Christoph fragen wegen Spring Test Framework
 	}
 
-	@Test(expected=IllegalArgumentException.class)
-	public void testSetNameError() throws Exception{
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetNameError() throws Exception {
 		model = new ConcreteProduct("", Money.of(1.99, EURO), "Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
 	}
 

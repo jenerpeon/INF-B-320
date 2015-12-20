@@ -25,7 +25,7 @@ public class Comment implements Serializable {
 	@Column(name = "ID")
 	private Long commentid;
 
-//	@NotEmpty(message="{Comment.text.NotEmpty}")
+	// @NotEmpty(message="{Comment.text.NotEmpty}")
 	@Column(name = "TEXT")
 	private String text;
 
@@ -44,10 +44,10 @@ public class Comment implements Serializable {
 	@JoinColumn(name = "CPRODUCT_ID", nullable = false)
 	private ConcreteProduct product;
 
-    @OneToOne
-    @JoinColumn(name= "CACCOUNT_ID", nullable = false)
-    private ConcreteUserAccount user; 
-    
+	@OneToOne
+	@JoinColumn(name = "CACCOUNT_ID", nullable = false)
+	private ConcreteUserAccount user;
+
 	@SuppressWarnings("unused")
 	private Comment() {
 	}
@@ -60,13 +60,13 @@ public class Comment implements Serializable {
 		this.accepted = false;
 	}
 
-    public ConcreteUserAccount getUserAccount(){
-    	return this.user;
-    }
-    
-    public void setUser(ConcreteUserAccount user){
-        this.user = user;
-    }
+	public ConcreteUserAccount getUserAccount() {
+		return this.user;
+	}
+
+	public void setUser(ConcreteUserAccount user) {
+		this.user = user;
+	}
 
 	public Long getCommentid() {
 		return commentid;
@@ -75,6 +75,7 @@ public class Comment implements Serializable {
 	public void setCommentid(Long commentid) {
 		this.commentid = commentid;
 	}
+
 	public ConcreteProduct getProduct() {
 		return this.product;
 	}
@@ -112,7 +113,7 @@ public class Comment implements Serializable {
 	}
 
 	public void setFormatedDate(Date date) {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy", Locale.GERMANY);
+		SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.GERMANY);
 		String formatedDate = formatter.format(date);
 		this.formatedDate = formatedDate;
 

@@ -21,12 +21,12 @@ import internetkaufhaus.repositories.ConcreteOrderRepository;
 public class Statistic {
 
 	private final OrderManager<Order> orderManager;
-//	private final ConcreteOrderRepository concreteOrderRepo;
+	// private final ConcreteOrderRepository concreteOrderRepo;
 
 	@Autowired
 	public Statistic(OrderManager<Order> orderManager) {
 		this.orderManager = orderManager;
-//		this.concreteOrderRepo = concreteOrderRepo;
+		// this.concreteOrderRepo = concreteOrderRepo;
 	}
 
 	private Money getTournover(Iterable<Order> orders) {
@@ -45,8 +45,8 @@ public class Statistic {
 		LocalDateTime start = i.getStart();
 		for (int j = 0; j < steps; j += q) {
 			Set<Order> orders = new HashSet<Order>();
-			LocalDateTime from = start.plusDays(j * q);
-			LocalDateTime to = start.plusDays(j * (q + 1));
+			LocalDateTime from = start.plusDays((long) j * q);
+			LocalDateTime to = start.plusDays((long) j * (q + 1));
 			orders = (Set<Order>) orderManager.findBy(Interval.from(from).to(to));
 			turnover.add(getTournover(orders));
 		}
@@ -69,8 +69,8 @@ public class Statistic {
 		LocalDateTime start = i.getStart();
 		for (int j = 0; j < steps; j += q) {
 			Set<Order> orders = new HashSet<Order>();
-			LocalDateTime from = start.plusDays(j * q);
-			LocalDateTime to = start.plusDays(j * (q + 1));
+			LocalDateTime from = start.plusDays((long) j * q);
+			LocalDateTime to = start.plusDays((long) j * (q + 1));
 			orders = (Set<Order>) orderManager.findBy(Interval.from(from).to(to));
 			sales.add(getSales(orders));
 		}
@@ -80,14 +80,14 @@ public class Statistic {
 	/* Purchcases and profit calculation are not yet implemented */
 
 	public List<Integer> getPurchasesByInterval(Interval i, int q) {
-		return null;
+		return null; // TODO: implement this
 	}
 
 	public List<Money> getProfitByInterval(Interval i, int q) {
-		return null;
+		return null; // TODO: implement this
 	}
 
 	public List<Integer> getRetoursByInterval(Interval i, int q) {
-		return null;
+		return null; // TODO: implement this
 	}
 }

@@ -1,5 +1,8 @@
 package internetkaufhaus.entities;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -9,12 +12,15 @@ import java.util.stream.IntStream;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Product;
+import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
@@ -27,24 +33,25 @@ public class ConcreteProduct extends Product {
 	@Column(name = "CATEGORY")
 	private String category;
 	private String imagefile;
-	
+
 	@Lob
-	@Column( length = 100000 )
+	@Column(length = 100000)
 	private String description;
-	
+
 	private String webLink;
-	
+
 	private long selled = 0;
 
+	private float priceFloat;
+
+	private float averageRating = 0;
 
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE }, mappedBy = "product", orphanRemoval = true)
 	private List<Comment> comments = new LinkedList<Comment>();
-	/*@Column(name = "COMMENTS")
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE }, mappedBy = "product", orphanRemoval = true)
-	private List<Comment> comments = new ArrayList<Comment>();*/
 
 	@SuppressWarnings({ "unused", "deprecation" })
-	private ConcreteProduct() {}
+	private ConcreteProduct() {
+	}
 
 	public ConcreteProduct(String name, Money price, String category, String description, String webLink, String imagefile) {
 		super(name, price);
@@ -53,6 +60,7 @@ public class ConcreteProduct extends Product {
 		this.webLink = webLink;
 		this.imagefile = imagefile;
 		this.category = category;
+		this.priceFloat = price.getNumberStripped().floatValue();
 	}
 
 	public int getRatings() {
@@ -71,13 +79,23 @@ public class ConcreteProduct extends Product {
 		double rating = 0;
 		if (comments.isEmpty())
 			return null;
-		for (Comment c : this.getAcceptedComments()){
-			System.out.println("single rating"+c.getRating());
-			rating += c.getRating();}
+		for (Comment c : this.getAcceptedComments()) {
+			rating += c.getRating();
+		}
 		rating = (rating / (this.getAcceptedComments().size()) + (0.5));
-		System.out.println("size:"+this.getAcceptedComments().size());
-		System.out.println("rating"+rating);
-		return IntStream.range(0, (int)rating).boxed().collect(Collectors.toList());
+		return IntStream.range(0, (int) rating).boxed().collect(Collectors.toList());
+	}
+
+	public void updateAverageRating() {
+		int rating = 0;
+		for (Comment comm : this.getAcceptedComments()) {
+			rating += comm.getRating();
+		}
+		this.averageRating = (float) rating / this.getAcceptedComments().size();
+	}
+
+	public float getAverageRating() {
+		return this.averageRating;
 	}
 
 	public Iterable<Comment> getComments() {
@@ -85,8 +103,8 @@ public class ConcreteProduct extends Product {
 	}
 
 	public String addComment(Comment c, ConcreteUserAccount userAccount) {
-//		if (isCommentator(userAccount))
-//			return "Sie haben dieses Produkt bereits bewertet";
+		// if (isCommentator(userAccount))
+		// return "Sie haben dieses Produkt bereits bewertet";
 		c.setProduct(this);
 		c.setUser(userAccount);
 		userAccount.addComment(c);
@@ -123,6 +141,11 @@ public class ConcreteProduct extends Product {
 
 	public String getImagefile() {
 		return imagefile;
+	}
+
+	public String getPriceFloat() {
+		DecimalFormat formatter = new DecimalFormat("0.00€");
+		return formatter.format(priceFloat);
 	}
 
 	public void setImagefile(String imagefile) {
@@ -170,14 +193,13 @@ public class ConcreteProduct extends Product {
 		Optional<InventoryItem> item = inventory.findByProductIdentifier(this.getIdentifier());
 		return item.map(InventoryItem::getQuantity).orElse(Quantity.of(0));
 	}
-	
+
 	public void increaseSelled(int sell) {
 		this.selled += sell;
 	}
-	
+
 	public long getSelled() {
 		return this.selled;
 	}
-	
-	
+
 }

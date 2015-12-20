@@ -5,9 +5,7 @@
 <head>
 
 <meta charset="utf-8">
-<title>Main Page</title>
-<script src="/resources/script/jquery-1.11.2.min.js"
-	type="text/javascript"></script>
+<title>Katalog</title>
 <link href="/resources/css/main.css" rel="stylesheet" type=text/css>
 <link href="/resources/css/catalog.css" rel="stylesheet" type=text/css>
 <script src="/resources/script/jquery.min.js" type="text/javascript"></script>
@@ -72,7 +70,7 @@
 					<div id="pageControl">
 						<div id="articlesPerPage">
 							<form method="post" th:if="${split != null}"
-							th:action="@{'/catalog/'+${category}+'/'+${representation}+'/'+${split}+'/'+${number}+'/changedSetting'}">
+							th:action="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number}+'/changedSetting'}">
 								<fieldset>
 									<label for="total">Artikel pro Seite:</label> <select
 										onchange="this.form.submit()" name="total" id="total"
@@ -81,14 +79,24 @@
 											th:value="${number}"></option>
 									</select>
 								</fieldset>
+								<fieldset>
+									<select onchange="this.form.submit()" name="sort" id="sort">
+										<option selected="true" style="display:none;">Sortieren nach</option>
+										<option value="popularity">Beliebtheit</option>
+										<option value="rating">Bewertung</option>
+										<option value="name,asc">Name, aufsteigend</option>
+										<option value="name,desc">Name, absteigend</option>
+										<option value="price,asc">Preis, aufsteigend</option>
+										<option value="price,desc">Preis, absteigend</option>
+									</select>
+								</fieldset>
 							</form>
 						</div>
 						<div id="articleRepresentation">
-							<a>Artikeldarstellung:</a>
-							<a th:href="@{'/catalog/'+${category}+'/'+'1/'+${split}+'/'+${number}}">
+							<a th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+'1/'+${split}+'/'+${number}}">
 								<img src="/resources/Bilder/details.png" />
 							</a>
-							<a th:href="@{'/catalog/'+${category}+'/'+'2/'+${split}+'/'+${number}}">
+							<a th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+'2/'+${split}+'/'+${number}}">
 								<img src="/resources/Bilder/thumbnails.png" />
 							</a>
 						</div>
@@ -96,26 +104,26 @@
 							<ul>
 								<li><a th:text="@{'Artikel '+${split * (number-1) + 1}+' bis '+${split * number}}+' von '+${maximum}"></a></li>
 								<li>
-									<a id="backward-last" th:href="@{'/catalog/'+${category}+'/'+${representation}+'/'+${split}+'/1'}">
+									<a id="backward-last" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/1'}">
 										<img src="/resources/Bilder/backward-last.png" />
 									</a>
 								</li>
 								<li>
-									<a id="backward" th:href="@{'/catalog/'+${category}+'/'+${representation}+'/'+${split}+'/'+${number-1}}">
+									<a id="backward" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number-1}}">
 										<img src="/resources/Bilder/backward.png" />
 									</a>
 								</li>
 								<li th:each="number:${numbers}">
 									<a class="articlePages" th:if="${category == null}"	th:text="${number}" th:href="@{'/sufu/'+${search}+'/'+${number}}"></a>
-									<a class="articlePages" th:if="${category != null}"	th:text="${number}" th:href="@{'/catalog/'+${category}+'/'+${representation}+'/'+${split}+'/'+${number}}"></a>
+									<a class="articlePages" th:if="${category != null}"	th:text="${number}" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number}}"></a>
 								</li>
 								<li>
-									<a id="forward" th:href="@{'/catalog/'+${category}+'/'+${representation}+'/'+${split}+'/'+${number+1}}">
+									<a id="forward" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number+1}}">
 										<img src="/resources/Bilder/forward.png" />
 									</a>
 								</li>
 								<li>
-									<a id="forward-last" th:href="@{'/catalog/'+${category}+'/'+${representation}+'/'+${split}+'/'+${sites}}">
+									<a id="forward-last" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${sites}}">
 										<img src="/resources/Bilder/forward-last.png" />
 									</a>
 								</li>
@@ -143,7 +151,7 @@
 										<span class="filled" th:each="i : ${concreteproduct.rating}">☆</span>
 									</div>
 									<a th:text="${concreteproduct.ratings}+' Bewertung(en)'"></a>
-									<a class="price" th:text="${concreteproduct.price}"></a>
+									<a class="price" th:text="${concreteproduct.priceFloat}"></a>
 								</div>
 							</div>
 							</li>
@@ -164,7 +172,7 @@
 								<span class="filled" th:each="i : ${concreteproduct.rating}">☆</span>
 							</div>
 							<a th:text="${concreteproduct.ratings}+' Bewertung(en)'"></a>
-							<a class="price-thumbnail" th:text="${concreteproduct.price}"></a>
+							<a class="price-thumbnail" th:text="${concreteproduct.priceFloat}"></a>
 							</div>
 						</li>
 					</ul>
@@ -173,7 +181,7 @@
 					<div id="pageControl">
 						<div id="articlesPerPage">
 							<form method="post" th:if="${split != null}"
-							th:action="@{'/catalog/'+${category}+'/'+${representation}+'/'+${split}+'/'+${number}+'/changedSetting'}">
+							th:action="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number}+'/changedSetting'}">
 								<fieldset>
 									<label for="total">Artikel pro Seite:</label> <select
 										onchange="this.form.submit()" name="total" id="total"
@@ -182,14 +190,24 @@
 											th:value="${number}"></option>
 									</select>
 								</fieldset>
+								<fieldset>
+									<select onchange="this.form.submit()" name="sort" id="sort">
+										<option selected="true" style="display:none;">Sortieren nach</option>
+										<option value="popularity">Beliebtheit</option>
+										<option vlaue="rating">Bewertung</option>
+										<option value="name,asc">Name, aufsteigend</option>
+										<option value="name,desc">Name, absteigend</option>
+										<option value="price,asc">Preis, aufsteigend</option>
+										<option value="price,desc">Preis, absteigend</option>
+									</select>
+								</fieldset>
 							</form>
 						</div>
 						<div id="articleRepresentation">
-							<a>Artikeldarstellung:</a>
-							<a th:href="@{'/catalog/'+${category}+'/'+'1/'+${split}+'/'+${number}}">
+							<a th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+'1/'+${split}+'/'+${number}}">
 								<img src="/resources/Bilder/details.png" />
 							</a>
-							<a th:href="@{'/catalog/'+${category}+'/'+'2/'+${split}+'/'+${number}}">
+							<a th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+'2/'+${split}+'/'+${number}}">
 								<img src="/resources/Bilder/thumbnails.png" />
 							</a>
 						</div>
@@ -197,26 +215,26 @@
 							<ul>
 								<li><a th:text="@{'Artikel '+${split * (number-1) + 1}+' bis '+${split * number}}+' von '+${maximum}"></a></li>
 								<li>
-									<a id="backward-last" th:href="@{'/catalog/'+${category}+'/'+${representation}+'/'+${split}+'/1'}">
+									<a id="backward-last" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/1'}">
 										<img src="/resources/Bilder/backward-last.png" />
 									</a>
 								</li>
 								<li>
-									<a id="backward" th:href="@{'/catalog/'+${category}+'/'+${representation}+'/'+${split}+'/'+${number-1}}">
+									<a id="backward" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number-1}}">
 										<img src="/resources/Bilder/backward.png" />
 									</a>
 								</li>
 								<li th:each="number:${numbers}">
 									<a class="articlePages" th:if="${category == null}"	th:text="${number}" th:href="@{'/sufu/'+${search}+'/'+${number}}"></a>
-									<a class="articlePages" th:if="${category != null}"	th:text="${number}" th:href="@{'/catalog/'+${category}+'/'+${representation}+'/'+${split}+'/'+${number}}"></a>
+									<a class="articlePages" th:if="${category != null}"	th:text="${number}" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number}}"></a>
 								</li>
 								<li>
-									<a id="forward" th:href="@{'/catalog/'+${category}+'/'+${representation}+'/'+${split}+'/'+${number+1}}">
+									<a id="forward" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number+1}}">
 										<img src="/resources/Bilder/forward.png" />
 									</a>
 								</li>
 								<li>
-									<a id="forward-last" th:href="@{'/catalog/'+${category}+'/'+${representation}+'/'+${split}+'/'+${sites}}">
+									<a id="forward-last" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${sites}}">
 										<img src="/resources/Bilder/forward-last.png" />
 									</a>
 								</li>

@@ -11,6 +11,7 @@ import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -39,7 +40,11 @@ public class HeaderAdvice {
 	/**
 	 * This is the constructor. It's neither used nor does it contain any functionality other than storing function arguments as class attribute, what do you expect me to write here? It's copied from CartController.
 	 * 
+	 * @param userRepo
+	 * @param concreteOrderRepo
+	 * @param orderManager
 	 * @param prodSearch
+	 * @param sender
 	 */
 	@Autowired
 	public HeaderAdvice(ConcreteUserAccountRepository userRepo, ConcreteOrderRepository concreteOrderRepo, OrderManager<Order> orderManager, Search prodSearch, MailSender sender) {
@@ -61,7 +66,7 @@ public class HeaderAdvice {
 	 * @return
 	 */
 	@ModelAttribute("categories")
-	public Iterable<String> addCatalog(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
+	public Iterable<String> addCatalog() {
 		return prodSearch.getCategories();
 	}
 
@@ -103,7 +108,10 @@ public class HeaderAdvice {
 	 * 
 	 * @param exception
 	 * @return
-	 *
-	 * @ExceptionHandler(value = Exception.class) public String handleExceptions(Exception exception) { return "/error"; }
 	 */
+	@ExceptionHandler(value = Exception.class)
+	public String handleExceptions(Exception exception, ModelMap model) {
+		model.addAttribute("exception", exception.toString());
+		return "error500";
+	}
 }

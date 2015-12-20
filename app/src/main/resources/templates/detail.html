@@ -4,10 +4,8 @@
 
 <head>
 <meta charset="utf-8">
-<title>Main Page</title>
-<script src="/resources/script/jquery-1.11.2.min.js"
-	type="text/javascript"></script>
-<script src="/resources/script/bootstrap.min.js" type="text/javascript"></script>
+<title>Produktdetails</title>
+<script src="/resources/script/jquery.min.js" type="text/javascript"></script>
 <link href="/resources/css/main.css" rel="stylesheet" type=text/css>
 <link href="/resources/css/detail.css" rel="stylesheet" type=text/css>
 
@@ -21,7 +19,7 @@
 				<div id="path">
 					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
 					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
-					<a th:text="${concreteproduct.category}"></a>
+					<a th:href="@{'/catalog/'+${concreteproduct.category}+'/name'+'/1'+'/6'+'/1'}" th:text="${concreteproduct.category}"></a>
 					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
 					<a th:text="${concreteproduct.name}"></a>
 				</div>
@@ -55,6 +53,7 @@
 					<p th:text="${concreteproduct.ratings}+' Bewertung(en)'"></p>
 					<p class="price" th:text="@{'Preis: '+${concreteproduct.price}}">1 Euro</p>
 					<p th:text="@{'Verkauft: '+${concreteproduct.selled}}"></p>
+					<p th:text="@{'Durchschnittswertung: '+${concreteproduct.averageRating}}"></p>
 					<table id="comments" th:if="${not #lists.isEmpty(comments)}">
 						<tr>
 							<th><a >Kommentar</a></th>
