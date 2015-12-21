@@ -6,7 +6,7 @@
 	<artifactId>swt22-PoeonProject</artifactId>
 	<version>1.1.0.BUILD-SNAPSHOT</version>
 
-	<name>Software Engineering Lab - Kickstart</name>
+	<name>swt15w22 - Software Engineering Lab</name>
 
 	<parent>
 		<groupId>de.tudresden.inf.st.lab</groupId>
@@ -42,7 +42,12 @@
 	<dependency>
 		<groupId>commons-collections</groupId>
 		<artifactId>commons-collections</artifactId>
-		<version>3.2.1</version>
+		<version>3.2.2</version>
+	</dependency>
+	<dependency>
+		<groupId>org.mockito</groupId>
+		<artifactId>mockito-all</artifactId>
+		<version>1.10.19</version>
 	</dependency>
 
 	</dependencies>
