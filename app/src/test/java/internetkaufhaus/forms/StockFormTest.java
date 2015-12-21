@@ -19,7 +19,7 @@ public class StockFormTest {
 	
 	@Test
 	public void prodIdTest() {
-		ConcreteProduct prod = new ConcreteProduct("TestArtikel", Money.of(50, "EUR"), "Testkategorie", "Testbeschreibung", "Testweblink", "Testimagefile");
+		ConcreteProduct prod = new ConcreteProduct("TestArtikel", Money.of(50, "EUR"), (float) 28, "Testkategorie", "Testbeschreibung", "Testweblink", "Testimagefile");
 		model.setProdId(prod.getIdentifier());
 		assertTrue("Produkt ID erhalten", model.getProdId().equals(prod.getIdentifier()));
 	}

@@ -1,22 +1,13 @@
 package internetkaufhaus.entities;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.salespointframework.core.Currencies.EURO;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 import org.javamoney.moneta.Money;
 import org.junit.Before;
 import org.junit.Test;
-import org.salespointframework.inventory.Inventory;
-import org.salespointframework.inventory.InventoryItem;
-import org.salespointframework.useraccount.Role;
-import org.salespointframework.useraccount.UserAccount;
-import org.salespointframework.useraccount.UserAccountManager;
 
 import internetkaufhaus.entities.ConcreteProduct;
 
@@ -29,7 +20,7 @@ public class ConcreteProductTest {
 	@Before
 	public void init() {
 		// UserAccount dummy = new UserAccount("hans","schranz", Role.of("ROLE_CUSTOMER"));
-		model = new ConcreteProduct("Zigarre", Money.of(1.99, EURO), "Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
+		model = new ConcreteProduct("Zigarre", Money.of(1.99, EURO), (float) 1.49, "Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
 	}
 
 	@Test
@@ -128,7 +119,7 @@ public class ConcreteProductTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetNameError() throws Exception {
-		model = new ConcreteProduct("", Money.of(1.99, EURO), "Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
+		model = new ConcreteProduct("", Money.of(1.99, EURO), (float) 1.49, "Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
 	}
 
 }

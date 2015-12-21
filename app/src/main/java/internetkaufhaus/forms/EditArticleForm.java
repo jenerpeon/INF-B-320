@@ -13,6 +13,8 @@ public class EditArticleForm {
 
 	@NotEmpty(message = "{EditArticleForm.name.NotEmpty}")
 	private String name;
+	
+	private float buyingPrice;
 
 	private float price;
 
@@ -57,6 +59,14 @@ public class EditArticleForm {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public float getBuyingPrice() {
+		return this.buyingPrice;
+	}
+	
+	public void setBuyingPrice(float buyingPrice) {
+		this.buyingPrice = buyingPrice;
 	}
 
 }
