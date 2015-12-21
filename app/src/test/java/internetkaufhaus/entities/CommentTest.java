@@ -34,7 +34,7 @@ public class CommentTest {
 
 	@Test
 	public void testProduct() {
-		ConcreteProduct prod = new ConcreteProduct("Zigarre", Money.of(1.99, EURO), "Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
+		ConcreteProduct prod = new ConcreteProduct("Zigarre", Money.of(1.99, EURO), (float) 1.49,"Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
 		model.setProduct(prod);
 		assertTrue("Product wird zurückgegeben", model.getProduct() == prod);
 	}

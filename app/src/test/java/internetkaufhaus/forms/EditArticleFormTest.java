@@ -13,7 +13,7 @@ public class EditArticleFormTest {
 	
 	@Test
 	public void prodIdTest() {
-		ConcreteProduct prodId = new ConcreteProduct("TestArtikel", Money.of(50, "EUR"), "Testkategorie", "Testbeschreibung", "Testweblink", "Testimagefile");
+		ConcreteProduct prodId = new ConcreteProduct("TestArtikel", Money.of(50, "EUR"), (float) 48, "Testkategorie", "Testbeschreibung", "Testweblink", "Testimagefile");
 		model.setProdId(prodId);
 		assertTrue("Produkt erhalten", model.getProdId().equals(prodId));
 	}
@@ -40,6 +40,12 @@ public class EditArticleFormTest {
 	public void descriptionTest() {
 		model.setDescription("Eine Kiste. Mit Quidditch Sachen drin");
 		assertTrue("Beschreibung erhalten", model.getDescription().equals("Eine Kiste. Mit Quidditch Sachen drin"));
+	}
+	
+	@Test
+	public void buyingPriceTest() {
+		model.setBuyingPrice(48);
+		assertTrue("Einkaufspreis erhalten", model.getBuyingPrice() == (float) 48);
 	}
 
 }

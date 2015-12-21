@@ -271,6 +271,7 @@ public class ManagementController {
 		prodId.addCategory(editForm.getCategory());
 		prodId.setName(editForm.getName());
 		prodId.setPrice(Money.of(editForm.getPrice(), "EUR"));
+		prodId.setBuyingPrice(editForm.getBuyingPrice());
 		prodId.setDescription(editForm.getDescription());
 
 		if (!(img.getOriginalFilename().isEmpty())) {
@@ -310,7 +311,7 @@ public class ManagementController {
 			System.out.println("another error (file empty) !!!");
 		}
 
-		ConcreteProduct prodId = new ConcreteProduct(editForm.getName(), Money.of(editForm.getPrice(), "EUR"), editForm.getCategory(), editForm.getDescription(), "", img.getOriginalFilename());
+		ConcreteProduct prodId = new ConcreteProduct(editForm.getName(), Money.of(editForm.getPrice(), "EUR"), editForm.getBuyingPrice(),editForm.getCategory(), editForm.getDescription(), "", img.getOriginalFilename());
 
 		catalog.save(prodId);
 

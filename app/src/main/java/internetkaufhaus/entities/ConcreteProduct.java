@@ -38,6 +38,8 @@ public class ConcreteProduct extends Product {
 	private long selled = 0;
 
 	private float priceFloat;
+	
+	private float buyingPrice;
 
 	private float averageRating = 0;
 
@@ -48,9 +50,10 @@ public class ConcreteProduct extends Product {
 	private ConcreteProduct() {
 	}
 
-	public ConcreteProduct(String name, Money price, String category, String description, String webLink, String imagefile) {
+	public ConcreteProduct(String name, Money price, float buyingPrice, String category, String description, String webLink, String imagefile) {
 		super(name, price);
 		this.addCategory(category);
+		this.buyingPrice = buyingPrice;
 		this.description = description;
 		this.webLink = webLink;
 		this.imagefile = imagefile;
@@ -195,6 +198,14 @@ public class ConcreteProduct extends Product {
 
 	public long getSelled() {
 		return this.selled;
+	}
+	
+	public float getBuyingPrice() {
+		return this.buyingPrice;
+	}
+	
+	public void setBuyingPrice(float buyingPrice) {
+		this.buyingPrice =  buyingPrice;
 	}
 
 }
