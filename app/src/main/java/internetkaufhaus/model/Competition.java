@@ -22,7 +22,7 @@ public class Competition {
 	public ArrayList<ConcreteUserAccount> getWinners() {
 		winners.clear();
 		for (ConcreteUserAccount acc : accs) {
-			creditmanager.udateCreditpointsByUser(acc);
+			creditmanager.updateCreditpointsByUser(acc);
 		}
 		int accsize = this.accs.size();
 		int numberofwinners = accsize / 10;

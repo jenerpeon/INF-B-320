@@ -29,7 +29,7 @@ public class Creditmanager {
 
 	// Method to update the credit amount of the given ConcreteUserAccount
 	// to get the credits of the User, use the method User.getCredits of ConcreteUserAccount--Class
-	public void udateCreditpointsByUser(ConcreteUserAccount recruiter) {
+	public void updateCreditpointsByUser(ConcreteUserAccount recruiter) {
 		List<UserAccount> recruits = recruiter.getRecruits();
 
 		Money credits = Money.of(0, EURO);
