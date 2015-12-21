@@ -11,7 +11,7 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
 @Component
 public class NewUserAccountForm {
-	private Role adminRole;
+
 	private UserAccountManager manager;
 	private ConcreteUserAccountRepository repo;
 
@@ -19,10 +19,9 @@ public class NewUserAccountForm {
 	public NewUserAccountForm(UserAccountManager manager, ConcreteUserAccountRepository repo) {
 		this.manager = manager;
 		this.repo = repo;
-		this.adminRole = Role.of("ROLE_ADMIN");
 	}
 
-	public boolean createUser(CreateUserForm createuserform) {
+	public long createUser(CreateUserForm createuserform) {
 
 		ConcreteUserAccount cacc = new ConcreteUserAccount(
 				// createuserform.getEmail(),
@@ -36,7 +35,7 @@ public class NewUserAccountForm {
 				createuserform.getPassword(), Role.of(createuserform.getRolename()), manager);
 		repo.save(cacc);
 		manager.save(cacc.getUserAccount());
-		return true;
+		return cacc.getId();
 	}
 
 	public boolean changeUser(Long id, String role, String password) {

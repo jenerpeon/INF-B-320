@@ -38,36 +38,49 @@ public class BillingAdressForm {
 	@Pattern(regexp = "([A-Za-z])+", message = "shipping town contains illegal characters")
 	private String billingTown;
 
+	public BillingAdressForm(){};
+	
+	public BillingAdressForm(String gender, String firstName, String lastName, String street, String houseNumber, String adressLine2, String zipCode, String town) {
+		this.billingGender = gender;
+		this.billingFirstName = firstName;
+		this.billingLastName = lastName;
+		this.billingStreet = street;
+		this.billingHouseNumber = houseNumber;
+		this.billingAdressLine2 = adressLine2;
+		this.billingZipCode = zipCode;
+		this.billingTown = town;
+	}
+	
 	public String getBillingGender() {
-		return billingGender;
+		return this.billingGender;
 	}
 
 	public String getBillingFirstName() {
-		return billingFirstName;
+		return this.billingFirstName;
 	}
 
 	public String getBillingLastName() {
-		return billingLastName;
+		return this.billingLastName;
 	}
 
 	public String getBillingStreet() {
-		return billingStreet;
+		return this.billingStreet;
 	}
 
 	public String getBillingHouseNumber() {
-		return billingHouseNumber;
+		return this.billingHouseNumber;
 	}
 
 	public String getBillingAdressLine2() {
-		return billingAdressLine2;
+		return this.billingAdressLine2;
 	}
 
 	public String getBillingZipCode() {
-		return billingZipCode;
+		return this.billingZipCode;
 	}
 
 	public String getBillingTown() {
-		return billingTown;
+		return this.billingTown;
 	}
 
 	public void setBillingGender(String billingGender) {
@@ -104,14 +117,16 @@ public class BillingAdressForm {
 
 	public List<String> getBillingAdress() {
 		List<String> billingAdress = new ArrayList<String>();
-		billingAdress.add(billingGender);
-		billingAdress.add(billingFirstName);
-		billingAdress.add(billingLastName);
-		billingAdress.add(billingStreet);
-		billingAdress.add(billingHouseNumber);
-		billingAdress.add(billingAdressLine2);
-		billingAdress.add(billingZipCode);
-		billingAdress.add(billingTown);
+		billingAdress.add(this.billingGender);
+		billingAdress.add(this.billingFirstName);
+		billingAdress.add(this.billingLastName);
+		billingAdress.add(this.billingStreet);
+		billingAdress.add(this.billingHouseNumber);
+		billingAdress.add(this.billingAdressLine2);
+		billingAdress.add(this.billingZipCode);
+		billingAdress.add(this.billingTown);
+		
+		System.out.println(this.billingGender);
 
 		return billingAdress;
 	}

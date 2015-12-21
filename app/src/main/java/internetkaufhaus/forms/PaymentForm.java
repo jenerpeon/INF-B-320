@@ -49,7 +49,7 @@ public class PaymentForm {
 	}
 
 	public String getCardNumber() {
-		return this.cardName;
+		return this.cardNumber;
 	}
 
 	public void setCardNumber(String cardNumber) {

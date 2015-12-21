@@ -39,6 +39,19 @@ public class ShippingAdressForm {
 	@NotEmpty(message = "shipping town field is mandatory")
 	@Pattern(regexp = "([A-Za-z])+", message = "shipping town contains illegal characters")
 	private String shippingTown;
+	
+	public ShippingAdressForm(){};
+	
+	public ShippingAdressForm(String gender, String firstName, String lastName, String street, String houseNumber, String adressLine2, String zipCode, String town) {
+		this.shippingGender = gender;
+		this.shippingFirstName = firstName;
+		this.shippingLastName = lastName;
+		this.shippingStreet = street;
+		this.shippingHouseNumber = houseNumber;
+		this.shippingAdressLine2 = adressLine2;
+		this.shippingZipCode = zipCode;
+		this.shippingTown = town;
+	}
 
 	public String getShippingGender() {
 		return shippingGender;
@@ -106,14 +119,14 @@ public class ShippingAdressForm {
 
 	public List<String> getShippingAdress() {
 		List<String> shippingAdress = new ArrayList<String>();
-		shippingAdress.add(shippingGender);
-		shippingAdress.add(shippingFirstName);
-		shippingAdress.add(shippingLastName);
-		shippingAdress.add(shippingStreet);
-		shippingAdress.add(shippingHouseNumber);
-		shippingAdress.add(shippingAdressLine2);
-		shippingAdress.add(shippingZipCode);
-		shippingAdress.add(shippingTown);
+		shippingAdress.add(this.shippingGender);
+		shippingAdress.add(this.shippingFirstName);
+		shippingAdress.add(this.shippingLastName);
+		shippingAdress.add(this.shippingStreet);
+		shippingAdress.add(this.shippingHouseNumber);
+		shippingAdress.add(this.shippingAdressLine2);
+		shippingAdress.add(this.shippingZipCode);
+		shippingAdress.add(this.shippingTown);
 
 		return shippingAdress;
 	}

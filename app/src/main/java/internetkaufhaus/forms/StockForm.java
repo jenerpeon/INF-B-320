@@ -3,7 +3,6 @@ package internetkaufhaus.forms;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.salespointframework.catalog.ProductIdentifier;
 
 public class StockForm {
