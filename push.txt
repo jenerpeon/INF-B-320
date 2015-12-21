@@ -1,0 +1,1 @@
+Ich bin eine Datei, die nur dazu da ist um sie zu entfernen oder hinzuzufügen. So kann man nach einem merge was pushen und sonarcube wird ausgeüfhrt.
