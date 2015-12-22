@@ -39,9 +39,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
-import internetkaufhaus.forms.BillingAdressForm;
+import internetkaufhaus.forms.BillingAddressForm;
 import internetkaufhaus.forms.PaymentForm;
-import internetkaufhaus.forms.ShippingAdressForm;
+import internetkaufhaus.forms.ShippingAddressForm;
 import internetkaufhaus.model.ConcreteMailSender;
 import internetkaufhaus.model.ReturnManager;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
@@ -73,6 +73,7 @@ class CartController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page adds a product to the cart and then redirects back to the catalog.
 	 * 
 	 * @param concreteproduct
 	 * @param number
@@ -91,6 +92,7 @@ class CartController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows the cart.
 	 * 
 	 * @return
 	 */
@@ -101,6 +103,7 @@ class CartController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page clears the cart.
 	 * 
 	 * @param cart
 	 * @return
@@ -113,6 +116,7 @@ class CartController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page removes one item from the cart.
 	 * 
 	 * @param cart
 	 * @param identifier
@@ -126,6 +130,7 @@ class CartController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page changes the amount of items of one product in the cart.
 	 * 
 	 * @param cart
 	 * @param identifier
@@ -181,18 +186,20 @@ class CartController {
 	 * @param modelmap
 	 * @param cart
 	 * @param paymentForm
-	 * @param result
-	 * @param shippingAdressForm
-	 * @param billingAdressForm
+	 * @param result1
+	 * @param shippingAddressForm
+	 * @param billingAddressForm
 	 * @param userAccount
 	 * @param redir
 	 * @return
 	 */
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 	@RequestMapping(value = "/payed", method = RequestMethod.POST)
-	public String payed(@ModelAttribute Cart cart, @ModelAttribute("paymentForm") @Valid PaymentForm paymentForm, BindingResult result, @ModelAttribute("shippingAdressForm") @Valid ShippingAdressForm shippingAdressForm, @ModelAttribute("billingAdressForm") @Valid BillingAdressForm billingAdressForm, @LoggedIn Optional<UserAccount> userAccount, RedirectAttributes redir) {
-		if (result.hasErrors()) {
-			redir.addFlashAttribute("message", result.getAllErrors());
+	public String payed(@ModelAttribute Cart cart, @ModelAttribute("paymentForm") @Valid PaymentForm paymentForm, @ModelAttribute("paymentForm") BindingResult result1, @ModelAttribute("shippingAddressForm") @Valid ShippingAddressForm shippingAddressForm, @ModelAttribute("shippingAddressForm") BindingResult result2, @ModelAttribute("billingAddressForm") @Valid BillingAddressForm billingAddressForm, @ModelAttribute("billingAddressForm") BindingResult result3, @LoggedIn Optional<UserAccount> userAccount, RedirectAttributes redir) {
+		if (result1.hasErrors() || result2.hasErrors() || result3.hasErrors()) {
+			redir.addFlashAttribute("message1", result1.getAllErrors());
+			redir.addFlashAttribute("message2", result2.getAllErrors());
+			redir.addFlashAttribute("message3", result3.getAllErrors());
 			return "redirect:/orderdata/1";
 		}
 		return userAccount.map(account -> {
@@ -205,15 +212,15 @@ class CartController {
 
 			cart.addItemsTo(o);
 
-			String billingAdress = billingAdressForm.getBillingFirstName() + " " + billingAdressForm.getBillingLastName() + "\n" + billingAdressForm.getBillingStreet() + " " + billingAdressForm.getBillingHouseNumber() + "\n" + billingAdressForm.getBillingAdressLine2() + "\n" + billingAdressForm.getBillingZipCode() + "" + billingAdressForm.getBillingTown();
+			String billingAddress = billingAddressForm.getBillingFirstName() + " " + billingAddressForm.getBillingLastName() + "\n" + billingAddressForm.getBillingStreet() + " " + billingAddressForm.getBillingHouseNumber() + "\n" + billingAddressForm.getBillingAddressLine2() + "\n" + billingAddressForm.getBillingZipCode() + "" + billingAddressForm.getBillingTown();
 
-			CreditCard paymentMethod = new CreditCard(paymentForm.getCardName(), paymentForm.getCardAssociationName(), paymentForm.getCardNumber(), paymentForm.getNameOnCard(), billingAdress, validFrom, paymentForm.getExpiryDateLocalDateTime(), paymentForm.getCardVerificationCode(), dailyWithdrawalLimit, creditLimit);
+			CreditCard paymentMethod = new CreditCard(paymentForm.getCardName(), paymentForm.getCardAssociationName(), paymentForm.getCardNumber(), paymentForm.getNameOnCard(), billingAddress, validFrom, paymentForm.getExpiryDateLocalDateTime(), paymentForm.getCardVerificationCode(), dailyWithdrawalLimit, creditLimit);
 
 			o.setPaymentMethod(paymentMethod);
 
-			order.setBillingAdress(billingAdressForm.getBillingAdress());
+			order.setBillingAddress(billingAddressForm.getBillingAddress());
 
-			order.setShippingAdress(shippingAdressForm.getShippingAdress());
+			order.setShippingAddress(shippingAddressForm.getShippingAddress());
 
 			order.setDateOrdered(LocalDateTime.now());
 			orderManager.save(o);

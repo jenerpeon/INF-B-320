@@ -7,15 +7,15 @@ import java.util.List;
 
 import org.junit.Test;
 
-public class ShippingAdressFormTest {
+public class ShippingAddressFormTest {
 	
-	private ShippingAdressForm model = new ShippingAdressForm();
+	private ShippingAddressForm model = new ShippingAddressForm();
 	private String gender = "Herr";
 	private String firstName = "Martin";
 	private String lastName = "Bens";
 	private String street = "Wundtstrasse";
 	private String houseNumber = "3";
-	private String adressLine2 = "Hinterhaus";
+	private String addressLine2 = "Hinterhaus";
 	private String zipCode = "01217";
 	private String town = "Dresden";
 	
@@ -50,9 +50,9 @@ public class ShippingAdressFormTest {
 	}
 	
 	@Test
-	public void testShippingAdressLine2() {
-		model.setShippingAdressLine2(adressLine2);
-		assertTrue("Adresszusatz erhalten", model.getShippingAdressLine2().equals(adressLine2));
+	public void testShippingAddressLine2() {
+		model.setShippingAddressLine2(addressLine2);
+		assertTrue("Adresszusatz erhalten", model.getShippingAddressLine2().equals(addressLine2));
 	}
 
 	@Test
@@ -68,20 +68,20 @@ public class ShippingAdressFormTest {
 	}
 	
 	@Test
-	public void testShippingAdress() {
-		List<String> ShippingAdress = new ArrayList<String>();
-		ShippingAdress.add(gender);
-		ShippingAdress.add(firstName);
-		ShippingAdress.add(lastName);
-		ShippingAdress.add(street);
-		ShippingAdress.add(houseNumber);
-		ShippingAdress.add(adressLine2);
-		ShippingAdress.add(zipCode);
-		ShippingAdress.add(town);
+	public void testShippingAddress() {
+		List<String> shippingAddress = new ArrayList<String>();
+		shippingAddress.add(gender);
+		shippingAddress.add(firstName);
+		shippingAddress.add(lastName);
+		shippingAddress.add(street);
+		shippingAddress.add(houseNumber);
+		shippingAddress.add(addressLine2);
+		shippingAddress.add(zipCode);
+		shippingAddress.add(town);
 		
-		ShippingAdressForm model = new ShippingAdressForm(gender, firstName, lastName, street, houseNumber, adressLine2, zipCode, town);
+		ShippingAddressForm model = new ShippingAddressForm(gender, firstName, lastName, street, houseNumber, addressLine2, zipCode, town);
 		
-		assertTrue("Zahlungsadresse erhalten", model.getShippingAdress().equals(ShippingAdress));
+		assertTrue("Zahlungsadresse erhalten", model.getShippingAddress().equals(shippingAddress));
 	}
 	
 }

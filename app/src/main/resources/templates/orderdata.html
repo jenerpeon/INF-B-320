@@ -17,7 +17,7 @@
 		  document.getElementsByName("billingLastName")[0].value = "";
 		  document.getElementsByName("billingStreet")[0].value = "";
 		  document.getElementsByName("billingHouseNumber")[0].value = "";
-		  document.getElementsByName("billingAdressLine2")[0].value = "";
+		  document.getElementsByName("billingAddressLine2")[0].value = "";
 		  document.getElementsByName("billingZipCode")[0].value = "";
 		  document.getElementsByName("billingTown")[0].value = "";
 	  }
@@ -26,7 +26,7 @@
 		  document.getElementsByName("billingLastName")[0].value = document.getElementsByName("shippingLastName")[0].value;
 		  document.getElementsByName("billingStreet")[0].value = document.getElementsByName("shippingStreet")[0].value;
 		  document.getElementsByName("billingHouseNumber")[0].value = document.getElementsByName("shippingHouseNumber")[0].value;
-		  document.getElementsByName("billingAdressLine2")[0].value = document.getElementsByName("shippingAdressLine2")[0].value;
+		  document.getElementsByName("billingAddressLine2")[0].value = document.getElementsByName("shippingAddressLine2")[0].value;
 		  document.getElementsByName("billingZipCode")[0].value = document.getElementsByName("shippingZipCode")[0].value;
 		  document.getElementsByName("billingTown")[0].value = document.getElementsByName("shippingTown")[0].value;
 	  }
@@ -37,7 +37,7 @@
 		  document.getElementsByName("billingLastName")[0].value = document.getElementsByName("shippingLastName")[0].value;
 		  document.getElementsByName("billingStreet")[0].value = document.getElementsByName("shippingStreet")[0].value;
 		  document.getElementsByName("billingHouseNumber")[0].value = document.getElementsByName("shippingHouseNumber")[0].value;
-		  document.getElementsByName("billingAdressLine2")[0].value = document.getElementsByName("shippingAdressLine2")[0].value;
+		  document.getElementsByName("billingAddressLine2")[0].value = document.getElementsByName("shippingAddressLine2")[0].value;
 		  document.getElementsByName("billingZipCode")[0].value = document.getElementsByName("shippingZipCode")[0].value;
 		  document.getElementsByName("billingTown")[0].value = document.getElementsByName("shippingTown")[0].value;
 	  }
@@ -53,10 +53,12 @@
 			
 			<div id="mainframe">
 				<ul id="registration-error">
-					<li th:each="line : ${message}" th:text="${line.getDefaultMessage()}"></li>
+					<li th:each="line : ${message1}" th:text="${line.getDefaultMessage()}"></li>
+					<li th:each="line : ${message2}" th:text="${line.getDefaultMessage()}"></li>
+					<li th:each="line : ${message3}" th:text="${line.getDefaultMessage()}"></li>
 				</ul>
 				<h1>Versand - und Rechnungsadresse</h1>
-				<form id="billingShippingAdress">
+				<form id="billingShippingAddress">
 					<fieldset>
 						<ol class="radioSelect">
 							<li>
@@ -94,15 +96,15 @@
 								<input type="text" name="shippingHouseNumber" onchange="update()"/>
 							</li>
 							<li>
-								<label for="shippingAdressLine2">Adresszusatz:</label>
-								<input type="text" name="shippingAdressLine2" onchange="update()"/>
+								<label for="shippingAddressLine2">Adresszusatz:</label>
+								<input type="text" name="shippingAddressLine2" onchange="update()"/>
 							</li>
 							<li>
 								<label for="shippingZipCode">Postleitzahl:</label>
 								<input type="text" name="shippingZipCode" onchange="update()"/>
 							</li>
 							<li>
-								<label for="shippingTown">Adresszusatz:</label>
+								<label for="shippingTown">Stadt:</label>
 								<input type="text" name="shippingTown" onchange="update()"/>
 							</li>
 						</ol>
@@ -134,15 +136,15 @@
 								<input type="text" name="billingHouseNumber"/>
 							</li>
 							<li>
-								<label for="billingAdressLine2">Adresszusatz:</label>
-								<input type="text" name="billingAdressLine2"/>
+								<label for="billingAddressLine2">Adresszusatz:</label>
+								<input type="text" name="billingAddressLine2"/>
 							</li>
 							<li>
 								<label for="billingZipCode">Postleitzahl:</label>
 								<input type="text" name="billingZipCode"/>
 							</li>
 							<li>
-								<label for="billingTown">Adresszusatz:</label>
+								<label for="billingTown">Stadt:</label>
 								<input type="text" name="billingTown"/>
 							</li>
 						</ol>

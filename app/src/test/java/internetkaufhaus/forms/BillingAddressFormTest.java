@@ -7,15 +7,15 @@ import java.util.List;
 
 import org.junit.Test;
 
-public class BillingAdressFormTest {
+public class BillingAddressFormTest {
 	
-	private BillingAdressForm model = new BillingAdressForm();
+	private BillingAddressForm model = new BillingAddressForm();
 	private String gender = "Herr";
 	private String firstName = "Martin";
 	private String lastName = "Bens";
 	private String street = "Wundtstrasse";
 	private String houseNumber = "3";
-	private String adressLine2 = "Hinterhaus";
+	private String addressLine2 = "Hinterhaus";
 	private String zipCode = "01217";
 	private String town = "Dresden";
 	
@@ -50,9 +50,9 @@ public class BillingAdressFormTest {
 	}
 	
 	@Test
-	public void testBillingAdressLine2() {
-		model.setBillingAdressLine2(adressLine2);
-		assertTrue("Adresszusatz erhalten", model.getBillingAdressLine2().equals(adressLine2));
+	public void testBillingAddressLine2() {
+		model.setBillingAddressLine2(addressLine2);
+		assertTrue("Adresszusatz erhalten", model.getBillingAddressLine2().equals(addressLine2));
 	}
 
 	@Test
@@ -68,20 +68,20 @@ public class BillingAdressFormTest {
 	}
 	
 	@Test
-	public void testBillingAdress() {
-		List<String> billingAdress = new ArrayList<String>();
-		billingAdress.add(gender);
-		billingAdress.add(firstName);
-		billingAdress.add(lastName);
-		billingAdress.add(street);
-		billingAdress.add(houseNumber);
-		billingAdress.add(adressLine2);
-		billingAdress.add(zipCode);
-		billingAdress.add(town);
+	public void testBillingAddress() {
+		List<String> billingAddress = new ArrayList<String>();
+		billingAddress.add(gender);
+		billingAddress.add(firstName);
+		billingAddress.add(lastName);
+		billingAddress.add(street);
+		billingAddress.add(houseNumber);
+		billingAddress.add(addressLine2);
+		billingAddress.add(zipCode);
+		billingAddress.add(town);
 		
-		BillingAdressForm model = new BillingAdressForm(gender, firstName, lastName, street, houseNumber, adressLine2, zipCode, town);
+		BillingAddressForm model = new BillingAddressForm(gender, firstName, lastName, street, houseNumber, addressLine2, zipCode, town);
 		
-		assertTrue("Zahlungsadresse erhalten", model.getBillingAdress().equals(billingAdress));
+		assertTrue("Zahlungsadresse erhalten", model.getBillingAddress().equals(billingAddress));
 	}
 	
 }

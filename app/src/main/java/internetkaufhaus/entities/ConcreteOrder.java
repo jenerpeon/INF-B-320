@@ -36,7 +36,7 @@ public class ConcreteOrder implements Serializable {
 	private String billingLastName;
 	private String billingStreet;
 	private String billingHouseNumber;
-	private String billingAdressLine2;
+	private String billingAddressLine2;
 	private String billingZipCode;
 	private String billingTown;
 
@@ -45,7 +45,7 @@ public class ConcreteOrder implements Serializable {
 	private String shippingLastName;
 	private String shippingStreet;
 	private String shippingHouseNumber;
-	private String shippingAdressLine2;
+	private String shippingAddressLine2;
 	private String shippingZipCode;
 	private String shippingTown;
 
@@ -69,13 +69,13 @@ public class ConcreteOrder implements Serializable {
 
 	}
 
-	public ConcreteOrder(String billingGender, String billingFirstName, String billingLastName, String billingStreet, String billingHouseNumber, String billingAdressLine2, String billingZipCode, String billingTown, String shippingGender, String shippingFirstName, String shippingLastName, String shippingStreet, String shippingHouseNumber, String shippingAdressLine2, String shippingZipCode, String shippingTown, LocalDateTime dateOrdered, Order order) {
+	public ConcreteOrder(String billingGender, String billingFirstName, String billingLastName, String billingStreet, String billingHouseNumber, String billingAddressLine2, String billingZipCode, String billingTown, String shippingGender, String shippingFirstName, String shippingLastName, String shippingStreet, String shippingHouseNumber, String shippingAddressLine2, String shippingZipCode, String shippingTown, LocalDateTime dateOrdered, Order order) {
 		this.billingGender = billingGender;
 		this.billingFirstName = billingFirstName;
 		this.billingLastName = billingLastName;
 		this.billingStreet = billingStreet;
 		this.billingHouseNumber = billingHouseNumber;
-		this.billingAdressLine2 = billingAdressLine2;
+		this.billingAddressLine2 = billingAddressLine2;
 		this.billingZipCode = billingZipCode;
 		this.billingTown = billingTown;
 
@@ -84,7 +84,7 @@ public class ConcreteOrder implements Serializable {
 		this.shippingLastName = shippingLastName;
 		this.shippingStreet = shippingStreet;
 		this.shippingHouseNumber = shippingHouseNumber;
-		this.shippingAdressLine2 = shippingAdressLine2;
+		this.shippingAddressLine2 = shippingAddressLine2;
 		this.shippingZipCode = shippingZipCode;
 		this.shippingTown = shippingTown;
 
@@ -118,8 +118,8 @@ public class ConcreteOrder implements Serializable {
 		return billingHouseNumber;
 	}
 
-	public String getBillingAdressLine2() {
-		return billingAdressLine2;
+	public String getBillingAddressLine2() {
+		return billingAddressLine2;
 	}
 
 	public String getBillingZipCode() {
@@ -150,8 +150,8 @@ public class ConcreteOrder implements Serializable {
 		return shippingHouseNumber;
 	}
 
-	public String getShippingAdressLine2() {
-		return shippingAdressLine2;
+	public String getShippingAddressLine2() {
+		return shippingAddressLine2;
 	}
 
 	public String getShippingZipCode() {
@@ -208,8 +208,8 @@ public class ConcreteOrder implements Serializable {
 		this.billingHouseNumber = billingHouseNumber;
 	}
 
-	public void setBillingAdressLine2(String billingAdressLine2) {
-		this.billingAdressLine2 = billingAdressLine2;
+	public void setBillingAddressLine2(String billingAddressLine2) {
+		this.billingAddressLine2 = billingAddressLine2;
 	}
 
 	public void setBillingZipCode(String billingZipCode) {
@@ -240,8 +240,8 @@ public class ConcreteOrder implements Serializable {
 		this.shippingHouseNumber = shippingHouseNumber;
 	}
 
-	public void setShippingAdressLine2(String shippingAdressLine2) {
-		this.shippingAdressLine2 = shippingAdressLine2;
+	public void setShippingAddressLine2(String shippingAddressLine2) {
+		this.shippingAddressLine2 = shippingAddressLine2;
 	}
 
 	public void setShippingZipCode(String shippingZipCode) {
@@ -264,26 +264,26 @@ public class ConcreteOrder implements Serializable {
 		this.id = id;
 	}
 
-	public void setBillingAdress(List<String> billingAdress) {
-		this.billingGender = billingAdress.get(0);
-		this.billingFirstName = billingAdress.get(1);
-		this.billingLastName = billingAdress.get(2);
-		this.billingStreet = billingAdress.get(3);
-		this.billingHouseNumber = billingAdress.get(4);
-		this.billingAdressLine2 = billingAdress.get(5);
-		this.billingZipCode = billingAdress.get(6);
-		this.billingTown = billingAdress.get(7);
+	public void setBillingAddress(List<String> billingAddress) {
+		this.billingGender = billingAddress.get(0);
+		this.billingFirstName = billingAddress.get(1);
+		this.billingLastName = billingAddress.get(2);
+		this.billingStreet = billingAddress.get(3);
+		this.billingHouseNumber = billingAddress.get(4);
+		this.billingAddressLine2 = billingAddress.get(5);
+		this.billingZipCode = billingAddress.get(6);
+		this.billingTown = billingAddress.get(7);
 	}
 
-	public void setShippingAdress(List<String> shippingAdress) {
-		this.shippingGender = shippingAdress.get(0);
-		this.shippingFirstName = shippingAdress.get(1);
-		this.shippingLastName = shippingAdress.get(2);
-		this.shippingStreet = shippingAdress.get(3);
-		this.shippingHouseNumber = shippingAdress.get(4);
-		this.shippingAdressLine2 = shippingAdress.get(5);
-		this.shippingZipCode = shippingAdress.get(6);
-		this.shippingTown = shippingAdress.get(7);
+	public void setShippingAddress(List<String> shippingAddress) {
+		this.shippingGender = shippingAddress.get(0);
+		this.shippingFirstName = shippingAddress.get(1);
+		this.shippingLastName = shippingAddress.get(2);
+		this.shippingStreet = shippingAddress.get(3);
+		this.shippingHouseNumber = shippingAddress.get(4);
+		this.shippingAddressLine2 = shippingAddress.get(5);
+		this.shippingZipCode = shippingAddress.get(6);
+		this.shippingTown = shippingAddress.get(7);
 	}
 
 	public void setReturned(boolean returned) {

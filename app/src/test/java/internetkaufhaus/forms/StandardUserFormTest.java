@@ -45,7 +45,7 @@ public class StandardUserFormTest {
 	}
 	
 	@Test
-	public void adressTest() {
+	public void addressTest() {
 		model.setAddress("Meine Adresse");
 		assertTrue("Adresse erhalten", model.getAddress().equals("Meine Adresse"));
 	}
