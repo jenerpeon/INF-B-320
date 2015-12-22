@@ -49,12 +49,7 @@ public class StockManagerUnitTest {
 	@Before
 	public void init()
 	{
-		this.prod = new ConcreteProduct("Testprodukt",
-										Money.of(10, EURO),
-										"Testkategorie",
-										"Testbeschreibung",
-										"Testlink",
-										"Testbild");
+		this.prod = mock(ConcreteProduct.class);
 		this.item = Optional.of(new InventoryItem(this.prod, Quantity.of(10)));
 		when(inventory.findByProductIdentifier(any())).thenReturn(this.item);
 	}
