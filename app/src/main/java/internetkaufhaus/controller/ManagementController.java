@@ -56,8 +56,7 @@ import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 
 /**
- * This is the management controller. It controls the management. Or does it manage the controls? You never know...
- * In this class you may find the controllers for the employee interfaces, should you choose to look for them.
+ * This is the management controller. It controls the management. Or does it manage the controls? You never know... In this class you may find the controllers for the employee interfaces, should you choose to look for them.
  * 
  * @author max
  *
@@ -106,19 +105,19 @@ public class ManagementController {
 		// this.carousselList = carousselList;
 		// this.selectionList = selectionList;
 	}
-	
+
 	@ModelAttribute("employeeNaviagtion")
 	public List<NavItem> addEmployeeNavigation() {
-		String employeeNavigationName[] = {"Katalog/Lager","Bestellungen","Bewertungen","Retouren","Newsletter","Startseite"};
-		String employeeNavigationLink[] = {"/employee/changecatalog","/employee/orders","/employee/comments","/employee/returnedOrders","/employee/newsletter","/employee/startpage/3/8"};
+		String employeeNavigationName[] = { "Katalog/Lager", "Bestellungen", "Bewertungen", "Retouren", "Newsletter", "Startseite" };
+		String employeeNavigationLink[] = { "/employee/changecatalog", "/employee/orders", "/employee/comments", "/employee/returnedOrders", "/employee/newsletter", "/employee/startpage/3/8" };
 		List<NavItem> navigation = new ArrayList<NavItem>();
-		for (int i=0; i < employeeNavigationName.length; i++) {
-			NavItem nav = new NavItem(employeeNavigationName[i],employeeNavigationLink[i],"non-category");
+		for (int i = 0; i < employeeNavigationName.length; i++) {
+			NavItem nav = new NavItem(employeeNavigationName[i], employeeNavigationLink[i], "non-category");
 			navigation.add(nav);
 		}
 		return navigation;
 	}
-	
+
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * 
@@ -311,7 +310,7 @@ public class ManagementController {
 			System.out.println("another error (file empty) !!!");
 		}
 
-		ConcreteProduct prodId = new ConcreteProduct(editForm.getName(), Money.of(editForm.getPrice(), "EUR"), editForm.getBuyingPrice(),editForm.getCategory(), editForm.getDescription(), "", img.getOriginalFilename());
+		ConcreteProduct prodId = new ConcreteProduct(editForm.getName(), Money.of(editForm.getPrice(), "EUR"), editForm.getBuyingPrice(), editForm.getCategory(), editForm.getDescription(), "", img.getOriginalFilename());
 
 		catalog.save(prodId);
 
@@ -647,12 +646,12 @@ public class ManagementController {
 
 		return "oldnewsletterdetail";
 	}
-	
-	@RequestMapping(value="/employee/returnedOrders")
-	public String getRetourList(ModelMap model){
-		List<ConcreteOrder>retourList= new ArrayList<ConcreteOrder>();
-		for( ConcreteOrder o :concreteOrderRepo.findAll()){
-			if(o.getReturned()==true){
+
+	@RequestMapping(value = "/employee/returnedOrders")
+	public String getRetourList(ModelMap model) {
+		List<ConcreteOrder> retourList = new ArrayList<ConcreteOrder>();
+		for (ConcreteOrder o : concreteOrderRepo.findAll()) {
+			if (o.getReturned() == true) {
 				retourList.add(o);
 			}
 		}

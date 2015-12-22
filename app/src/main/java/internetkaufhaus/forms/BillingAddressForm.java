@@ -5,7 +5,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotEmpty;
 import java.util.*;
 
-public class BillingAdressForm {
+public class BillingAddressForm {
 
 	@NotEmpty(message = "shipping gender is mandatory")
 	@Pattern(regexp = "([A-Za-z])+", message = "shipping gender contains illegal characters")
@@ -27,8 +27,8 @@ public class BillingAdressForm {
 	@Pattern(regexp = "([0-9])+", message = "shipping house number contains illegal characters")
 	private String billingHouseNumber;
 
-	@Pattern(regexp = "([A-Za-z])+", message = "shipping adress line 2 contains illegal characters")
-	private String billingAdressLine2;
+	@Pattern(regexp = "([A-Za-z])+", message = "shipping address line 2 contains illegal characters")
+	private String billingAddressLine2;
 
 	@NotEmpty(message = "shipping zip code field is mandatory")
 	@Pattern(regexp = "([0-9])+", message = "shipping zip code contains illegal characters")
@@ -38,15 +38,15 @@ public class BillingAdressForm {
 	@Pattern(regexp = "([A-Za-z])+", message = "shipping town contains illegal characters")
 	private String billingTown;
 
-	public BillingAdressForm(){};
+	public BillingAddressForm(){};
 	
-	public BillingAdressForm(String gender, String firstName, String lastName, String street, String houseNumber, String adressLine2, String zipCode, String town) {
+	public BillingAddressForm(String gender, String firstName, String lastName, String street, String houseNumber, String addressLine2, String zipCode, String town) {
 		this.billingGender = gender;
 		this.billingFirstName = firstName;
 		this.billingLastName = lastName;
 		this.billingStreet = street;
 		this.billingHouseNumber = houseNumber;
-		this.billingAdressLine2 = adressLine2;
+		this.billingAddressLine2 = addressLine2;
 		this.billingZipCode = zipCode;
 		this.billingTown = town;
 	}
@@ -71,8 +71,8 @@ public class BillingAdressForm {
 		return this.billingHouseNumber;
 	}
 
-	public String getBillingAdressLine2() {
-		return this.billingAdressLine2;
+	public String getBillingAddressLine2() {
+		return this.billingAddressLine2;
 	}
 
 	public String getBillingZipCode() {
@@ -103,8 +103,8 @@ public class BillingAdressForm {
 		this.billingHouseNumber = billingHouseNumber;
 	}
 
-	public void setBillingAdressLine2(String billingAdressLine2) {
-		this.billingAdressLine2 = billingAdressLine2;
+	public void setBillingAddressLine2(String billingAddressLine2) {
+		this.billingAddressLine2 = billingAddressLine2;
 	}
 
 	public void setBillingZipCode(String billingZipCode) {
@@ -115,20 +115,20 @@ public class BillingAdressForm {
 		this.billingTown = billingTown;
 	}
 
-	public List<String> getBillingAdress() {
-		List<String> billingAdress = new ArrayList<String>();
-		billingAdress.add(this.billingGender);
-		billingAdress.add(this.billingFirstName);
-		billingAdress.add(this.billingLastName);
-		billingAdress.add(this.billingStreet);
-		billingAdress.add(this.billingHouseNumber);
-		billingAdress.add(this.billingAdressLine2);
-		billingAdress.add(this.billingZipCode);
-		billingAdress.add(this.billingTown);
+	public List<String> getBillingAddress() {
+		List<String> billingAddress = new ArrayList<String>();
+		billingAddress.add(this.billingGender);
+		billingAddress.add(this.billingFirstName);
+		billingAddress.add(this.billingLastName);
+		billingAddress.add(this.billingStreet);
+		billingAddress.add(this.billingHouseNumber);
+		billingAddress.add(this.billingAddressLine2);
+		billingAddress.add(this.billingZipCode);
+		billingAddress.add(this.billingTown);
 		
 		System.out.println(this.billingGender);
 
-		return billingAdress;
+		return billingAddress;
 	}
 
 }

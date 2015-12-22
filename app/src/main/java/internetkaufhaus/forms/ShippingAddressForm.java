@@ -7,48 +7,53 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class ShippingAdressForm {
+/**
+ * This form checks if the shipping address is correct and returns it.
+ * @author max
+ *
+ */
+public class ShippingAddressForm {
 
 	@NotEmpty(message = "shipping gender is mandatory")
 	@Pattern(regexp = "([A-Za-z])+", message = "shipping gender contains illegal characters")
 	private String shippingGender;
 
 	@NotEmpty(message = "shipping fist name field is mandatory")
-	@Pattern(regexp = "([A-Za-z])+", message = "shipping first name contains illegal characters")
+	@Pattern(regexp = "([A-Za-z -])+", message = "shipping first name contains illegal characters")
 	private String shippingFirstName;
 
 	@NotEmpty(message = "shipping last name field is mandatory")
-	@Pattern(regexp = "([A-Za-z])+", message = "shipping last name contains illegal characters")
+	@Pattern(regexp = "([A-Za-z -])+", message = "shipping last name contains illegal characters")
 	private String shippingLastName;
 
 	@NotEmpty(message = "shipping street field is mandatory")
-	@Pattern(regexp = "([A-Za-z])+", message = "shipping street contains illegal characters")
+	@Pattern(regexp = "([A-Za-z ,.-])+", message = "shipping street contains illegal characters")
 	private String shippingStreet;
 
 	@NotEmpty(message = "shipping house number field is mandatory")
-	@Pattern(regexp = "([0-9])+", message = "shipping house number contains illegal characters")
+	@Pattern(regexp = "([0-9-])+(A-Za-z)*", message = "shipping house number contains illegal characters")
 	private String shippingHouseNumber;
 
-	@Pattern(regexp = "([A-Za-z])+", message = "shipping adress line 2 contains illegal characters")
-	private String shippingAdressLine2;
+	@Pattern(regexp = "([0-9A-Za-z ,.-])+", message = "shipping address line 2 contains illegal characters")
+	private String shippingAddressLine2;
 
 	@NotEmpty(message = "shipping zip code field is mandatory")
 	@Pattern(regexp = "([0-9])+", message = "shipping zip code contains illegal characters")
 	private String shippingZipCode;
 
 	@NotEmpty(message = "shipping town field is mandatory")
-	@Pattern(regexp = "([A-Za-z])+", message = "shipping town contains illegal characters")
+	@Pattern(regexp = "([A-Za-z ,.-])+", message = "shipping town contains illegal characters")
 	private String shippingTown;
 	
-	public ShippingAdressForm(){};
+	public ShippingAddressForm(){};
 	
-	public ShippingAdressForm(String gender, String firstName, String lastName, String street, String houseNumber, String adressLine2, String zipCode, String town) {
+	public ShippingAddressForm(String gender, String firstName, String lastName, String street, String houseNumber, String addressLine2, String zipCode, String town) {
 		this.shippingGender = gender;
 		this.shippingFirstName = firstName;
 		this.shippingLastName = lastName;
 		this.shippingStreet = street;
 		this.shippingHouseNumber = houseNumber;
-		this.shippingAdressLine2 = adressLine2;
+		this.shippingAddressLine2 = addressLine2;
 		this.shippingZipCode = zipCode;
 		this.shippingTown = town;
 	}
@@ -73,8 +78,8 @@ public class ShippingAdressForm {
 		return shippingHouseNumber;
 	}
 
-	public String getShippingAdressLine2() {
-		return shippingAdressLine2;
+	public String getShippingAddressLine2() {
+		return shippingAddressLine2;
 	}
 
 	public String getShippingZipCode() {
@@ -105,8 +110,8 @@ public class ShippingAdressForm {
 		this.shippingHouseNumber = shippingHouseNumber;
 	}
 
-	public void setShippingAdressLine2(String shippingAdressLine2) {
-		this.shippingAdressLine2 = shippingAdressLine2;
+	public void setShippingAddressLine2(String shippingAddressLine2) {
+		this.shippingAddressLine2 = shippingAddressLine2;
 	}
 
 	public void setShippingZipCode(String shippingZipCode) {
@@ -117,18 +122,18 @@ public class ShippingAdressForm {
 		this.shippingTown = shippingTown;
 	}
 
-	public List<String> getShippingAdress() {
-		List<String> shippingAdress = new ArrayList<String>();
-		shippingAdress.add(this.shippingGender);
-		shippingAdress.add(this.shippingFirstName);
-		shippingAdress.add(this.shippingLastName);
-		shippingAdress.add(this.shippingStreet);
-		shippingAdress.add(this.shippingHouseNumber);
-		shippingAdress.add(this.shippingAdressLine2);
-		shippingAdress.add(this.shippingZipCode);
-		shippingAdress.add(this.shippingTown);
+	public List<String> getShippingAddress() {
+		List<String> shippingAddress = new ArrayList<String>();
+		shippingAddress.add(this.shippingGender);
+		shippingAddress.add(this.shippingFirstName);
+		shippingAddress.add(this.shippingLastName);
+		shippingAddress.add(this.shippingStreet);
+		shippingAddress.add(this.shippingHouseNumber);
+		shippingAddress.add(this.shippingAddressLine2);
+		shippingAddress.add(this.shippingZipCode);
+		shippingAddress.add(this.shippingTown);
 
-		return shippingAdress;
+		return shippingAddress;
 	}
 
 }
