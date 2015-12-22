@@ -51,4 +51,12 @@ public class Competition {
 			sender.sendMail(acc.getEmail(), "Herzlichen Glückwunsch", "wood@shop.de", "Gewonnen");
 		}
 	}
+
+	public ArrayList<ConcreteUserAccount> getAccs() {
+		return accs;
+	}
+
+	public void setAccs(ArrayList<ConcreteUserAccount> accs) {
+		this.accs = accs;
+	}
 }
