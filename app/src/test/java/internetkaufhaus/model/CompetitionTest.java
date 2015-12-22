@@ -13,19 +13,24 @@ import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.mail.MailSender;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import internetkaufhaus.Application;
 import internetkaufhaus.entities.ConcreteUserAccount;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
+@Transactional
 public class CompetitionTest {
 
 	@Autowired
 	private UserAccountManager manager;
 	@Autowired
 	private Creditmanager creditmanager;
+	@Autowired
+	private ConcreteMailSender sender;
 	private ArrayList<ConcreteUserAccount> accs = new ArrayList<ConcreteUserAccount>();
 	private Role customerRole = Role.of("ROLE_CUSTOMER");
 	private Competition comp;
