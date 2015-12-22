@@ -12,10 +12,6 @@ import org.javamoney.moneta.Money;
 import org.junit.Before;
 import org.junit.Test;
 
-import internetkaufhaus.entities.Comment;
-import internetkaufhaus.entities.ConcreteProduct;
-import internetkaufhaus.entities.ConcreteUserAccount;
-
 public class CommentTest {
 
 	Comment model;
@@ -34,7 +30,8 @@ public class CommentTest {
 
 	@Test
 	public void testProduct() {
-		ConcreteProduct prod = new ConcreteProduct("Zigarre", Money.of(1.99, EURO), (float) 1.49,"Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
+		ConcreteProduct prod = new ConcreteProduct("Zigarre", Money.of(1.99, EURO), Money.of(1.49, EURO), "Tabakwaren",
+				"Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
 		model.setProduct(prod);
 		assertTrue("Product wird zurückgegeben", model.getProduct() == prod);
 	}

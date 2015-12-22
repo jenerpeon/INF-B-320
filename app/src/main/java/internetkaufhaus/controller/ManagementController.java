@@ -1,5 +1,7 @@
 package internetkaufhaus.controller;
 
+import static org.salespointframework.core.Currencies.EURO;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -56,7 +58,9 @@ import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 
 /**
- * This is the management controller. It controls the management. Or does it manage the controls? You never know... In this class you may find the controllers for the employee interfaces, should you choose to look for them.
+ * This is the management controller. It controls the management. Or does it
+ * manage the controls? You never know... In this class you may find the
+ * controllers for the employee interfaces, should you choose to look for them.
  * 
  * @author max
  *
@@ -79,7 +83,9 @@ public class ManagementController {
 	// private final List<ConcreteProduct> selectionList;
 
 	/**
-	 * This is the constructor. It's neither used nor does it contain any functionality other than storing function arguments as class attribute, what do you expect me to write here?
+	 * This is the constructor. It's neither used nor does it contain any
+	 * functionality other than storing function arguments as class attribute,
+	 * what do you expect me to write here?
 	 * 
 	 * @param concreteProductRepository
 	 * @param orderManager
@@ -92,7 +98,10 @@ public class ManagementController {
 	 * @param sender
 	 */
 	@Autowired
-	public ManagementController(ConcreteProductRepository concreteProductRepository, OrderManager<Order> orderManager, ConcreteOrderRepository concreteOrderRepo, Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, StockManager stock, NewsletterManager newsManager, MailSender sender) {
+	public ManagementController(ConcreteProductRepository concreteProductRepository, OrderManager<Order> orderManager,
+			ConcreteOrderRepository concreteOrderRepo, Catalog<ConcreteProduct> catalog,
+			Inventory<InventoryItem> inventory, Search prodSearch, StockManager stock, NewsletterManager newsManager,
+			MailSender sender) {
 		this.concreteProductRepository = concreteProductRepository;
 		this.catalog = catalog;
 		this.inventory = inventory;
@@ -108,8 +117,10 @@ public class ManagementController {
 
 	@ModelAttribute("employeeNaviagtion")
 	public List<NavItem> addEmployeeNavigation() {
-		String employeeNavigationName[] = { "Katalog/Lager", "Bestellungen", "Bewertungen", "Retouren", "Newsletter", "Startseite" };
-		String employeeNavigationLink[] = { "/employee/changecatalog", "/employee/orders", "/employee/comments", "/employee/returnedOrders", "/employee/newsletter", "/employee/startpage/3/8" };
+		String employeeNavigationName[] = { "Katalog/Lager", "Bestellungen", "Bewertungen", "Retouren", "Newsletter",
+				"Startseite" };
+		String employeeNavigationLink[] = { "/employee/changecatalog", "/employee/orders", "/employee/comments",
+				"/employee/returnedOrders", "/employee/newsletter", "/employee/startpage/3/8" };
 		List<NavItem> navigation = new ArrayList<NavItem>();
 		for (int i = 0; i < employeeNavigationName.length; i++) {
 			NavItem nav = new NavItem(employeeNavigationName[i], employeeNavigationLink[i], "non-category");
@@ -248,7 +259,8 @@ public class ManagementController {
 	 * @return
 	 */
 	@RequestMapping(value = "/employee/changecatalog/editedArticle", method = RequestMethod.POST)
-	public String editedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm, @RequestParam("image") MultipartFile img, BindingResult result) {
+	public String editedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm,
+			@RequestParam("image") MultipartFile img, BindingResult result) {
 		if (result.hasErrors()) {
 			return "redirect:/employee/changecatalog/editArticle/";
 		}
@@ -256,7 +268,9 @@ public class ManagementController {
 		if (!img.isEmpty()) {
 			try {
 				byte[] bytes = img.getBytes();
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("filename"))); // TODO: generate filename
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("filename"))); // TODO:
+																													// generate
+																													// filename
 				stream.write(bytes);
 				stream.close();
 			} catch (Exception e) {
@@ -269,8 +283,8 @@ public class ManagementController {
 		ConcreteProduct prodId = editForm.getProdId();
 		prodId.addCategory(editForm.getCategory());
 		prodId.setName(editForm.getName());
-		prodId.setPrice(Money.of(editForm.getPrice(), "EUR"));
-		prodId.setBuyingPrice(editForm.getBuyingPrice());
+		prodId.setPrice(Money.of(editForm.getPrice(), EURO));
+		prodId.setBuyingPrice(Money.of(editForm.getBuyingPrice(), EURO));
 		prodId.setDescription(editForm.getDescription());
 
 		if (!(img.getOriginalFilename().isEmpty())) {
@@ -292,7 +306,8 @@ public class ManagementController {
 	 * @return
 	 */
 	@RequestMapping(value = "/employee/changecatalog/addedArticle", method = RequestMethod.POST)
-	public String addedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm, @RequestParam("image") MultipartFile img, BindingResult result) {
+	public String addedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm,
+			@RequestParam("image") MultipartFile img, BindingResult result) {
 		if (result.hasErrors()) {
 			return "redirect:/employee/changecatalog/addArticle/";
 		}
@@ -300,7 +315,9 @@ public class ManagementController {
 		if (!img.isEmpty()) {
 			try {
 				byte[] bytes = img.getBytes();
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("filename"))); // TODO: generate filename
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("filename"))); // TODO:
+																													// generate
+																													// filename
 				stream.write(bytes);
 				stream.close();
 			} catch (Exception e) {
@@ -310,7 +327,9 @@ public class ManagementController {
 			System.out.println("another error (file empty) !!!");
 		}
 
-		ConcreteProduct prodId = new ConcreteProduct(editForm.getName(), Money.of(editForm.getPrice(), "EUR"), editForm.getBuyingPrice(), editForm.getCategory(), editForm.getDescription(), "", img.getOriginalFilename());
+		ConcreteProduct prodId = new ConcreteProduct(editForm.getName(), Money.of(editForm.getPrice(), EURO),
+				Money.of(editForm.getBuyingPrice(), EURO), editForm.getCategory(), editForm.getDescription(), "",
+				img.getOriginalFilename());
 
 		catalog.save(prodId);
 
@@ -386,13 +405,15 @@ public class ManagementController {
 	 * @return
 	 */
 	@RequestMapping(value = "/employee/changecatalog/orderedArticle", method = RequestMethod.GET)
-	public String orderedArticle(@ModelAttribute("StockForm") @Valid StockForm stockForm, BindingResult result, @LoggedIn Optional<UserAccount> userAccount) {
+	public String orderedArticle(@ModelAttribute("StockForm") @Valid StockForm stockForm, BindingResult result,
+			@LoggedIn Optional<UserAccount> userAccount) {
 		if (result.hasErrors()) {
 			return "redirect:/employee/changecatalog";
 		}
 		ConcreteOrder order = new ConcreteOrder(userAccount.get(), Cash.CASH);
 
-		OrderLine orderLine = new OrderLine(catalog.findOne(stockForm.getProdId()).get(), Quantity.of(stockForm.getQuantity()));
+		OrderLine orderLine = new OrderLine(catalog.findOne(stockForm.getProdId()).get(),
+				Quantity.of(stockForm.getQuantity()));
 
 		order.getOrder().add(orderLine);
 
@@ -429,7 +450,8 @@ public class ManagementController {
 	 * @return
 	 */
 	@RequestMapping("/employee/startpage/{totalCaroussel}/{totalSelection}")
-	public String editStartPage(@PathVariable("totalCaroussel") int totalCaroussel, @PathVariable("totalSelection") int totalSelection, ModelMap model) {
+	public String editStartPage(@PathVariable("totalCaroussel") int totalCaroussel,
+			@PathVariable("totalSelection") int totalSelection, ModelMap model) {
 		model.addAttribute("prod50", catalog.findAll());
 		model.addAttribute("totCar", totalCaroussel);
 		model.addAttribute("totSel", totalSelection);
@@ -444,11 +466,21 @@ public class ManagementController {
 	 * @return
 	 */
 	@RequestMapping(value = "/employee/startpage/changedSetting", method = RequestMethod.POST)
-	public String changeStartPageSetting(@RequestParam("totalCaroussel") int totalCaroussel, @RequestParam("totalSelection") int totalSelection) {
+	public String changeStartPageSetting(@RequestParam("totalCaroussel") int totalCaroussel,
+			@RequestParam("totalSelection") int totalSelection) {
 		return "redirect:/employee/startpage/" + totalCaroussel + '/' + totalSelection;
 	}
 	/*
-	 * @RequestMapping(value = "/employee/startpage/changedstartpage", method = RequestMethod.POST) public String changeStartpage(@ModelAttribute ChangeStartPageForm changeStartPageForm) { List<ProductIdentifier> carousselProdsId = changeStartPageForm.getCarousselArticle(); List<ProductIdentifier> selectionProdsId = changeStartPageForm.getSelectionArticle(); int index = 0; for (ProductIdentifier prodId : carousselProdsId) { carousselList.set(index, catalog.findOne(prodId).get()); index ++; } index = 0; for (ProductIdentifier prodId : selectionProdsId) { selectionList.set(index, catalog.findOne(prodId).get()); index ++; } return "redirect:/"; }
+	 * @RequestMapping(value = "/employee/startpage/changedstartpage", method =
+	 * RequestMethod.POST) public String changeStartpage(@ModelAttribute
+	 * ChangeStartPageForm changeStartPageForm) { List<ProductIdentifier>
+	 * carousselProdsId = changeStartPageForm.getCarousselArticle();
+	 * List<ProductIdentifier> selectionProdsId =
+	 * changeStartPageForm.getSelectionArticle(); int index = 0; for
+	 * (ProductIdentifier prodId : carousselProdsId) { carousselList.set(index,
+	 * catalog.findOne(prodId).get()); index ++; } index = 0; for
+	 * (ProductIdentifier prodId : selectionProdsId) { selectionList.set(index,
+	 * catalog.findOne(prodId).get()); index ++; } return "redirect:/"; }
 	 */
 
 	/**
@@ -462,7 +494,8 @@ public class ManagementController {
 		Iterable<ConcreteOrder> ordersPaid = concreteOrderRepo.findByStatus(OrderStatus.PAID);
 		Iterable<ConcreteOrder> ordersCancelled = concreteOrderRepo.findByStatus(OrderStatus.CANCELLED);
 		Iterable<ConcreteOrder> ordersCompleted = concreteOrderRepo.findByStatus(OrderStatus.COMPLETED);
-		// System.out.println("Paid Orders:" + ordersPaid + "Cancelled Orders:" + ordersCancelled + "Completed Orders:" + ordersCompleted);
+		// System.out.println("Paid Orders:" + ordersPaid + "Cancelled Orders:"
+		// + ordersCancelled + "Completed Orders:" + ordersCompleted);
 
 		model.addAttribute("ordersPaid", ordersPaid);
 		model.addAttribute("ordersCancelled", ordersCancelled);
@@ -501,18 +534,22 @@ public class ManagementController {
 			concreteProductRepository.save(prod);
 		}
 
-		String mail = "Sehr geehrte(r) " + order.getUserAccount().getFirstname() + " " + order.getUserAccount().getLastname() + "!\n";
-		mail += "Ihre unten aufgeführte Bestellung vom " + order.getDateCreated().toString() + " wurde von einem unserer Mitarbeiter bearbeitet und ist nun auf dem Weg zu Ihnen!\n";
+		String mail = "Sehr geehrte(r) " + order.getUserAccount().getFirstname() + " "
+				+ order.getUserAccount().getLastname() + "!\n";
+		mail += "Ihre unten aufgeführte Bestellung vom " + order.getDateCreated().toString()
+				+ " wurde von einem unserer Mitarbeiter bearbeitet und ist nun auf dem Weg zu Ihnen!\n";
 		mail += "Es handelt sich um Ihre Bestellung folgender Artikel:";
 		Iterator<OrderLine> i = order.getOrderLines().iterator();
 		OrderLine current;
 		while (i.hasNext()) {
 			current = i.next();
-			mail += "\n" + current.getQuantity().toString() + "x " + current.getProductName() + " für gesamt " + current.getPrice().toString();
+			mail += "\n" + current.getQuantity().toString() + "x " + current.getProductName() + " für gesamt "
+					+ current.getPrice().toString();
 		}
 		mail += "\nGesamtpreis: " + order.getTotalPrice().toString();
 
-		new ConcreteMailSender(this.sender).sendMail(order.getUserAccount().getEmail(), mail, "nobody@nothing.com", "Bestellung bearbeitet!");
+		new ConcreteMailSender(this.sender).sendMail(order.getUserAccount().getEmail(), mail, "nobody@nothing.com",
+				"Bestellung bearbeitet!");
 
 		// orderManager.completeOrder(o.getOrder());
 		return "redirect:/employee/orders";
@@ -639,7 +676,8 @@ public class ManagementController {
 	 * @return
 	 */
 	@RequestMapping(value = "/employee/newsletter/oldAbos/{date}/{subject}")
-	public String oldAbosdetails(@PathVariable("date") String date, @PathVariable("subject") String subject, ModelMap model) {
+	public String oldAbosdetails(@PathVariable("date") String date, @PathVariable("subject") String subject,
+			ModelMap model) {
 		model.addAttribute("date", date);
 		model.addAttribute("mailsubject", subject);
 		model.addAttribute("mailtext", newsManager.getOldAbos().get(subject));

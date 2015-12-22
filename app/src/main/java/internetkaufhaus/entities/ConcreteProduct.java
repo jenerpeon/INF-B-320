@@ -38,19 +38,23 @@ public class ConcreteProduct extends Product {
 	private long selled = 0;
 
 	private float priceFloat;
-	
-	private float buyingPrice;
+
+	@Lob
+	@Column(length = 2000)
+	private Money buyingPrice;
 
 	private float averageRating = 0;
 
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE }, mappedBy = "product", orphanRemoval = true)
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH,
+			CascadeType.REMOVE }, mappedBy = "product", orphanRemoval = true)
 	private List<Comment> comments = new LinkedList<Comment>();
 
 	@SuppressWarnings({ "unused", "deprecation" })
 	private ConcreteProduct() {
 	}
 
-	public ConcreteProduct(String name, Money price, float buyingPrice, String category, String description, String webLink, String imagefile) {
+	public ConcreteProduct(String name, Money price, Money buyingPrice, String category, String description,
+			String webLink, String imagefile) {
 		super(name, price);
 		this.addCategory(category);
 		this.buyingPrice = buyingPrice;
@@ -199,13 +203,13 @@ public class ConcreteProduct extends Product {
 	public long getSelled() {
 		return this.selled;
 	}
-	
-	public float getBuyingPrice() {
+
+	public Money getBuyingPrice() {
 		return this.buyingPrice;
 	}
-	
-	public void setBuyingPrice(float buyingPrice) {
-		this.buyingPrice =  buyingPrice;
+
+	public void setBuyingPrice(Money buyingPrice) {
+		this.buyingPrice = buyingPrice;
 	}
 
 }
