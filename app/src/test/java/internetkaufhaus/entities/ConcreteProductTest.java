@@ -20,7 +20,7 @@ public class ConcreteProductTest {
 	@Before
 	public void init() {
 		// UserAccount dummy = new UserAccount("hans","schranz", Role.of("ROLE_CUSTOMER"));
-		model = new ConcreteProduct("Zigarre", Money.of(1.99, EURO), (float) 1.49, "Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
+		model = new ConcreteProduct("Zigarre", Money.of(1.99, EURO), Money.of(1.49, EURO), "Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
 	}
 
 	@Test
@@ -119,7 +119,7 @@ public class ConcreteProductTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetNameError() throws Exception {
-		model = new ConcreteProduct("", Money.of(1.99, EURO), (float) 1.49, "Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
+		model = new ConcreteProduct("", Money.of(1.99, EURO), Money.of(1.49, EURO), "Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
 	}
 
 }

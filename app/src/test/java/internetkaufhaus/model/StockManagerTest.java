@@ -46,7 +46,7 @@ public class StockManagerTest {
 
 	@Before
 	public void init() {
-		model = new ConcreteProduct("Zigarre", Money.of(1.99, EURO), (float) 1.49, "Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
+		model = new ConcreteProduct("Zigarre", Money.of(1.99, EURO), Money.of(1.49, EURO), "Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
 
 		InventoryItem inventoryItem = new InventoryItem(model, Quantity.of(10));
 		inventory.save(inventoryItem);

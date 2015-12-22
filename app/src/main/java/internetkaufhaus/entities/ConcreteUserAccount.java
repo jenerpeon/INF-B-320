@@ -173,6 +173,8 @@ public class ConcreteUserAccount implements Serializable {
 			this.recruits.add(user.getUserAccount());
 		}
 
+	
+		
 	}
 
 }

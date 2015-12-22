@@ -1,0 +1,34 @@
+Cross-Testing Internetkaufhaus SWT-Praktikum 
+Gruppe 22
+
+LoginDaten:
+
+	Übersicht nach Rollen:
+		-Admin: 
+			Benutzername: peon
+			Passwort: peon
+		
+		-Mitarbeiter
+			Benutzername: saul
+			Passwort: saul
+
+		-Kunde
+			Benutzername: lars
+			Passwort: lars
+
+
+Features:
+	
+	Übersicht nach Rollen:
+		-Admin:
+			Userverwaltung, Bilanz, Statistik und Gewinnspiel (Zugriff über header: Adminportal)
+			Katalog/Lagerübersicht, Bestellungen, Newsletter, Kommentare, Startseite konfiguieren (Zuriff über header: 				Mitarbeiterportal)
+		-Mitarbeiter:
+			Katalog/Lagerübersicht, Bestellungen, Newsletter, Kommentare, Startseite konfiguieren (Zuriff über header: 				Mitarbeiterportal)
+
+		-Kunde:
+			Artikel kaufen/zurückgeben/kommentieren, Punktestand einsehen, Freunde werben (Zugriff header)
+
+		-Gast: 
+			Newsletter abonnieren (Unten Footer)
+			

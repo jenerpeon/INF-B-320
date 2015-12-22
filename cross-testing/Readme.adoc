@@ -1,0 +1,43 @@
+Cross-Testing Internetkaufhaus SWT-Praktikum 
+Gruppe 22
+
+LoginDaten:
+
+	Übersicht nach Rollen:
+		-Admin: 
+			Benutzername: peon
+			Passwort: peon
+		
+		-Mitarbeiter
+			Benutzername: saul
+			Passwort: saul
+
+		-Kunde
+			Benutzername: lars
+			Passwort: lars
+
+
+Features:
+	
+	Übersicht nach Rollen:
+		-Admin:
+			Userverwaltung, Bilanz, Statistik und Gewinnspiel (Zugriff über header: Adminportal)
+			Katalog/Lagerübersicht, Bestellungen, Newsletter, Kommentare, Startseite konfiguieren (Zuriff über header: Mitarbeiterportal)
+		-Mitarbeiter:
+			Katalog/Lagerübersicht, Bestellungen, Newsletter, Kommentare, Startseite konfiguieren (Zuriff über header: Mitarbeiterportal)
+
+		-Kunde:
+			Artikel kaufen/zurückgeben/kommentieren, Punktestand einsehen, Freunde werben (Zugriff header)
+
+		-Gast: 
+			Newsletter abonnieren (Unten Footer)
+
+	Beim Einkauf- bzw. Bezahlvorgang sind folgende Eingaben zu beachten:
+		-Adresse: kein ß
+		-Adresszusatz: kein Leerzeichen
+		-Ablaufdatum der Karte: YYYY-MM-DD
+
+	- Kommentare müssen von einem Mitarbeiter bestätigt werden bevor sie auf der Produktseite erscheinen
+	- Bestellungen müssen von einem Mitarbeiter angenommen werden bevor sie in der Bilanz auftauchen. Auch dann erst wird eine Bestellbestätigung per Mail gesendet.
+
+			
