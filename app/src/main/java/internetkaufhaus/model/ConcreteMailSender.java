@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Service("mailService")
 public class ConcreteMailSender {
-	@Autowired
+	
 	private final MailSender mailSender;
-
+	
 	@Autowired
 	public ConcreteMailSender(MailSender mailSender) {
 		this.mailSender = mailSender;

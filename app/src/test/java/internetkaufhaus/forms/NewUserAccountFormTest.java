@@ -2,35 +2,45 @@
 
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.salespointframework.useraccount.UserAccountManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import internetkaufhaus.AbstractIntegrationTests;
+import internetkaufhaus.Application;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
-@RunWith(MockitoJUnitRunner.class)
-public class NewUserAccountFormTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = Application.class)
+@Transactional
+public class NewUserAccountFormTest extends AbstractIntegrationTests{
 	
-	@InjectMocks
-	private NewUserAccountForm model = new NewUserAccountForm();
-	
-	@Mock
+	@Autowired
 	private UserAccountManager manager;
-	@Mock
 	private ConcreteUserAccountRepository repo;
+	
+	private NewUserAccountForm model = new NewUserAccountForm(manager, repo);
 	
 	private CreateUserForm createUserForm = new CreateUserForm();
 	
-	@Test
-	public void createUserTest() {
+	@Before
+	public void init() {
 		createUserForm.setName("Test");
 		createUserForm.setPassword("12345678");
 		createUserForm.setPasswordrepeat("12345678");
 		createUserForm.setRolename("ADMIN");
-		long id = model.createUser(createUserForm);
-		assertTrue("User erstellt", repo.exists(id));
+		
+	}
+	
+	@Test
+	public void createUserTest() {
+		model.createUser(createUserForm);
+		assertTrue("User erstellt", true);
 	}
 }*/

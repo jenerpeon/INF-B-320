@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans ...>
+	<bean id="userAccountManager" class="import org.salespointframework.useraccount.UserAccountManager">
+	        <!-- set properties, etc. -->
+	    </bean>
+</beans>
