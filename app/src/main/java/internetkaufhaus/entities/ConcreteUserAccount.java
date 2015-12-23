@@ -57,6 +57,7 @@ public class ConcreteUserAccount implements Serializable {
 	}
 
 	public ConcreteUserAccount(String username, String password, Role role, UserAccountManager u) {
+		
 		this.userAccount = u.create(username, password, role);
 		this.credits = Money.of(0, EURO);
 	}

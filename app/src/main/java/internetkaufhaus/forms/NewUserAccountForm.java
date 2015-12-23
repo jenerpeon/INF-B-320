@@ -21,21 +21,10 @@ public class NewUserAccountForm {
 		this.repo = repo;
 	}
 
-	public long createUser(CreateUserForm createuserform) {
-
-		ConcreteUserAccount cacc = new ConcreteUserAccount(
-				// createuserform.getEmail(),
-				// createuserform.getUsername(),
-				createuserform.getName(),
-				// createuserform.getFirstname(),
-				// createuserform.getLastname(),
-				// createuserform.getAddress(),
-				// createuserform.getZipcode(),
-				// createuserform.getCity(),
-				createuserform.getPassword(), Role.of(createuserform.getRolename()), manager);
+	public void createUser(CreateUserForm createuserform) {
+		ConcreteUserAccount cacc = new ConcreteUserAccount(createuserform.getName(),createuserform.getPassword(), Role.of(createuserform.getRolename()), manager);
 		repo.save(cacc);
 		manager.save(cacc.getUserAccount());
-		return cacc.getId();
 	}
 
 	public boolean changeUser(Long id, String role, String password) {

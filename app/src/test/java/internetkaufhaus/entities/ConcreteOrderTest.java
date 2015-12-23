@@ -30,7 +30,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests{
 	private ConcreteOrder o;
 
 	@Autowired
-	UserAccountManager u;
+	private UserAccountManager u;
 
 	@Before
 	public void init() {

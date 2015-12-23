@@ -50,6 +50,12 @@
 		  <scope>test</scope>
 		</dependency>
 
+		<dependency>
+    			<groupId>com.github.ipillars</groupId>
+    			<artifactId>public/java/utils/com/ipillars/sorter/</artifactId>
+    			<version>branch-SNAPSHOT</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -75,6 +81,10 @@
 			<url>http://www.st.inf.tu-dresden.de/SalesPoint/repository</url>
 		</repository>
 
+		<repository>
+    			<id>jitpack.io</id>
+    			<url>https://jitpack.io</url>
+		</repository>
 
 	</repositories>
 
