@@ -24,8 +24,11 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import internetkaufhaus.AbstractIntegrationTests;
 import internetkaufhaus.Application;
 import internetkaufhaus.Initialize;
 import internetkaufhaus.entities.ConcreteProduct;
@@ -33,7 +36,8 @@ import internetkaufhaus.repositories.ConcreteProductRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
-public class StockManagerTest {
+@Transactional
+public class StockManagerTest extends AbstractIntegrationTests{
 
 	private ConcreteProduct model;
 

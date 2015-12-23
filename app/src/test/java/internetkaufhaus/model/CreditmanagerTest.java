@@ -92,6 +92,6 @@ public class CreditmanagerTest {
 		Money credits = Money.of(14, EURO);
 		acc.setCredits(credits);
 		manager.updateCreditpointsByUser(acc);
-		assertEquals("UpdatePoints", acc.getCredits(), credits);
+		assertEquals("UpdatePoints", acc.getCredits(), 14);
 	}
 }

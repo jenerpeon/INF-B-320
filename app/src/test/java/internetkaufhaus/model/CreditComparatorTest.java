@@ -11,19 +11,22 @@ import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import internetkaufhaus.AbstractIntegrationTests;
 import internetkaufhaus.Application;
 import internetkaufhaus.entities.ConcreteUserAccount;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
-
-public class CreditComparatorTest {
+@ContextConfiguration(classes = Application.class)
+@Transactional
+public class CreditComparatorTest extends AbstractIntegrationTests{
 	private ConcreteUserAccount model1;
 	private ConcreteUserAccount model2;
 
-	@Autowired
 	CreditComparator comparator;
 	@Autowired
 	UserAccountManager u;
