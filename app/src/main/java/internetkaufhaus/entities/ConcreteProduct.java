@@ -1,5 +1,8 @@
 package internetkaufhaus.entities;
 
+import static org.salespointframework.core.Currencies.EURO;
+
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +13,6 @@ import java.util.stream.IntStream;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,20 +31,19 @@ public class ConcreteProduct extends Product {
 	private String category;
 	private String imagefile;
 
-	@Lob
-	@Column(length = 100000)
+	@Column(name = "DESCRIPTION", length = 100000)
 	private String description;
 
+	@Column(name = "WEBLINK")
 	private String webLink;
 
-	private long selled = 0;
+	@Column(name = "SOLD")
+	private long amountProductsSold = 0;
 
-	private float priceFloat;
+	@Column(name = "BUYING_PRICE")
+	private BigDecimal buyingPrice;
 
-	@Lob
-	@Column(length = 2000)
-	private Money buyingPrice;
-
+	@Column
 	private float averageRating = 0;
 
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH,
@@ -57,12 +58,11 @@ public class ConcreteProduct extends Product {
 			String webLink, String imagefile) {
 		super(name, price);
 		this.addCategory(category);
-		this.buyingPrice = buyingPrice;
+		this.buyingPrice = buyingPrice.getNumberStripped();
 		this.description = description;
 		this.webLink = webLink;
 		this.imagefile = imagefile;
 		this.category = category;
-		this.priceFloat = price.getNumberStripped().floatValue();
 	}
 
 	public int getRatings() {
@@ -147,7 +147,7 @@ public class ConcreteProduct extends Product {
 
 	public String getPriceFloat() {
 		DecimalFormat formatter = new DecimalFormat("0.00€");
-		return formatter.format(priceFloat);
+		return formatter.format(this.getPrice().getNumberStripped());
 	}
 
 	public void setImagefile(String imagefile) {
@@ -197,19 +197,19 @@ public class ConcreteProduct extends Product {
 	}
 
 	public void increaseSelled(int sell) {
-		this.selled += sell;
+		this.amountProductsSold += sell;
 	}
 
 	public long getSelled() {
-		return this.selled;
+		return this.amountProductsSold;
 	}
 
 	public Money getBuyingPrice() {
-		return this.buyingPrice;
+		return Money.of(this.buyingPrice, EURO);
 	}
 
 	public void setBuyingPrice(Money buyingPrice) {
-		this.buyingPrice = buyingPrice;
+		this.buyingPrice = buyingPrice.getNumberStripped();
 	}
 
 }

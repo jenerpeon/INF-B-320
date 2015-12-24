@@ -158,7 +158,7 @@ public class ConcreteUserAccount implements Serializable {
 	}
 
 	public int getCredits() {
-		return (int) ((double) credits.getNumber().intValue() + (0.5));
+		return (int) (credits.getNumber().doubleValue() + 0.5);
 	}
 
 	public void setCredits(Money credits) {

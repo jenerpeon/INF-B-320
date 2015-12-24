@@ -101,7 +101,7 @@ public class AdminController {
 	 * 
 	 * @param userAccount
 	 * @param model
-	 * @return
+	 * @return adminOverviewPage
 	 */
 	@RequestMapping("/admin")
 	public String adminStart(@LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
@@ -113,7 +113,7 @@ public class AdminController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * 
 	 * @param model
-	 * @return
+	 * @return changeUserPage
 	 */
 	@RequestMapping(value = "/admin/changeuser")
 	public String changeUser(ModelMap model) {
@@ -130,7 +130,7 @@ public class AdminController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * 
 	 * @param id
-	 * @return
+	 * @return redirectToChangeUserPage
 	 */
 	@RequestMapping(value = "/admin/changeuser/deleteUser/{id}")
 	public String deleteUser(@PathVariable("id") Long id) {

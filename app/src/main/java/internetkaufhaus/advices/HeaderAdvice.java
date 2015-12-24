@@ -29,9 +29,6 @@ public class HeaderAdvice {
 	/**
 	 * This is the constructor. It's neither used nor does it contain any functionality other than storing function arguments as class attribute, what do you expect me to write here? It's copied from CartController.
 	 * 
-	 * @param userRepo
-	 * @param concreteOrderRepo
-	 * @param orderManager
 	 * @param prodSearch
 	 * @param sender
 	 */
@@ -43,11 +40,7 @@ public class HeaderAdvice {
 	/**
 	 * This is a Model Attribute. It Models Attributes. Or does it Attribute Models? Adds the available categories to the variables used by thymeleaf so the category list can be displayed in the navigation header.
 	 * 
-	 * @param request
-	 * @param response
-	 * @param handler
-	 * @param modelAndView
-	 * @return
+	 * @return navigation
 	 */
 	@ModelAttribute("categories")
 	public List<NavItem> addCatalog() { 
@@ -69,7 +62,7 @@ public class HeaderAdvice {
 	 * This is a Model Attribute. It Models Attributes. Or does it Attribute Models? Adds the current cart price to the variables used by thymeleaf so an overview about the cart can be displayed in the navigation header.
 	 * 
 	 * @param cart
-	 * @return
+	 * @return cartPrice
 	 */
 	@ModelAttribute("cartprice")
 	public String addCartPrice(@ModelAttribute Cart cart) {
@@ -80,7 +73,7 @@ public class HeaderAdvice {
 	 * This is a Model Attribute. It Models Attributes. Or does it Attribute Models? Adds the current number of items in the cart to the variables used by thymeleaf so an overview about the cart can be displayed in the navigation header.
 	 * 
 	 * @param cart
-	 * @return
+	 * @return cartSize
 	 */
 	@ModelAttribute("cartsize")
 	public int addCartSize(@ModelAttribute Cart cart) {
@@ -97,7 +90,7 @@ public class HeaderAdvice {
 	 * This is an Exception Hander. It handles Exceptions. Or does it Except Handles?
 	 * 
 	 * @param exception
-	 * @return
+	 * @return "error500"
 	 */
 	@ExceptionHandler(value = Exception.class)
 	public String handleExceptions(Exception exception, ModelMap model) {
