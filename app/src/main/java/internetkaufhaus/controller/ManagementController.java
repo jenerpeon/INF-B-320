@@ -628,7 +628,9 @@ public class ManagementController {
 	 */
 	@RequestMapping(value = "/employee/newsletter/deleteUserAbo/{mail}/{username}")
 	public String deleteUserAbo(@PathVariable("mail") String mail, @PathVariable("username") String name) {
-		newsManager.getMap().remove(name); // TODO: why do I need the mail here?
+		if (newsManager.getMap().get(name) == mail) {
+			newsManager.getMap().remove(name);
+		}
 		return "redirect:/employee/newsletter";
 	}
 
