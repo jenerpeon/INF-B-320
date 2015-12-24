@@ -264,7 +264,7 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value = "/admin/statistics")
-	public String getStatistics(ModelMap model) {
+	public String getStatistics() {
 		//Statistic stat = new Statistic(orderManager);
 		LocalDateTime to = LocalDateTime.now();
 		LocalDateTime from7Days = to.minusDays(7);

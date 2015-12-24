@@ -39,8 +39,10 @@ import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
 /**
- * This is the catalog controller. It controls the catalog. Or does it catalog the controller? You never know...
- * In this class you may find the controllers for the catalog and artible pages, should you choose to look for them.
+ * This is the catalog controller. It controls the catalog. Or does it catalog
+ * the controller? You never know... In this class you may find the controllers
+ * for the catalog and artible pages, should you choose to look for them.
+ * 
  * @author max
  *
  */
@@ -56,7 +58,9 @@ public class CatalogController {
 	private final ConcreteUserAccountRepository usermanager;
 
 	/**
-	 * This is the constructor. It's neither used nor does it contain any functionality other than storing function arguments as class attribute, what do you expect me to write here?
+	 * This is the constructor. It's neither used nor does it contain any
+	 * functionality other than storing function arguments as class attribute,
+	 * what do you expect me to write here?
 	 * 
 	 * @param catalog
 	 * @param inventory
@@ -67,7 +71,9 @@ public class CatalogController {
 	 * @param usermanager
 	 */
 	@Autowired
-	public CatalogController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch, ConcreteProductRepository concreteCatalog, NewsletterManager newsManager, MailSender sender, ConcreteUserAccountRepository usermanager) {
+	public CatalogController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch,
+			ConcreteProductRepository concreteCatalog, NewsletterManager newsManager, MailSender sender,
+			ConcreteUserAccountRepository usermanager) {
 
 		this.catalog = catalog;
 		this.inventory = inventory;
@@ -105,7 +111,8 @@ public class CatalogController {
 	 * @return
 	 */
 	@RequestMapping("/sufu/{search}/{pagenumber}")
-	public String postsufu(@PathVariable("search") String lookup, @PathVariable("pagenumber") int number, ModelMap model) {
+	public String postsufu(@PathVariable("search") String lookup, @PathVariable("pagenumber") int number,
+			ModelMap model) {
 
 		int max_number = prodSearch.list50(prodSearch.lookup_bar(lookup)).size() + 1;
 		// model.addAttribute("prods", concreteCatalog));
@@ -142,20 +149,28 @@ public class CatalogController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(path = "/catalog/{type}/{sort}/{representation}/{split}/{pagenumber}", method = { RequestMethod.POST, RequestMethod.GET })
-	public String list50(@PathVariable("type") String category, @PathVariable("split") int split, @PathVariable("pagenumber") int number, @PathVariable("representation") int representation, @PathVariable("sort") String sort, ModelMap model) {
-		if (split == 0) {
+	@RequestMapping(path = "/catalog/{type}/{sort}/{representation}/{split}/{pagenumber}", method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String list50(@PathVariable("type") String category, @PathVariable("split") int givenSplit,
+			@PathVariable("pagenumber") int givenNumber, @PathVariable("representation") int representation,
+			@PathVariable("sort") String sort, ModelMap model) {
+		int split;
+		if (givenSplit == 0) {
 			split = 3;
+		} else {
+			split = givenSplit;
 		}
 
 		Sort sorting = null;
 
 		switch (sort) {
 		case "selled":
-			sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "selled", Sort.NullHandling.NATIVE), new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE));
+			sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "selled", Sort.NullHandling.NATIVE),
+					new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE));
 			break;
 		case "rating":
-			sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "averageRating", Sort.NullHandling.NATIVE), new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE));
+			sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "averageRating", Sort.NullHandling.NATIVE),
+					new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE));
 			break;
 		case "name,asc":
 			sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE));
@@ -164,28 +179,34 @@ public class CatalogController {
 			sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "name", Sort.NullHandling.NATIVE));
 			break;
 		case "price,asc":
-			sorting = new Sort(Arrays.asList(new Sort.Order(Sort.Direction.ASC, "price", Sort.NullHandling.NATIVE), new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE)));
+			sorting = new Sort(Arrays.asList(new Sort.Order(Sort.Direction.ASC, "price", Sort.NullHandling.NATIVE),
+					new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE)));
 			break;
 		case "price,desc":
-			sorting = new Sort(Arrays.asList(new Sort.Order(Sort.Direction.DESC, "price", Sort.NullHandling.NATIVE), new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE)));
+			sorting = new Sort(Arrays.asList(new Sort.Order(Sort.Direction.DESC, "price", Sort.NullHandling.NATIVE),
+					new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE)));
 			break;
 		default:
 			sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE));
 		}
 
-		Page<ConcreteProduct> page = concreteCatalog.findByCategory(category, new PageRequest(number - 1, split, sorting));
+		Page<ConcreteProduct> page = concreteCatalog.findByCategory(category,
+				new PageRequest(givenNumber - 1, split, sorting));
 		List<ConcreteProduct> prods = page.getContent();
 
 		List<Integer> numbers = IntStream.range(1, page.getTotalPages() + 1).boxed().collect(Collectors.toList());
-		if (number == 0) {
-			number = 1;
-		}
-		if (number > numbers.size()) {
+		int number;
+		if (givenNumber > numbers.size()) {
 			number = numbers.size();
+		} else if (givenNumber == 0) {
+			number = 1;
+		} else {
+			number = givenNumber;
 		}
 		model.addAttribute("category", category);
 		model.addAttribute("number", number);
-		Set<Integer> quantities = Sets.newSet(split, 2, 3, 4, 5, 10, 15, 25, 50, 100, 150, 250, 500, prodSearch.getProdsByCategory(category).size());
+		Set<Integer> quantities = Sets.newSet(split, 2, 3, 4, 5, 10, 15, 25, 50, 100, 150, 250, 500,
+				prodSearch.getProdsByCategory(category).size());
 		quantities.removeIf(i -> i > prodSearch.getProdsByCategory(category).size());
 		model.addAttribute("maximum", prodSearch.getProdsByCategory(category).size());
 		model.addAttribute("quantities", new TreeSet<Integer>(quantities));
@@ -193,7 +214,8 @@ public class CatalogController {
 		model.addAttribute("representation", representation);
 		model.addAttribute("split", split);
 		model.addAttribute("prods", prods);
-		model.addAttribute("numbers", IntStream.range(1, page.getTotalPages() + 1).boxed().collect(Collectors.toList()));
+		model.addAttribute("numbers",
+				IntStream.range(1, page.getTotalPages() + 1).boxed().collect(Collectors.toList()));
 		return "catalog";
 	}
 
@@ -208,10 +230,14 @@ public class CatalogController {
 	 * @return
 	 */
 	@RequestMapping(value = "/catalog/{type}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)
-	public String changeStartPageSetting(@PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split) {
+	public String changeStartPageSetting(@PathVariable("type") String category, @PathVariable("pagenumber") int number,
+			@RequestParam("total") int split) {
 		return "redirect:/catalog/" + category + '/' + split + '/' + number;
 		/*
-		 * model.addAttribute("prods", page); model.addAttribute("numbers", numbers); model.addAttribute("sites", numbers.size()); model.addAttribute("categories", prodSearch.getCategories()); return "catalog";
+		 * model.addAttribute("prods", page); model.addAttribute("numbers",
+		 * numbers); model.addAttribute("sites", numbers.size());
+		 * model.addAttribute("categories", prodSearch.getCategories()); return
+		 * "catalog";
 		 */
 	}
 
@@ -228,7 +254,9 @@ public class CatalogController {
 	 * @return
 	 */
 	@RequestMapping(value = "/catalog/{type}/{sort}/{representation}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)
-	public String changeStartPageSetting(@PathVariable("type") String category, @PathVariable("pagenumber") int number, @RequestParam("total") int split, @RequestParam(value = "sort", defaultValue = "name") String sort, @PathVariable("representation") int representation, ModelMap model) {
+	public String changeStartPageSetting(@PathVariable("type") String category, @PathVariable("pagenumber") int number,
+			@RequestParam("total") int split, @RequestParam(value = "sort", defaultValue = "name") String sort,
+			@PathVariable("representation") int representation) {
 		return "redirect:/catalog/" + category + '/' + sort + '/' + representation + '/' + split + '/' + number;
 	}
 
@@ -262,7 +290,8 @@ public class CatalogController {
 	 * @return
 	 */
 	@RequestMapping(value = "/comment", method = RequestMethod.POST)
-	public String comment(@RequestParam("prodId") ConcreteProduct prod, @RequestParam("comment") String comment, @RequestParam("rating") int rating, Model model, @LoggedIn Optional<UserAccount> user) {
+	public String comment(@RequestParam("prodId") ConcreteProduct prod, @RequestParam("comment") String comment,
+			@RequestParam("rating") int rating, Model model, @LoggedIn Optional<UserAccount> user) {
 		Comment c = new Comment(comment, rating, new Date(), "");
 		if (!(comment.equals("")) && user.isPresent()) {
 			c.setFormatedDate(c.getDate());

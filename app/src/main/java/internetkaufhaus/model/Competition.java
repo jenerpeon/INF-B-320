@@ -32,13 +32,11 @@ public class Competition {
 		Iterator<ConcreteUserAccount> iter = this.accs.iterator();
 		if (this.accs.size() == 0)
 			return winners;
-		if(this.accs.size()<10 && iter.hasNext())
-		{
+		if (this.accs.size() < 10 && iter.hasNext()) {
 			winners.add(iter.next());
 			return winners;
 		}
-		while(iter.hasNext() && i<numberofwinners)
-		{
+		while (iter.hasNext() && i < numberofwinners) {
 			winners.add(iter.next());
 			i++;
 		}
