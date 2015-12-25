@@ -17,20 +17,19 @@ import org.springframework.mail.MailSender;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import internetkaufhaus.AbstractIntegrationTests;
 import internetkaufhaus.Application;
 import internetkaufhaus.entities.ConcreteUserAccount;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @Transactional
-public class CompetitionTest {
+public class CompetitionTest extends AbstractIntegrationTests{
 
 	@Autowired
 	private UserAccountManager manager;
 	@Autowired
 	private Creditmanager creditmanager;
-	@Autowired
-	private ConcreteMailSender sender;
 	private ArrayList<ConcreteUserAccount> accs = new ArrayList<ConcreteUserAccount>();
 	private Role customerRole = Role.of("ROLE_CUSTOMER");
 	private Competition comp;
