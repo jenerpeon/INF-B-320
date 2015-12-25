@@ -41,4 +41,20 @@ public class CompetitionUnitTest {
 		com.notifyWinners(sender);
 		verify(sender, times(2)).sendMail(anyString(),eq("Herzlichen Glückwunsch"),eq("wood@shop.de"),eq("Gewonnen"));
 	}
+	@Test
+	public void getAccsTest()
+	{
+		Competition com = new Competition(this.accs, this.credit);
+		assertTrue("ConcreteUserAccounts stimmen nicht überein", com.getAccs().equals(this.accs));
+	}
+	@Test
+	public void setAccsTest()
+	{
+		ConcreteUserAccount mocki = mock(ConcreteUserAccount.class);
+		ArrayList<ConcreteUserAccount> acci = new ArrayList<ConcreteUserAccount>();
+		acci.add(mocki);
+		Competition com = new Competition(this.accs, this.credit);
+		com.setAccs(acci);
+		assertTrue("Accounts stimmen nicht überein", com.getAccs().equals(acci));
+	}
 }
