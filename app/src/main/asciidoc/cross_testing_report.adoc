@@ -1,7 +1,7 @@
 = Cross-Testing Feedback
 
-__Durchführende Gruppe:__
-__Anwendung von Gruppe:__
+__Durchführende Gruppe: Gruppe 22
+__Anwendung von Gruppe: Internetkaufhaus 
 
 == Getestetes System
 Welche Aufgabe/Problemstellung löst die Anwendung.
@@ -11,13 +11,24 @@ Welche Aufgabe/Problemstellung löst die Anwendung.
 [options="header"]
 |===
 |Pfad |Parameter |Beschreibung |Rückgabe
-| … | … | … | … |
+|localhost:8080/admin/comments |Kommentar anzeigen Icon|Pop-Up-Fenster ist leer. Der eingegbene Kommentar wird nicht angezeigt| … |localhost:8080/admin/settings |||ErrorPage
+|localhost:8080/admin/category |Kategorie löschen Icon| Kategorie bleibt und ist auch noch die der Kategorieliste im Mitarbeiterbereich||
+|localhost:8080/adminCustomer/changePassword |Passwort erneuern Icon unter Kunden bei Mitarbeiterbereich | Neues Passwort kann eingegeben werden und wird abgeschickt. | ErrorPage
+|localhost:8080/admin/users | |Zugriff verweigert als Mitarbeiter. Aber es kommt eine ErrorPage||
+|localhost:8080/cart/order | | Kaufen als Admin und Mitarbeiter. Zugriff wird wie gewünscht verweigert. Aber es kommt eine ErrorPage | |
+
+|
 |===
 
 == Sonstiges
 * Optik der Anwendung
+Darstellung Produkt: Preisdarstellung teilweise unterschiedlich z.B. 9.5 E+2
 * Fehlende Features
 * Interaktion mit der Anwendung (Usability)
+Kommentare: Wenn man ein Kommentar abgibt, wird ohne Bestätigung des Mitarbeiters bzw. Admins schon die Sterne übernommen und auf der Produktseite angezeigt. 
+
+Bestellung: Bestellung konnte nicht abgeschickt werden. 
+
 
 == Verbesserungsvorschläge
 * Was kann noch weiter verbessert werden?
