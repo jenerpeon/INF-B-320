@@ -42,16 +42,16 @@ import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.forms.BillingAddressForm;
 import internetkaufhaus.forms.PaymentForm;
 import internetkaufhaus.forms.ShippingAddressForm;
-import internetkaufhaus.model.ConcreteMailSender;
 import internetkaufhaus.model.ReturnManager;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
+import internetkaufhaus.services.ConcreteMailService;
 
 @Controller
 @SessionAttributes("cart")
 class CartController {
 
 	private final OrderManager<Order> orderManager;
-	private MailSender sender;
+	private final ConcreteMailService sender;
 	private final ConcreteOrderRepository concreteOrderRepo;
 
 	/**
@@ -64,7 +64,7 @@ class CartController {
 	 * @param sender
 	 */
 	@Autowired
-	public CartController(ConcreteOrderRepository concreteOrderRepo, OrderManager<Order> orderManager, MailSender sender) {
+	public CartController(ConcreteOrderRepository concreteOrderRepo, OrderManager<Order> orderManager, ConcreteMailService sender) {
 		Assert.notNull(orderManager, "OrderManager must not be null!");
 		this.orderManager = orderManager;
 		this.concreteOrderRepo = concreteOrderRepo;
@@ -240,7 +240,7 @@ class CartController {
 
 			cart.clear();
 
-			new ConcreteMailSender(this.sender).sendMail(account.getEmail(), "Sehr geehrte(r) " + account.getFirstname() + " " + account.getLastname() + "!\nIhre Bestellung ist soeben bei uns eingetroffen und wird nun bearbeitet!\nIhre Bestellung umfasst folgende Artikel:" + articles, "nobody@nothing.com", "Bestellung eingetroffen!");
+			sender.sendMail(account.getEmail(), "Sehr geehrte(r) " + account.getFirstname() + " " + account.getLastname() + "!\nIhre Bestellung ist soeben bei uns eingetroffen und wird nun bearbeitet!\nIhre Bestellung umfasst folgende Artikel:" + articles, "nobody@nothing.com", "Bestellung eingetroffen!");
 
 			return "redirect:/";
 		}).orElse("redirect:/login");

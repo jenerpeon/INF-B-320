@@ -26,7 +26,6 @@ import org.springframework.stereotype.Component;
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.entities.ConcreteUserAccount;
-import internetkaufhaus.model.AccountAdministration;
 import internetkaufhaus.model.Search;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
@@ -46,8 +45,6 @@ public class Initialize implements DataInitializer {
 	private final Inventory<InventoryItem> inventory;
 	private final Catalog<ConcreteProduct> productCatalog;
 	private final OrderManager<Order> orderManager;
-	private final AccountAdministration accountAdministration;
-	private final MailSender sender;
 	private final ConcreteProductRepository concreteProductRepository;
 	private final ConcreteOrderRepository concreteOrderRepo;
 	private final Search productSearch;
@@ -72,7 +69,6 @@ public class Initialize implements DataInitializer {
 	public Initialize(ConcreteOrderRepository concreteOrderRepo, Catalog<ConcreteProduct> productCatalog,
 			UserAccountManager userAccountManager, ConcreteUserAccountRepository ConcreteUserAccountManager,
 			Inventory<InventoryItem> inventory, OrderManager<Order> orderManager, Search productSearch,
-			AccountAdministration accountAdministration, MailSender sender,
 			ConcreteProductRepository concreteProductRepository) {
 		this.inventory = inventory;
 		this.concreteUserAccountManager = ConcreteUserAccountManager;
@@ -82,11 +78,6 @@ public class Initialize implements DataInitializer {
 		this.productSearch.setCatalog(productCatalog);
 		this.orderManager = orderManager;
 		this.concreteProductRepository = concreteProductRepository;
-		this.sender = sender;
-		this.accountAdministration = accountAdministration;
-		this.accountAdministration.setUserAccountManager(this.userAccountManager);
-		this.accountAdministration.setConcreteUserAccountManager(this.concreteUserAccountManager);
-		this.accountAdministration.setMailSender(this.sender);
 		this.concreteOrderRepo = concreteOrderRepo;
 	}
 

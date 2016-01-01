@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import internetkaufhaus.entities.ConcreteUserAccount;
+import internetkaufhaus.services.ConcreteMailService;
 /**
  * Competition in which the Customers who 
  * gained the most CreditPoints are rewarded with a prize. 
@@ -56,7 +59,7 @@ public class Competition {
 	 * Notifies winners via Email
 	 * @param sender 
 	 */
-	public void notifyWinners(ConcreteMailSender sender) {
+	public void notifyWinners(ConcreteMailService sender) {
 		for (ConcreteUserAccount acc : winners) {
 			sender.sendMail(acc.getEmail(), "Herzlichen Glückwunsch", "wood@shop.de", "Gewonnen");
 		}
