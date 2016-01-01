@@ -12,13 +12,10 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.javamoney.moneta.Money;
-import org.salespointframework.order.Order;
-import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.time.Interval;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
-import org.salespointframework.useraccount.UserAccountManager;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,11 +33,10 @@ import internetkaufhaus.forms.CreateUserForm;
 import internetkaufhaus.forms.EditUserForm;
 import internetkaufhaus.forms.NewUserAccountForm;
 import internetkaufhaus.model.Competition;
-import internetkaufhaus.model.ConcreteMailSender;
 import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.model.NavItem;
-import internetkaufhaus.repositories.ConcreteOrderRepository;
-import internetkaufhaus.repositories.ConcreteUserAccountRepository;
+import internetkaufhaus.services.ConcreteMailService;
+import internetkaufhaus.services.DataService;
 
 /**
  * This is the admin controller. It controls the admin. Or maybe it admins the controls? You never know... In this class you may find the controllers for the admin interfaces, should you choose to look for them.
@@ -51,15 +47,14 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 @Controller
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AdminController {
-	private final ConcreteUserAccountRepository manager;
+	
+	@Autowired
+	private DataService dataService;
+	@Autowired
+	private ConcreteMailService mailService;
 
-	private final ConcreteOrderRepository concreteOrderRepo;
-	private final OrderManager<Order> orderManager;
-	private final UserAccountManager umanager;
 	private final NewUserAccountForm form;
-
 	private final Creditmanager creditmanager;
-	private ConcreteMailSender sender;
 
 	/**
 	 * This is the constructor. It's neither used nor does it contain any functionality other than storing function arguments as class attribute, what do you expect me to write here?
@@ -71,15 +66,9 @@ public class AdminController {
 	 * @param form
 	 */
 	@Autowired
-	public AdminController(ConcreteOrderRepository concreteOrderRepo, OrderManager<Order> orderManager ,ConcreteUserAccountRepository manager, UserAccountManager umanager, Creditmanager creditmanager, NewUserAccountForm form, ConcreteMailSender sender) {
-
-		this.manager = manager;
-		this.umanager = umanager;
-		this.concreteOrderRepo = concreteOrderRepo;
-		this.orderManager = orderManager;
-		
+	public AdminController(Creditmanager creditmanager, NewUserAccountForm form) {
+			
 		this.form = form;
-		this.sender = sender;
 		this.creditmanager = creditmanager;
 
 	}
@@ -120,9 +109,9 @@ public class AdminController {
 		Role roleCustomer = Role.of("ROLE_CUSTOMER");
 		Role roleAdmin = Role.of("ROLE_ADMIN");
 		Role roleEmployee = Role.of("ROLE_EMPLOYEE");
-		model.addAttribute("employees", manager.findByRole(roleEmployee));
-		model.addAttribute("customers", manager.findByRole(roleCustomer));
-		model.addAttribute("admins", manager.findByRole(roleAdmin));
+		model.addAttribute("employees", dataService.getConcreteUserAccoutnRepository().findByRole(roleEmployee));
+		model.addAttribute("customers", dataService.getConcreteUserAccoutnRepository().findByRole(roleCustomer));
+		model.addAttribute("admins", dataService.getConcreteUserAccoutnRepository().findByRole(roleAdmin));
 		return "changeuser";
 	}
 
@@ -134,9 +123,12 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/admin/changeuser/deleteUser/{id}")
 	public String deleteUser(@PathVariable("id") Long id) {
-
-		umanager.disable((manager.findOne(id).getUserAccount().getId()));
-		manager.delete(id);
+        dataService.getUserAccountManager().disable(
+        		dataService.getConcreteUserAccoutnRepository().
+        	    	findOne(id).
+        	    	getUserAccount().
+        	    	getId());
+        dataService.getConcreteUserAccoutnRepository().delete(id);
 
 		return "redirect:/admin/changeuser";
 	}
@@ -232,8 +224,8 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/admin/balance")
 	public String balance(ModelMap model) {
-		Iterable<ConcreteOrder> ordersCompleted = concreteOrderRepo.findByStatus(OrderStatus.COMPLETED);
-		Iterable<ConcreteOrder> ordersOpen = concreteOrderRepo.findByStatus(OrderStatus.OPEN);
+		Iterable<ConcreteOrder> ordersCompleted = dataService.getConcreteOrderRepository().findByStatus(OrderStatus.COMPLETED); 
+		Iterable<ConcreteOrder> ordersOpen = dataService.getConcreteOrderRepository().findByStatus(OrderStatus.OPEN);
 
 		double totalPaid = 0;
 		for (ConcreteOrder order : ordersCompleted) {
@@ -315,11 +307,11 @@ public class AdminController {
 	@RequestMapping(value = "/admin/competitionButton")
 	public String getWinners(ModelMap model) {
 
-		Competition com = new Competition(manager.findByRole(Role.of("ROLE_CUSTOMER")), creditmanager);
+		Competition com = new Competition(dataService.getConcreteUserAccoutnRepository().findByRole(Role.of("ROLE_CUSTOMER")), creditmanager);
 
 		model.addAttribute("winners", com.getWinners());
 		com.getWinners().forEach(x->System.out.println(x.getUserAccount().getUsername()+" "+x.getCredits()));
-		com.notifyWinners(sender);
+		com.notifyWinners(mailService);
 		HashMap<String, String> msg = new HashMap<String, String>();
 		msg.put("success", "Die folgenden Gewinner wurden benachrichtigt");
 		msg.put("name", "Name");
