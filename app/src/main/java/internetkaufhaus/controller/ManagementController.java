@@ -32,7 +32,6 @@ import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -49,13 +48,13 @@ import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.forms.EditArticleForm;
 import internetkaufhaus.forms.StockForm;
-import internetkaufhaus.model.ConcreteMailSender;
 import internetkaufhaus.model.NavItem;
-import internetkaufhaus.model.NewsletterManager;
 import internetkaufhaus.model.Search;
 import internetkaufhaus.model.StockManager;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
+import internetkaufhaus.services.ConcreteMailService;
+import internetkaufhaus.services.NewsletterService;
 
 /**
  * This is the management controller. It controls the management. Or does it
@@ -77,8 +76,8 @@ public class ManagementController {
 	private final ConcreteProductRepository concreteProductRepository;
 	private final OrderManager<Order> orderManager;
 	private final StockManager stock;
-	private final NewsletterManager newsManager;
-	private final MailSender sender;
+	private final NewsletterService newsManager;
+	private final ConcreteMailService sender;
 	// private final List<ConcreteProduct> carousselList;
 	// private final List<ConcreteProduct> selectionList;
 
@@ -100,8 +99,8 @@ public class ManagementController {
 	@Autowired
 	public ManagementController(ConcreteProductRepository concreteProductRepository, OrderManager<Order> orderManager,
 			ConcreteOrderRepository concreteOrderRepo, Catalog<ConcreteProduct> catalog,
-			Inventory<InventoryItem> inventory, Search prodSearch, StockManager stock, NewsletterManager newsManager,
-			MailSender sender) {
+			Inventory<InventoryItem> inventory, Search prodSearch, StockManager stock, NewsletterService newsManager,
+			ConcreteMailService sender) {
 		this.concreteProductRepository = concreteProductRepository;
 		this.catalog = catalog;
 		this.inventory = inventory;
@@ -548,7 +547,7 @@ public class ManagementController {
 		}
 		mail += "\nGesamtpreis: " + order.getTotalPrice().toString();
 
-		new ConcreteMailSender(this.sender).sendMail(order.getUserAccount().getEmail(), mail, "nobody@nothing.com",
+		sender.sendMail(order.getUserAccount().getEmail(), mail, "nobody@nothing.com",
 				"Bestellung bearbeitet!");
 
 		// orderManager.completeOrder(o.getOrder());
@@ -644,10 +643,9 @@ public class ManagementController {
 	@RequestMapping(value = "/employee/newsletter/changeNewsletter/sendNewsletter", method = RequestMethod.GET)
 	public String sendNewsletter(@RequestParam("subject") String subject, @RequestParam("mailBody") String mailBody) {
 		Map<Date, String> maildetails = new HashMap<Date, String>();
-		ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);
 		if (!(mailBody.equals(""))) {
 			for (String mail : this.newsManager.getMap().values()) {
-				concreteMailSender.sendMail(mail, mailBody, "zu@googlemail.com", subject);
+				sender.sendMail(mail, mailBody, "zu@googlemail.com", subject);
 			}
 			maildetails.put(new Date(), mailBody);
 			newsManager.getOldAbos().put(subject, maildetails);

@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -32,11 +31,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteProduct;
-import internetkaufhaus.model.ConcreteMailSender;
-import internetkaufhaus.model.NewsletterManager;
 import internetkaufhaus.model.Search;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
+import internetkaufhaus.services.ConcreteMailService;
+import internetkaufhaus.services.NewsletterService;
 
 /**
  * This is the catalog controller. It controls the catalog. Or does it catalog
@@ -53,8 +52,8 @@ public class CatalogController {
 	private final Inventory<InventoryItem> inventory;
 	private final ConcreteProductRepository concreteCatalog;
 	private final Search prodSearch;
-	private final NewsletterManager newsManager;
-	private final MailSender sender;
+	private final NewsletterService newsManager;
+	private final ConcreteMailService sender;
 	private final ConcreteUserAccountRepository usermanager;
 
 	/**
@@ -72,7 +71,7 @@ public class CatalogController {
 	 */
 	@Autowired
 	public CatalogController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch,
-			ConcreteProductRepository concreteCatalog, NewsletterManager newsManager, MailSender sender,
+			ConcreteProductRepository concreteCatalog, NewsletterService newsManager, ConcreteMailService sender,
 			ConcreteUserAccountRepository usermanager) {
 
 		this.catalog = catalog;
@@ -94,11 +93,17 @@ public class CatalogController {
 	 */
 	@RequestMapping("/sufu/{pagenumber}")
 	public String sufu(@RequestParam("search") String lookup, @PathVariable("pagenumber") int number, ModelMap model) {
-
+        
+		try{
 		int max_number = prodSearch.list50(prodSearch.lookup_bar(lookup)).size() + 1;
 		model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
 		model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
 		model.addAttribute("search", lookup);
+		}catch (Exception e){
+			System.out.println("sufu stage 1:"+e.toString());
+
+			return "index";
+		}
 		return "catalog";
 	}
 
@@ -115,10 +120,14 @@ public class CatalogController {
 			ModelMap model) {
 
 		int max_number = prodSearch.list50(prodSearch.lookup_bar(lookup)).size() + 1;
-		// model.addAttribute("prods", concreteCatalog));
+		try{
 		model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
 		model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
 		model.addAttribute("search", lookup);
+		}catch(Exception e){
+			System.out.println("sufu stage 2:"+e.toString());
+			return "index";
+		}
 		return "catalog";
 	}
 
@@ -312,7 +321,6 @@ public class CatalogController {
 	 */
 	@RequestMapping(value = "/newsletter", method = RequestMethod.GET)
 	public String newsletter(@RequestParam("email") String sendTo, ModelMap model) throws ParseException {
-		ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);
 		String text = "Sie haben sich für den Woods Super Dooper Shop Newsletter angemeldet.";
 		String username;
 
@@ -322,7 +330,7 @@ public class CatalogController {
 			username = usermanager.findByEmail(sendTo).getUserAccount().getUsername();
 		}
 		newsManager.getMap().put(username, sendTo);
-		concreteMailSender.sendMail(sendTo, text, "zu@googlemail.com", "NewsletterAbonnement");
+		sender.sendMail(sendTo, text, "zu@googlemail.com", "NewsletterAbonnement");
 
 		model.addAttribute("prodList", catalog.findAll());
 

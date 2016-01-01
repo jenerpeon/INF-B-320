@@ -4,8 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
-import internetkaufhaus.entities.ConcreteUserAccount;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import internetkaufhaus.entities.ConcreteUserAccount;
+import internetkaufhaus.services.ConcreteMailService;
+/**
+ * Competition in which the Customers who 
+ * gained the most CreditPoints are rewarded with a prize. 
+ * 
+ * @author Wilhelm Mundt
+ *
+ */
 public class Competition {
 
 	private ArrayList<ConcreteUserAccount> accs = new ArrayList<ConcreteUserAccount>();
@@ -18,7 +27,10 @@ public class Competition {
 		}
 		this.creditmanager = creditmanager;
 	}
-
+	/**
+	 * Returns first 10% of participants
+	 * @return
+	 */
 	public ArrayList<ConcreteUserAccount> getWinners() {
 		winners.clear();
 		for (ConcreteUserAccount acc : accs) {
@@ -43,17 +55,26 @@ public class Competition {
 
 		return winners;
 	}
-
-	public void notifyWinners(ConcreteMailSender sender) {
+	/**
+	 * Notifies winners via Email
+	 * @param sender 
+	 */
+	public void notifyWinners(ConcreteMailService sender) {
 		for (ConcreteUserAccount acc : winners) {
 			sender.sendMail(acc.getEmail(), "Herzlichen Glückwunsch", "wood@shop.de", "Gewonnen");
 		}
 	}
-
+	/**
+	 * Returns list of participants
+	 * @return
+	 */
 	public ArrayList<ConcreteUserAccount> getAccs() {
 		return accs;
 	}
-
+	/**
+	 * Sets list of participants
+	 * @param accs
+	 */
 	public void setAccs(ArrayList<ConcreteUserAccount> accs) {
 		this.accs = accs;
 	}

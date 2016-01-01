@@ -1,14 +1,20 @@
 package internetkaufhaus.model;
 
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
 import internetkaufhaus.entities.ConcreteUserAccount;
+import internetkaufhaus.services.ConcreteMailService;
 
 public class CompetitionUnitTest {
 	private ArrayList<ConcreteUserAccount> accs = new ArrayList<ConcreteUserAccount>();
@@ -35,10 +41,26 @@ public class CompetitionUnitTest {
 	@Test
 	public void notifyWinnersTest()
 	{
-		ConcreteMailSender sender = mock(ConcreteMailSender.class);
+		ConcreteMailService sender = mock(ConcreteMailService.class);
 		Competition com = new Competition(this.accs, this.credit);
 		com.getWinners();
 		com.notifyWinners(sender);
 		verify(sender, times(2)).sendMail(anyString(),eq("Herzlichen Glückwunsch"),eq("wood@shop.de"),eq("Gewonnen"));
+	}
+	@Test
+	public void getAccsTest()
+	{
+		Competition com = new Competition(this.accs, this.credit);
+		assertTrue("ConcreteUserAccounts stimmen nicht überein", com.getAccs().equals(this.accs));
+	}
+	@Test
+	public void setAccsTest()
+	{
+		ConcreteUserAccount mocki = mock(ConcreteUserAccount.class);
+		ArrayList<ConcreteUserAccount> acci = new ArrayList<ConcreteUserAccount>();
+		acci.add(mocki);
+		Competition com = new Competition(this.accs, this.credit);
+		com.setAccs(acci);
+		assertTrue("Accounts stimmen nicht überein", com.getAccs().equals(acci));
 	}
 }
