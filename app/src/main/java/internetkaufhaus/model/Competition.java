@@ -4,10 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
+import org.springframework.mail.MailException;
+
 import internetkaufhaus.entities.ConcreteUserAccount;
 
 public class Competition {
-
+	
+	/**
+	 * The Competition class is responsible for the recruit competition between all invitators.
+	 * The the best invitators are the winners.
+	 *
+	 */
+	
 	private ArrayList<ConcreteUserAccount> accs = new ArrayList<ConcreteUserAccount>();
 	private ArrayList<ConcreteUserAccount> winners = new ArrayList<ConcreteUserAccount>();
 	private Creditmanager creditmanager;
@@ -18,7 +26,15 @@ public class Competition {
 		}
 		this.creditmanager = creditmanager;
 	}
-
+	
+	/**
+	 * The getWinners method finds out the ten best invitators.
+	 * 
+	 * @return ArrayList with 
+	 * 
+	 * @author heiner
+	 *
+	 */
 	public ArrayList<ConcreteUserAccount> getWinners() {
 		winners.clear();
 		for (ConcreteUserAccount acc : accs) {
@@ -44,6 +60,15 @@ public class Competition {
 		return winners;
 	}
 
+	
+	/**
+	 * The notifyWinners method sends a congratulation email to the winners.
+	 * 
+	 * @return ArrayList with 
+	 * 
+	 * @author heiner
+	 *
+	 */
 	public void notifyWinners(ConcreteMailSender sender) {
 		for (ConcreteUserAccount acc : winners) {
 			sender.sendMail(acc.getEmail(), "Herzlichen Glückwunsch", "wood@shop.de", "Gewonnen");
