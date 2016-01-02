@@ -52,7 +52,7 @@ public class NewsletterManager {
 		}
 
 	}
-
+ 
 	public Map<String, String> getMap() {
 
 		return map;
