@@ -19,6 +19,11 @@ import internetkaufhaus.repositories.ConcreteOrderRepository;
 @Component
 public class Creditmanager {
 
+	/**
+	 * The Creditmanager class is responsible for increasing the credits of the invitator everytime the recruiter buy products.
+	 *
+	 */
+	
 	private ConcreteOrderRepository concreteOrderRepo;
 
 	@Autowired
@@ -29,6 +34,14 @@ public class Creditmanager {
 
 	// Method to update the credit amount of the given ConcreteUserAccount
 	// to get the credits of the User, use the method User.getCredits of ConcreteUserAccount--Class
+	
+	/**
+	 * The updateCreditpointsByUser is responsible for increasing the credit amount by 20% of the sales value for completed orders after one month.
+	 * 
+	 * @param recruiter ConcreteUserAccount which get the credits and recruited the buyer.
+
+	 *
+	 */
 	public void updateCreditpointsByUser(ConcreteUserAccount recruiter) {
 		List<UserAccount> recruits = recruiter.getRecruits();
 
