@@ -11,6 +11,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class NewsletterManager {
 
+	/**
+	 * The NewsletterManager class is responsible for the newsletters which can be written and send by employees.
+	 * Every costumer which is part in the newsletter list will get a newsletter.
+	 *
+	 */
+	
 	private MailSender sender;
 
 	private Map<String, String> map = new HashMap<String, String>(); // Map with User and Email
@@ -24,7 +30,7 @@ public class NewsletterManager {
 	public void setMap(Map<String, String> map) {
 		this.map = map;
 	}
-
+	
 	public Map<String, Map<Date, String>> getOldAbos() {
 		return oldAbos;
 	}
@@ -32,7 +38,13 @@ public class NewsletterManager {
 	public void setOldAbos(Map<String, Map<Date, String>> oldAbos) {
 		this.oldAbos = oldAbos;
 	}
-
+	
+	/**
+	 * The sendNewsletters method sends the given text as newsletter to all costumers which have subscribed the newsletter.
+	 * 
+	 * @param text the newsletter content as String 
+	 *
+	 */
 	public void sendNewsletters(String text) {
 		ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);
 		for (String email : this.getMap().values()) {
