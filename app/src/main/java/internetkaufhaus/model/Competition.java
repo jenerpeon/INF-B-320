@@ -73,7 +73,7 @@ public class Competition {
 	}
 	/**
 	 * Sets list of participants
-	 * @param accs
+	 * @param accs ConcreteUserAccounts for the competition
 	 */
 	public void setAccs(ArrayList<ConcreteUserAccount> accs) {
 		this.accs = accs;
