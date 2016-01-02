@@ -28,7 +28,6 @@ public class ConcreteMailSenderTest {
 	@Test
 	public void wiredTest() throws Exception {
 		ConcreteMailSender concreteMailSender = new ConcreteMailSender(sender);
-		concreteMailSender.sendMail("heinzerluds@googlemail.com", "Hallo Heinz", "me@web.de", "tescht");
-		assertTrue("empty test", true);
+		assertTrue("empty test", concreteMailSender.sendMail("heinzerluds@googlemail.com", "Hallo Heinz", "me@web.de", "tescht"));
 	}
 }
