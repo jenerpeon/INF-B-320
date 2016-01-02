@@ -18,7 +18,11 @@ import org.salespointframework.time.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class Statistic {
-
+	/**
+	 * The Statistic class is responsible for all financial transactions. 
+	 * It provides different filter functions to get financial numbers of different intervals. 
+	 */
+	
 	private final OrderManager<Order> orderManager;
 	// private final ConcreteOrderRepository concreteOrderRepo;
 
@@ -36,7 +40,14 @@ public class Statistic {
 		}
 		return turnover;
 	}*/
-
+	
+	/**
+	 * The getTurnoverByInterval method is used to get all orders with the ordervalue and orderstatus each during a given time.
+	 * @param i time interval
+	 * @param unit 
+	 * 
+	 * @return a list containing elements with orderstatus and ordervalue
+	 */
 	public Map<LocalDate, Money> getTurnoverByInterval(Interval i, String unit) {
 		Map<LocalDate, Money> turnover = new HashMap<LocalDate, Money>();
 		LocalTime midnight = LocalTime.MIDNIGHT;
@@ -108,6 +119,12 @@ public class Statistic {
 		return turnover;
 	}
 
+	/**
+	 * The getSales method finds out how much completed orders are existing inside a given Iterable
+	 * @param orders Iterable with orders
+	 *
+	 * @return an Integer showing how much orders part of the given Iterable are completed
+	 */
 	private Integer getSales(Iterable<Order> orders) {
 		int sum = 0;
 		for (Order o : orders) {
@@ -116,6 +133,7 @@ public class Statistic {
 		}
 		return sum;
 	}
+
 
 	public List<Integer> getSalesByInterval(Interval i, int q) {
 		List<Integer> sales = new ArrayList<Integer>();
