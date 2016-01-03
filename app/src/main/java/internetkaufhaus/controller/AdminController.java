@@ -12,13 +12,10 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.javamoney.moneta.Money;
-import org.salespointframework.order.Order;
-import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.time.Interval;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
-import org.salespointframework.useraccount.UserAccountManager;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,14 +33,15 @@ import internetkaufhaus.forms.CreateUserForm;
 import internetkaufhaus.forms.EditUserForm;
 import internetkaufhaus.forms.NewUserAccountForm;
 import internetkaufhaus.model.Competition;
-import internetkaufhaus.model.ConcreteMailSender;
 import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.model.NavItem;
-import internetkaufhaus.repositories.ConcreteOrderRepository;
-import internetkaufhaus.repositories.ConcreteUserAccountRepository;
+import internetkaufhaus.services.ConcreteMailService;
+import internetkaufhaus.services.DataService;
 
 /**
- * This is the admin controller. It controls the admin. Or maybe it admins the controls? You never know... In this class you may find the controllers for the admin interfaces, should you choose to look for them.
+ * This is the admin controller. It controls the admin. Or maybe it admins the
+ * controls? You never know... In this class you may find the controllers for
+ * the admin interfaces, should you choose to look for them.
  * 
  * @author max
  *
@@ -51,46 +49,46 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 @Controller
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AdminController {
-	private final ConcreteUserAccountRepository manager;
 
-	private final ConcreteOrderRepository concreteOrderRepo;
-	private final OrderManager<Order> orderManager;
-	private final UserAccountManager umanager;
+	@Autowired
+	private DataService dataService;
+	@Autowired
+	private ConcreteMailService mailService;
+
 	private final NewUserAccountForm form;
-
 	private final Creditmanager creditmanager;
-	private ConcreteMailSender sender;
 
 	/**
-	 * This is the constructor. It's neither used nor does it contain any functionality other than storing function arguments as class attribute, what do you expect me to write here?
+	 * This is the constructor. It's neither used nor does it contain any
+	 * functionality other than storing function arguments as class attribute,
+	 * what do you expect me to write here?
 	 * 
 	 * @param concreteOrderRepo
+	 *            singleton, passed by spring/salespoint
 	 * @param manager
+	 *            singleton, passed by spring/salespoint
 	 * @param umanager
+	 *            singleton, passed by spring/salespoint
 	 * @param creditmanager
+	 *            singleton, passed by spring/salespoint
 	 * @param form
+	 *            singleton, passed by spring/salespoint
 	 */
 	@Autowired
-	public AdminController(ConcreteOrderRepository concreteOrderRepo, OrderManager<Order> orderManager ,ConcreteUserAccountRepository manager, UserAccountManager umanager, Creditmanager creditmanager, NewUserAccountForm form, ConcreteMailSender sender) {
+	public AdminController(Creditmanager creditmanager, NewUserAccountForm form) {
 
-		this.manager = manager;
-		this.umanager = umanager;
-		this.concreteOrderRepo = concreteOrderRepo;
-		this.orderManager = orderManager;
-		
 		this.form = form;
-		this.sender = sender;
 		this.creditmanager = creditmanager;
 
 	}
-	
+
 	@ModelAttribute("adminNaviagtion")
 	public List<NavItem> addAdminNavigation() {
-		String adminNavigationName[] = {"Userverwaltung","Bilanzen","Statistiken","Gewinnspiel"};
-		String adminNavigationLink[] = {"/admin/changeuser","/admin/balance","/admin/statistics","/admin/lottery"};
+		String adminNavigationName[] = { "Userverwaltung", "Bilanzen", "Statistiken", "Gewinnspiel" };
+		String adminNavigationLink[] = { "/admin/changeuser", "/admin/balance", "/admin/statistics", "/admin/lottery" };
 		List<NavItem> navigation = new ArrayList<NavItem>();
-		for (int i=0; i < adminNavigationName.length; i++) {
-			NavItem nav = new NavItem(adminNavigationName[i],adminNavigationLink[i],"non-category");
+		for (int i = 0; i < adminNavigationName.length; i++) {
+			NavItem nav = new NavItem(adminNavigationName[i], adminNavigationLink[i], "non-category");
 			navigation.add(nav);
 		}
 		return navigation;
@@ -101,7 +99,7 @@ public class AdminController {
 	 * 
 	 * @param userAccount
 	 * @param model
-	 * @return
+	 * @return adminOverviewPage
 	 */
 	@RequestMapping("/admin")
 	public String adminStart(@LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
@@ -113,16 +111,16 @@ public class AdminController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * 
 	 * @param model
-	 * @return
+	 * @return changeUserPage
 	 */
 	@RequestMapping(value = "/admin/changeuser")
 	public String changeUser(ModelMap model) {
 		Role roleCustomer = Role.of("ROLE_CUSTOMER");
 		Role roleAdmin = Role.of("ROLE_ADMIN");
 		Role roleEmployee = Role.of("ROLE_EMPLOYEE");
-		model.addAttribute("employees", manager.findByRole(roleEmployee));
-		model.addAttribute("customers", manager.findByRole(roleCustomer));
-		model.addAttribute("admins", manager.findByRole(roleAdmin));
+		model.addAttribute("employees", dataService.getConcreteUserAccoutnRepository().findByRole(roleEmployee));
+		model.addAttribute("customers", dataService.getConcreteUserAccoutnRepository().findByRole(roleCustomer));
+		model.addAttribute("admins", dataService.getConcreteUserAccoutnRepository().findByRole(roleAdmin));
 		return "changeuser";
 	}
 
@@ -130,13 +128,13 @@ public class AdminController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * 
 	 * @param id
-	 * @return
+	 * @return redirectToChangeUserPage
 	 */
 	@RequestMapping(value = "/admin/changeuser/deleteUser/{id}")
 	public String deleteUser(@PathVariable("id") Long id) {
-
-		umanager.disable((manager.findOne(id).getUserAccount().getId()));
-		manager.delete(id);
+		dataService.getUserAccountManager()
+				.disable(dataService.getConcreteUserAccoutnRepository().findOne(id).getUserAccount().getId());
+		dataService.getConcreteUserAccoutnRepository().delete(id);
 
 		return "redirect:/admin/changeuser";
 	}
@@ -173,7 +171,8 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value = "/admin/changeuser/addedUser", method = RequestMethod.POST)
-	public String addedUser(@ModelAttribute("CreateUserForm") @Valid CreateUserForm createuserform, BindingResult result, ModelMap model) {
+	public String addedUser(@ModelAttribute("CreateUserForm") @Valid CreateUserForm createuserform,
+			BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
 			model.addAttribute("message", result.getAllErrors());
 			return "changeusernewuser";
@@ -203,7 +202,8 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value = "/admin/changeuser/editedUser", method = RequestMethod.POST)
-	public String editedUserUser(@ModelAttribute("EditUserForm") @Valid EditUserForm edituserform, BindingResult result) {
+	public String editedUserUser(@ModelAttribute("EditUserForm") @Valid EditUserForm edituserform,
+			BindingResult result) {
 		if (result.hasErrors()) {
 			return "redirect:/admin/changeuser/";
 		}
@@ -232,8 +232,9 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/admin/balance")
 	public String balance(ModelMap model) {
-		Iterable<ConcreteOrder> ordersCompleted = concreteOrderRepo.findByStatus(OrderStatus.COMPLETED);
-		Iterable<ConcreteOrder> ordersOpen = concreteOrderRepo.findByStatus(OrderStatus.OPEN);
+		Iterable<ConcreteOrder> ordersCompleted = dataService.getConcreteOrderRepository()
+				.findByStatus(OrderStatus.COMPLETED);
+		Iterable<ConcreteOrder> ordersOpen = dataService.getConcreteOrderRepository().findByStatus(OrderStatus.OPEN);
 
 		double totalPaid = 0;
 		for (ConcreteOrder order : ordersCompleted) {
@@ -265,7 +266,7 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/admin/statistics")
 	public String getStatistics() {
-		//Statistic stat = new Statistic(orderManager);
+		// Statistic stat = new Statistic(orderManager);
 		LocalDateTime to = LocalDateTime.now();
 		LocalDateTime from7Days = to.minusDays(7);
 		LocalDateTime from1Month = to.minusMonths(1);
@@ -274,9 +275,9 @@ public class AdminController {
 		LocalDateTime from3Year = to.minusYears(3);
 		LocalDateTime from5Year = to.minusYears(5);
 		LocalDateTime from10Year = to.minusYears(10);
-		
+
 		Map<Interval, String> intervals = new HashMap<Interval, String>();
-		
+
 		intervals.put(Interval.from(from7Days).to(to), "day");
 		intervals.put(Interval.from(from1Month).to(to), "week");
 		intervals.put(Interval.from(from3Month).to(to), "month");
@@ -284,23 +285,10 @@ public class AdminController {
 		intervals.put(Interval.from(from3Year).to(to), "year");
 		intervals.put(Interval.from(from5Year).to(to), "year");
 		intervals.put(Interval.from(from10Year).to(to), "year");
-		
-		/*List<Map<LocalDate, Money>> turnovers= new ArrayList<Map<LocalDate, Money>>();
-		for (Map.Entry<Interval, String> entry : intervals.entrySet()) {
-			turnovers.add(stat.getTurnoverByInterval(entry.getKey(), entry.getValue()));
-		}
-		
-		model.addAttribute("turnover", turnovers);*/
-		
-		/*model.addAttribute("sales", stat.getSalesByInterval(i, quantize));
-		model.addAttribute("purchases", null);
-		model.addAttribute("profit", null);*/
+
 		return "statistics";
 	}
 
-	/*
-	 * @RequestMapping(value="/userManagement") public String userManagement(ModelMap model){ //model.addAttribute("customers", ); //model.addAttribute("admins",); //model.addAttribute("employees",); return "index";
-	 */
 	@RequestMapping(value = "/admin/lottery")
 	public String competition() {
 		return "competition"; // TODO: what does this even do?
@@ -315,11 +303,12 @@ public class AdminController {
 	@RequestMapping(value = "/admin/competitionButton")
 	public String getWinners(ModelMap model) {
 
-		Competition com = new Competition(manager.findByRole(Role.of("ROLE_CUSTOMER")), creditmanager);
+		Competition com = new Competition(
+				dataService.getConcreteUserAccoutnRepository().findByRole(Role.of("ROLE_CUSTOMER")), creditmanager);
 
 		model.addAttribute("winners", com.getWinners());
-		com.getWinners().forEach(x->System.out.println(x.getUserAccount().getUsername()+" "+x.getCredits()));
-		com.notifyWinners(sender);
+		com.getWinners().forEach(x -> System.out.println(x.getUserAccount().getUsername() + " " + x.getCredits()));
+		com.notifyWinners(mailService);
 		HashMap<String, String> msg = new HashMap<String, String>();
 		msg.put("success", "Die folgenden Gewinner wurden benachrichtigt");
 		msg.put("name", "Name");
