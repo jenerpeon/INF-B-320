@@ -4,7 +4,10 @@ __Durchführende Gruppe: Gruppe 22
 __Anwendung von Gruppe: Internetkaufhaus 
 
 == Getestetes System
-Welche Aufgabe/Problemstellung löst die Anwendung.
+Getestet wurde eine Software für ein Internetkaufhaus. 
+Es gibt 4 Rollen( Gast, Kunde, Mitarbeiter und Admin). 
+Jede Rolle hat unterschiedliche Zugriffsrechte. Als Gast kann man die Produkte einsehen. Um ein Produkt zu kaufen, zu bewerten und zurückzusenden, muss man sich als Kunde einloggen. Eingeloggt kann man auf sein Profil, seine Bestellungen und seine Rabattpunkte zugreifen. Als Mitarbeiter und Admin kann man die Seite konfiguieren , Kategorien anlegen/ ändern/löschen, Produkte nachbestellen/ändern/löschen, Bestellungen bearbeiten, User verwalten, Kommentare überprüfen, Bilanz einsehen , Newsletter versenden und das Gewinnspiel starten.
+
 
 == Fehler-Report
 // See http://asciidoctor.org/docs/user-manual/#tables
@@ -24,13 +27,14 @@ Welche Aufgabe/Problemstellung löst die Anwendung.
 == Sonstiges
 * Optik der Anwendung
 Darstellung Produkt: Preisdarstellung teilweise unterschiedlich z.B. 9.5 E+2
-* Fehlende Features
+* Fehlende Features 
+Wird der Rabatt für Werbung beim Bestellen abgezoen? Vllt. Ein Hinweis beim Bestellvorgang hinzufügen.
 * Interaktion mit der Anwendung (Usability)
-Kommentare: Wenn man ein Kommentar abgibt, wird ohne Bestätigung des Mitarbeiters bzw. Admins schon die Sterne übernommen und auf der Produktseite angezeigt. 
-
-Bestellung: Bestellung konnte nicht abgeschickt werden. 
+Kommentare: Wenn man ein Kommentar abgibt, wird ohne Bestätigung des Mitarbeiters bzw. Admins schon die Sterne übernommen und auf der Produktseite angezeigt.
 
 
 == Verbesserungsvorschläge
 * Was kann noch weiter verbessert werden?
 Warenkorb: Evtl. Artikelanzahl erhöhen/reduzieren
+
+Dashboard für Mitarbeiter bzw. Admins ist super. Alles Wichtige ist auf einen Blick zu sehen. Jedoch ist die Seite ziemlich überfüllt und dadurch unübersichtlich. Evtl. überlegen, ob man die linke Leiste durch ein Dropdownmenü mit nur 2 Oberpunkten( Mitarbeiterbereich & Adminbereich). 
