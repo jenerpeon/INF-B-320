@@ -14,8 +14,10 @@ import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
 /**
- * This is the customer controller. It controlls the customer. Or does it customize the controller? You never know...
- * In this class you may find the controllers for the profile page and similar stuff, should you choose to look for it.
+ * This is the customer controller. It controls the customer. Or does it
+ * customize the controller? You never know... In this class you may find the
+ * controllers for the profile page and similar stuff, should you choose to look
+ * for it.
  * 
  * @author max
  *
@@ -27,7 +29,9 @@ public class CustomerController {
 	private final ConcreteUserAccountRepository userRepo;
 
 	/**
-	 * This is the constructor. It's neither used nor does it contain any functionality other than storing function arguments as class attribute, what do you expect me to write here?
+	 * This is the constructor. It's neither used nor does it contain any
+	 * functionality other than storing function arguments as class attribute,
+	 * what do you expect me to write here?
 	 * 
 	 * @param creditmanager
 	 * @param userRepo
@@ -41,8 +45,10 @@ public class CustomerController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows the account details of a given account.
 	 * 
 	 * @param userAccount
+	 *            the account to show details about
 	 * @param model
 	 * @return
 	 */

@@ -22,38 +22,74 @@ import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ConcreteProduct.
+ */
 @Entity
 @Table(name = "CPRODUCT")
 public class ConcreteProduct extends Product {
+
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** The category. */
 	@Column(name = "CATEGORY")
 	private String category;
+
+	/** The imagefile. */
 	private String imagefile;
 
+	/** The description. */
 	@Column(name = "DESCRIPTION", length = 100000)
 	private String description;
 
+	/** The web link. */
 	@Column(name = "WEBLINK")
 	private String webLink;
 
+	/** The amount products sold. */
 	@Column(name = "SOLD")
 	private long amountProductsSold = 0;
 
+	/** The buying price. */
 	@Column(name = "BUYING_PRICE")
 	private BigDecimal buyingPrice;
 
+	/** The average rating. */
 	@Column
 	private float averageRating = 0;
 
+	/** The comments. */
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH,
 			CascadeType.REMOVE }, mappedBy = "product", orphanRemoval = true)
 	private List<Comment> comments = new LinkedList<Comment>();
 
+	/**
+	 * Instantiates a new concrete product.
+	 */
 	@SuppressWarnings({ "unused", "deprecation" })
 	private ConcreteProduct() {
 	}
 
+	/**
+	 * Instantiates a new concrete product.
+	 *
+	 * @param name
+	 *            the name
+	 * @param price
+	 *            the price
+	 * @param buyingPrice
+	 *            the buying price
+	 * @param category
+	 *            the category
+	 * @param description
+	 *            the description
+	 * @param webLink
+	 *            the web link
+	 * @param imagefile
+	 *            the imagefile
+	 */
 	public ConcreteProduct(String name, Money price, Money buyingPrice, String category, String description,
 			String webLink, String imagefile) {
 		super(name, price);
@@ -65,10 +101,22 @@ public class ConcreteProduct extends Product {
 		this.category = category;
 	}
 
+	/**
+	 * Gets the ratings.
+	 *
+	 * @return the ratings
+	 */
 	public int getRatings() {
 		return this.getAcceptedComments().size();
 	}
 
+	/**
+	 * Checks if is commentator.
+	 *
+	 * @param user
+	 *            the user
+	 * @return true, if is commentator
+	 */
 	public boolean isCommentator(ConcreteUserAccount user) {
 		for (Comment c : comments) {
 			if (c.getUserAccount().equals(user))
@@ -77,6 +125,11 @@ public class ConcreteProduct extends Product {
 		return false;
 	}
 
+	/**
+	 * Gets the rating.
+	 *
+	 * @return the rating
+	 */
 	public List<Integer> getRating() {
 		double rating = 0;
 		if (comments.isEmpty())
@@ -88,6 +141,9 @@ public class ConcreteProduct extends Product {
 		return IntStream.range(0, (int) rating).boxed().collect(Collectors.toList());
 	}
 
+	/**
+	 * Update average rating.
+	 */
 	public void updateAverageRating() {
 		int rating = 0;
 		for (Comment comm : this.getAcceptedComments()) {
@@ -96,14 +152,33 @@ public class ConcreteProduct extends Product {
 		this.averageRating = (float) rating / this.getAcceptedComments().size();
 	}
 
+	/**
+	 * Gets the average rating.
+	 *
+	 * @return the average rating
+	 */
 	public float getAverageRating() {
 		return this.averageRating;
 	}
 
+	/**
+	 * Gets the comments.
+	 *
+	 * @return the comments
+	 */
 	public Iterable<Comment> getComments() {
 		return comments;
 	}
 
+	/**
+	 * Adds the comment.
+	 *
+	 * @param c
+	 *            the c
+	 * @param userAccount
+	 *            the user account
+	 * @return the string
+	 */
 	public String addComment(Comment c, ConcreteUserAccount userAccount) {
 		// if (isCommentator(userAccount))
 		// return "Sie haben dieses Produkt bereits bewertet";
@@ -114,6 +189,13 @@ public class ConcreteProduct extends Product {
 		return "Vielen Dank fuer Ihre Bewertung";
 	}
 
+	/**
+	 * Removes the comment.
+	 *
+	 * @param c
+	 *            the c
+	 * @return true, if successful
+	 */
 	public boolean removeComment(Comment c) {
 		c.setProduct(null);
 		c.setUser(null);
@@ -121,6 +203,11 @@ public class ConcreteProduct extends Product {
 		return true;
 	}
 
+	/**
+	 * Gets the accepted comments.
+	 *
+	 * @return the accepted comments
+	 */
 	public List<Comment> getAcceptedComments() {
 		List<Comment> l = new LinkedList<Comment>();
 		for (Comment c : this.comments) {
@@ -131,6 +218,11 @@ public class ConcreteProduct extends Product {
 		return l;
 	}
 
+	/**
+	 * Gets the unaccepted comments.
+	 *
+	 * @return the unaccepted comments
+	 */
 	public List<Comment> getUnacceptedComments() {
 		List<Comment> l = new LinkedList<Comment>();
 		for (Comment c : this.comments) {
@@ -141,15 +233,31 @@ public class ConcreteProduct extends Product {
 		return l;
 	}
 
+	/**
+	 * Gets the imagefile.
+	 *
+	 * @return the imagefile
+	 */
 	public String getImagefile() {
 		return imagefile;
 	}
 
+	/**
+	 * Gets the price float.
+	 *
+	 * @return the price float
+	 */
 	public String getPriceFloat() {
 		DecimalFormat formatter = new DecimalFormat("0.00€");
 		return formatter.format(this.getPrice().getNumberStripped());
 	}
 
+	/**
+	 * Sets the imagefile.
+	 *
+	 * @param imagefile
+	 *            the new imagefile
+	 */
 	public void setImagefile(String imagefile) {
 		if (imagefile.length() == 0) {
 			throw new IllegalArgumentException();
@@ -157,10 +265,21 @@ public class ConcreteProduct extends Product {
 		this.imagefile = imagefile;
 	}
 
+	/**
+	 * Gets the description.
+	 *
+	 * @return the description
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * Sets the description.
+	 *
+	 * @param description
+	 *            the new description
+	 */
 	public void setDescription(String description) {
 		if (description.length() == 0) {
 			throw new IllegalArgumentException();
@@ -169,10 +288,21 @@ public class ConcreteProduct extends Product {
 
 	}
 
+	/**
+	 * Gets the web link.
+	 *
+	 * @return the web link
+	 */
 	public String getWebLink() {
 		return webLink;
 	}
 
+	/**
+	 * Sets the web link.
+	 *
+	 * @param webLink
+	 *            the new web link
+	 */
 	public void setWebLink(String webLink) {
 		if (webLink.length() == 0) {
 			throw new IllegalArgumentException();
@@ -180,10 +310,21 @@ public class ConcreteProduct extends Product {
 		this.webLink = webLink;
 	}
 
+	/**
+	 * Gets the category.
+	 *
+	 * @return the category
+	 */
 	public String getCategory() {
 		return this.category;
 	}
 
+	/**
+	 * Sets the category.
+	 *
+	 * @param category
+	 *            the new category
+	 */
 	public void setCategory(String category) {
 		if (category.length() == 0) {
 			throw new IllegalArgumentException();
@@ -191,23 +332,52 @@ public class ConcreteProduct extends Product {
 		this.category = category;
 	}
 
+	/**
+	 * Gets the quantity.
+	 *
+	 * @param inventory
+	 *            the inventory
+	 * @return the quantity
+	 */
 	public Quantity getQuantity(Inventory<InventoryItem> inventory) {
 		Optional<InventoryItem> item = inventory.findByProductIdentifier(this.getIdentifier());
 		return item.map(InventoryItem::getQuantity).orElse(Quantity.of(0));
 	}
 
+	/**
+	 * Increase selled.
+	 *
+	 * @param sell
+	 *            the sell
+	 */
 	public void increaseSelled(int sell) {
 		this.amountProductsSold += sell;
 	}
 
+	/**
+	 * Gets the selled.
+	 *
+	 * @return the selled
+	 */
 	public long getSelled() {
 		return this.amountProductsSold;
 	}
 
+	/**
+	 * Gets the buying price.
+	 *
+	 * @return the buying price
+	 */
 	public Money getBuyingPrice() {
 		return Money.of(this.buyingPrice, EURO);
 	}
 
+	/**
+	 * Sets the buying price.
+	 *
+	 * @param buyingPrice
+	 *            the new buying price
+	 */
 	public void setBuyingPrice(Money buyingPrice) {
 		this.buyingPrice = buyingPrice.getNumberStripped();
 	}

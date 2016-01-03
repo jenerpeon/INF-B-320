@@ -27,10 +27,14 @@ public class HeaderAdvice {
 	private final Search prodSearch;
 
 	/**
-	 * This is the constructor. It's neither used nor does it contain any functionality other than storing function arguments as class attribute, what do you expect me to write here? It's copied from CartController.
+	 * This is the constructor. It's neither used nor does it contain any
+	 * functionality other than storing function arguments as class attribute,
+	 * what do you expect me to write here? It's copied from CartController.
 	 * 
 	 * @param prodSearch
+	 *            singleton, passed by spring/salespoint
 	 * @param sender
+	 *            singleton, passed by spring/salespoint
 	 */
 	@Autowired
 	public HeaderAdvice(Search prodSearch) {
@@ -38,16 +42,18 @@ public class HeaderAdvice {
 	}
 
 	/**
-	 * This is a Model Attribute. It Models Attributes. Or does it Attribute Models? Adds the available categories to the variables used by thymeleaf so the category list can be displayed in the navigation header.
+	 * This is a Model Attribute. It Models Attributes. Or does it Attribute
+	 * Models? Adds the available categories to the variables used by thymeleaf
+	 * so the category list can be displayed in the navigation header.
 	 * 
 	 * @return navigation
 	 */
 	@ModelAttribute("categories")
-	public List<NavItem> addCatalog() { 
+	public List<NavItem> addCatalog() {
 		Iterable<String> categories = prodSearch.getCategories();
 		List<NavItem> navigation = new ArrayList<NavItem>();
 		for (String category : categories) {
-			NavItem nav = new NavItem(category,category,"category");
+			NavItem nav = new NavItem(category, category, "category");
 			navigation.add(nav);
 		}
 		return navigation;
@@ -59,7 +65,9 @@ public class HeaderAdvice {
 	}
 
 	/**
-	 * This is a Model Attribute. It Models Attributes. Or does it Attribute Models? Adds the current cart price to the variables used by thymeleaf so an overview about the cart can be displayed in the navigation header.
+	 * This is a Model Attribute. It Models Attributes. Or does it Attribute
+	 * Models? Adds the current cart price to the variables used by thymeleaf so
+	 * an overview about the cart can be displayed in the navigation header.
 	 * 
 	 * @param cart
 	 * @return cartPrice
@@ -70,7 +78,10 @@ public class HeaderAdvice {
 	}
 
 	/**
-	 * This is a Model Attribute. It Models Attributes. Or does it Attribute Models? Adds the current number of items in the cart to the variables used by thymeleaf so an overview about the cart can be displayed in the navigation header.
+	 * This is a Model Attribute. It Models Attributes. Or does it Attribute
+	 * Models? Adds the current number of items in the cart to the variables
+	 * used by thymeleaf so an overview about the cart can be displayed in the
+	 * navigation header.
 	 * 
 	 * @param cart
 	 * @return cartSize
@@ -87,7 +98,8 @@ public class HeaderAdvice {
 	}
 
 	/**
-	 * This is an Exception Hander. It handles Exceptions. Or does it Except Handles?
+	 * This is an Exception Hander. It handles Exceptions. Or does it Except
+	 * Handles?
 	 * 
 	 * @param exception
 	 * @return "error500"

@@ -21,7 +21,6 @@ import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -46,6 +45,14 @@ import internetkaufhaus.model.ReturnManager;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.services.ConcreteMailService;
 
+/**
+ * This is the cart controller. It controls the cart. Or maybe it carts the
+ * controls? You never know... In this class you may find the controllers for
+ * the shopping cart interfaces, should you choose to look for them.
+ * 
+ * @author max
+ *
+ */
 @Controller
 @SessionAttributes("cart")
 class CartController {
@@ -55,7 +62,9 @@ class CartController {
 	private final ConcreteOrderRepository concreteOrderRepo;
 
 	/**
-	 * This is the constructor. It's neither used nor does it contain any functionality other than storing function arguments as class attribute, what do you expect me to write here?
+	 * This is the constructor. It's neither used nor does it contain any
+	 * functionality other than storing function arguments as class attribute,
+	 * what do you expect me to write here?
 	 * 
 	 * @param userRepo
 	 * @param concreteOrderRepo
@@ -64,7 +73,8 @@ class CartController {
 	 * @param sender
 	 */
 	@Autowired
-	public CartController(ConcreteOrderRepository concreteOrderRepo, OrderManager<Order> orderManager, ConcreteMailService sender) {
+	public CartController(ConcreteOrderRepository concreteOrderRepo, OrderManager<Order> orderManager,
+			ConcreteMailService sender) {
 		Assert.notNull(orderManager, "OrderManager must not be null!");
 		this.orderManager = orderManager;
 		this.concreteOrderRepo = concreteOrderRepo;
@@ -73,7 +83,8 @@ class CartController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * This page adds a product to the cart and then redirects back to the catalog.
+	 * This page adds a product to the cart and then redirects back to the
+	 * catalog.
 	 * 
 	 * @param concreteproduct
 	 * @param number
@@ -81,12 +92,14 @@ class CartController {
 	 * @return
 	 */
 	@RequestMapping(value = "/cart", method = RequestMethod.POST)
-	public String addProduct(@RequestParam("prodId") ConcreteProduct concreteproduct, @RequestParam("dropDown") int number, @ModelAttribute Cart cart) {
+	public String addProduct(@RequestParam("prodId") ConcreteProduct concreteproduct,
+			@RequestParam("dropDown") int number, @ModelAttribute Cart cart) {
 		int amount = number;
 		if (number < 0 || number > 5)
 			amount = 1;
 		cart.addOrUpdateItem(concreteproduct, Quantity.of(amount));
-		// get first Category of product and redirect to associated catalog search
+		// get first Category of product and redirect to associated catalog
+		// search
 		return "redirect:catalog/" + concreteproduct.getCategories().iterator().next() + "/name/1/5/1";
 	}
 
@@ -138,7 +151,8 @@ class CartController {
 	 * @return
 	 */
 	@RequestMapping(value = "/changeAmount", method = RequestMethod.POST)
-	public String changeAmount(@ModelAttribute Cart cart, @RequestParam("cid") String identifier, @RequestParam("amount") int amount) {
+	public String changeAmount(@ModelAttribute Cart cart, @RequestParam("cid") String identifier,
+			@RequestParam("amount") int amount) {
 		Optional<CartItem> cartitem = cart.getItem(identifier);
 		if (!cartitem.isPresent())
 			return "redirect:/cart";
@@ -156,7 +170,8 @@ class CartController {
 	 * @return
 	 */
 	@RequestMapping(value = "/orderdata/{option}", method = RequestMethod.POST)
-	public String orderdata(@PathVariable("option") int option, @LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
+	public String orderdata(@PathVariable("option") int option, @LoggedIn Optional<UserAccount> userAccount,
+			ModelMap model) {
 		return userAccount.map(account -> {
 			model.addAttribute("option", option);
 			return "orderdata";
@@ -173,7 +188,8 @@ class CartController {
 	 */
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 	@RequestMapping(value = "/orderdata/{option}", method = RequestMethod.GET)
-	public String orderdataredirect(@PathVariable("option") int option, @LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
+	public String orderdataredirect(@PathVariable("option") int option, @LoggedIn Optional<UserAccount> userAccount,
+			ModelMap model) {
 		return userAccount.map(account -> {
 			model.addAttribute("option", option);
 			return "orderdata";
@@ -195,7 +211,13 @@ class CartController {
 	 */
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 	@RequestMapping(value = "/payed", method = RequestMethod.POST)
-	public String payed(@ModelAttribute Cart cart, @ModelAttribute("paymentForm") @Valid PaymentForm paymentForm, @ModelAttribute("paymentForm") BindingResult result1, @ModelAttribute("shippingAddressForm") @Valid ShippingAddressForm shippingAddressForm, @ModelAttribute("shippingAddressForm") BindingResult result2, @ModelAttribute("billingAddressForm") @Valid BillingAddressForm billingAddressForm, @ModelAttribute("billingAddressForm") BindingResult result3, @LoggedIn Optional<UserAccount> userAccount, RedirectAttributes redir) {
+	public String payed(@ModelAttribute Cart cart, @ModelAttribute("paymentForm") @Valid PaymentForm paymentForm,
+			@ModelAttribute("paymentForm") BindingResult result1,
+			@ModelAttribute("shippingAddressForm") @Valid ShippingAddressForm shippingAddressForm,
+			@ModelAttribute("shippingAddressForm") BindingResult result2,
+			@ModelAttribute("billingAddressForm") @Valid BillingAddressForm billingAddressForm,
+			@ModelAttribute("billingAddressForm") BindingResult result3, @LoggedIn Optional<UserAccount> userAccount,
+			RedirectAttributes redir) {
 		if (result1.hasErrors() || result2.hasErrors() || result3.hasErrors()) {
 			redir.addFlashAttribute("message1", result1.getAllErrors());
 			redir.addFlashAttribute("message2", result2.getAllErrors());
@@ -212,9 +234,15 @@ class CartController {
 
 			cart.addItemsTo(o);
 
-			String billingAddress = billingAddressForm.getBillingFirstName() + " " + billingAddressForm.getBillingLastName() + "\n" + billingAddressForm.getBillingStreet() + " " + billingAddressForm.getBillingHouseNumber() + "\n" + billingAddressForm.getBillingAddressLine2() + "\n" + billingAddressForm.getBillingZipCode() + "" + billingAddressForm.getBillingTown();
+			String billingAddress = billingAddressForm.getBillingFirstName() + " "
+					+ billingAddressForm.getBillingLastName() + "\n" + billingAddressForm.getBillingStreet() + " "
+					+ billingAddressForm.getBillingHouseNumber() + "\n" + billingAddressForm.getBillingAddressLine2()
+					+ "\n" + billingAddressForm.getBillingZipCode() + "" + billingAddressForm.getBillingTown();
 
-			CreditCard paymentMethod = new CreditCard(paymentForm.getCardName(), paymentForm.getCardAssociationName(), paymentForm.getCardNumber(), paymentForm.getNameOnCard(), billingAddress, validFrom, paymentForm.getExpiryDateLocalDateTime(), paymentForm.getCardVerificationCode(), dailyWithdrawalLimit, creditLimit);
+			CreditCard paymentMethod = new CreditCard(paymentForm.getCardName(), paymentForm.getCardAssociationName(),
+					paymentForm.getCardNumber(), paymentForm.getNameOnCard(), billingAddress, validFrom,
+					paymentForm.getExpiryDateLocalDateTime(), paymentForm.getCardVerificationCode(),
+					dailyWithdrawalLimit, creditLimit);
 
 			o.setPaymentMethod(paymentMethod);
 
@@ -234,13 +262,18 @@ class CartController {
 			OrderLine current;
 			while (i.hasNext()) {
 				current = i.next();
-				articles += "\n" + current.getQuantity().toString() + "x " + current.getProductName() + " für gesamt " + current.getPrice().toString();
+				articles += "\n" + current.getQuantity().toString() + "x " + current.getProductName() + " für gesamt "
+						+ current.getPrice().toString();
 			}
 			articles += "\nGesamtpreis: " + order.getOrder().getTotalPrice().toString();
 
 			cart.clear();
 
-			sender.sendMail(account.getEmail(), "Sehr geehrte(r) " + account.getFirstname() + " " + account.getLastname() + "!\nIhre Bestellung ist soeben bei uns eingetroffen und wird nun bearbeitet!\nIhre Bestellung umfasst folgende Artikel:" + articles, "nobody@nothing.com", "Bestellung eingetroffen!");
+			sender.sendMail(account.getEmail(),
+					"Sehr geehrte(r) " + account.getFirstname() + " " + account.getLastname()
+							+ "!\nIhre Bestellung ist soeben bei uns eingetroffen und wird nun bearbeitet!\nIhre Bestellung umfasst folgende Artikel:"
+							+ articles,
+					"nobody@nothing.com", "Bestellung eingetroffen!");
 
 			return "redirect:/";
 		}).orElse("redirect:/login");
@@ -256,7 +289,8 @@ class CartController {
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 	@RequestMapping(value = "/returOrders", method = RequestMethod.GET)
 	public String returnRedirect(Model model, @LoggedIn Optional<UserAccount> userAccount) {
-		model.addAttribute("ordersCompletedInReturnTime", ReturnManager.getConcreteOrderDuringLastTwoWeeks(concreteOrderRepo, userAccount));
+		model.addAttribute("ordersCompletedInReturnTime",
+				ReturnManager.getConcreteOrderDuringLastTwoWeeks(concreteOrderRepo, userAccount));
 		return "returOrders";
 	}
 

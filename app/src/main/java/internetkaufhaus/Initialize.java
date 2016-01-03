@@ -20,7 +20,6 @@ import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Component;
 
 import internetkaufhaus.entities.ConcreteOrder;
@@ -55,15 +54,25 @@ public class Initialize implements DataInitializer {
 	 * what do you expect me to write here?
 	 * 
 	 * @param concreteOrderRepo
+	 *            singleton, passed by spring/salespoint
 	 * @param productCatalog
+	 *            singleton, passed by spring/salespoint
 	 * @param userAccountManager
+	 *            singleton, passed by spring/salespoint
 	 * @param ConcreteUserAccountManager
+	 *            singleton, passed by spring/salespoint
 	 * @param inventory
+	 *            singleton, passed by spring/salespoint
 	 * @param orderManager
+	 *            singleton, passed by spring/salespoint
 	 * @param productSearch
+	 *            singleton, passed by spring/salespoint
 	 * @param accountAdministration
+	 *            singleton, passed by spring/salespoint
 	 * @param sender
+	 *            singleton, passed by spring/salespoint
 	 * @param concreteProductRepository
+	 *            singleton, passed by spring/salespoint
 	 */
 	@Autowired
 	public Initialize(ConcreteOrderRepository concreteOrderRepo, Catalog<ConcreteProduct> productCatalog,
@@ -109,19 +118,7 @@ public class Initialize implements DataInitializer {
 		if (productCatalog.count() > 0) {
 			return;
 		}
-
-		/*
-		 * Comment p= new Comment(
-		 * "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren"
-		 * ,4, new Date(),"");
-		 * 
-		 * p11.addreviewedComments(p); p3.addreviewedComments(p);
-		 * p6.addreviewedComments(p); p1.addreviewedComments(p);
-		 * p9.addreviewedComments(p); p5.addreviewedComments(p);
-		 */
-
 		List<ConcreteProduct> prods = new ArrayList<ConcreteProduct>();
-
 		prods.add(new ConcreteProduct("CIMAROSA Sauvignon Blanc Marlborough Estate Selection, Weißwein 2014",
 				Money.of(5.49, EURO), Money.of(4.39, EURO), "Wein",
 				"„Nahezu mühelos produziert Neuseeland helle, aromatische Sauvignons, die eine Geschmackstiefe erreichen, ohne dieselbe Heftigkeit am Gaumen zu zeigen, die diese beliebte Rebsorte oft charakterisiert. Frisch und nicht zu trocken ist dieser Wein leicht zu trinken – alleine oder zu Salaten, Fisch und weißem Fleisch.\" RICHARD BAMPFIELD.",
@@ -209,7 +206,6 @@ public class Initialize implements DataInitializer {
 				"Der Roséklassiker von der Loire überrascht nebst seinen zarten Beerenaromen mit dem würzigen Duft nach Liebstöckel und Majoran. Er ist weich am Gaumen und hat einen verspielten Abgang, der Lust auf mehr macht.",
 				"https://eng.wikipedia.org/wiki/Fuzz",
 				"domaine-de-gagnebert-cabernet-d-anjou-aop-rosewein-2013--1.jpg"));
-
 		prods.add(new ConcreteProduct("Ron Botucal Reserva Exclusiva (ehem. Diplomatico) Premium Rum - 0,7L 40% vol ",
 				Money.of(29.49, EURO), Money.of(23.59, EURO), "Spirituosen",
 				"Der Ron Botucal Reserva Exclusiva war eher unter dem Namen Diplomatico 12 Reserva Exclusiva bekannt. Er stammt aus Venezuela und ist eine Kombination aus unterschiedlichen Destillaten. Rund zwölf Jahre reift dieser Rum in Eichenholzfässern, bevor er in den recht massiven Flaschenkörper abgefüllt wird. Sein komplexer Duft erinnert an Fruchtkuchen, Zimt und Kakao. Im Mund setzen sich die fruchtigen Noten fort, außerdem feine Schokoladensoße, Karamell, Piment, Nüsse und außerdem Orange, die für eine angenehme Frische sorgt. Insgesamt ein reifer, ausgewogener Rum. Im Abgang ist er langanhaltend und süß. Er sollte unbedingt pur getrunken werden. Zum Mixen ist er wirklich zu schade. Der tiefgoldene, kupferfarbene Rum ist mehrfach ausgezeichnet worden. Sein Alkoholgehalt beträgt 40 %.",
@@ -453,10 +449,8 @@ public class Initialize implements DataInitializer {
 				Money.of(29.95, EURO), Money.of(23.96, EURO), "Schmuck",
 				"Wunderschöner Damenring aus 925er Silber der Marke Celesta. Der Damenring hat Zirkoniasteine und ist rosévergoldet.",
 				"https://eng.wikipedia.org/wiki/Fuzz", "SProdukt_368270033.jpg"));
-
 		productCatalog.save(prods);
 		concreteProductRepository.save(prods);
-
 		productSearch.addProds(productCatalog.findAll());
 	}
 
@@ -499,35 +493,14 @@ public class Initialize implements DataInitializer {
 		userAccounts.add(new ConcreteUserAccount("behrens_lars@gmx.de", "lars", "Lars", "Behrens", "Musterstraße",
 				"01069", "Definitiv nicht Dresden", "lars", customerRole, userAccountManager));
 
-		// 100 weitere ConcreteUserAccounts; auskommentiert aus Zeitgründen
-		//
-		// int i = 0;
-		// for(i=0;i<100;i++)
-		// {
-		// userAccounts.add(new ConcreteUserAccount("kunde"+i+"@todesstern.ru",
-		// "kunde"+i, "Kunde"+i, "Kundenname"+i, "Kundenstraße"+i, "12345",
-		// "Definitiv nicht Dresden", "kunde"+i, customerRole,
-		// userAccountManager));
-		// }
-
-		/*
-		 * RegistrationForm reg = new RegistrationForm();
-		 * reg.setEmail("behrens_lars@gmx.de"); reg.setName("peons");
-		 * reg.setPassword("asdf"); reg.setPasswordrepeat("asdf");
-		 * 
-		 */
-
 		for (ConcreteUserAccount acc : userAccounts) {
 			userAccountManager.save(acc.getUserAccount());
 			ConcreteUserAccountManager.save(acc);
-
 		}
-
 		ConcreteUserAccountManager.findByUserAccount(userAccountManager.findByUsername("lars").get())
 				.setRecruits(ConcreteUserAccountManager.findByEmail("adminBehrens@todesstern.ru"));
 		ConcreteUserAccountManager.findByUserAccount(userAccountManager.findByUsername("admin").get())
 				.setRecruits(ConcreteUserAccountManager.findByEmail("behrens_lars@gmx.de"));
-
 	}
 
 	/**
@@ -568,21 +541,16 @@ public class Initialize implements DataInitializer {
 			order.setShippingHouseNumber("2");
 			order.setShippingTown(u.getCity());
 			order.setShippingZipCode(u.getZipCode());
-
-			orderManager.payOrder(o);// only set orderManager.payOrder(o), do
-										// not use
-										// orderManager.completeOrder(0), to
-										// complete Order look at the next line!
-			order.setStatus(OrderStatus.COMPLETED); // to complete Order do not
-													// use
-													// orderManager.completeOrder
+			orderManager.payOrder(o);
+			// only set orderManager.payOrder(o), do not use
+			// orderManager.completeOrder(0), to complete Order look at the next
+			// line!
+			order.setStatus(OrderStatus.COMPLETED);
+			// to complete Order do not use orderManager.completeOrder
 			order.setDateOrdered(LocalDateTime.now().minusDays(31));
 			concreteOrderRepo.save(order);
 			orderManager.save(o);
-
 		}
-
 		c.clear();
-
 	}
 }

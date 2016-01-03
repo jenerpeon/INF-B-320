@@ -114,6 +114,12 @@ public class ManagementController {
 		// this.selectionList = selectionList;
 	}
 
+	/**
+	 * This is a Model Attribute. It Models Attributes. Or does it Attribute
+	 * Models? This function adds the Navigation Options to the navigation menu.
+	 * 
+	 * @return
+	 */
 	@ModelAttribute("employeeNaviagtion")
 	public List<NavItem> addEmployeeNavigation() {
 		String employeeNavigationName[] = { "Katalog/Lager", "Bestellungen", "Bewertungen", "Retouren", "Newsletter",
@@ -130,6 +136,8 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows the main menu for the administration interface of
+	 * employees.
 	 * 
 	 * @param userAccount
 	 * @param model
@@ -142,9 +150,9 @@ public class ManagementController {
 	}
 
 	/**
-	 * gives The catalog in ascending order by its Product name.
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows all current products in the catalog, ascending by name.
 	 * 
-	 * @param userAccount
 	 * @param model
 	 * @return
 	 */
@@ -158,6 +166,7 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows the addArticle-form for employees.
 	 * 
 	 * @param model
 	 * @return
@@ -170,8 +179,10 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page accepts a comment as given by its ID.
 	 * 
 	 * @param comId
+	 *            the comment to accept
 	 * @return
 	 */
 	@RequestMapping("/employee/acceptComment/{comId}")
@@ -190,8 +201,10 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page rejects a comment as given by its ID.
 	 * 
 	 * @param comId
+	 *            the comment to reject.
 	 * @return
 	 */
 	@RequestMapping("/employee/deleteComment/{comId}")
@@ -217,6 +230,8 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows not (yet) accepted comments, so employees can review and
+	 * reject or accept them.
 	 * 
 	 * @param model
 	 * @return
@@ -227,17 +242,16 @@ public class ManagementController {
 		for (ConcreteProduct prods : catalog.findAll()) {
 			comlist.addAll(prods.getUnacceptedComments());
 		}
-
 		model.addAttribute("Comments", comlist);
-		// model.addAttribute("concretProduct", com.getKey(com.values));
-
 		return "comments";
 	}
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows the edit article form for employees.
 	 * 
 	 * @param prod
+	 *            the article to edit
 	 * @param model
 	 * @return
 	 */
@@ -251,10 +265,15 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page edits an article as requested by an employee and then redirects
+	 * the user to the article Overview.
 	 * 
 	 * @param editForm
+	 *            the form in which the employee specified which article to edit
 	 * @param img
+	 *            the new image which the should have.
 	 * @param result
+	 *            the result which (in)validates above mentioned form
 	 * @return
 	 */
 	@RequestMapping(value = "/employee/changecatalog/editedArticle", method = RequestMethod.POST)
@@ -267,9 +286,8 @@ public class ManagementController {
 		if (!img.isEmpty()) {
 			try {
 				byte[] bytes = img.getBytes();
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("filename"))); // TODO:
-																													// generate
-																													// filename
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("filename")));
+				// TODO: generate filename
 				stream.write(bytes);
 				stream.close();
 			} catch (Exception e) {
@@ -289,19 +307,22 @@ public class ManagementController {
 		if (!(img.getOriginalFilename().isEmpty())) {
 			prodId.setImagefile(img.getOriginalFilename());
 		}
-
 		catalog.save(prodId);
 		concreteProductRepository.save(prodId);
-
 		return "redirect:/employee/changecatalog";
 	}
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page adds an article as requested by an employee and then redirects
+	 * the user to the article Overview.
 	 * 
 	 * @param editForm
+	 *            the form in which the employee specified which article to add
 	 * @param img
+	 *            the new image which the should have.
 	 * @param result
+	 *            the result which (in)validates above mentioned form
 	 * @return
 	 */
 	@RequestMapping(value = "/employee/changecatalog/addedArticle", method = RequestMethod.POST)
@@ -314,9 +335,8 @@ public class ManagementController {
 		if (!img.isEmpty()) {
 			try {
 				byte[] bytes = img.getBytes();
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("filename"))); // TODO:
-																													// generate
-																													// filename
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream("filename"));
+				// TODO: generate filename
 				stream.write(bytes);
 				stream.close();
 			} catch (Exception e) {
@@ -329,24 +349,23 @@ public class ManagementController {
 		ConcreteProduct prodId = new ConcreteProduct(editForm.getName(), Money.of(editForm.getPrice(), EURO),
 				Money.of(editForm.getBuyingPrice(), EURO), editForm.getCategory(), editForm.getDescription(), "",
 				img.getOriginalFilename());
-
 		catalog.save(prodId);
 
 		List<ConcreteProduct> prods = new ArrayList<ConcreteProduct>();
 		prods.add(prodId); // TODO: das hier ist offensichtlich.
 		prodSearch.addProds(prods);
-
 		InventoryItem inventoryItem = new InventoryItem(prodId, Quantity.of(0));
 		inventory.save(inventoryItem);
-
 		return "redirect:/employee/changecatalog";
-
 	}
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows the delete article form which the user has to fill to
+	 * confirm the deletion of an article.
 	 * 
 	 * @param prod
+	 *            the product ID of the article to remove
 	 * @param model
 	 * @return
 	 */
@@ -360,31 +379,31 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page deletes an article given by its ID.
 	 * 
 	 * @param prod
 	 * @return
 	 */
 	@RequestMapping(value = "/employee/changecatalog/deletedArticle/{prodId}", method = RequestMethod.GET)
 	public String deletedArticle(@PathVariable("prodId") ProductIdentifier prod) {
-
 		prodSearch.delete(catalog.findOne(prod).get());
 		inventory.delete(inventory.findByProductIdentifier(prod).get());
 		catalog.delete(catalog.findOne(prod).get());
-
 		return "redirect:/employee/changecatalog";
-
 	}
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows the order-article-form where employees choose how many
+	 * items of an article they want to order.
 	 * 
 	 * @param prod
+	 *            the ID of the article to order
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping("/employee/changecatalog/orderArticle/{prodId}")
 	public String orderArticle(@PathVariable("prodId") ConcreteProduct prod, ModelMap model) {
-
 		Optional<InventoryItem> item = inventory.findByProductIdentifier(prod.getIdentifier());
 		Quantity quantity = item.map(InventoryItem::getQuantity).orElse(NONE);
 		model.addAttribute("categories", prodSearch.getCategories());
@@ -396,9 +415,13 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page orders a given amount of articles and then redirects to the
+	 * article management overview.
 	 * 
 	 * @param stockForm
+	 *            the form which contains the article and the amount to order
 	 * @param result
+	 *            the result which (in)validates the form
 	 * @param model
 	 * @param userAccount
 	 * @return
@@ -410,22 +433,19 @@ public class ManagementController {
 			return "redirect:/employee/changecatalog";
 		}
 		ConcreteOrder order = new ConcreteOrder(userAccount.get(), Cash.CASH);
-
 		OrderLine orderLine = new OrderLine(catalog.findOne(stockForm.getProdId()).get(),
 				Quantity.of(stockForm.getQuantity()));
-
 		order.getOrder().add(orderLine);
-
 		order.setDateOrdered(LocalDateTime.now());
 		orderManager.save(order.getOrder());
 		concreteOrderRepo.save(order);
-
 		stock.orderArticle(stockForm.getProdId(), Quantity.of(stockForm.getQuantity()));
 		return "redirect:/employee/changecatalog";
 	}
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page removes an article from stock.
 	 * 
 	 * @param stockForm
 	 * @param result
@@ -442,6 +462,7 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows the menu to edit the start page.
 	 * 
 	 * @param totalCaroussel
 	 * @param totalSelection
@@ -459,6 +480,8 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page redirects to the start page editing page after editing the
+	 * start page.
 	 * 
 	 * @param totalCaroussel
 	 * @param totalSelection
@@ -469,6 +492,8 @@ public class ManagementController {
 			@RequestParam("totalSelection") int totalSelection) {
 		return "redirect:/employee/startpage/" + totalCaroussel + '/' + totalSelection;
 	}
+
+	// TODO: What is this?
 	/*
 	 * @RequestMapping(value = "/employee/startpage/changedstartpage", method =
 	 * RequestMethod.POST) public String changeStartpage(@ModelAttribute
@@ -484,6 +509,7 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows an overview of all orders.
 	 * 
 	 * @param model
 	 * @return
@@ -505,6 +531,9 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page marks an order as accepted, sends out the corresponding E-Mail
+	 * to the customer and then redirects the employee back to the order
+	 * management page.
 	 * 
 	 * @param orderId
 	 * @param model
@@ -547,8 +576,7 @@ public class ManagementController {
 		}
 		mail += "\nGesamtpreis: " + order.getTotalPrice().toString();
 
-		sender.sendMail(order.getUserAccount().getEmail(), mail, "nobody@nothing.com",
-				"Bestellung bearbeitet!");
+		sender.sendMail(order.getUserAccount().getEmail(), mail, "nobody@nothing.com", "Bestellung bearbeitet!");
 
 		// orderManager.completeOrder(o.getOrder());
 		return "redirect:/employee/orders";
@@ -556,6 +584,8 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page cancels an order and then redirects the employee using the page
+	 * back to the order overview.
 	 * 
 	 * @param model
 	 * @param orderId
@@ -574,6 +604,7 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows details to a given order.
 	 * 
 	 * @param orderId
 	 * @param model
@@ -595,6 +626,7 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows the users, which have subscribed to the newsletter.
 	 * 
 	 * @param model
 	 * @return
@@ -607,6 +639,7 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows the form to change the newsletter.
 	 * 
 	 * @param userAccount
 	 * @param model
@@ -620,6 +653,7 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page deletes an E-Mail from the newsletter.
 	 * 
 	 * @param mail
 	 * @param name
@@ -635,6 +669,7 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page sends out the newsletter.
 	 * 
 	 * @param subject
 	 * @param mailBody
@@ -655,6 +690,7 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * TODO: Javadoc
 	 * 
 	 * @param model
 	 * @return
@@ -669,6 +705,7 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * TODO: Javadoc
 	 * 
 	 * @param date
 	 * @param subject
@@ -685,6 +722,13 @@ public class ManagementController {
 		return "oldnewsletterdetail";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows a list of returned orders.
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/employee/returnedOrders")
 	public String getRetourList(ModelMap model) {
 		List<ConcreteOrder> retourList = new ArrayList<ConcreteOrder>();
@@ -697,10 +741,20 @@ public class ManagementController {
 		return "returnedOrders";
 	}
 
+	/**
+	 * TODO: What does this do?
+	 * 
+	 * @return
+	 */
 	public Inventory<InventoryItem> getInventory() {
 		return inventory;
 	}
 
+	/**
+	 * TODO: What does this do?
+	 * 
+	 * @return
+	 */
 	public static Quantity getNone() {
 		return NONE;
 	}

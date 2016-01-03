@@ -26,6 +26,7 @@ public class ConcreteUserAccount implements Serializable {
 
 	private static final long serialVersionUID = 3L;
 
+	/** The comments. */
 	@ManyToMany
 	@JoinColumn(name = "COMMENT", nullable = false)
 	private List<Comment> comments = new ArrayList<Comment>();
@@ -57,12 +58,14 @@ public class ConcreteUserAccount implements Serializable {
 	}
 
 	public ConcreteUserAccount(String username, String password, Role role, UserAccountManager u) {
-		
+
 		this.userAccount = u.create(username, password, role);
 		this.credits = Money.of(0, EURO);
 	}
 
-	public ConcreteUserAccount(String email, String username, String firstname, String lastname, String address, String zipCode, String city, String password, Role role, UserAccountManager u, int credits, List<UserAccount> recruits) {
+	public ConcreteUserAccount(String email, String username, String firstname, String lastname, String address,
+			String zipCode, String city, String password, Role role, UserAccountManager u, int credits,
+			List<UserAccount> recruits) {
 		this.userAccount = u.create(username, password, role);
 		this.recruits = recruits;
 		this.userAccount.setFirstname(firstname);
@@ -76,7 +79,8 @@ public class ConcreteUserAccount implements Serializable {
 		this.role = role;
 	}
 
-	public ConcreteUserAccount(String email, String username, String firstname, String lastname, String address, String zipCode, String city, String password, Role role, UserAccountManager u) {
+	public ConcreteUserAccount(String email, String username, String firstname, String lastname, String address,
+			String zipCode, String city, String password, Role role, UserAccountManager u) {
 		this.userAccount = u.create(username, password, role);
 		this.userAccount.setFirstname(firstname);
 		this.userAccount.setLastname(lastname);
@@ -174,8 +178,6 @@ public class ConcreteUserAccount implements Serializable {
 			this.recruits.add(user.getUserAccount());
 		}
 
-	
-		
 	}
 
 }
