@@ -37,13 +37,13 @@
 						<td><a>Preis</a></td>
 						<td><a>Anzahl</a></td>
 					<tr th:each="orderLine : ${orderLines}">
-						<td class="name" style="max-width: 600px"><a th:href="@{'/detail/'+${orderLine.getProductIdentifier()}}" th:text="${orderLine.getProductName()}">Name</a></td>
-						<td><a th:text="${orderLine.getPrice()}">Preis</a></td>
-						<td><a th:text="${orderLine.getQuantity()}">Anzahl</a></td>
+						<td class="name" style="max-width: 600px"><a th:href="@{'/detail/'+${orderLine.key.getProductIdentifier()}}" th:text="${orderLine.key.getProductName()}">Name</a></td>
+						<td><a th:text="${orderLine.value}">Preis</a></td>
+						<td><a th:text="${orderLine.key.getQuantity()}">Anzahl</a></td>
 					</tr>
 				</table>
 				
-				<p th:text="@{'Preis der Bestellung: '+${order.getOrder().getTotalPrice()}}">Preis: </p>
+				<p th:text="@{'Preis der Bestellung: '+${totalPrice}}">Preis: </p>
 				<p th:text="@{'Kunde der Bestellung: '+${order.getUser().getUsername()}}">Kunde: </p>
 				<p th:text="@{'Status der Bestellung: '+${order.getStatus()}}">Status: </p>
 				<form id="orderData">
