@@ -38,9 +38,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
-import internetkaufhaus.forms.BillingAddressForm;
 import internetkaufhaus.forms.PaymentForm;
-import internetkaufhaus.forms.ShippingAddressForm;
 import internetkaufhaus.model.ReturnManager;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.services.ConcreteMailService;
@@ -212,16 +210,9 @@ class CartController {
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 	@RequestMapping(value = "/payed", method = RequestMethod.POST)
 	public String payed(@ModelAttribute Cart cart, @ModelAttribute("paymentForm") @Valid PaymentForm paymentForm,
-			@ModelAttribute("paymentForm") BindingResult result1,
-			@ModelAttribute("shippingAddressForm") @Valid ShippingAddressForm shippingAddressForm,
-			@ModelAttribute("shippingAddressForm") BindingResult result2,
-			@ModelAttribute("billingAddressForm") @Valid BillingAddressForm billingAddressForm,
-			@ModelAttribute("billingAddressForm") BindingResult result3, @LoggedIn Optional<UserAccount> userAccount,
-			RedirectAttributes redir) {
-		if (result1.hasErrors() || result2.hasErrors() || result3.hasErrors()) {
-			redir.addFlashAttribute("message1", result1.getAllErrors());
-			redir.addFlashAttribute("message2", result2.getAllErrors());
-			redir.addFlashAttribute("message3", result3.getAllErrors());
+			BindingResult result, @LoggedIn Optional<UserAccount> userAccount, RedirectAttributes redir) {
+		if (result.hasErrors()) {
+			redir.addFlashAttribute("message1", result.getAllErrors());
 			return "redirect:/orderdata/1";
 		}
 		return userAccount.map(account -> {
@@ -234,10 +225,10 @@ class CartController {
 
 			cart.addItemsTo(o);
 
-			String billingAddress = billingAddressForm.getBillingFirstName() + " "
-					+ billingAddressForm.getBillingLastName() + "\n" + billingAddressForm.getBillingStreet() + " "
-					+ billingAddressForm.getBillingHouseNumber() + "\n" + billingAddressForm.getBillingAddressLine2()
-					+ "\n" + billingAddressForm.getBillingZipCode() + "" + billingAddressForm.getBillingTown();
+			String billingAddress = paymentForm.getBillingFirstName() + " " + paymentForm.getBillingLastName() + "\n"
+					+ paymentForm.getBillingStreet() + " " + paymentForm.getBillingHouseNumber() + "\n"
+					+ paymentForm.getBillingAddressLine2() + "\n" + paymentForm.getBillingZipCode() + ""
+					+ paymentForm.getBillingTown();
 
 			CreditCard paymentMethod = new CreditCard(paymentForm.getCardName(), paymentForm.getCardAssociationName(),
 					paymentForm.getCardNumber(), paymentForm.getNameOnCard(), billingAddress, validFrom,
@@ -246,9 +237,9 @@ class CartController {
 
 			o.setPaymentMethod(paymentMethod);
 
-			order.setBillingAddress(billingAddressForm.getBillingAddress());
+			order.setBillingAddress(paymentForm.getBillingAddress());
 
-			order.setShippingAddress(shippingAddressForm.getShippingAddress());
+			order.setShippingAddress(paymentForm.getShippingAddress());
 
 			order.setDateOrdered(LocalDateTime.now());
 			orderManager.save(o);
