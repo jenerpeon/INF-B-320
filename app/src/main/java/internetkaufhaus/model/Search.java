@@ -13,9 +13,9 @@ import internetkaufhaus.entities.ConcreteProduct;
 
 @Component
 public class Search implements Serializable {
-	
+
 	/**
-	 * The Search class is made for finding and working on products. 
+	 * The Search class is made for finding and working on products.
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
@@ -35,10 +35,13 @@ public class Search implements Serializable {
 	public Iterable<String> getCategories() {
 		return searchType.keySet();
 	}
-	
+
 	/**
-	 * The getProdsByCategory method is made for finding products via product category. 
-	 * @param cat existing category as String
+	 * The getProdsByCategory method is made for finding products via product
+	 * category.
+	 * 
+	 * @param cat
+	 *            existing category as String
 	 * @return List of all products with given category
 	 */
 	public List<ConcreteProduct> getProdsByCategory(String cat) {
@@ -57,15 +60,18 @@ public class Search implements Serializable {
 	}
 
 	/**
-	 * The list50 method generates a list of lists in which are exactly four elements each. This is necessary to structure the product catalog.
-	 * @param prods Iterable filled with products
+	 * The list50 method generates a list of lists in which are exactly ten
+	 * elements each. This is necessary to structure the product catalog.
+	 * 
+	 * @param prods
+	 *            Iterable filled with products
 	 * @return List of Lists with four products each
 	 */
 	public List<List<ConcreteProduct>> list50(Iterable<ConcreteProduct> prods) {
 		List<List<ConcreteProduct>> list50 = new ArrayList<List<ConcreteProduct>>();
 		List<ConcreteProduct> init = new ArrayList<ConcreteProduct>();
 		for (ConcreteProduct p : prods) {
-			if (init.size() >= 4) {
+			if (init.size() >= 10) {
 				list50.add(init);
 				init = new ArrayList<ConcreteProduct>();
 			}
@@ -76,9 +82,14 @@ public class Search implements Serializable {
 
 	}
 
-	public Iterable<ConcreteProduct> lookup_bar(String str) {
-		if (str.isEmpty())
-			return catalog.findAll();
+	public List<ConcreteProduct> lookup_bar(String str) {
+		if (str.isEmpty()) {
+			List<ConcreteProduct> lookup = new ArrayList<ConcreteProduct>();
+			for (ConcreteProduct prod : catalog.findAll()) {
+				lookup.add(prod);
+			}
+			return lookup;
+		}
 		List<ConcreteProduct> lookup = new ArrayList<ConcreteProduct>();
 		for (ConcreteProduct prod : catalog.findAll()) {
 			if (prod.getName().toLowerCase().contains(str.toLowerCase())) {
@@ -87,7 +98,33 @@ public class Search implements Serializable {
 		}
 		return lookup;
 	}
-	
+
+	public List<ConcreteProduct> lookup_bar(String str, int limit) {
+		if (str.isEmpty()) {
+			List<ConcreteProduct> lookup = new ArrayList<ConcreteProduct>();
+			for (ConcreteProduct prod : catalog.findAll()) {
+				if (limit > 0) {
+					limit--;
+				} else {
+					break;
+				}
+				lookup.add(prod);
+			}
+			return lookup;
+		}
+		List<ConcreteProduct> lookup = new ArrayList<ConcreteProduct>();
+		for (ConcreteProduct prod : catalog.findAll()) {
+			if (prod.getName().toLowerCase().contains(str.toLowerCase())) {
+				if (limit > 0) {
+					limit--;
+				} else {
+					break;
+				}
+				lookup.add(prod);
+			}
+		}
+		return lookup;
+	}
 
 	public void addProds(Iterable<ConcreteProduct> iterable) {
 		for (ConcreteProduct prod : iterable) {
@@ -99,7 +136,6 @@ public class Search implements Serializable {
 			}
 		}
 	}
-
 
 	public void delete(ConcreteProduct prodId) {
 		HashMap<String, ArrayList<ConcreteProduct>> list = getsearchTypes();

@@ -97,26 +97,9 @@ public class CatalogController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/sufu/{pagenumber}")
-	public String sufu(@RequestParam("search") String lookup, @PathVariable("pagenumber") int number, ModelMap model) {
-		try {
-			int split = 10;
-			int max_number = prodSearch.list50(prodSearch.lookup_bar(lookup)).size() + 1;
-			model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
-			model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
-			model.addAttribute("search", lookup);
-			model.addAttribute("number", number);
-			Set<Integer> quantities = Sets.newSet(split, 2, 3, 4, 5, 10, 15, 25, 50, 100, 150, 250, 500,
-					prodSearch.list50(prodSearch.lookup_bar(lookup)).size());
-			quantities.removeIf(i -> i > prodSearch.list50(prodSearch.lookup_bar(lookup)).size());
-			model.addAttribute("maximum", prodSearch.list50(prodSearch.lookup_bar(lookup)).size());
-			model.addAttribute("quantities", new TreeSet<Integer>(quantities));
-			model.addAttribute("split", split);
-		} catch (Exception e) {
-			System.out.println("sufu stage 1:" + e.toString());
-			return "index";
-		}
-		return "catalog";
+	@RequestMapping("/sufu")
+	public String sufu(@RequestParam("search") String lookup, ModelMap model) {
+		return "redirect:/sufu/" + lookup;
 	}
 
 	/**
@@ -131,15 +114,13 @@ public class CatalogController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/sufu/{search}/{pagenumber}")
-	public String postsufu(@PathVariable("search") String lookup, @PathVariable("pagenumber") int number,
-			ModelMap model) {
-
-		int max_number = prodSearch.list50(prodSearch.lookup_bar(lookup)).size() + 1;
+	@RequestMapping("/sufu/{search}")
+	public String postsufu(@PathVariable("search") String lookup, ModelMap model) {
 		try {
-			model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
-			model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
+			int split = 10;
+			model.addAttribute("prods", prodSearch.lookup_bar(lookup, 20));
 			model.addAttribute("search", lookup);
+			model.addAttribute("representation", 1);
 		} catch (Exception e) {
 			System.out.println("sufu stage 2:" + e.toString());
 			return "index";

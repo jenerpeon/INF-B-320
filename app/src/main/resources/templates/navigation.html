@@ -86,7 +86,8 @@
 					<a href="#close" title="Close" class="close">X</a>
 					<h2>Registrierung</h2>
 					<ul id="registration-error">
-						<li th:each="line : ${message}" th:text="${line.getDefaultMessage()}"></li>
+						<li th:each="line : ${message}"
+							th:text="${line.getDefaultMessage()}"></li>
 					</ul>
 					<form method="post" th:action="@{/registerNew}">
 						<fieldset>
@@ -153,17 +154,27 @@
 					<li th:if="${info}"><p th:text="${info}"></p></li>
 				</ul>
 				<ul>
-					<li sec:authorize="isAuthenticated()"><a>Herzlich Willkommen</a></li>
-					<li sec:authorize="isAuthenticated()"><a th:text="${#authentication.name}">Name</a></li>
-					<li sec:authorize="isAuthenticated()"><a th:href="@{'/login'}">Mein Konto</a></li>
-					<li sec:authorize="hasRole('ROLE_CUSTOMER')" ><a th:href="@{/customer}">Punktestand</a></li>
-					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a href="#recruit-modal">Rekrutieren</a></li>
-					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a th:href="@{'/returOrders'}">Rückgabe</a></li>
+					<li sec:authorize="isAuthenticated()"><a>Herzlich
+							Willkommen</a></li>
+					<li sec:authorize="isAuthenticated()"><a
+						th:text="${#authentication.name}">Name</a></li>
+					<li sec:authorize="isAuthenticated()"><a th:href="@{'/login'}">Mein
+							Konto</a></li>
+					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a
+						th:href="@{/customer}">Punktestand</a></li>
+					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a
+						href="#recruit-modal">Rekrutieren</a></li>
+					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a
+						th:href="@{'/returOrders'}">Rückgabe</a></li>
 					<li sec:authorize="!isAuthenticated()"><a href="#login-modal">Anmelden</a></li>
-					<li sec:authorize="!isAuthenticated()"><a href="#registration-modal">Registrieren</a></li>
-					<li sec:authorize="hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')"><a th:href="@{/employee}">Mitarbeiterportal</a></li>
-					<li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/admin}">Adminportal</a></li>
-					<li sec:authorize="isAuthenticated()"><a th:href="@{'/logout'}">Ausloggen</a></li>
+					<li sec:authorize="!isAuthenticated()"><a
+						href="#registration-modal">Registrieren</a></li>
+					<li sec:authorize="hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')"><a
+						th:href="@{/employee}">Mitarbeiterportal</a></li>
+					<li sec:authorize="hasRole('ROLE_ADMIN')"><a
+						th:href="@{/admin}">Adminportal</a></li>
+					<li sec:authorize="isAuthenticated()"><a
+						th:href="@{'/logout'}">Ausloggen</a></li>
 				</ul>
 			</div>
 
@@ -175,12 +186,14 @@
 									Super Dooper Shop</a></td>
 							<td>
 								<div id="searchfield">
-									<form id="search" method="post" th:action="@{'/sufu'+'/1'}">
+									<form id="search" method="post" th:action="@{'/sufu'}">
 										<table>
 											<tbody>
 												<tr id="searchcolumn">
 													<td><input type="search" id="search" name="search"
-														value="Suchbegriff" onFocus="value=''" /></td>
+														placeholder="Suchbegriff" th:if="${search != null}" th:value="${search}" /><input
+														type="search" id="search" name="search"
+														placeholder="Suchbegriff" th:if="${search == null}" /></td>
 													<td><input type="image"
 														src="/resources/Bilder/search.png" alt="Suche_Icon" /></td>
 												</tr>
@@ -215,15 +228,16 @@
 	</div>
 	<div id="navigation">
 		<ul class="nav">
-			<li th:if="${employeeNaviagtion == null and adminNaviagtion == null}" th:each="c : ${categories}">
-				<a th:href="@{'/catalog/'+${c.link}+'/name'+'/1'+'/6'+'/1'}" th:text="${c.name}" th:id="${c.name}" ></a>
-			</li>
-			<li th:if="${adminNaviagtion != null}" th:each="c : ${adminNaviagtion}">
-				<a th:href="${c.link}" th:text="${c.name}" th:id="${c.name}" ></a>
-			</li>
-			<li th:if="${employeeNaviagtion != null}" th:each="c : ${employeeNaviagtion}">
-				<a th:href="${c.link}" th:text="${c.name}" th:id="${c.name}" ></a>
-			</li>
+			<li th:if="${employeeNaviagtion == null and adminNaviagtion == null}"
+				th:each="c : ${categories}"><a
+				th:href="@{'/catalog/'+${c.link}+'/name'+'/1'+'/6'+'/1'}"
+				th:text="${c.name}" th:id="${c.name}"></a></li>
+			<li th:if="${adminNaviagtion != null}"
+				th:each="c : ${adminNaviagtion}"><a th:href="${c.link}"
+				th:text="${c.name}" th:id="${c.name}"></a></li>
+			<li th:if="${employeeNaviagtion != null}"
+				th:each="c : ${employeeNaviagtion}"><a th:href="${c.link}"
+				th:text="${c.name}" th:id="${c.name}"></a></li>
 		</ul>
 	</div>
 </body>
