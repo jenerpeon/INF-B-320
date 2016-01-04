@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import internetkaufhaus.model.NavItem;
 import internetkaufhaus.model.Search;
@@ -22,6 +23,7 @@ import internetkaufhaus.model.Search;
  *
  */
 @ControllerAdvice
+@SessionAttributes("cart")
 public class HeaderAdvice {
 
 	private final Search prodSearch;
@@ -60,8 +62,8 @@ public class HeaderAdvice {
 	}
 
 	@ModelAttribute("cart")
-	public Cart getCart() {
-		return new Cart();
+	public Cart getCart(@ModelAttribute("cart") Cart cart) {
+		return cart;
 	}
 
 	/**
@@ -73,7 +75,7 @@ public class HeaderAdvice {
 	 * @return cartPrice
 	 */
 	@ModelAttribute("cartprice")
-	public String addCartPrice(@ModelAttribute Cart cart) {
+	public String addCartPrice(@ModelAttribute("cart") Cart cart) {
 		return cart.getPrice().toString();
 	}
 
@@ -87,7 +89,7 @@ public class HeaderAdvice {
 	 * @return cartSize
 	 */
 	@ModelAttribute("cartsize")
-	public int addCartSize(@ModelAttribute Cart cart) {
+	public int addCartSize(@ModelAttribute("cart") Cart cart) {
 		Iterator<CartItem> i = cart.iterator();
 		int size = 0;
 		while (i.hasNext()) {

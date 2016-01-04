@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteUserAccount;
@@ -48,6 +49,7 @@ import internetkaufhaus.services.DataService;
  */
 @Controller
 @PreAuthorize("hasRole('ROLE_ADMIN')")
+@SessionAttributes("cart")
 public class AdminController {
 
 	@Autowired

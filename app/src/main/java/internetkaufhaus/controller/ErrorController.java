@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 /**
  * This is the error controller. It controls errors. Or does it error controls? You never know...
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  *
  */
 @Controller
+@SessionAttributes("cart")
 public class ErrorController {
 	
 	/**

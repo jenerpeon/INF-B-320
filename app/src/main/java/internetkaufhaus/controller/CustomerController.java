@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
@@ -24,6 +25,7 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
  */
 @Controller
 @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+@SessionAttributes("cart")
 public class CustomerController {
 	private final Creditmanager creditmanager;
 	private final ConcreteUserAccountRepository userRepo;

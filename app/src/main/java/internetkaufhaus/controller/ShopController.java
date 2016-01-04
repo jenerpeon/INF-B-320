@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.repositories.ConcreteProductRepository;
@@ -23,6 +24,7 @@ import internetkaufhaus.repositories.ConcreteProductRepository;
  *
  */
 @Controller
+@SessionAttributes("cart")
 public class ShopController {
 
 	private final Catalog<ConcreteProduct> catalog;
@@ -55,13 +57,13 @@ public class ShopController {
 	@RequestMapping(value = { "/", "/index" })
 	public String index(ModelMap model) {
 		model.addAttribute("prodList", catalog.findAll());
-		/*List<ConcreteProduct> bannerContent = concreteCatalog
-				.findAll(
-						new PageRequest(0, 10,
-								new Sort(new Sort.Order(Sort.Direction.DESC, "RANDOM()", Sort.NullHandling.NATIVE),
-										new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE))))
-				.getContent();
-		model.addAttribute("bannerContent", bannerContent);*/
+		/*
+		 * List<ConcreteProduct> bannerContent = concreteCatalog .findAll( new
+		 * PageRequest(0, 10, new Sort(new Sort.Order(Sort.Direction.DESC,
+		 * "RANDOM()", Sort.NullHandling.NATIVE), new
+		 * Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE))))
+		 * .getContent(); model.addAttribute("bannerContent", bannerContent);
+		 */
 		List<ConcreteProduct> top5rated = concreteCatalog
 				.findAll(
 						new PageRequest(0, 10,
@@ -72,7 +74,9 @@ public class ShopController {
 		List<ConcreteProduct> top5sold = concreteCatalog
 				.findAll(
 						new PageRequest(0, 10,
-								new Sort(new Sort.Order(Sort.Direction.DESC, "amountProductsSold", Sort.NullHandling.NATIVE),
+								new Sort(
+										new Sort.Order(Sort.Direction.DESC, "amountProductsSold",
+												Sort.NullHandling.NATIVE),
 										new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE))))
 				.getContent();
 		return "index";

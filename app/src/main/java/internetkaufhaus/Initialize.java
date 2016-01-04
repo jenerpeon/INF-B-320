@@ -5,6 +5,7 @@ import static org.salespointframework.core.Currencies.EURO;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Catalog;
@@ -29,7 +30,6 @@ import internetkaufhaus.model.Search;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
-import scala.util.Random;
 
 /**
  * This class initializes default data which is used to test the functionality

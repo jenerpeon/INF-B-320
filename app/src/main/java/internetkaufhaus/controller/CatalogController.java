@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteProduct;
@@ -46,6 +47,7 @@ import internetkaufhaus.services.NewsletterService;
  *
  */
 @Controller
+@SessionAttributes("cart")
 public class CatalogController {
 	private static final Quantity NONE = Quantity.of(0);
 	private final Catalog<ConcreteProduct> catalog;

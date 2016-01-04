@@ -230,7 +230,7 @@ public class PaymentForm {
 
 	/** The billing street. */
 	@NotEmpty(message = "shipping street field is mandatory")
-	@Pattern(regexp = "([A-Za-z])+", message = "shipping street contains illegal characters")
+	@Pattern(regexp = "([A-Za-z ß,.-])+", message = "shipping street contains illegal characters")
 	private String billingStreet;
 
 	/** The billing house number. */
@@ -434,7 +434,7 @@ public class PaymentForm {
 
 	/** The shipping street. */
 	@NotEmpty(message = "shipping street field is mandatory")
-	@Pattern(regexp = "([A-Za-z ,.-])+", message = "shipping street contains illegal characters")
+	@Pattern(regexp = "([A-Za-zß ,.-])+", message = "shipping street contains illegal characters")
 	private String shippingStreet;
 
 	/** The shipping house number. */
