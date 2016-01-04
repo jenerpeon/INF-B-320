@@ -284,6 +284,7 @@ public class ManagementController {
 		if (result.hasErrors()) {
 			return "redirect:/employee/changecatalog/editArticle/";
 		}
+		System.out.println(editForm.getCategory().toString());
 
 		if (!img.isEmpty()) {
 			try {
@@ -299,18 +300,22 @@ public class ManagementController {
 			System.out.println("another error (file empty) !!!");
 		}
 
-		ConcreteProduct prodId = editForm.getProdId();
-		prodId.addCategory(editForm.getCategory());
-		prodId.setName(editForm.getName());
-		prodId.setPrice(Money.of(editForm.getPrice(), EURO));
-		prodId.setBuyingPrice(Money.of(editForm.getBuyingPrice(), EURO));
-		prodId.setDescription(editForm.getDescription());
+		ConcreteProduct prod = editForm.getProdId();
+
+		prod.setCategory(editForm.getCategory());
+		prod.addCategory(editForm.getCategory());
+		prod.setName(editForm.getName());
+		prod.setPrice(Money.of(editForm.getPrice(), EURO));
+		prod.setBuyingPrice(Money.of(editForm.getBuyingPrice(), EURO));
+		prod.setDescription(editForm.getDescription());
 
 		if (!(img.getOriginalFilename().isEmpty())) {
-			prodId.setImagefile(img.getOriginalFilename());
+			prod.setImagefile(img.getOriginalFilename());
 		}
-		catalog.save(prodId);
-		concreteProductRepository.save(prodId);
+
+		catalog.save(prod);
+		concreteProductRepository.save(prod);
+
 		return "redirect:/employee/changecatalog";
 	}
 
