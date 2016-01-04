@@ -104,11 +104,6 @@
 							<ul>
 								<li><a th:text="@{'Artikel '+${split * (number-1) + 1}+' bis '+${split * number}}+' von '+${maximum}"></a></li>
 								<li>
-									<a id="backward-last" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/1'}">
-										<img src="/resources/Bilder/backward-last.png" />
-									</a>
-								</li>
-								<li>
 									<a id="backward" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number-1}}">
 										<img src="/resources/Bilder/backward.png" />
 									</a>
@@ -120,11 +115,6 @@
 								<li>
 									<a id="forward" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number+1}}">
 										<img src="/resources/Bilder/forward.png" />
-									</a>
-								</li>
-								<li>
-									<a id="forward-last" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${sites}}">
-										<img src="/resources/Bilder/forward-last.png" />
 									</a>
 								</li>
 							</ul>
@@ -215,11 +205,6 @@
 							<ul>
 								<li><a th:text="@{'Artikel '+${split * (number-1) + 1}+' bis '+${split * number}}+' von '+${maximum}"></a></li>
 								<li>
-									<a id="backward-last" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/1'}">
-										<img src="/resources/Bilder/backward-last.png" />
-									</a>
-								</li>
-								<li>
 									<a id="backward" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number-1}}">
 										<img src="/resources/Bilder/backward.png" />
 									</a>
@@ -231,11 +216,6 @@
 								<li>
 									<a id="forward" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number+1}}">
 										<img src="/resources/Bilder/forward.png" />
-									</a>
-								</li>
-								<li>
-									<a id="forward-last" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${sites}}">
-										<img src="/resources/Bilder/forward-last.png" />
 									</a>
 								</li>
 							</ul>

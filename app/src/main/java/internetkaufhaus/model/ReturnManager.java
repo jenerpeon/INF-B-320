@@ -11,7 +11,20 @@ import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 
 public class ReturnManager {
-
+	/**
+	 * The ReturnManager class is made for the return of orders.
+	 *
+	 */
+	
+	/**
+	 * The getConcreteOrderDuringLastTwoWeeks method is responsible for the return of a list containing all orders of an user completed during the last two weeks.
+	 *
+	 *@param concreteOrderRepo the order repository. All orders are saved here.
+	 *@param userAccount the user account 
+	 *
+	 *@return List of Orders completed during the last two weeks 
+	 *
+	 */
 	public static List<ConcreteOrder> getConcreteOrderDuringLastTwoWeeks(ConcreteOrderRepository concreteOrderRepo, Optional<UserAccount> userAccount) {
 
 		LocalDateTime timeStart = LocalDateTime.now().minusWeeks(2);

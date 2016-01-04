@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteProduct;
@@ -40,12 +41,13 @@ import internetkaufhaus.services.NewsletterService;
 /**
  * This is the catalog controller. It controls the catalog. Or does it catalog
  * the controller? You never know... In this class you may find the controllers
- * for the catalog and artible pages, should you choose to look for them.
+ * for the catalog and article pages, should you choose to look for them.
  * 
  * @author max
  *
  */
 @Controller
+@SessionAttributes("cart")
 public class CatalogController {
 	private static final Quantity NONE = Quantity.of(0);
 	private final Catalog<ConcreteProduct> catalog;
@@ -85,23 +87,33 @@ public class CatalogController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows a particular search result page as defined by the search
+	 * string and the pagenumber.
 	 * 
 	 * @param lookup
+	 *            the search string as entered by the user
 	 * @param number
+	 *            the page number the user requested
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping("/sufu/{pagenumber}")
 	public String sufu(@RequestParam("search") String lookup, @PathVariable("pagenumber") int number, ModelMap model) {
-        
-		try{
-		int max_number = prodSearch.list50(prodSearch.lookup_bar(lookup)).size() + 1;
-		model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
-		model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
-		model.addAttribute("search", lookup);
-		}catch (Exception e){
-			System.out.println("sufu stage 1:"+e.toString());
-
+		try {
+			int split = 10;
+			int max_number = prodSearch.list50(prodSearch.lookup_bar(lookup)).size() + 1;
+			model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
+			model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
+			model.addAttribute("search", lookup);
+			model.addAttribute("number", number);
+			Set<Integer> quantities = Sets.newSet(split, 2, 3, 4, 5, 10, 15, 25, 50, 100, 150, 250, 500,
+					prodSearch.list50(prodSearch.lookup_bar(lookup)).size());
+			quantities.removeIf(i -> i > prodSearch.list50(prodSearch.lookup_bar(lookup)).size());
+			model.addAttribute("maximum", prodSearch.list50(prodSearch.lookup_bar(lookup)).size());
+			model.addAttribute("quantities", new TreeSet<Integer>(quantities));
+			model.addAttribute("split", split);
+		} catch (Exception e) {
+			System.out.println("sufu stage 1:" + e.toString());
 			return "index";
 		}
 		return "catalog";
@@ -109,9 +121,13 @@ public class CatalogController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows a particular search result page as defined by the search
+	 * string and the pagenumber.
 	 * 
 	 * @param lookup
+	 *            the search string as entered by the user
 	 * @param number
+	 *            the page number the user requested
 	 * @param model
 	 * @return
 	 */
@@ -120,12 +136,12 @@ public class CatalogController {
 			ModelMap model) {
 
 		int max_number = prodSearch.list50(prodSearch.lookup_bar(lookup)).size() + 1;
-		try{
-		model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
-		model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
-		model.addAttribute("search", lookup);
-		}catch(Exception e){
-			System.out.println("sufu stage 2:"+e.toString());
+		try {
+			model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
+			model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
+			model.addAttribute("search", lookup);
+		} catch (Exception e) {
+			System.out.println("sufu stage 2:" + e.toString());
 			return "index";
 		}
 		return "catalog";
@@ -133,8 +149,11 @@ public class CatalogController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows all products of a certain category. This is deprecated.
+	 * TODO: Remove this(?)
 	 * 
 	 * @param category
+	 *            the category which the user wants to see.
 	 * @param model
 	 * @return
 	 */
@@ -149,20 +168,28 @@ public class CatalogController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * Shows the requested catalog page as defined by category, number of items
+	 * per page (givenSplit), number of current page (givenNumber), display
+	 * style (representation) and order of sorting (sort).
 	 * 
 	 * @param category
-	 * @param split
-	 * @param number
+	 *            the category to display
+	 * @param givenSplit
+	 *            the number of items per page
+	 * @param givenNumber
+	 *            the page number
 	 * @param representation
+	 *            which page design to use
 	 * @param sort
+	 *            the order to sort the items in
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(path = "/catalog/{type}/{sort}/{representation}/{split}/{pagenumber}", method = {
+	@RequestMapping(path = "/catalog/{type}/{sorting}/{representation}/{split}/{pagenumber}", method = {
 			RequestMethod.POST, RequestMethod.GET })
 	public String list50(@PathVariable("type") String category, @PathVariable("split") int givenSplit,
 			@PathVariable("pagenumber") int givenNumber, @PathVariable("representation") int representation,
-			@PathVariable("sort") String sort, ModelMap model) {
+			@PathVariable("sorting") String sort, ModelMap model) {
 		int split;
 		if (givenSplit == 0) {
 			split = 3;
@@ -173,8 +200,8 @@ public class CatalogController {
 		Sort sorting = null;
 
 		switch (sort) {
-		case "selled":
-			sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "selled", Sort.NullHandling.NATIVE),
+		case "popularity":
+			sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "amountProductsSold", Sort.NullHandling.NATIVE),
 					new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE));
 			break;
 		case "rating":
@@ -230,6 +257,7 @@ public class CatalogController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * TODO: Is this deprecated?
 	 * 
 	 * @param pagable
 	 * @param category
@@ -242,16 +270,12 @@ public class CatalogController {
 	public String changeStartPageSetting(@PathVariable("type") String category, @PathVariable("pagenumber") int number,
 			@RequestParam("total") int split) {
 		return "redirect:/catalog/" + category + '/' + split + '/' + number;
-		/*
-		 * model.addAttribute("prods", page); model.addAttribute("numbers",
-		 * numbers); model.addAttribute("sites", numbers.size());
-		 * model.addAttribute("categories", prodSearch.getCategories()); return
-		 * "catalog";
-		 */
 	}
 
 	/**
-	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps? For
+	 * further documentation of this please refer to the function list50 in the
+	 * CatalogController, to which this redirects.
 	 * 
 	 * @param pagable
 	 * @param category
@@ -271,14 +295,16 @@ public class CatalogController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows the article page for a certain article as given by its
+	 * ID.
 	 * 
 	 * @param prod
+	 *            the article ID of the article to display
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping("/detail/{prodId}")
 	public String detail(@PathVariable("prodId") ConcreteProduct prod, Model model) {
-
 		Optional<InventoryItem> item = inventory.findByProductIdentifier(prod.getIdentifier());
 		Quantity quantity = item.map(InventoryItem::getQuantity).orElse(NONE);
 		model.addAttribute("concreteproduct", prod);
@@ -290,10 +316,15 @@ public class CatalogController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page submits a comment to an article and then redirects to the
+	 * corresponding article page.
 	 * 
 	 * @param prod
+	 *            the article ID of the article to comment on
 	 * @param comment
+	 *            the actual comment text
 	 * @param rating
+	 *            the rating associated with the comment
 	 * @param model
 	 * @param user
 	 * @return
@@ -313,8 +344,11 @@ public class CatalogController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page registers a given user to the E-Mail-newsletter and sends a
+	 * confirmation E-Mail. It then redirects the user to the start page.
 	 * 
 	 * @param sendTo
+	 *            the E-Mail-Address to send the newsletter to.
 	 * @param model
 	 * @return
 	 * @throws ParseException
@@ -331,9 +365,7 @@ public class CatalogController {
 		}
 		newsManager.getMap().put(username, sendTo);
 		sender.sendMail(sendTo, text, "zu@googlemail.com", "NewsletterAbonnement");
-
 		model.addAttribute("prodList", catalog.findAll());
-
 		return "index";
 
 	}

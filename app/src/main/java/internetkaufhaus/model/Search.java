@@ -13,7 +13,11 @@ import internetkaufhaus.entities.ConcreteProduct;
 
 @Component
 public class Search implements Serializable {
-
+	
+	/**
+	 * The Search class is made for finding and working on products. 
+	 *
+	 */
 	private static final long serialVersionUID = 1L;
 
 	private HashMap<String, ArrayList<ConcreteProduct>> searchType;
@@ -31,7 +35,12 @@ public class Search implements Serializable {
 	public Iterable<String> getCategories() {
 		return searchType.keySet();
 	}
-
+	
+	/**
+	 * The getProdsByCategory method is made for finding products via product category. 
+	 * @param cat existing category as String
+	 * @return List of all products with given category
+	 */
 	public List<ConcreteProduct> getProdsByCategory(String cat) {
 		return searchType.get(cat);
 	}
@@ -47,6 +56,11 @@ public class Search implements Serializable {
 		// TODO: this needs to be implemented.
 	}
 
+	/**
+	 * The list50 method generates a list of lists in which are exactly four elements each. This is necessary to structure the product catalog.
+	 * @param prods Iterable filled with products
+	 * @return List of Lists with four products each
+	 */
 	public List<List<ConcreteProduct>> list50(Iterable<ConcreteProduct> prods) {
 		List<List<ConcreteProduct>> list50 = new ArrayList<List<ConcreteProduct>>();
 		List<ConcreteProduct> init = new ArrayList<ConcreteProduct>();
@@ -73,6 +87,7 @@ public class Search implements Serializable {
 		}
 		return lookup;
 	}
+	
 
 	public void addProds(Iterable<ConcreteProduct> iterable) {
 		for (ConcreteProduct prod : iterable) {
@@ -84,6 +99,7 @@ public class Search implements Serializable {
 			}
 		}
 	}
+
 
 	public void delete(ConcreteProduct prodId) {
 		HashMap<String, ArrayList<ConcreteProduct>> list = getsearchTypes();

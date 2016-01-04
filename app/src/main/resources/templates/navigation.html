@@ -156,9 +156,9 @@
 					<li sec:authorize="isAuthenticated()"><a>Herzlich Willkommen</a></li>
 					<li sec:authorize="isAuthenticated()"><a th:text="${#authentication.name}">Name</a></li>
 					<li sec:authorize="isAuthenticated()"><a th:href="@{'/login'}">Mein Konto</a></li>
-					<!--<li sec:authorize="hasRole('ROLE_CUSTOMER')" ><a th:href="@{/customer}" th:text="${#authentication.credits}">Punktestand</a></li> -->
+					<li sec:authorize="hasRole('ROLE_CUSTOMER')" ><a th:href="@{/customer}">Punktestand</a></li>
 					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a href="#recruit-modal">Rekrutieren</a></li>
-					<li sec:authorize="hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')"><a th:href="@{'/returOrders'}">Rückgabe</a></li>
+					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a th:href="@{'/returOrders'}">Rückgabe</a></li>
 					<li sec:authorize="!isAuthenticated()"><a href="#login-modal">Anmelden</a></li>
 					<li sec:authorize="!isAuthenticated()"><a href="#registration-modal">Registrieren</a></li>
 					<li sec:authorize="hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')"><a th:href="@{/employee}">Mitarbeiterportal</a></li>

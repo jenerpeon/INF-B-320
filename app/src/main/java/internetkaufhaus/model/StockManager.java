@@ -7,14 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import internetkaufhaus.repositories.ConcreteInventory;
+
 /**
- * 
- * @author Wilhelm Mundt
- * A StockManager to manage the stock
- *
+ * The StockManager class is responsible for changing the amount of products at the depot.
  */
 @Component
 public class StockManager {
+
 	private ConcreteInventory<InventoryItem> inventory;
 
 	/**
@@ -27,8 +26,9 @@ public class StockManager {
 	}
 	/**
 	 * Orders a given amount of an article.
-	 * @param prodId
-	 * @param quantity
+	 * @param prodId select product via it's id
+	 * @param quantity amount of products to add
+	 * 
 	 */
 	public void orderArticle(ProductIdentifier prodId, Quantity quantity) {
 		inventory.findByProductIdentifier(prodId).ifPresent(x -> {
@@ -36,11 +36,13 @@ public class StockManager {
 			inventory.save(x);
 		});
 	}
+
 	/**
+	 * The removeArticle method is used to decrease the amount of given products.
 	 * 
-	 * Removes a given amount of an article.
-	 * @param prodId
-	 * @param quantity
+	 * @param prodId select product via it's id
+	 * @param quantity amount of products to remove
+	 * 
 	 */
 	public void removeArticle(ProductIdentifier prodId, Quantity quantity) {
 		inventory.findByProductIdentifier(prodId).ifPresent(x -> {

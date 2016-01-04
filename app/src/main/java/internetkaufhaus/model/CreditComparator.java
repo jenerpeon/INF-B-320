@@ -11,12 +11,16 @@ import internetkaufhaus.entities.ConcreteUserAccount;
  *A CreditComparator for sorting UserAccounts by credits.
  */
 public class CreditComparator implements Comparator<ConcreteUserAccount> {
-
+	
+	
 	/**
-	 * Compares two ConcreteUserAccounts
-	 * @param o1
-	 * @param o2
-	 * @return
+	 * The compare method compares the credit amount of two existing user accounts.
+	 * 
+	 * @param first ConcreteUserAccount to compare with second ConcreteUserAccount
+	 *  @param second ConcreteUserAccount to compare with first ConcreteUserAccount
+	 * 
+	 * @return integer, which account has more credits
+	 *
 	 */
 	@Override
 	public int compare(ConcreteUserAccount o1, ConcreteUserAccount o2) {

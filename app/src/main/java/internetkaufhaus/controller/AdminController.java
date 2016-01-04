@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteUserAccount;
@@ -39,15 +40,18 @@ import internetkaufhaus.services.ConcreteMailService;
 import internetkaufhaus.services.DataService;
 
 /**
- * This is the admin controller. It controls the admin. Or maybe it admins the controls? You never know... In this class you may find the controllers for the admin interfaces, should you choose to look for them.
+ * This is the admin controller. It controls the admin. Or maybe it admins the
+ * controls? You never know... In this class you may find the controllers for
+ * the admin interfaces, should you choose to look for them.
  * 
  * @author max
  *
  */
 @Controller
 @PreAuthorize("hasRole('ROLE_ADMIN')")
+@SessionAttributes("cart")
 public class AdminController {
-	
+
 	@Autowired
 	private DataService dataService;
 	@Autowired
@@ -57,29 +61,36 @@ public class AdminController {
 	private final Creditmanager creditmanager;
 
 	/**
-	 * This is the constructor. It's neither used nor does it contain any functionality other than storing function arguments as class attribute, what do you expect me to write here?
+	 * This is the constructor. It's neither used nor does it contain any
+	 * functionality other than storing function arguments as class attribute,
+	 * what do you expect me to write here?
 	 * 
 	 * @param concreteOrderRepo
+	 *            singleton, passed by spring/salespoint
 	 * @param manager
+	 *            singleton, passed by spring/salespoint
 	 * @param umanager
+	 *            singleton, passed by spring/salespoint
 	 * @param creditmanager
+	 *            singleton, passed by spring/salespoint
 	 * @param form
+	 *            singleton, passed by spring/salespoint
 	 */
 	@Autowired
 	public AdminController(Creditmanager creditmanager, NewUserAccountForm form) {
-			
+
 		this.form = form;
 		this.creditmanager = creditmanager;
 
 	}
-	
+
 	@ModelAttribute("adminNaviagtion")
 	public List<NavItem> addAdminNavigation() {
-		String adminNavigationName[] = {"Userverwaltung","Bilanzen","Statistiken","Gewinnspiel"};
-		String adminNavigationLink[] = {"/admin/changeuser","/admin/balance","/admin/statistics","/admin/lottery"};
+		String adminNavigationName[] = { "Userverwaltung", "Bilanzen", "Statistiken", "Gewinnspiel" };
+		String adminNavigationLink[] = { "/admin/changeuser", "/admin/balance", "/admin/statistics", "/admin/lottery" };
 		List<NavItem> navigation = new ArrayList<NavItem>();
-		for (int i=0; i < adminNavigationName.length; i++) {
-			NavItem nav = new NavItem(adminNavigationName[i],adminNavigationLink[i],"non-category");
+		for (int i = 0; i < adminNavigationName.length; i++) {
+			NavItem nav = new NavItem(adminNavigationName[i], adminNavigationLink[i], "non-category");
 			navigation.add(nav);
 		}
 		return navigation;
@@ -123,12 +134,9 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/admin/changeuser/deleteUser/{id}")
 	public String deleteUser(@PathVariable("id") Long id) {
-        dataService.getUserAccountManager().disable(
-        		dataService.getConcreteUserAccoutnRepository().
-        	    	findOne(id).
-        	    	getUserAccount().
-        	    	getId());
-        dataService.getConcreteUserAccoutnRepository().delete(id);
+		dataService.getUserAccountManager()
+				.disable(dataService.getConcreteUserAccoutnRepository().findOne(id).getUserAccount().getId());
+		dataService.getConcreteUserAccoutnRepository().delete(id);
 
 		return "redirect:/admin/changeuser";
 	}
@@ -165,7 +173,8 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value = "/admin/changeuser/addedUser", method = RequestMethod.POST)
-	public String addedUser(@ModelAttribute("CreateUserForm") @Valid CreateUserForm createuserform, BindingResult result, ModelMap model) {
+	public String addedUser(@ModelAttribute("CreateUserForm") @Valid CreateUserForm createuserform,
+			BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
 			model.addAttribute("message", result.getAllErrors());
 			return "changeusernewuser";
@@ -195,7 +204,8 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value = "/admin/changeuser/editedUser", method = RequestMethod.POST)
-	public String editedUserUser(@ModelAttribute("EditUserForm") @Valid EditUserForm edituserform, BindingResult result) {
+	public String editedUserUser(@ModelAttribute("EditUserForm") @Valid EditUserForm edituserform,
+			BindingResult result) {
 		if (result.hasErrors()) {
 			return "redirect:/admin/changeuser/";
 		}
@@ -224,7 +234,8 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/admin/balance")
 	public String balance(ModelMap model) {
-		Iterable<ConcreteOrder> ordersCompleted = dataService.getConcreteOrderRepository().findByStatus(OrderStatus.COMPLETED); 
+		Iterable<ConcreteOrder> ordersCompleted = dataService.getConcreteOrderRepository()
+				.findByStatus(OrderStatus.COMPLETED);
 		Iterable<ConcreteOrder> ordersOpen = dataService.getConcreteOrderRepository().findByStatus(OrderStatus.OPEN);
 
 		double totalPaid = 0;
@@ -257,7 +268,7 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/admin/statistics")
 	public String getStatistics() {
-		//Statistic stat = new Statistic(orderManager);
+		// Statistic stat = new Statistic(orderManager);
 		LocalDateTime to = LocalDateTime.now();
 		LocalDateTime from7Days = to.minusDays(7);
 		LocalDateTime from1Month = to.minusMonths(1);
@@ -266,9 +277,9 @@ public class AdminController {
 		LocalDateTime from3Year = to.minusYears(3);
 		LocalDateTime from5Year = to.minusYears(5);
 		LocalDateTime from10Year = to.minusYears(10);
-		
+
 		Map<Interval, String> intervals = new HashMap<Interval, String>();
-		
+
 		intervals.put(Interval.from(from7Days).to(to), "day");
 		intervals.put(Interval.from(from1Month).to(to), "week");
 		intervals.put(Interval.from(from3Month).to(to), "month");
@@ -276,23 +287,10 @@ public class AdminController {
 		intervals.put(Interval.from(from3Year).to(to), "year");
 		intervals.put(Interval.from(from5Year).to(to), "year");
 		intervals.put(Interval.from(from10Year).to(to), "year");
-		
-		/*List<Map<LocalDate, Money>> turnovers= new ArrayList<Map<LocalDate, Money>>();
-		for (Map.Entry<Interval, String> entry : intervals.entrySet()) {
-			turnovers.add(stat.getTurnoverByInterval(entry.getKey(), entry.getValue()));
-		}
-		
-		model.addAttribute("turnover", turnovers);*/
-		
-		/*model.addAttribute("sales", stat.getSalesByInterval(i, quantize));
-		model.addAttribute("purchases", null);
-		model.addAttribute("profit", null);*/
+
 		return "statistics";
 	}
 
-	/*
-	 * @RequestMapping(value="/userManagement") public String userManagement(ModelMap model){ //model.addAttribute("customers", ); //model.addAttribute("admins",); //model.addAttribute("employees",); return "index";
-	 */
 	@RequestMapping(value = "/admin/lottery")
 	public String competition() {
 		return "competition"; // TODO: what does this even do?
@@ -307,10 +305,11 @@ public class AdminController {
 	@RequestMapping(value = "/admin/competitionButton")
 	public String getWinners(ModelMap model) {
 
-		Competition com = new Competition(dataService.getConcreteUserAccoutnRepository().findByRole(Role.of("ROLE_CUSTOMER")), creditmanager);
+		Competition com = new Competition(
+				dataService.getConcreteUserAccoutnRepository().findByRole(Role.of("ROLE_CUSTOMER")), creditmanager);
 
 		model.addAttribute("winners", com.getWinners());
-		com.getWinners().forEach(x->System.out.println(x.getUserAccount().getUsername()+" "+x.getCredits()));
+		com.getWinners().forEach(x -> System.out.println(x.getUserAccount().getUsername() + " " + x.getCredits()));
 		com.notifyWinners(mailService);
 		HashMap<String, String> msg = new HashMap<String, String>();
 		msg.put("success", "Die folgenden Gewinner wurden benachrichtigt");
