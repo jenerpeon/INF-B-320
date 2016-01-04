@@ -36,8 +36,10 @@ import internetkaufhaus.forms.NewUserAccountForm;
 import internetkaufhaus.model.Competition;
 import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.model.NavItem;
+import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.services.ConcreteMailService;
 import internetkaufhaus.services.DataService;
+import internetkaufhaus.services.ProductManagementService;
 
 /**
  * This is the admin controller. It controls the admin. Or maybe it admins the
@@ -56,9 +58,12 @@ public class AdminController {
 	private DataService dataService;
 	@Autowired
 	private ConcreteMailService mailService;
+	@Autowired
+	private ProductManagementService productManagementService;
 
 	private final NewUserAccountForm form;
 	private final Creditmanager creditmanager;
+	private final ConcreteProductRepository concreteProductRepository;
 
 	/**
 	 * This is the constructor. It's neither used nor does it contain any
@@ -77,11 +82,10 @@ public class AdminController {
 	 *            singleton, passed by spring/salespoint
 	 */
 	@Autowired
-	public AdminController(Creditmanager creditmanager, NewUserAccountForm form) {
-
+	public AdminController(Creditmanager creditmanager, NewUserAccountForm form, ConcreteProductRepository concreteProductRepository) {
+		this.concreteProductRepository = concreteProductRepository;
 		this.form = form;
 		this.creditmanager = creditmanager;
-
 	}
 
 	@ModelAttribute("adminNaviagtion")
@@ -239,23 +243,27 @@ public class AdminController {
 		Iterable<ConcreteOrder> ordersOpen = dataService.getConcreteOrderRepository().findByStatus(OrderStatus.OPEN);
 
 		double totalPaid = 0;
+		Map<ConcreteOrder, Double> customerOrders = new HashMap<ConcreteOrder, Double>();
 		for (ConcreteOrder order : ordersCompleted) {
 			if (order.getReturned() == false) {
-				totalPaid += order.getOrder().getTotalPrice().getNumberStripped().doubleValue();
+				customerOrders.put(order, order.getOrder().getTotalPrice().getNumberStripped().doubleValue());
+				totalPaid += customerOrders.get(order);
 			}
 		}
 
 		double totalOpen = 0;
+		Map<ConcreteOrder, Double> stockOrders = new HashMap<ConcreteOrder, Double>();
 		for (ConcreteOrder order : ordersOpen) {
-			totalOpen += order.getOrder().getTotalPrice().getNumberStripped().doubleValue();
+			stockOrders.put(order, this.productManagementService.getBuyingPrice(order).getNumberStripped().doubleValue());
+			totalOpen += stockOrders.get(order);
 		}
 
 		double balance = Math.round((totalPaid - totalOpen) * 100.00) / 100.00;
 
-		model.addAttribute("customerOrders", ordersCompleted);
-		model.addAttribute("StockOrders", ordersOpen);
+		model.addAttribute("customerOrders", customerOrders);
+		model.addAttribute("StockOrders", stockOrders);
 		model.addAttribute("customerOrdersTotal", Money.of(Math.round(totalPaid * 100) / 100, EURO));
-		model.addAttribute("StockOrdersTotal", Money.of(Math.round(totalOpen), EURO));
+		model.addAttribute("StockOrdersTotal", Money.of(Math.round(totalOpen * 100) / 100, EURO));
 		model.addAttribute("balance", Money.of(balance, EURO));
 		return "balance";
 	}

@@ -1,5 +1,6 @@
 package internetkaufhaus.repositories;
 
+import org.salespointframework.catalog.ProductIdentifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,5 +19,7 @@ public interface ConcreteProductRepository extends PagingAndSortingRepository<Co
 	Iterable<ConcreteProduct> findAllByOrderByName();
 
 	Page<ConcreteProduct> findAll(Pageable pageable);
+
+	ConcreteProduct findByProductIdentifier(ProductIdentifier productIdentifier);
 
 }

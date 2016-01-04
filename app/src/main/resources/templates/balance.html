@@ -45,9 +45,9 @@
 								<table class="orderTable">
 									<tbody>
 										<tr th:each="order : ${customerOrders}">
-											<td><a target="newtab" th:href="@{'/employee/orders/detail/'+${order.getId()}}" th:text="@{${order.getTotalProductNumber()}+' Artikel'}"></a></td>
-											<td><a th:text="@{'Gesamt: '+${order.getOrder().getTotalPrice()}}"></a></td>
-											<td th:if="${order.getReturned()}"><img  src="/resources/Bilder/return.png" width="30px"/></td>
+											<td><a target="newtab" th:href="@{'/employee/orders/detail/'+${order.key.getId()}}" th:text="@{${order.key.getTotalProductNumber()}+' Artikel'}"></a></td>
+											<td><a th:text="@{'Gesamt: '+${order.value}}"></a></td>
+											<td th:if="${order.key.getReturned()}"><img  src="/resources/Bilder/return.png" width="30px"/></td>
 										</tr>
 									</tbody>
 								</table>
@@ -56,8 +56,8 @@
 								<table class="orderTable">
 									<tbody>
 										<tr th:each="order : ${StockOrders}">
-											<td><a target="newtab" th:href="@{'/employee/orders/detail/'+${order.getId()}}" th:text="@{${order.getTotalProductNumber()}+' Artikel'}"></a></td>
-											<td><a th:text="@{'Gesamt: '+${order.getOrder().getTotalPrice()}}"></a></td>
+											<td><a target="newtab" th:href="@{'/employee/orders/detail/'+${order.key.getId()}}" th:text="@{${order.key.getTotalProductNumber()}+' Artikel'}"></a></td>
+											<td><a th:text="@{'Gesamt: '+${order.value}}"></a></td>
 										</tr>
 									</tbody>
 								</table>

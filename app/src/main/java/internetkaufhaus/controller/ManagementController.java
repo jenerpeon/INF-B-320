@@ -262,6 +262,7 @@ public class ManagementController {
 		model.addAttribute("categories", prodSearch.getCategories());
 		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("price", prod.getPrice().getNumber());
+		model.addAttribute("buyingPrice", prod.getBuyingPrice());
 		return "changecatalogchangeitem";
 	}
 
@@ -417,6 +418,7 @@ public class ManagementController {
 		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("quantity", quantity);
 		model.addAttribute("price", prod.getPrice().getNumber());
+		model.addAttribute("buyingPrice", prod.getBuyingPrice());
 		return "changecatalogorderitem";
 	}
 
