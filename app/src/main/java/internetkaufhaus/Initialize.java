@@ -29,6 +29,7 @@ import internetkaufhaus.model.Search;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
+import scala.util.Random;
 
 /**
  * This class initializes default data which is used to test the functionality
@@ -514,9 +515,12 @@ public class Initialize implements DataInitializer {
 	private void initializeOrders(ConcreteOrderRepository concreteOrderRepo, ConcreteProductRepository prods,
 			OrderManager<Order> orderManager, ConcreteUserAccountRepository ConcreteUserAccountManager) {
 
+		Random rand = new Random();
 		Cart c = new Cart();
 		for (ConcreteProduct p : prods.findAll()) {
-			c.addOrUpdateItem(p, Quantity.of(1));
+			if (rand.nextInt(2) > 0) {
+				c.addOrUpdateItem(p, Quantity.of(rand.nextInt(10)));
+			}
 		}
 		for (ConcreteUserAccount u : ConcreteUserAccountManager.findByRole(Role.of("ROLE_CUSTOMER"))) {
 

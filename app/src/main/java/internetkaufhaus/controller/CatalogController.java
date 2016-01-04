@@ -97,12 +97,19 @@ public class CatalogController {
 	 */
 	@RequestMapping("/sufu/{pagenumber}")
 	public String sufu(@RequestParam("search") String lookup, @PathVariable("pagenumber") int number, ModelMap model) {
-
 		try {
+			int split = 10;
 			int max_number = prodSearch.list50(prodSearch.lookup_bar(lookup)).size() + 1;
 			model.addAttribute("prods", prodSearch.list50(prodSearch.lookup_bar(lookup)).get(number - 1));
 			model.addAttribute("numbers", IntStream.range(1, max_number).boxed().collect(Collectors.toList()));
 			model.addAttribute("search", lookup);
+			model.addAttribute("number", number);
+			Set<Integer> quantities = Sets.newSet(split, 2, 3, 4, 5, 10, 15, 25, 50, 100, 150, 250, 500,
+					prodSearch.list50(prodSearch.lookup_bar(lookup)).size());
+			quantities.removeIf(i -> i > prodSearch.list50(prodSearch.lookup_bar(lookup)).size());
+			model.addAttribute("maximum", prodSearch.list50(prodSearch.lookup_bar(lookup)).size());
+			model.addAttribute("quantities", new TreeSet<Integer>(quantities));
+			model.addAttribute("split", split);
 		} catch (Exception e) {
 			System.out.println("sufu stage 1:" + e.toString());
 			return "index";
@@ -176,11 +183,11 @@ public class CatalogController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(path = "/catalog/{type}/{sort}/{representation}/{split}/{pagenumber}", method = {
+	@RequestMapping(path = "/catalog/{type}/{sorting}/{representation}/{split}/{pagenumber}", method = {
 			RequestMethod.POST, RequestMethod.GET })
 	public String list50(@PathVariable("type") String category, @PathVariable("split") int givenSplit,
 			@PathVariable("pagenumber") int givenNumber, @PathVariable("representation") int representation,
-			@PathVariable("sort") String sort, ModelMap model) {
+			@PathVariable("sorting") String sort, ModelMap model) {
 		int split;
 		if (givenSplit == 0) {
 			split = 3;
@@ -191,8 +198,8 @@ public class CatalogController {
 		Sort sorting = null;
 
 		switch (sort) {
-		case "selled":
-			sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "selled", Sort.NullHandling.NATIVE),
+		case "popularity":
+			sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "amountProductsSold", Sort.NullHandling.NATIVE),
 					new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE));
 			break;
 		case "rating":

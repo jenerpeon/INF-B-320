@@ -55,13 +55,13 @@ public class ShopController {
 	@RequestMapping(value = { "/", "/index" })
 	public String index(ModelMap model) {
 		model.addAttribute("prodList", catalog.findAll());
-		List<ConcreteProduct> bannerContent = concreteCatalog
+		/*List<ConcreteProduct> bannerContent = concreteCatalog
 				.findAll(
 						new PageRequest(0, 10,
 								new Sort(new Sort.Order(Sort.Direction.DESC, "RANDOM()", Sort.NullHandling.NATIVE),
 										new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE))))
 				.getContent();
-		model.addAttribute("bannerContent", bannerContent);
+		model.addAttribute("bannerContent", bannerContent);*/
 		List<ConcreteProduct> top5rated = concreteCatalog
 				.findAll(
 						new PageRequest(0, 10,
@@ -72,7 +72,7 @@ public class ShopController {
 		List<ConcreteProduct> top5sold = concreteCatalog
 				.findAll(
 						new PageRequest(0, 10,
-								new Sort(new Sort.Order(Sort.Direction.DESC, "selled", Sort.NullHandling.NATIVE),
+								new Sort(new Sort.Order(Sort.Direction.DESC, "amountProductsSold", Sort.NullHandling.NATIVE),
 										new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE))))
 				.getContent();
 		return "index";

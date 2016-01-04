@@ -556,7 +556,7 @@ public class ManagementController {
 		Collection<OrderLine> orderLines = IteratorUtils.toList(orders.iterator());
 		for (OrderLine orderLine : orderLines) {
 			ConcreteProduct prod = catalog.findOne(orderLine.getProductIdentifier()).get();
-			prod.increaseSelled(orderLine.getQuantity().getAmount().intValue());
+			prod.increaseSold(orderLine.getQuantity().getAmount().intValue());
 
 			catalog.save(prod);
 			concreteProductRepository.save(prod);

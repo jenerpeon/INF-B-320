@@ -345,21 +345,21 @@ public class ConcreteProduct extends Product {
 	}
 
 	/**
-	 * Increase selled.
+	 * Increase sold.
 	 *
 	 * @param sell
 	 *            the sell
 	 */
-	public void increaseSelled(int sell) {
+	public void increaseSold(int sell) {
 		this.amountProductsSold += sell;
 	}
 
 	/**
-	 * Gets the selled.
+	 * Gets the sold.
 	 *
-	 * @return the selled
+	 * @return the sold
 	 */
-	public long getSelled() {
+	public long getSold() {
 		return this.amountProductsSold;
 	}
 
