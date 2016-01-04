@@ -8,23 +8,24 @@ import org.springframework.stereotype.Component;
 
 import internetkaufhaus.repositories.ConcreteInventory;
 
+/**
+ * The StockManager class is responsible for changing the amount of products at the depot.
+ */
 @Component
 public class StockManager {
 
-	/**
-	 * The StockManager class is responsible for changing the amount of products at the depot.
-	 */
 	private ConcreteInventory<InventoryItem> inventory;
 
+	/**
+	 * Constructor of StockManager
+	 * @param inventory
+	 */
 	@Autowired
 	public StockManager(ConcreteInventory<InventoryItem> inventory) {
 		this.inventory = inventory;
 	}
-
-	
 	/**
-	 * The orderArticle method is used to increase the amount of given products.
-	 * 
+	 * Orders a given amount of an article.
 	 * @param prodId select product via it's id
 	 * @param quantity amount of products to add
 	 * 
