@@ -4,11 +4,13 @@ import java.util.Comparator;
 
 import internetkaufhaus.entities.ConcreteUserAccount;
 
+/**
+ * 
+ * @author Wilhelm Mundt
+ *
+ *A CreditComparator for sorting UserAccounts by credits.
+ */
 public class CreditComparator implements Comparator<ConcreteUserAccount> {
-	/**
-	 * The CreditComparator class has the one function to compare the credit amount of two user accounts.
-	 *
-	 */
 	
 	
 	/**

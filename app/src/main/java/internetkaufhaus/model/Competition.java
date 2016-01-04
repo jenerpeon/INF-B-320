@@ -98,9 +98,14 @@ public class Competition {
 	}
 
 	/**
+<<<<<<< HEAD
+	 * Sets list of participants
+	 * @param accs ConcreteUserAccounts for the competition
+=======
 	 * Sets list of participants.
 	 *
 	 * @param accs the new accs
+>>>>>>> 64d62d28489e373b8adbe81fe8b7b3f421f51fc2
 	 */
 	public void setAccs(ArrayList<ConcreteUserAccount> accs) {
 		this.accs = accs;
