@@ -40,6 +40,7 @@
 									<td><a>Text</a></td>
 									<td><a>Bewertung</a></td>
 									<td><a>Datum</a></td>
+									<td><a>Artikel</a></td>
 									<td><a>Akzeptieren/Löschen</a></td>
 								</tr>
 								<tr class="article" th:each="comment : ${Comments}"style="padding: 6px;">
@@ -47,6 +48,7 @@
 										<td><a th:text="${comment.text}">Kommentar</a></td>
 										<td><a th:text="${comment.rating}">5 Sterne</a></td>
 										<td><a th:text="${comment.formatedDate}">Zeitpunkt</a></td>
+										<td><a th:text="${comment.product}">Artikel</a></td>
 										<td>
 											<div class="btn-group" role="group">	
 												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/acceptComment/'+${comment.id}}" class="accept-button" style="padding: 3px 6px;">	

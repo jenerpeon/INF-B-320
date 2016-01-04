@@ -4,6 +4,7 @@ import static org.salespointframework.core.Currencies.EURO;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -23,6 +24,7 @@ import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.entities.ConcreteUserAccount;
@@ -450,6 +452,8 @@ public class Initialize implements DataInitializer {
 				Money.of(29.95, EURO), Money.of(23.96, EURO), "Schmuck",
 				"Wunderschöner Damenring aus 925er Silber der Marke Celesta. Der Damenring hat Zirkoniasteine und ist rosévergoldet.",
 				"https://eng.wikipedia.org/wiki/Fuzz", "SProdukt_368270033.jpg"));
+		prods.get(20).addComment(new Comment("Kommentar!", 4, new Date(), "Kooomentar!"),
+				concreteUserAccountManager.findAll().iterator().next());
 		productCatalog.save(prods);
 		concreteProductRepository.save(prods);
 		productSearch.addProds(productCatalog.findAll());
