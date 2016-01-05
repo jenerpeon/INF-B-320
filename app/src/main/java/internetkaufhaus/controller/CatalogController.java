@@ -175,6 +175,7 @@ public class CatalogController {
 	public String list50(@PathVariable("type") String category, @PathVariable("split") int givenSplit,
 			@PathVariable("pagenumber") int givenNumber, @PathVariable("representation") int representation,
 			@PathVariable("sorting") String sort, ModelMap model) {
+		
 		int split;
 		if (givenSplit == 0) {
 			split = 3;

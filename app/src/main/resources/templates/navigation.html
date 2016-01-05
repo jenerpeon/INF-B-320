@@ -179,7 +179,32 @@
 			</div>
 
 			<div id="header-row2">
-				<table id="header-row2-table">
+				<a th:href="@{'/'}" id="logo">Woods Super Dooper Shop</a>
+				<div id="searchfield">
+					<form id="search" method="post" th:action="@{'/sufu'}">
+					<table>
+											<tbody>
+												<tr id="searchcolumn">
+													<td><input type="search" id="search" name="search"
+														placeholder="Suchbegriff" th:if="${search != null}" th:value="${search}" /><input
+														type="search" id="search" name="search"
+														placeholder="Suchbegriff" th:if="${search == null}" /></td>
+													<td><input type="image"
+														src="/resources/Bilder/search.png" alt="Suche_Icon" /></td>
+												</tr>
+											</tbody>
+										</table>
+					</form>
+				</div>
+				<a th:href="@{'/cart'}"><img src="/resources/Bilder/warenkorb_icon_dark.png" height="50" alt="" /></a>
+				<ul id="cart-text-list">
+					<li><a th:text="${cartsize}+' Artikel'"></a></li>
+					<li><a th:text="'Summe: '+${cartprice}"></a></li>
+					<li><a th:href="@{'/cart'}">Zum Warenkorb</a></li>
+				</ul>
+			
+			
+				<!-- <table id="header-row2-table">
 					<tbody>
 						<tr>
 							<td align="left"><a th:href="@{'/'}" id="logo">Woods
@@ -222,7 +247,7 @@
 							</td>
 						</tr>
 					</tbody>
-				</table>
+				</table>-->
 			</div>
 		</header>
 	</div>

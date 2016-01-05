@@ -286,7 +286,7 @@ public class Initialize implements DataInitializer {
 				"Der Ratzeputz Schnaps wurde erstmals 1877 von C.W. Baland und Langenbartels hergestellt und stammt aus der Region um Celle. Sein Hauptbestandteil ist die Ingwerwurzel. Der Ingwer gilt seit Hunderten von Jahren als Heilpflanze und dies wurde inzwischen auch in Studien nachgewiesen. Der Schnaps Ratzeputz verfügt über einen frischen zitronigen Geschmack und wird am meisten eisgekühlt genossen. Der Ratzeputz schmeckt zwischendurch auf einer Wanderung oder abends in geselliger Runde.",
 				"https://eng.wikipedia.org/wiki/Fuzz", "Ratzeputz_0-7_Liter_11142.jpg"));
 		prods.add(new ConcreteProduct("Dos Mas, Zimtlikör mit Tequila, Spirituose - 0,7L 20% vol", Money.of(9.88, EURO),
-				Money.of(7.9, EURO), "Spirituosen",
+				Money.of(7.90, EURO), "Spirituosen",
 				"Der hellgolden leuchtende DOS MAS Tequila Zimtlikör ist eine exquisite Kreation der MBG International Premium Brands GmbH, die im Jahr 1993 gegründet wurde und ihren Sitz im nordrhein-westfälischen Paderborn hat. Der Zimtlikör basiert auf einem Tequila aus Mexiko, der den Saft blauer Agaven enthält, die im mexikanischen Bundesstaat Jalisco gedeihen. Der mexikanische Tequila wird in Paderborn so mit feinem Zimtaroma versetzt, dass der Alkoholanteil im Hintergrund bleibt und nur die Aroma-Noten aus Zimt und Kräutern den harmonisch ausgewogenen Geschmack bestimmen. Der nach Agave duftende Likör lässt sich auch pur angenehm trinken, verfügt aber nicht über zu viel Süße. Mit seiner Leichtigkeit bildet der DOS MAS Tequila Zimtlikör auch eine ideale Grundlage für besondere Cocktails, die über einen Zimt-Beigeschmack verfügen sollen. Auch als mit etwas Saft zubereiteter Longdrink lässt sich der DOS MAS Tequila Zimtlikör genießen.",
 				"https://eng.wikipedia.org/wiki/Fuzz", "4637.jpg"));
 		prods.add(new ConcreteProduct("Sauza Tequila Hornitos Anejo - 0,7L 38% vol", Money.of(27.88, EURO),
@@ -471,17 +471,15 @@ public class Initialize implements DataInitializer {
 		productSearch.addProds(productCatalog.findAll());
 
 		this.startPage.setBannerProducts(new ArrayList<ConcreteProduct>());
-		this.startPage.addBannerProduct(prods.get(20));
-		this.startPage.addBannerProduct(prods.get(21));
-		this.startPage.addBannerProduct(prods.get(22));
-		this.startPage.addBannerProduct(prods.get(23));
-		this.startPage.addBannerProduct(prods.get(24));
+		Random random = new Random();
+		for (int i=0; i < 5 ; i++) {
+			this.startPage.addBannerProduct(prods.get(random.nextInt(prods.size())));
+		}
+		
 		this.startPage.setSelectionProducts(new ArrayList<ConcreteProduct>());
-		this.startPage.addSelectionProduct(prods.get(25));
-		this.startPage.addSelectionProduct(prods.get(26));
-		this.startPage.addSelectionProduct(prods.get(27));
-		this.startPage.addSelectionProduct(prods.get(28));
-		this.startPage.addSelectionProduct(prods.get(29));
+		for (int i=0; i < 16 ; i++) {
+			this.startPage.addSelectionProduct(prods.get(random.nextInt(prods.size())));
+		}
 	}
 
 	/**
