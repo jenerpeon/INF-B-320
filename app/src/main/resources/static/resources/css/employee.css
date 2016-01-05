@@ -237,6 +237,7 @@
 
 .changeStartPageForm fieldset {
 	border: none;
+	padding: 10px 0;;
 }
 
 .changeStartPageForm ol {
@@ -299,6 +300,6 @@
 }
 
 #changeStartPage select {
-	width: 200px;
+	width: 900px;
 }
 

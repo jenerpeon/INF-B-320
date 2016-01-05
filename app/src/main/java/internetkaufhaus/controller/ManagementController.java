@@ -516,8 +516,6 @@ public class ManagementController {
 	@RequestMapping(value = "/employee/startpage/changedStartpage", method = RequestMethod.POST)
 	public String changeStartpage(@RequestParam("bannerArticles") List<ProductIdentifier> bannerArticles,
 			@RequestParam("selectionArticles") List<ProductIdentifier> selectionArticles) {
-		System.out.println(bannerArticles);
-		System.out.println(selectionArticles);
 		List<ConcreteProduct> bannerProducts = new ArrayList<ConcreteProduct>();
 		for (ProductIdentifier i : bannerArticles) {
 			bannerProducts.add(this.concreteProductRepository.findByProductIdentifier(i));
@@ -529,8 +527,6 @@ public class ManagementController {
 			selectionProducts.add(this.concreteProductRepository.findByProductIdentifier(i));
 		}
 		this.startPage.setSelectionProducts(selectionProducts);
-		System.out.println(bannerProducts);
-		System.out.println(selectionProducts);
 		return "redirect:/employee/startpage";
 	}
 
