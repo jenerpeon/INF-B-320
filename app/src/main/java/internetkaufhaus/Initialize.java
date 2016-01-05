@@ -29,6 +29,7 @@ import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.model.Search;
+import internetkaufhaus.model.StartPage;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
@@ -42,6 +43,8 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
  */
 @Component
 public class Initialize implements DataInitializer {
+
+	private final StartPage startPage;
 	private final ConcreteUserAccountRepository concreteUserAccountManager;
 	private final UserAccountManager userAccountManager;
 	private final Inventory<InventoryItem> inventory;
@@ -78,10 +81,12 @@ public class Initialize implements DataInitializer {
 	 *            singleton, passed by spring/salespoint
 	 */
 	@Autowired
-	public Initialize(ConcreteOrderRepository concreteOrderRepo, Catalog<ConcreteProduct> productCatalog,
-			UserAccountManager userAccountManager, ConcreteUserAccountRepository ConcreteUserAccountManager,
-			Inventory<InventoryItem> inventory, OrderManager<Order> orderManager, Search productSearch,
+	public Initialize(StartPage startPage, ConcreteOrderRepository concreteOrderRepo,
+			Catalog<ConcreteProduct> productCatalog, UserAccountManager userAccountManager,
+			ConcreteUserAccountRepository ConcreteUserAccountManager, Inventory<InventoryItem> inventory,
+			OrderManager<Order> orderManager, Search productSearch,
 			ConcreteProductRepository concreteProductRepository) {
+		this.startPage = startPage;
 		this.inventory = inventory;
 		this.concreteUserAccountManager = ConcreteUserAccountManager;
 		this.userAccountManager = userAccountManager;
@@ -457,6 +462,19 @@ public class Initialize implements DataInitializer {
 		productCatalog.save(prods);
 		concreteProductRepository.save(prods);
 		productSearch.addProds(productCatalog.findAll());
+
+		this.startPage.setBannerProducts(new ArrayList<ConcreteProduct>());
+		this.startPage.addBannerProduct(prods.get(20));
+		this.startPage.addBannerProduct(prods.get(21));
+		this.startPage.addBannerProduct(prods.get(22));
+		this.startPage.addBannerProduct(prods.get(23));
+		this.startPage.addBannerProduct(prods.get(24));
+		this.startPage.setSelectionProducts(new ArrayList<ConcreteProduct>());
+		this.startPage.addSelectionProduct(prods.get(25));
+		this.startPage.addSelectionProduct(prods.get(26));
+		this.startPage.addSelectionProduct(prods.get(27));
+		this.startPage.addSelectionProduct(prods.get(28));
+		this.startPage.addSelectionProduct(prods.get(29));
 	}
 
 	/**

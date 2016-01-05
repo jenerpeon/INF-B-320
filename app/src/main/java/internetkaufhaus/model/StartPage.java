@@ -72,4 +72,23 @@ public class StartPage {
 		this.selectionProducts = selectionProducts;
 	}
 
+	/**
+	 * Adds a banner product.
+	 *
+	 * @param product
+	 *            the product
+	 */
+	public void addBannerProduct(ConcreteProduct product) {
+		this.bannerProducts.add(product);
+	}
+
+	/**
+	 * Adds a selection product.
+	 *
+	 * @param product
+	 *            the product
+	 */
+	public void addSelectionProduct(ConcreteProduct product) {
+		this.selectionProducts.add(product);
+	}
 }
