@@ -104,6 +104,10 @@ public class ConcreteUserAccount implements Serializable {
 	public void addComment(Comment c) {
 		this.comments.add(c);
 	}
+	
+	public void removeComment(Comment c) {
+		this.comments.remove(c);
+	}
 
 	public void setId(Long id) {
 		this.id = id;

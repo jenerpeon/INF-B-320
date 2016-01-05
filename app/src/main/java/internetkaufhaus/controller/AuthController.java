@@ -154,7 +154,7 @@ public class AuthController extends SalespointSecurityConfiguration {
 			return "redirect:/#registration-modal";
 		}
 		this.accountingService.registerNew(registrationForm);
-		return "index";
+		return "redirect:/";
 	}
 
 	/**
@@ -170,6 +170,6 @@ public class AuthController extends SalespointSecurityConfiguration {
 	public String recruitUser(ModelMap modelmap, @RequestParam(value = "email") String recruit,
 			@LoggedIn Optional<UserAccount> userAccount) {
 		modelmap.addAttribute("info", this.accountingService.RecruitCustomer(userAccount, recruit));
-		return "/index";
+		return "redirect:/";
 	}
 }

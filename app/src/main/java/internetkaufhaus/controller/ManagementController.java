@@ -223,7 +223,7 @@ public class ManagementController {
 			for (Comment c : prods.getComments()) {
 				if (c.getId() == comId) {
 					prods.removeComment(c);
-					c.getProduct().updateAverageRating();
+					prods.updateAverageRating();
 					break_outer = true;
 					// prevents modification while interation
 					break;

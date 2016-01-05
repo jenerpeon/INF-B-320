@@ -33,30 +33,28 @@
 			
 			<div id="workframe" >
 			
-						<table >
+						<table class="table" style="font-size: 12pt;">
 							<tbody>
 								<tr>
-									<td hidden="true"></td>
 									<td><a>Text</a></td>
 									<td><a>Bewertung</a></td>
 									<td><a>Datum</a></td>
 									<td><a>Artikel</a></td>
 									<td><a>Akzeptieren/Löschen</a></td>
 								</tr>
-								<tr class="article" th:each="comment : ${Comments}"style="padding: 6px;">
-										<td hidden="true"> <input type="hidden" name="comment" th:value="${comment}"/></td>
-										<td><a th:text="${comment.text}">Kommentar</a></td>
-										<td><a th:text="${comment.rating}">5 Sterne</a></td>
-										<td><a th:text="${comment.formatedDate}">Zeitpunkt</a></td>
-										<td><a th:text="${comment.product}">Artikel</a></td>
-										<td>
-											<div class="btn-group" role="group">	
-												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/acceptComment/'+${comment.id}}" class="accept-button" style="padding: 3px 6px;">	
-												</button>
-												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/deleteComment/'+${comment.id}}" class="cancel-button" style="padding: 3px 6px;">
-												</button>
-											</div>
-										</td>
+								<tr class="comment" th:each="comment : ${Comments}"style="padding: 6px;">
+									<td class="text"><a th:text="${comment.text}">Kommentar</a></td>
+									<td class="rating"><a th:text="${comment.rating}">5 Sterne</a></td>
+									<td class="date"><a th:text="${comment.formatedDate}">Zeitpunkt</a></td>
+									<td class="product"><a th:text="${comment.product}">Artikel</a></td>
+									<td class="buttons">
+										<div class="btn-group" role="group">	
+											<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/acceptComment/'+${comment.id}}" class="accept-button" style="padding: 3px 6px;">	
+											</button>
+											<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/deleteComment/'+${comment.id}}" class="cancel-button" style="padding: 3px 6px;">
+											</button>
+										</div>
+									</td>
 								</tr>
 							</tbody>
 						</table>
