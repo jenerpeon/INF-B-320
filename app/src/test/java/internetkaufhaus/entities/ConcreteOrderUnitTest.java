@@ -195,97 +195,97 @@ public class ConcreteOrderUnitTest {
 		corder.setReturned(true);
 		assertTrue("getReturned defekt", corder.getReturned()==true);
 	}
-//	@Test
-//	public void testsetBillingFirstName()
-//	{
-//		corder.setBillingFirstName("Hans");
-//		assertEquals("Hans", corder.getBillingFirstName());
-//	}
-//	@Test
-//	public void testsetBillingLastName()
-//	{
-//		corder.setBillingLastName("Wurst");
-//		assertEquals("Wurst", corder.getBillingLastName());
-//	}
-//	@Test
-//	public void testsetBillingStreet()
-//	{
-//		corder.setBillingStreet("Straße");
-//		assertEquals("Straße", corder.getBillingStreet());
-//	}
-//	@Test
-//	public void testsetBillingHouseNumber()
-//	{
-//		corder.setBillingHouseNumber("5");
-//		assertEquals("5", corder.getBillingHouseNumber());
-//	}
-//	@Test
-//	public void testsetBillingAddressLine2()
-//	{
-//		corder.setBillingAddressLine2("Zeile2");
-//		assertEquals("Zeile2", corder.getBillingAddressLine2());
-//	}
-//	@Test
-//	public void testsetBillingZipCode()
-//	{
-//		corder.setBillingZipCode("12345");
-//		assertEquals("12345", corder.getBillingZipCode());
-//	}
-//	@Test
-//	public void testsetBillingTown()
-//	{
-//		corder.setBillingTown("Stadt");
-//		assertEquals("Stadt", corder.getBillingTown());
-//	}
-//	@Test
-//	public void testsetShippingFirstName()
-//	{
-//		corder.setShippingFirstName("Hans");
-//		assertEquals("Hans", corder.getShippingFirstName());
-//	}
-//	@Test
-//	public void testsetShippingLastName()
-//	{
-//		corder.setShippingLastName("Wurst");
-//		assertEquals("Wurst", corder.getShippingLastName());
-//	}
-//	@Test
-//	public void testsetShippingStreet()
-//	{
-//		corder.setShippingStreet("Straße");
-//		assertEquals("Straße", corder.getShippingStreet());
-//	}
-//	@Test
-//	public void testsetShippingHouseNumber()
-//	{
-//		corder.setShippingHouseNumber("5");
-//		assertEquals("5", corder.getShippingHouseNumber());
-//	}
-//	@Test
-//	public void testsetShippingAddressLine2()
-//	{
-//		corder.setShippingAddressLine2("Zeile2");
-//		assertEquals("Zeile2", corder.getShippingAddressLine2());
-//	}
-//	@Test
-//	public void testsetShippingZipCode()
-//	{
-//		corder.setShippingZipCode("12345");
-//		assertEquals("12345", corder.getShippingZipCode());
-//	}
-//	@Test
-//	public void testsetShippingTown()
-//	{
-//		corder.setShippingTown("Stadt");
-//		assertEquals("Stadt", corder.getShippingTown());
-//	}
-//	@Test
-//	public void testSetId()
-//	{
-//		corder.setId(Long.valueOf(42));
-//		assertTrue("setId defekt", corder.getId().longValue()==42);
-//		
-//	}
+	@Test
+	public void testsetBillingFirstName()
+	{
+		corder.setBillingFirstName("Hans");
+		assertEquals("Hans", corder.getBillingFirstName());
+	}
+	@Test
+	public void testsetBillingLastName()
+	{
+		corder.setBillingLastName("Wurst");
+		assertEquals("Wurst", corder.getBillingLastName());
+	}
+	@Test
+	public void testsetBillingStreet()
+	{
+		corder.setBillingStreet("Straße");
+		assertEquals("Straße", corder.getBillingStreet());
+	}
+	@Test
+	public void testsetBillingHouseNumber()
+	{
+		corder.setBillingHouseNumber("5");
+		assertEquals("5", corder.getBillingHouseNumber());
+	}
+	@Test
+	public void testsetBillingAddressLine2()
+	{
+		corder.setBillingAddressLine2("Zeile2");
+		assertEquals("Zeile2", corder.getBillingAddressLine2());
+	}
+	@Test
+	public void testsetBillingZipCode()
+	{
+		corder.setBillingZipCode("12345");
+		assertEquals("12345", corder.getBillingZipCode());
+	}
+	@Test
+	public void testsetBillingTown()
+	{
+		corder.setBillingTown("Stadt");
+		assertEquals("Stadt", corder.getBillingTown());
+	}
+	@Test
+	public void testsetShippingFirstName()
+	{
+		corder.setShippingFirstName("Hans");
+		assertEquals("Hans", corder.getShippingFirstName());
+	}
+	@Test
+	public void testsetShippingLastName()
+	{
+		corder.setShippingLastName("Wurst");
+		assertEquals("Wurst", corder.getShippingLastName());
+	}
+	@Test
+	public void testsetShippingStreet()
+	{
+		corder.setShippingStreet("Straße");
+		assertEquals("Straße", corder.getShippingStreet());
+	}
+	@Test
+	public void testsetShippingHouseNumber()
+	{
+		corder.setShippingHouseNumber("5");
+		assertEquals("5", corder.getShippingHouseNumber());
+	}
+	@Test
+	public void testsetShippingAddressLine2()
+	{
+		corder.setShippingAddressLine2("Zeile2");
+		assertEquals("Zeile2", corder.getShippingAddressLine2());
+	}
+	@Test
+	public void testsetShippingZipCode()
+	{
+		corder.setShippingZipCode("12345");
+		assertEquals("12345", corder.getShippingZipCode());
+	}
+	@Test
+	public void testsetShippingTown()
+	{
+		corder.setShippingTown("Stadt");
+		assertEquals("Stadt", corder.getShippingTown());
+	}
+	@Test
+	public void testSetId()
+	{
+		corder.setId(Long.valueOf(42));
+		assertTrue("setId defekt", corder.getId().longValue()==42);
+		
+	}
 	@Test
 	public void testGetId()
 	{
