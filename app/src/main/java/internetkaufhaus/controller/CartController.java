@@ -39,8 +39,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.forms.PaymentForm;
+import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.model.ReturnManager;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
+import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 import internetkaufhaus.services.ConcreteMailService;
 
 // TODO: Auto-generated Javadoc
@@ -64,7 +66,13 @@ class CartController {
 	
 	/** The concrete order repo. */
 	private final ConcreteOrderRepository concreteOrderRepo;
-
+    
+	private final ConcreteUserAccountRepository concreteUserRepo;
+	
+	private final Creditmanager creditmanager;
+	
+    private Money storeCredit;
+    
 	/**
 	 * This is the constructor. It's neither used nor does it contain any
 	 * functionality other than storing function arguments as class attribute,
@@ -76,11 +84,13 @@ class CartController {
 	 */
 	@Autowired
 	public CartController(ConcreteOrderRepository concreteOrderRepo, OrderManager<Order> orderManager,
-			ConcreteMailService sender) {
+			ConcreteMailService sender, ConcreteUserAccountRepository concreteUserRepo, Creditmanager creditmanager) {
 		Assert.notNull(orderManager, "OrderManager must not be null!");
 		this.orderManager = orderManager;
 		this.concreteOrderRepo = concreteOrderRepo;
 		this.sender = sender;
+		this.concreteUserRepo = concreteUserRepo;
+		this.creditmanager = creditmanager;
 	}
 
 	/**
@@ -112,7 +122,38 @@ class CartController {
 	 * @return the string
 	 */
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
-	public String cartRedirect() {
+	public String cartRedirect(@LoggedIn Optional<UserAccount> userAccount, ModelMap model,@ModelAttribute Cart cart) {
+        
+        creditmanager.updateCreditpointsByUser(concreteUserRepo.findByUserAccount(userAccount.get()));
+		
+		int credit=0;
+		try{
+		 credit=(concreteUserRepo.findByUserAccount(userAccount.get()).getCredits());
+		
+		}
+		catch (Exception e){
+			System.out.println(e.getMessage());
+		}
+	
+		
+		
+		Money allcredits= Money.of(credit, EURO);
+		Money price=cart.getPrice();
+		Money maxreduce=price.multiply(0.2);
+		
+		if(maxreduce.isLessThanOrEqualTo(allcredits)){
+			price=price.subtract(maxreduce);
+			storeCredit=maxreduce;
+		}
+		else{
+			price=price.subtract(allcredits);
+			storeCredit=allcredits;
+		}	
+		
+		model.addAttribute("credits", storeCredit);
+		model.addAttribute("points", price);
+        
+        
 		return "cart";
 	}
 
@@ -216,11 +257,16 @@ class CartController {
 			redir.addFlashAttribute("message1", result.getAllErrors());
 			return "redirect:/orderdata/1";
 		}
-		return userAccount.map(account -> {
+        
+		ConcreteProduct rabatt = new ConcreteProduct("Rabatt", storeCredit.negate(), Money.of(0, EURO), "Rabatt", "", "", "");
+        
+        return userAccount.map(account -> {
 			org.javamoney.moneta.Money dailyWithdrawalLimit = Money.of(1000000000, EURO);
 			org.javamoney.moneta.Money creditLimit = Money.of(1000000000, EURO);
 			LocalDateTime validFrom = LocalDateTime.MIN;
-
+            
+            cart.addOrUpdateItem(rabatt, Quantity.of(1));
+            
 			ConcreteOrder order = new ConcreteOrder(account, Cash.CASH);
 			Order o = order.getOrder();
 
