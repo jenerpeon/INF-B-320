@@ -1,14 +1,23 @@
 package internetkaufhaus.entities;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.salespointframework.core.Currencies.EURO;
 
+import java.util.Date;
 import java.util.Random;
 
 import org.javamoney.moneta.Money;
 import org.junit.Before;
 import org.junit.Test;
+import org.salespointframework.useraccount.UserAccount;
 
 public class ConcreteProductTest {
 
@@ -64,7 +73,7 @@ public class ConcreteProductTest {
 	 * !model.getComments().contains(comment2)); }
 	 */
 	@Test
-	public void testImagefile() {
+	public void testgetImagefile() {
 		String imagefile = "";
 		Random random = new Random();
 		String availableChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-_:;/()&?=\"!+*#äöüß$ "; // TODO:
@@ -175,5 +184,127 @@ public class ConcreteProductTest {
 	public void testSetBuyingPrice() {
 		model.setBuyingPrice(Money.of(200.35, EURO));
 		assertEquals("buyingPrice getter/setter don't seem to work.", model.getBuyingPrice(), Money.of(200.35, EURO));
+	}
+	@Test
+	public void testGetComments()
+	{
+		Comment c = new Comment("Text",5,new Date(),"");
+		ConcreteUserAccount acc = mock(ConcreteUserAccount.class);
+		model.addComment(c, acc);
+		assertTrue("GetComments defekt", model.getComments().iterator().next().equals(c));
+	}
+	@Test
+	public void testAddComment()
+	{
+		Comment c = new Comment("Text", 5, new Date(), "");
+		ConcreteUserAccount acc = mock(ConcreteUserAccount.class);
+		model.addComment(c, acc);
+		assertTrue("AddComment defekt", model.getComments().iterator().next().equals(c));
+	}
+	@Test
+	public void testIsCommentator()
+	{
+		Comment c = new Comment("Text", 5, new Date(), "");
+		ConcreteUserAccount acc1 = mock(ConcreteUserAccount.class);
+		ConcreteUserAccount acc2 = mock(ConcreteUserAccount.class);
+		model.addComment(c, acc1);
+		assertTrue("IsCommentator defekt", model.isCommentator(acc1));
+		assertFalse("IsCommentator defekt", model.isCommentator(acc2));
+	}
+	@Test
+	public void testGetRating()
+	{
+		assertTrue("GetRating defekt", model.getRating()==null);
+		Comment a = new Comment("Text", 5, new Date(), "");
+		a.setAccepted(true);
+		ConcreteUserAccount acc1 = mock(ConcreteUserAccount.class);
+		model.addComment(a, acc1);
+		assertTrue("GetRating defekt", model.getRating().iterator().hasNext()==true);
+	}
+	@Test
+	public void testupdateAverageRating()
+	{
+		Comment a = new Comment("Text", 5, new Date(), "");
+		Comment b = new Comment("Text", 3, new Date(), "");
+		a.setAccepted(true);
+		b.setAccepted(true);
+		ConcreteUserAccount acc1 = mock(ConcreteUserAccount.class);
+		ConcreteUserAccount acc2 = mock(ConcreteUserAccount.class);
+		model.addComment(a, acc1);
+		model.addComment(b, acc2);
+		model.updateAverageRating();
+		assertTrue("updateAverageRating defekt", model.getAverageRating()==4);
+	}
+	@Test
+	public void testgetAverageRating()
+	{
+		Comment a = new Comment("Text", 5, new Date(), "");
+		Comment b = new Comment("Text", 3, new Date(), "");
+		a.setAccepted(true);
+		b.setAccepted(true);
+		ConcreteUserAccount acc1 = mock(ConcreteUserAccount.class);
+		ConcreteUserAccount acc2 = mock(ConcreteUserAccount.class);
+		model.addComment(a, acc1);
+		model.addComment(b, acc2);
+		model.updateAverageRating();
+		assertTrue("getAverageRating defekt", model.getAverageRating()==4);
+	}
+	@Test
+	public void testremoveComment()
+	{
+		Comment a = new Comment("Text", 5, new Date(), "");
+		ConcreteUserAccount acc = mock(ConcreteUserAccount.class);
+		model.addComment(a, acc);
+		model.removeComment(a);
+		assertTrue("removeComment defekt", model.getComments().iterator().hasNext()==false);
+	}
+	@Test
+	public void testgetAcceptedComments()
+	{
+		Comment a = new Comment("Text", 5, new Date(), "");
+		Comment b = new Comment("Text", 3, new Date(), "");
+		a.setAccepted(true);
+		b.setAccepted(true);
+		ConcreteUserAccount acc1 = mock(ConcreteUserAccount.class);
+		ConcreteUserAccount acc2 = mock(ConcreteUserAccount.class);
+		model.addComment(a, acc1);
+		model.addComment(b, acc2);
+		assertTrue("getAcceptedComments defekt", model.getAcceptedComments().size()==2);
+		assertTrue("getAcceptedComments defekt", model.getAcceptedComments().contains(a));
+		assertTrue("getAcceptedComments defekt", model.getAcceptedComments().contains(b));
+	}
+	@Test
+	public void testgetUnacceptedComments()
+	{
+		Comment a = new Comment("Text", 5, new Date(), "");
+		Comment b = new Comment("Text", 3, new Date(), "");
+		ConcreteUserAccount acc1 = mock(ConcreteUserAccount.class);
+		ConcreteUserAccount acc2 = mock(ConcreteUserAccount.class);
+		model.addComment(a, acc1);
+		model.addComment(b, acc2);
+		assertTrue("getUnacceptedComments defekt", model.getUnacceptedComments().size()==2);
+		assertTrue("getUnacceptedComments defekt", model.getUnacceptedComments().contains(a));
+		assertTrue("getUnacceptedComments defekt", model.getUnacceptedComments().contains(b));
+	}
+	@Test
+	public void testgetBuyingPrice()
+	{
+		assertTrue("getBuyingPrice defekt", model.getBuyingPrice().isEqualTo(Money.of(1.49, EURO)));
+	}
+	@Test
+	public void testgetPriceFloat()
+	{
+		assertTrue("getPriceFloat defekt ", model.getPriceFloat().equals("1,99€"));
+	}
+	@Test
+	public void testincreaseSold()
+	{
+		model.increaseSold(10);
+		assertTrue("increaseSold defekt", model.getSold()==10);
+	}
+	@Test
+	public void testgetSold()
+	{
+		assertTrue("getSold defekt", model.getSold()==0);
 	}
 }
