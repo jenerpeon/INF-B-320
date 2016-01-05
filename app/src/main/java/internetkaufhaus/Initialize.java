@@ -34,6 +34,7 @@ import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
+// TODO: Auto-generated Javadoc
 /**
  * This class initializes default data which is used to test the functionality
  * of the whole project.
@@ -44,41 +45,47 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 @Component
 public class Initialize implements DataInitializer {
 
+	/** The start page. */
 	private final StartPage startPage;
+	
+	/** The concrete user account manager. */
 	private final ConcreteUserAccountRepository concreteUserAccountManager;
+	
+	/** The user account manager. */
 	private final UserAccountManager userAccountManager;
+	
+	/** The inventory. */
 	private final Inventory<InventoryItem> inventory;
+	
+	/** The product catalog. */
 	private final Catalog<ConcreteProduct> productCatalog;
+	
+	/** The order manager. */
 	private final OrderManager<Order> orderManager;
+	
+	/** The concrete product repository. */
 	private final ConcreteProductRepository concreteProductRepository;
+	
+	/** The concrete order repo. */
 	private final ConcreteOrderRepository concreteOrderRepo;
+	
+	/** The product search. */
 	private final Search productSearch;
 
 	/**
 	 * This is the constructor. It's neither used nor does it contain any
 	 * functionality other than storing function arguments as class attribute,
 	 * what do you expect me to write here?
-	 * 
-	 * @param concreteOrderRepo
-	 *            singleton, passed by spring/salespoint
-	 * @param productCatalog
-	 *            singleton, passed by spring/salespoint
-	 * @param userAccountManager
-	 *            singleton, passed by spring/salespoint
-	 * @param ConcreteUserAccountManager
-	 *            singleton, passed by spring/salespoint
-	 * @param inventory
-	 *            singleton, passed by spring/salespoint
-	 * @param orderManager
-	 *            singleton, passed by spring/salespoint
-	 * @param productSearch
-	 *            singleton, passed by spring/salespoint
-	 * @param accountAdministration
-	 *            singleton, passed by spring/salespoint
-	 * @param sender
-	 *            singleton, passed by spring/salespoint
-	 * @param concreteProductRepository
-	 *            singleton, passed by spring/salespoint
+	 *
+	 * @param startPage the start page
+	 * @param concreteOrderRepo            singleton, passed by spring/salespoint
+	 * @param productCatalog            singleton, passed by spring/salespoint
+	 * @param userAccountManager            singleton, passed by spring/salespoint
+	 * @param ConcreteUserAccountManager            singleton, passed by spring/salespoint
+	 * @param inventory            singleton, passed by spring/salespoint
+	 * @param orderManager            singleton, passed by spring/salespoint
+	 * @param productSearch            singleton, passed by spring/salespoint
+	 * @param concreteProductRepository            singleton, passed by spring/salespoint
 	 */
 	@Autowired
 	public Initialize(StartPage startPage, ConcreteOrderRepository concreteOrderRepo,
@@ -117,9 +124,9 @@ public class Initialize implements DataInitializer {
 
 	/**
 	 * This function initializes the catalog. Who would've thought!
-	 * 
-	 * @param productCatalog
-	 * @param productSearch
+	 *
+	 * @param productCatalog the product catalog
+	 * @param productSearch the product search
 	 */
 	private void initializeCatalog(Catalog<ConcreteProduct> productCatalog, Search productSearch) {
 		// prevents the Initializer to run in case of data persistance
@@ -479,9 +486,9 @@ public class Initialize implements DataInitializer {
 
 	/**
 	 * This function initializes the inventory. Who would've thought!
-	 * 
-	 * @param productCatalog
-	 * @param inventory
+	 *
+	 * @param productCatalog the product catalog
+	 * @param inventory the inventory
 	 */
 	private void initializeInventory(Catalog<ConcreteProduct> productCatalog, Inventory<InventoryItem> inventory) {
 		// prevents the Initializer to run in case of data persistance
@@ -493,9 +500,9 @@ public class Initialize implements DataInitializer {
 
 	/**
 	 * This function initializes the users. Who would've thought!
-	 * 
-	 * @param userAccountManager
-	 * @param ConcreteUserAccountManager
+	 *
+	 * @param userAccountManager the user account manager
+	 * @param ConcreteUserAccountManager the concrete user account manager
 	 */
 	private void initializeUsers(UserAccountManager userAccountManager,
 			ConcreteUserAccountRepository ConcreteUserAccountManager) {
@@ -528,11 +535,11 @@ public class Initialize implements DataInitializer {
 
 	/**
 	 * This function initializes the orders. Who would've thought!
-	 * 
-	 * @param concreteOrderRepo
-	 * @param prods
-	 * @param orderManager
-	 * @param ConcreteUserAccountManager
+	 *
+	 * @param concreteOrderRepo the concrete order repo
+	 * @param prods the prods
+	 * @param orderManager the order manager
+	 * @param ConcreteUserAccountManager the concrete user account manager
 	 */
 	private void initializeOrders(ConcreteOrderRepository concreteOrderRepo, ConcreteProductRepository prods,
 			OrderManager<Order> orderManager, ConcreteUserAccountRepository ConcreteUserAccountManager) {

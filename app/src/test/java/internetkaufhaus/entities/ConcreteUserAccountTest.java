@@ -20,17 +20,28 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import internetkaufhaus.Application;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ConcreteUserAccountTest.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 
 public class ConcreteUserAccountTest {
 
+	/** The model1. */
 	private ConcreteUserAccount model1;
+	
+	/** The model2. */
 	private ConcreteUserAccount model2;
 
+	/** The u. */
 	@Autowired
 	UserAccountManager u;
 
+	/**
+	 * Inits the.
+	 */
 	@Before
 	public void init() {
 		List<UserAccount> recruits = new ArrayList<UserAccount>();
@@ -42,6 +53,9 @@ public class ConcreteUserAccountTest {
 
 	}
 
+	/**
+	 * Test getter setter.
+	 */
 	@Test
 	public void testGetterSetter() {
 		Comment com = new Comment("Das hier ist ein Kommentar", 4, new Date(), "12");

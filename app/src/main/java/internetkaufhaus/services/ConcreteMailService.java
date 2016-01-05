@@ -7,6 +7,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * This is the ConcreteMailService class. It is responsible for sending mails via
  * a connected mail provider.
@@ -17,8 +18,14 @@ import org.springframework.stereotype.Service;
 @Service("mailService")
 public class ConcreteMailService {
 
+	/** The mail sender. */
 	private final MailSender mailSender;
 
+	/**
+	 * Instantiates a new concrete mail service.
+	 *
+	 * @param mailSender the mail sender
+	 */
 	@Autowired
 	public ConcreteMailService(MailSender mailSender) {
 		this.mailSender = mailSender;
@@ -27,22 +34,14 @@ public class ConcreteMailService {
 	/**
 	 * The sendMail method will send a mail with the given mail attributes like
 	 * the destination address or content.
-	 * 
-	 * @param sendTo
-	 *            email destination address
-	 * @param text
-	 *            email text content
-	 * @param from
-	 *            sender name
-	 * @param subject
-	 *            email subject
-	 * 
-	 * @return <tt>true</tt> if mail sending was successful
-	 * 
-	 * @exception MailException
-	 * 
-	 * @author heiner
 	 *
+	 * @author heiner
+	 * @param sendTo            email destination address
+	 * @param text            email text content
+	 * @param from            sender name
+	 * @param subject            email subject
+	 * @return <tt>true</tt> if mail sending was successful
+	 * @exception MailException the mail exception
 	 */
 
 	public boolean sendMail(String sendTo, String text, String from, String subject) {
@@ -64,6 +63,11 @@ public class ConcreteMailService {
 
 	}
 
+	/**
+	 * Gets the mail sender.
+	 *
+	 * @return the mail sender
+	 */
 	public MailSender getMailSender() {
 		return this.mailSender;
 	}
