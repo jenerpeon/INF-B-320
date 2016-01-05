@@ -66,19 +66,20 @@ public class ShopController {
 		 */
 		List<ConcreteProduct> top5rated = concreteCatalog
 				.findAll(
-						new PageRequest(0, 10,
+						new PageRequest(0, 5,
 								new Sort(new Sort.Order(Sort.Direction.DESC, "averageRating", Sort.NullHandling.NATIVE),
 										new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE))))
 				.getContent();
 		model.addAttribute("top5rated", top5rated);
 		List<ConcreteProduct> top5sold = concreteCatalog
 				.findAll(
-						new PageRequest(0, 10,
+						new PageRequest(0, 5,
 								new Sort(
 										new Sort.Order(Sort.Direction.DESC, "amountProductsSold",
 												Sort.NullHandling.NATIVE),
 										new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE))))
 				.getContent();
+		model.addAttribute("top5sold", top5sold);
 		return "index";
 	}
 

@@ -71,6 +71,37 @@
 					  	</a>
 					</div>
 				</div>
+				<h2>Die Top 5 der bestbewertetsten Produkte</h2>
+				<div id="top-rated" class="top5">
+					
+					<div class="img-thumbnail" th:each="topRatedProduct : ${top5rated}">
+						<img th:src="@{'/resources/Bilder/Produkte/' + ${topRatedProduct.imagefile}}" alt="" class="center-block">
+						<div id=thumbnail-text>
+							<h3 class="thumbnail-category" th:text="${topRatedProduct.category}"></h3>
+							<h3 class="thumbnail-name" th:text="${topRatedProduct.name}"></h3>
+							<div class="rating">
+									<span class="filled" th:each="i : ${topRatedProduct.rating}">☆</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<h2>Die Top 5 der meistverkauften Produkte</h2>
+				<div id="top-sold" class="top5">
+					
+					<div class="img-thumbnail" th:each="topSoldProduct : ${top5sold}">
+						<img th:src="@{'/resources/Bilder/Produkte/' + ${topSoldProduct.imagefile}}" alt="" class="center-block">
+						<div id=thumbnail-text>
+							<h3 class="thumbnail-category" th:text="${topSoldProduct.category}"></h3>
+							<h3 class="thumbnail-name" th:text="${topSoldProduct.name}"></h3>
+							<div class="rating">
+									<span class="filled" th:each="i : ${topSoldProduct.rating}">☆</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<h2>Für Sie aktuell im Angebot</h2>
 				<div id="selection-container">
 					<div class="img-thumbnail">
 						<div class="caption">
