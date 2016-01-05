@@ -1,6 +1,7 @@
 package internetkaufhaus.controller;
 
 import static org.salespointframework.core.Currencies.EURO;
+import static org.salespointframework.order.OrderStatus.OPEN;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -56,6 +57,7 @@ import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.services.ConcreteMailService;
 import internetkaufhaus.services.NewsletterService;
+import internetkaufhaus.services.ProductManagementService;
 
 /**
  * This is the management controller. It controls the management. Or does it
@@ -69,6 +71,9 @@ import internetkaufhaus.services.NewsletterService;
 @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')")
 @SessionAttributes("cart")
 public class ManagementController {
+
+	@Autowired
+	private ProductManagementService productManagementService;
 
 	private static final Quantity NONE = Quantity.of(0);
 	private final Catalog<ConcreteProduct> catalog;
@@ -262,6 +267,7 @@ public class ManagementController {
 		model.addAttribute("categories", prodSearch.getCategories());
 		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("price", prod.getPrice().getNumber());
+		model.addAttribute("buyingPrice", prod.getBuyingPrice());
 		return "changecatalogchangeitem";
 	}
 
@@ -284,6 +290,7 @@ public class ManagementController {
 		if (result.hasErrors()) {
 			return "redirect:/employee/changecatalog/editArticle/";
 		}
+		System.out.println(editForm.getCategory().toString());
 
 		if (!img.isEmpty()) {
 			try {
@@ -299,18 +306,22 @@ public class ManagementController {
 			System.out.println("another error (file empty) !!!");
 		}
 
-		ConcreteProduct prodId = editForm.getProdId();
-		prodId.addCategory(editForm.getCategory());
-		prodId.setName(editForm.getName());
-		prodId.setPrice(Money.of(editForm.getPrice(), EURO));
-		prodId.setBuyingPrice(Money.of(editForm.getBuyingPrice(), EURO));
-		prodId.setDescription(editForm.getDescription());
+		ConcreteProduct prod = editForm.getProdId();
+
+		prod.setCategory(editForm.getCategory());
+		prod.addCategory(editForm.getCategory());
+		prod.setName(editForm.getName());
+		prod.setPrice(Money.of(editForm.getPrice(), EURO));
+		prod.setBuyingPrice(Money.of(editForm.getBuyingPrice(), EURO));
+		prod.setDescription(editForm.getDescription());
 
 		if (!(img.getOriginalFilename().isEmpty())) {
-			prodId.setImagefile(img.getOriginalFilename());
+			prod.setImagefile(img.getOriginalFilename());
 		}
-		catalog.save(prodId);
-		concreteProductRepository.save(prodId);
+
+		catalog.save(prod);
+		concreteProductRepository.save(prod);
+
 		return "redirect:/employee/changecatalog";
 	}
 
@@ -412,6 +423,7 @@ public class ManagementController {
 		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("quantity", quantity);
 		model.addAttribute("price", prod.getPrice().getNumber());
+		model.addAttribute("buyingPrice", prod.getBuyingPrice());
 		return "changecatalogorderitem";
 	}
 
@@ -620,9 +632,24 @@ public class ManagementController {
 			return "index";
 		}
 
-		Iterable<OrderLine> orderLines = o.getOrder().getOrderLines();
+		if (concreteOrderRepo.findById(orderId).getStatus() == OPEN) {
+			Map<OrderLine, Double> orderLines = new HashMap<OrderLine, Double>();
+			for (OrderLine i : o.getOrder().getOrderLines()) {
+				orderLines.put(i, this.concreteProductRepository.findByProductIdentifier(i.getProductIdentifier())
+						.getBuyingPrice().multiply(i.getQuantity().getAmount()).getNumberStripped().doubleValue());
+			}
+			model.addAttribute("orderLines", orderLines);
+			model.addAttribute("totalPrice",
+					this.productManagementService.getBuyingPrice(concreteOrderRepo.findById(orderId)));
+		} else {
+			Map<OrderLine, Double> orderLines = new HashMap<OrderLine, Double>();
+			for (OrderLine i : o.getOrder().getOrderLines()) {
+				orderLines.put(i, i.getPrice().getNumberStripped().doubleValue());
+			}
+			model.addAttribute("orderLines", orderLines);
+			model.addAttribute("totalPrice", concreteOrderRepo.findById(orderId).getOrder().getTotalPrice());
+		}
 		model.addAttribute("order", o);
-		model.addAttribute("orderLines", orderLines);
 		return "orderdetail";
 	}
 

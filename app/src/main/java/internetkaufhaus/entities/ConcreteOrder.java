@@ -1,5 +1,7 @@
 package internetkaufhaus.entities;
 
+import static org.salespointframework.core.Currencies.EURO;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -12,11 +14,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.collections.IteratorUtils;
+import org.javamoney.moneta.Money;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.useraccount.UserAccount;
+
+import internetkaufhaus.repositories.ConcreteProductRepository;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -123,7 +128,6 @@ public class ConcreteOrder implements Serializable {
 		this.order = new Order(account, cash);
 		this.status = this.order.getOrderStatus();
 		this.user = account;
-
 	}
 
 	/**

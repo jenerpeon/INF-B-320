@@ -10,7 +10,8 @@
 <link href="/resources/css/catalog.css" rel="stylesheet" type=text/css>
 <script src="/resources/script/jquery.min.js" type="text/javascript"></script>
 <script src="/resources/script/pagenumber.js" type="text/javascript"></script>
-<script src="/resources/script/jquery.dotdotdot.min.js" type="text/javascript"></script>
+<script src="/resources/script/jquery.dotdotdot.min.js"
+	type="text/javascript"></script>
 <script th:inline="javascript">
   $(document).ready(function(){
   		$('.description').dotdotdot({
@@ -52,9 +53,10 @@
 			<div id="topLine">
 				<div id="path">
 					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
-					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
-					<a th:if="${category != null}" th:text="@{${category}}">Home &gt;</a>
-					<a th:if="${category == null}" th:text="@{'Suche'+ ' > ' +${search}}">Home &gt;</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" /> <a
+						th:if="${category != null}" th:text="@{${category}}">Home &gt;</a>
+					<a th:if="${category == null}"
+						th:text="@{'Suche'+ ' > ' +${search}}">Home &gt;</a>
 				</div>
 			</div>
 
@@ -66,11 +68,11 @@
 					</a>
 				</div> -->
 				<div id="catalogview" th:switch="${representation}">
-					<hr/>
+					<hr />
 					<div id="pageControl">
 						<div id="articlesPerPage">
 							<form method="post" th:if="${split != null}"
-							th:action="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number}+'/changedSetting'}">
+								th:action="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number}+'/changedSetting'}">
 								<fieldset>
 									<label for="total">Artikel pro Seite:</label> <select
 										onchange="this.form.submit()" name="total" id="total"
@@ -81,7 +83,8 @@
 								</fieldset>
 								<fieldset>
 									<select onchange="this.form.submit()" name="sort" id="sort">
-										<option selected="true" style="display:none;">Sortieren nach</option>
+										<option selected="true" style="display: none;">Sortieren
+											nach</option>
 										<option value="popularity">Beliebtheit</option>
 										<option value="rating">Bewertung</option>
 										<option value="name,asc">Name, aufsteigend</option>
@@ -92,86 +95,94 @@
 								</fieldset>
 							</form>
 						</div>
-						<div id="articleRepresentation">
-							<a th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+'1/'+${split}+'/'+${number}}">
+						<div id="articleRepresentation" th:if="${split != null}">
+							<a
+								th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+'1/'+${split}+'/'+${number}}">
 								<img src="/resources/Bilder/details.png" />
-							</a>
-							<a th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+'2/'+${split}+'/'+${number}}">
+							</a> <a
+								th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+'2/'+${split}+'/'+${number}}">
 								<img src="/resources/Bilder/thumbnails.png" />
 							</a>
 						</div>
-						<div id="catalogSite">
+						<div id="catalogSite" th:if="${split != null}">
 							<ul>
-								<li><a th:text="@{'Artikel '+${split * (number-1) + 1}+' bis '+${split * number}}+' von '+${maximum}"></a></li>
-								<li>
-									<a id="backward" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number-1}}">
+								<li><a
+									th:text="@{'Artikel '+${split * (number-1) + 1}+' bis '+${split * number}}+' von '+${maximum}"></a></li>
+								<li><a id="backward"
+									th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number-1}}">
 										<img src="/resources/Bilder/backward.png" />
-									</a>
+								</a></li>
+								<li th:each="number:${numbers}"><a class="articlePages"
+									th:if="${category == null}" th:text="${number}"
+									th:href="@{'/sufu/'+${search}+'/'+${number}}"></a> <a
+									class="articlePages" th:if="${category != null}"
+									th:text="${number}"
+									th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number}}"></a>
 								</li>
-								<li th:each="number:${numbers}">
-									<a class="articlePages" th:if="${category == null}"	th:text="${number}" th:href="@{'/sufu/'+${search}+'/'+${number}}"></a>
-									<a class="articlePages" th:if="${category != null}"	th:text="${number}" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number}}"></a>
-								</li>
-								<li>
-									<a id="forward" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number+1}}">
+								<li><a id="forward"
+									th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number+1}}">
 										<img src="/resources/Bilder/forward.png" />
-									</a>
-								</li>
+								</a></li>
 							</ul>
 						</div>
 					</div>
-					<hr/>
+					<hr />
 					<ul id="articlelist" th:case="1">
-
-						<li class="article" th:each="concreteproduct : ${prods}">
-							<a th:href="@{'/detail/'+${concreteproduct.identifier}}">
+						<li class="article" th:if="${prods.size() == 0}">
+							<p>Es konnten leider keine Artikel zu diesen Kriterien
+								gefunden werden.</p>
+						</li>
+						<li class="article" th:each="concreteproduct : ${prods}"><a
+							th:href="@{'/detail/'+${concreteproduct.identifier}}">
 								<h1 th:text="${concreteproduct.name}" class="name"></h1>
-							</a>
+						</a>
 							<div class="flex-container">
 								<div id="firstcolumn">
-									<a th:href="@{'/detail/'+${concreteproduct.identifier}}" >
-										<img class="picture" th:src="@{'/resources/Bilder/Produkte/' + ${concreteproduct.imagefile}}" />
+									<a th:href="@{'/detail/'+${concreteproduct.identifier}}">
+										<img class="picture"
+										th:src="@{'/resources/Bilder/Produkte/' + ${concreteproduct.imagefile}}" />
 									</a>
 								</div>
 								<div id="secondcolumn">
 									<div class="clamping-container">
-										<p class="description" th:text="${concreteproduct.description}">Beschreibung</p>
+										<p class="description"
+											th:text="${concreteproduct.description}">Beschreibung</p>
 									</div>
 									<div class="rating">
 										<span class="filled" th:each="i : ${concreteproduct.rating}">☆</span>
 									</div>
-									<a th:text="${concreteproduct.ratings}+' Bewertung(en)'"></a>
-									<a class="price" th:text="${concreteproduct.priceFloat}"></a>
+									<a th:text="${concreteproduct.ratings}+' Bewertung(en)'"></a> <a
+										class="price" th:text="${concreteproduct.priceFloat}"></a>
 								</div>
-							</div>
-							</li>
+							</div></li>
 					</ul>
-					
+
 					<ul id="articlelist-thumbnail" th:case="2">
 						<li class="article" th:each="concreteproduct : ${prods}">
 							<div class="article-container">
-							<a th:href="@{'/detail/'+${concreteproduct.identifier}}" >
-								<img class="picture-thumbnail" th:src="@{'/resources/Bilder/Produkte/' + ${concreteproduct.imagefile}}"/>
-							</a>
-							<div class="name-container-thumbnail">
-								<a th:href="@{'/detail/'+${concreteproduct.identifier}}">
-									<h1 th:text="${concreteproduct.name}" class="name-thumbnail"></h1>
+								<a th:href="@{'/detail/'+${concreteproduct.identifier}}"> <img
+									class="picture-thumbnail"
+									th:src="@{'/resources/Bilder/Produkte/' + ${concreteproduct.imagefile}}" />
 								</a>
-							</div>
-							<div class="rating">
-								<span class="filled" th:each="i : ${concreteproduct.rating}">☆</span>
-							</div>
-							<a th:text="${concreteproduct.ratings}+' Bewertung(en)'"></a>
-							<a class="price-thumbnail" th:text="${concreteproduct.priceFloat}"></a>
+								<div class="name-container-thumbnail">
+									<a th:href="@{'/detail/'+${concreteproduct.identifier}}">
+										<h1 th:text="${concreteproduct.name}" class="name-thumbnail"></h1>
+									</a>
+								</div>
+								<div class="rating">
+									<span class="filled" th:each="i : ${concreteproduct.rating}">☆</span>
+								</div>
+								<a th:text="${concreteproduct.ratings}+' Bewertung(en)'"></a> <a
+									class="price-thumbnail" th:text="${concreteproduct.priceFloat}"></a>
 							</div>
 						</li>
 					</ul>
-					
-					<hr/>
+
+					<hr />
 					<div id="pageControl">
 						<div id="articlesPerPage">
 							<form method="post" th:if="${split != null}"
-							th:action="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number}+'/changedSetting'}">
+								th:action="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number}+'/changedSetting'}">
 								<fieldset>
 									<label for="total">Artikel pro Seite:</label> <select
 										onchange="this.form.submit()" name="total" id="total"
@@ -182,7 +193,8 @@
 								</fieldset>
 								<fieldset>
 									<select onchange="this.form.submit()" name="sort" id="sort">
-										<option selected="true" style="display:none;">Sortieren nach</option>
+										<option selected="true" style="display: none;">Sortieren
+											nach</option>
 										<option value="popularity">Beliebtheit</option>
 										<option vlaue="rating">Bewertung</option>
 										<option value="name,asc">Name, aufsteigend</option>
@@ -193,38 +205,41 @@
 								</fieldset>
 							</form>
 						</div>
-						<div id="articleRepresentation">
-							<a th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+'1/'+${split}+'/'+${number}}">
+						<div id="articleRepresentation" th:if="${split != null}">
+							<a
+								th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+'1/'+${split}+'/'+${number}}">
 								<img src="/resources/Bilder/details.png" />
-							</a>
-							<a th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+'2/'+${split}+'/'+${number}}">
+							</a> <a
+								th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+'2/'+${split}+'/'+${number}}">
 								<img src="/resources/Bilder/thumbnails.png" />
 							</a>
 						</div>
-						<div id="catalogSite">
+						<div id="catalogSite" th:if="${split != null}">
 							<ul>
-								<li><a th:text="@{'Artikel '+${split * (number-1) + 1}+' bis '+${split * number}}+' von '+${maximum}"></a></li>
-								<li>
-									<a id="backward" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number-1}}">
+								<li><a
+									th:text="@{'Artikel '+${split * (number-1) + 1}+' bis '+${split * number}}+' von '+${maximum}"></a></li>
+								<li><a id="backward"
+									th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number-1}}">
 										<img src="/resources/Bilder/backward.png" />
-									</a>
+								</a></li>
+								<li th:each="number:${numbers}"><a class="articlePages"
+									th:if="${category == null}" th:text="${number}"
+									th:href="@{'/sufu/'+${search}+'/'+${number}}"></a> <a
+									class="articlePages" th:if="${category != null}"
+									th:text="${number}"
+									th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number}}"></a>
 								</li>
-								<li th:each="number:${numbers}">
-									<a class="articlePages" th:if="${category == null}"	th:text="${number}" th:href="@{'/sufu/'+${search}+'/'+${number}}"></a>
-									<a class="articlePages" th:if="${category != null}"	th:text="${number}" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number}}"></a>
-								</li>
-								<li>
-									<a id="forward" th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number+1}}">
+								<li><a id="forward"
+									th:href="@{'/catalog/'+${category}+'/'+${sort}+'/'+${representation}+'/'+${split}+'/'+${number+1}}">
 										<img src="/resources/Bilder/forward.png" />
-									</a>
-								</li>
+								</a></li>
 							</ul>
 						</div>
 					</div>
-					<hr/>
+					<hr />
 				</div>
 			</div>
-			
+
 
 		</div>
 
