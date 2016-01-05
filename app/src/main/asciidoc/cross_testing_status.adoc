@@ -10,49 +10,48 @@ Onlineshop "Woods Super Dooper Shop"
 // See http://asciidoctor.org/docs/user-manual/#tables
 [options="header"]
 |===
-|Status |Pfad |Parameter |Beschreibung |Rückgabe 
+| Status | Pfad | Parameter | Beschreibung | Rückgabe 
 | fixed | home | … | Warenkorb-Zusammenfassung bleib immer leer, außer man geht auf den Warenkorb, nur dann stimmt die Anzeige | … 
-| urgent | /sufu/1 | … | suche funktionert nicht | Exception evaluating SpringEL expression: "split * (number-1) + 1" (catalog) 
+| fixed | /sufu/1 | … | suche funktionert nicht | Exception evaluating SpringEL expression: "split * (number-1) + 1" (catalog) 
 | fixed | /returOrders | … | wenn als Admin eingeloggt | access denied 
 | wontfix | /employee/changecatalog/editArticle/... | … | mehrere Kategorien nicht möglich | … 
-| marginal | /employee/changecatalog/editArticle/... | … | Kategorie wird nicht vorgeladen (immer spirituosen) | … 
+| urgent | /employee/changecatalog/editArticle/... | … | Kategorie wird nicht vorgeladen (immer spirituosen) | … 
 | urgent | /employee/changecatalog/editArticle/... | … | Kategorie wird nicht geändert | … 
 | urgent | /employee/changecatalog/editArticle/... | … | Preis wird nicht geändert | … 
-| urgent |/employee/changecatalog/editArticle/... | fehlerhafte Eingaben | Validierung schlägt ohne Feedback fehl | Validation failed for object='editArticleForm'. Error count: 1 
+| urgent | /employee/changecatalog/editArticle/... | fehlerhafte Eingaben | Validierung schlägt ohne Feedback fehl | Validation failed for object='editArticleForm'. Error count: 1 
 | urgent | /employee/changecatalog/addedArticle | … | es können keine Artikel hinzugefügt werden | leere Seite 
 | urgent | /employee/deleteComment/... | … | Kommentare können nicht gelöscht werden | No message available 
-| urgent |/employee/comments | ... |Löschen von Kommentaren liefert ein Whitelabel Error, des weitern weiß man nicht zu welchem Artikel die Kommentare gehören | Whitelabel Error
+| urgent | /employee/comments | ... | Löschen von Kommentaren liefert ein Whitelabel Error
+| fixed | /employee/comments | ... | des weitern weiß man nicht zu welchem Artikel die Kommentare gehören | Whitelabel Error
 | wontfix | /detail/... | … | es können nur bis zu 5 Artikel in den Warenkorb gelegt werden | ... 
-| wontfix |/admin/balance | ... | Bilanz muss im Negativen beginnen ... die Waren müssen ja etwas gekostet haben und dürfen nicht als Einnahmen gezählt werden !| ...
-| urgent |/admin/statistics | ... |Statistiken gehen garnicht | ... 
-| urgent |/employee/startpage/changedStartpage |4 Artikel im Karussell; anderen Artikel ausgewählt |Startseite übernehmen gedrückt | WhiteLabel Error : POST not supported
-| urgent |/employee/newsletter | … |beide Button funktionieren nicht | Whitelabel Error Page : Error resolving template "employeenavigation"
-| marginal |home | ... |angemeldet als Mitarbeiter, klick auf "Mein Konto"|erneutes anmelden ohne vorheriges abmelden möglich 
-| urgent |home | ... |falsche Eingabe bei der Anmeldung | es passiert nichts, keine Fehlermeldung, stattdessen wird der aktuell angemeldete Kunde abgemeldet
-| urgent |/#registration-modal |irgendwas | ich will mich anmelden| alle Felder werden annulliert, egal was man falsch eingibt; Eingabe, von wem man geworben wurde?
-||/NewPass |Email und Passwort | auf Button drücken zum bestätigen| Whitelabel Error Page: Error resolving template "redirect/#login-modal"
-| fixed |/recruit|Email|Button "Rekrutieren" drücken| Whitelabel Error Page: Error resolving template "/index"
-| wontfix |/detail/dde777ad-43ac-4b32-80ca-add9ada5d984|Kommentar und Bewertung|Kommentar abschicken und bestätigen durch Mitarbeiter|Artikel kann bewertet werden, ohne ihn gekauft zu haben, das macht keinen Sinn
-| fixed |/payed|überall "aa"|ich möchte bezahlen|Whitelabel Error Page: Validation failed for object='shippingAdressForm'
-| fixed |/payed|richtige Adresse, fast richtige Kreditkarte|bezahlen drücken|Whitelabel Error Page: Validation failed for object='billingAdressForm'. Error count: 13
-| fixed |/payed|theoretisch formkorrekte Eingabe|es kommen immer Fehler|Whitelabel Error Page: Validation failed for object='billingAdressForm'. Error count: 13
-| fixed |/payed|Adresse eingegeben|bestellen drücken, um Einkaufswagen zu kaufen|Whitelabel Error Page: Zugriff verweigert
-| marginal |/?cartsize=0&cartprice=EUR+0#login-modal|...|Klick auf "Mein Konto" : Wo ist die Übersicht über mein Konto? Ich kann mich immer nur anmelden; wo kann ich mein Rabattguthaben einsehen? Warum wird kein Rabatt bei der Bestellung verrechnet?|...
-| marginal |/cart|nothing|ich kann leere Bestellungen machen|...
-| urgent |/admin/changeuser/editUser/3|unterschiedliche Passwörter|Passwörter müssen nicht gleich sein, werden nicht verglichen|Userstatus geändert
-| urgent |/employee/orders/accept/1|...|Admin hat die Bestellung angenommen, versuche sie mit dem Mitarbeiter nochmal anzunehmen|Whitelabel Error Page: No value present
-| urgent |/#registration-modal|asd@asd|asd@asd.irgendwas sollte erst gehen|
-| urgent |redirect/#login-modal|||Error resolving template "redirect/#login-modal", template might not exist
-| urgent |"Mein Konto"||Kein Zugriff auf Schaltfläche|
-| urgent |employee/newsletter/changeNewsletter  ||Neuer Newsletter|Error resolving template "employeenavigation", template might not exist
-| urgent |/employee/newsletter/oldAbos||Alter Newsletter|Error resolving template "employeenavigation", template might not exist
-| urgent |/admin/changeuser/addedUser||
-"neuen" User asd als Admin hinzufügen, obwohl bereits existiert|Whitelabel Error Page: User with name asd already exists!
-| urgent |/admin/changeuser/addedUser||
-neuen User "wer" anlegen als Admin|There was an unexpected error (type=Internal Server Error, status=500).
+| wontfix | /admin/balance | ... | Bilanz muss im Negativen beginnen ... die Waren müssen ja etwas gekostet haben und dürfen nicht als Einnahmen gezählt werden ! | ...
+| urgent | /admin/statistics | ... | Statistiken gehen garnicht | ... 
+| urgent | /employee/startpage/changedStartpage | 4 Artikel im Karussell; anderen Artikel ausgewählt | Startseite übernehmen gedrückt | WhiteLabel Error : POST not supported
+| urgent | /employee/newsletter | … | beide Button funktionieren nicht | Whitelabel Error Page : Error resolving template "employeenavigation"
+| marginal | home | ... | angemeldet als Mitarbeiter, klick auf "Mein Konto"|erneutes anmelden ohne vorheriges abmelden möglich
+| urgent | home | ... | falsche Eingabe bei der Anmeldung | es passiert nichts, keine Fehlermeldung, stattdessen wird der aktuell angemeldete Kunde abgemeldet
+| marginal | /#registration-modal | irgendwas | ich will mich anmelden | alle Felder werden annulliert, egal was man falsch eingibt; Eingabe, von wem man geworben wurde?
+| urgent | /NewPass | Email und Passwort | auf Button drücken zum bestätigen | Whitelabel Error Page: Error resolving template "redirect/#login-modal"
+| urgent | /recruit | Email | Button "Rekrutieren" drücken | Whitelabel Error Page: Error resolving template "/index"
+| wontfix | /detail/dde777ad-43ac-4b32-80ca-add9ada5d984 | Kommentar und Bewertung | Kommentar abschicken und bestätigen durch Mitarbeiter | Artikel kann bewertet werden, ohne ihn gekauft zu haben, das macht keinen Sinn
+| fixed | /payed | überall "aa" | ich möchte bezahlen | Whitelabel Error Page: Validation failed for object='shippingAdressForm'
+| fixed | /payed | richtige Adresse, fast richtige Kreditkarte | bezahlen drücken | Whitelabel Error Page: Validation failed for object='billingAdressForm'. Error count: 13
+| fixed | /payed | theoretisch formkorrekte Eingabe | es kommen immer Fehler | Whitelabel Error Page: Validation failed for object='billingAdressForm'. Error count: 13
+| could not reproduce | /payed | Adresse eingegeben | bestellen drücken, um Einkaufswagen zu kaufen | Whitelabel Error Page: Zugriff verweigert
+| marginal | /?cartsize=0&cartprice=EUR+0#login-modal | ... | Klick auf "Mein Konto" : Wo ist die Übersicht über mein Konto? Ich kann mich immer nur anmelden; wo kann ich mein Rabattguthaben einsehen? Warum wird kein Rabatt bei der Bestellung verrechnet?| ...
+| marginal | /cart | nothing | ich kann leere Bestellungen machen|...
+| urgent | /admin/changeuser/editUser/3 | unterschiedliche Passwörter | Passwörter müssen nicht gleich sein, werden nicht verglichen | Userstatus geändert
+| urgent | /employee/orders/accept/1 | ... | Admin hat die Bestellung angenommen, versuche sie mit dem Mitarbeiter nochmal anzunehmen | Whitelabel Error Page: No value present
+| urgent | /#registration-modal | asd@asd | asd@asd.irgendwas sollte erst gehen|
+| urgent | redirect/#login-modal | | | Error resolving template "redirect/#login-modal", template might not exist
+| urgent | "Mein Konto" | | Kein Zugriff auf Schaltfläche |
+| urgent | employee/newsletter/changeNewsletter | | Neuer Newsletter | Error resolving template "employeenavigation", template might not exist
+| urgent | /employee/newsletter/oldAbos | | Alter Newsletter | Error resolving template "employeenavigation", template might not exist
+| urgent | /admin/changeuser/addedUser | | "neuen" User asd als Admin hinzufügen, obwohl bereits existiert | Whitelabel Error Page: User with name asd already exists!
+| urgent | /admin/changeuser/addedUser | | neuen User "wer" anlegen als Admin | There was an unexpected error (type=Internal Server Error, status=500).
 org.hibernate.TransientPropertyValueException: object references an unsaved transient instance - save the transient instance before flushing : internetkaufhaus.entities.ConcreteUserAccount.userAccount -> org.salespointframework.useraccount.UserAccount; nested exception is java.lang.IllegalStateException: org.hibernate.TransientPropertyValueException: object references an unsaved transient instance - save the transient instance before flushing : internetkaufhaus.entities.ConcreteUserAccount.userAccount -> org.salespointframework.useraccount.UserAccount
 
-| fixed |/returOrders||als Admin eingeloggt|Whitelabel Error Page: Zugriff verweigert
+| fixed | /returOrders | | als Admin eingeloggt | Whitelabel Error Page: Zugriff verweigert
 |===
 
 == Sonstiges
