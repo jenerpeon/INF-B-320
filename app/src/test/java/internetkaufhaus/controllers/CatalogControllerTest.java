@@ -10,20 +10,33 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.junit.Test;
+import org.salespointframework.catalog.Catalog;
+import org.salespointframework.inventory.Inventory;
+import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.quantity.Quantity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import internetkaufhaus.AbstractWebIntegrationTests;
 import internetkaufhaus.controller.CatalogController;
+import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.model.Search;
 
 public class CatalogControllerTest extends AbstractWebIntegrationTests {
 
+	private static final Quantity NONE = Quantity.of(0);
 	@Autowired
 	CatalogController controller;
 	@Autowired
 	Search prodsearch;
+	@Autowired
+	Catalog<ConcreteProduct> catalog;
+	@Autowired
+	Inventory<InventoryItem> inventory;
 
 	public List<String> categories = new ArrayList<String>();
 
@@ -32,7 +45,7 @@ public class CatalogControllerTest extends AbstractWebIntegrationTests {
 	 * @throws Exception
 	 */
 	@Test
-	public void sampleMvcIntegrationTest() throws Exception {
+	public void sufuTest() throws Exception {
 
 		// RequestMapping and model checking for predefined categories
 		for (String category : categories) {
@@ -40,11 +53,32 @@ public class CatalogControllerTest extends AbstractWebIntegrationTests {
 			mvc.perform(get("/sufu/" + category)).andExpect(status().isOk())
 					.andExpect(model().attribute((String) category, is(not(null))))
 					.andExpect(model().attribute("ProdsOfCategory", is(not(emptyIterable()))));
-			mvc.perform(get("/catalog/" + category)).andExpect(status().isOk())
-					.andExpect(model().attribute((String) category, is(not(null))))
-					.andExpect(model().attribute("ProdsOfCategory", is(not(emptyIterable()))));
-
 		}
+	}
+	
+	@Test
+	public void categoryTest() throws Exception {
+		for (String category : categories) {
+			mvc.perform(get("/catalog/" + category)).andExpect(status().isOk())
+			.andExpect(model().attribute((String) category, is(not(null))))
+			.andExpect(model().attribute("ProdsOfCategory", is(not(emptyIterable()))));
+		}
+	}
+	
+	@Test
+	public void dateilTest() throws Exception {
+		List<ConcreteProduct> prods = new ArrayList<ConcreteProduct>();
+		CollectionUtils.addAll(prods, catalog.findAll().iterator());
+		Random random = new Random();
+		ConcreteProduct prod = prods.get(random.nextInt(prods.size() -1));
+		
+		Optional<InventoryItem> item = inventory.findByProductIdentifier(prod.getIdentifier());
+		Quantity quantity = item.map(InventoryItem::getQuantity).orElse(NONE);
+		
+		mvc.perform(get("/detail/" + prod.getIdentifier().toString())).andExpect(status().isOk())
+		.andExpect(model().attribute("concreteproduct", is(prod)))
+		.andExpect(model().attribute("quantity", is(quantity)))
+		.andExpect(model().attribute("orderable", is(quantity.isGreaterThan(NONE))));
 	}
 
 	/**

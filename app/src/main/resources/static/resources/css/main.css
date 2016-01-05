@@ -237,10 +237,13 @@ option {
 }
 
 #header header #header-row2 {
-	width: 970px;
+	width: 920px;
 	margin-left: auto;
 	margin-right: auto;
-	padding: 0 0 0 10px;
+	padding-left: 50px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 #header-row2-table {
