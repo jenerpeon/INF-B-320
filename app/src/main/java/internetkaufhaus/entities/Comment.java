@@ -81,11 +81,21 @@ public class Comment implements Serializable {
 	 *            the t
 	 */
 	public Comment(String text, int rating, Date dateTime, String t) {
-		this.text = text;
-		this.rating = rating;
-		this.date = dateTime;
-		this.formatedDate = t;
-		this.accepted = false;
+		this
+		.text = 
+		text;
+		this
+		.rating = 
+		rating;
+		this
+		.date = 
+		dateTime;
+		this
+		.formatedDate = 
+		t;
+		this
+		.accepted = 
+		false;
 	}
 
 	/**
@@ -104,7 +114,9 @@ public class Comment implements Serializable {
 	 *            the new user
 	 */
 	public void setUser(ConcreteUserAccount user) {
-		this.user = user;
+		this
+		.user = 
+		user;
 	}
 
 	/**
@@ -123,7 +135,9 @@ public class Comment implements Serializable {
 	 *            the new commentid
 	 */
 	public void setCommentid(Long commentid) {
-		this.commentid = commentid;
+		this
+		.commentid = 
+				commentid;
 	}
 
 	/**
@@ -132,7 +146,8 @@ public class Comment implements Serializable {
 	 * @return the product
 	 */
 	public ConcreteProduct getProduct() {
-		return this.product;
+		return this
+				.product;
 	}
 
 	/**
@@ -142,7 +157,9 @@ public class Comment implements Serializable {
 	 *            the new product
 	 */
 	public void setProduct(ConcreteProduct product) {
-		this.product = product;
+		this
+		.product = 
+		product;
 	}
 
 	/**
@@ -218,8 +235,10 @@ public class Comment implements Serializable {
 	 *            the new formated date
 	 */
 	public void setFormatedDate(Date date) {
-		SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.GERMANY);
-		String formatedDate = formatter.format(date);
+		SimpleDateFormat formatter = 
+				new SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.GERMANY);
+		String formatedDate = formatter
+				.format(date);
 		this.formatedDate = formatedDate;
 
 	}
@@ -230,89 +249,6 @@ public class Comment implements Serializable {
 	 * @return the formated date
 	 */
 	public String getFormatedDate() {
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		return formatedDate;
 	}
 
