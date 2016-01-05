@@ -143,8 +143,7 @@ public class ManagementController {
 		this.sender = sender;
 		this.newsManager = newsManager;
 		this.orderManager = orderManager;
-		// this.carousselList = carousselList;
-		// this.selectionList = selectionList;
+
 	}
 
 	/**

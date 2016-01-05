@@ -2,6 +2,7 @@ package internetkaufhaus;
 
 import static org.salespointframework.core.Currencies.EURO;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +25,7 @@ import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import internetkaufhaus.controller.CatalogController;
 import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
@@ -464,8 +466,23 @@ public class Initialize implements DataInitializer {
 				Money.of(29.95, EURO), Money.of(23.96, EURO), "Schmuck",
 				"Wunderschöner Damenring aus 925er Silber der Marke Celesta. Der Damenring hat Zirkoniasteine und ist rosévergoldet.",
 				"https://eng.wikipedia.org/wiki/Fuzz", "SProdukt_368270033.jpg"));
-		prods.get(20).addComment(new Comment("Kommentar!", 4, new Date(), "Kooomentar!"),
-				concreteUserAccountManager.findAll().iterator().next());
+		
+		for (ConcreteProduct prod : prods) {
+			Random random = new Random();
+			for (int i=0; i<random.nextInt(4)+2; i++) {
+				Comment comment = new Comment("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores"
+				, random.nextInt(5)+1, java.sql.Date.valueOf(LocalDate.now()), "");
+				prod.addComment(comment, concreteUserAccountManager.findAll().iterator().next());
+			}
+		}
+		
+		for (ConcreteProduct prod : prods) {
+			for (Comment c : prod.getUnacceptedComments()) {
+				c.accept();
+				c.getProduct().updateAverageRating();
+			}
+		}
+		
 		productCatalog.save(prods);
 		concreteProductRepository.save(prods);
 		productSearch.addProds(productCatalog.findAll());
