@@ -276,8 +276,12 @@
 	align-items: center;
 }
 
-.top5 .img-thumbnail img {
+.top5 .img-thumbnail a img {
 	width: 140px;
+}
+
+
+.top5 .img-thumbnail a {
 	margin: auto 0;
 }
 
@@ -330,6 +334,7 @@
 
 #selection-container .img-thumbnail {
 	height: 300px;
+	margin: 10px 0;
 }
 
 .caption {
