@@ -52,6 +52,7 @@ import internetkaufhaus.forms.EditArticleForm;
 import internetkaufhaus.forms.StockForm;
 import internetkaufhaus.model.NavItem;
 import internetkaufhaus.model.Search;
+import internetkaufhaus.model.StartPage;
 import internetkaufhaus.model.StockManager;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
@@ -74,6 +75,9 @@ public class ManagementController {
 
 	@Autowired
 	private ProductManagementService productManagementService;
+
+	@Autowired
+	private StartPage startPage;
 
 	private static final Quantity NONE = Quantity.of(0);
 	private final Catalog<ConcreteProduct> catalog;
@@ -132,7 +136,7 @@ public class ManagementController {
 		String employeeNavigationName[] = { "Katalog/Lager", "Bestellungen", "Bewertungen", "Retouren", "Newsletter",
 				"Startseite" };
 		String employeeNavigationLink[] = { "/employee/changecatalog", "/employee/orders", "/employee/comments",
-				"/employee/returnedOrders", "/employee/newsletter", "/employee/startpage/3/8" };
+				"/employee/returnedOrders", "/employee/newsletter", "/employee/startpage" };
 		List<NavItem> navigation = new ArrayList<NavItem>();
 		for (int i = 0; i < employeeNavigationName.length; i++) {
 			NavItem nav = new NavItem(employeeNavigationName[i], employeeNavigationLink[i], "non-category");
@@ -225,7 +229,7 @@ public class ManagementController {
 					prods.removeComment(c);
 					prods.updateAverageRating();
 					break_outer = true;
-					// prevents modification while interation
+					// prevents modification during interaction
 					break;
 				}
 			}
@@ -290,20 +294,20 @@ public class ManagementController {
 		if (result.hasErrors()) {
 			return "redirect:/employee/changecatalog/editArticle/";
 		}
-		System.out.println(editForm.getCategory().toString());
 
 		if (!img.isEmpty()) {
 			try {
 				byte[] bytes = img.getBytes();
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("filename")));
+				BufferedOutputStream stream = new BufferedOutputStream(
+						new FileOutputStream(new File(img.getOriginalFilename())));
 				// TODO: generate filename
 				stream.write(bytes);
 				stream.close();
 			} catch (Exception e) {
-				System.out.println("error (" + e.getMessage() + ") !!!");
+				System.out.println("Error while uploading image file: " + e.getMessage());
 			}
 		} else {
-			System.out.println("another error (file empty) !!!");
+			System.out.println("no file submitted, nothing to see here.");
 		}
 
 		ConcreteProduct prod = editForm.getProdId();
@@ -483,43 +487,52 @@ public class ManagementController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/employee/startpage/{totalCaroussel}/{totalSelection}")
-	public String editStartPage(@PathVariable("totalCaroussel") int totalCaroussel,
-			@PathVariable("totalSelection") int totalSelection, ModelMap model) {
-		model.addAttribute("prod50", catalog.findAll());
-		model.addAttribute("totCar", totalCaroussel);
-		model.addAttribute("totSel", totalSelection);
+	@RequestMapping("/employee/startpage")
+	public String editStartPage(ModelMap model) {
+		Map<ConcreteProduct, Boolean> bannerProducts = new HashMap<ConcreteProduct, Boolean>();
+		for (ConcreteProduct i : catalog.findAll()) {
+			bannerProducts.put(i,
+					this.startPage.getBannerProducts() != null && this.startPage.getBannerProducts().contains(i));
+		}
+		model.addAttribute("bannerProducts", bannerProducts);
+		Map<ConcreteProduct, Boolean> selectionProducts = new HashMap<ConcreteProduct, Boolean>();
+		for (ConcreteProduct i : catalog.findAll()) {
+			selectionProducts.put(i,
+					this.startPage.getSelectionProducts() != null && this.startPage.getSelectionProducts().contains(i));
+		}
+		model.addAttribute("selectionProducts", selectionProducts);
+		System.out.println(bannerProducts);
+		System.out.println(selectionProducts);
 		return "changestartpage";
 	}
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * This page redirects to the start page editing page after editing the
-	 * start page.
+	 * This page is called when the start page editing form is filled.
 	 * 
-	 * @param totalCaroussel
-	 * @param totalSelection
+	 * @param changeStartPageForm
 	 * @return
 	 */
-	@RequestMapping(value = "/employee/startpage/changedSetting", method = RequestMethod.POST)
-	public String changeStartPageSetting(@RequestParam("totalCaroussel") int totalCaroussel,
-			@RequestParam("totalSelection") int totalSelection) {
-		return "redirect:/employee/startpage/" + totalCaroussel + '/' + totalSelection;
-	}
+	@RequestMapping(value = "/employee/startpage/changedStartpage", method = RequestMethod.POST)
+	public String changeStartpage(@RequestParam("bannerArticles") List<ProductIdentifier> bannerArticles,
+			@RequestParam("selectionArticles") List<ProductIdentifier> selectionArticles) {
+		System.out.println(bannerArticles);
+		System.out.println(selectionArticles);
+		List<ConcreteProduct> bannerProducts = new ArrayList<ConcreteProduct>();
+		for (ProductIdentifier i : bannerArticles) {
+			bannerProducts.add(this.concreteProductRepository.findByProductIdentifier(i));
+		}
+		this.startPage.setBannerProducts(bannerProducts);
 
-	// TODO: What is this?
-	/*
-	 * @RequestMapping(value = "/employee/startpage/changedstartpage", method =
-	 * RequestMethod.POST) public String changeStartpage(@ModelAttribute
-	 * ChangeStartPageForm changeStartPageForm) { List<ProductIdentifier>
-	 * carousselProdsId = changeStartPageForm.getCarousselArticle();
-	 * List<ProductIdentifier> selectionProdsId =
-	 * changeStartPageForm.getSelectionArticle(); int index = 0; for
-	 * (ProductIdentifier prodId : carousselProdsId) { carousselList.set(index,
-	 * catalog.findOne(prodId).get()); index ++; } index = 0; for
-	 * (ProductIdentifier prodId : selectionProdsId) { selectionList.set(index,
-	 * catalog.findOne(prodId).get()); index ++; } return "redirect:/"; }
-	 */
+		List<ConcreteProduct> selectionProducts = new ArrayList<ConcreteProduct>();
+		for (ProductIdentifier i : selectionArticles) {
+			selectionProducts.add(this.concreteProductRepository.findByProductIdentifier(i));
+		}
+		this.startPage.setSelectionProducts(selectionProducts);
+		System.out.println(bannerProducts);
+		System.out.println(selectionProducts);
+		return "redirect:/employee/startpage";
+	}
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?

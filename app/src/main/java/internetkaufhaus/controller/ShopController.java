@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import internetkaufhaus.entities.ConcreteProduct;
+import internetkaufhaus.model.StartPage;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 
 /**
@@ -26,6 +27,9 @@ import internetkaufhaus.repositories.ConcreteProductRepository;
 @Controller
 @SessionAttributes("cart")
 public class ShopController {
+
+	@Autowired
+	private StartPage startPage;
 
 	private final Catalog<ConcreteProduct> catalog;
 	private final UserAccountManager userAccountManager;
@@ -57,13 +61,8 @@ public class ShopController {
 	@RequestMapping(value = { "/", "/index" })
 	public String index(ModelMap model) {
 		model.addAttribute("prodList", catalog.findAll());
-		/*
-		 * List<ConcreteProduct> bannerContent = concreteCatalog .findAll( new
-		 * PageRequest(0, 10, new Sort(new Sort.Order(Sort.Direction.DESC,
-		 * "RANDOM()", Sort.NullHandling.NATIVE), new
-		 * Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE))))
-		 * .getContent(); model.addAttribute("bannerContent", bannerContent);
-		 */
+		model.addAttribute("banner", this.startPage.getBannerProducts());
+		model.addAttribute("selection", startPage.getSelectionProducts());
 		List<ConcreteProduct> top5rated = concreteCatalog
 				.findAll(
 						new PageRequest(0, 5,

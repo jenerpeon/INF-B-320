@@ -27,28 +27,26 @@ public class AccountAdministration {
 	 * accounts.
 	 *
 	 */
-
 	private ConcreteMailService concreteMailService;
-	
+
 	/** The random. */
 	private SecureRandom random;
-	
-	/** The key2email. */
-	// Maps key to email. Used in Password reset and registration
+
+	/** Maps key to email. Used in Password reset and registration */
 	private Map<String, String> key2email;
-	
-	/** The email2pass. */
-	// Maps emails to passwords. Used in Password reset
+
+	/** Maps emails to passwords. Used in Password reset */
 	private Map<String, String> email2pass;
-	
-	/** The recruit2invite. */
-	// Maps recruits to invitators. Used in Registration with recruitation link
+
+	/**
+	 * Maps recruits to invitators. Used in Registration with recruitation link
+	 */
 	private Map<String, String> recruit2invite;
 
 	/** The Concrete user account manager. */
 	@OneToOne
 	private ConcreteUserAccountRepository ConcreteUserAccountManager;
-	
+
 	/** The user account manager. */
 	@OneToOne
 	private UserAccountManager userAccountManager;
@@ -67,8 +65,10 @@ public class AccountAdministration {
 	 * The RegisterCustomer method will send a mail to new registered costumers
 	 * with an activation link.
 	 *
-	 * @param email            email address of costumer
-	 * @exception MailException the mail exception
+	 * @param email
+	 *            email address of costumer
+	 * @exception MailException
+	 *                the mail exception
 	 */
 
 	public void RegisterCustomer(String email) {
@@ -85,8 +85,10 @@ public class AccountAdministration {
 	 * The RecruitCustomer method will send a mail to a recruit costumer. Names
 	 * of recruit and invitator will be saved at the invitator account.
 	 *
-	 * @param recruit            name of invitator
-	 * @param invitator the invitator
+	 * @param recruit
+	 *            name of invitator
+	 * @param invitator
+	 *            the invitator
 	 * @return the string
 	 */
 	public String RecruitCustomer(String recruit, String invitator) {
@@ -171,7 +173,8 @@ public class AccountAdministration {
 	/**
 	 * Sets the recruit2invite.
 	 *
-	 * @param recruit2invite the recruit2invite
+	 * @param recruit2invite
+	 *            the recruit2invite
 	 */
 	public void setRecruit2invite(Map<String, String> recruit2invite) {
 		this.recruit2invite = recruit2invite;
@@ -180,7 +183,8 @@ public class AccountAdministration {
 	/**
 	 * Sets the concrete user account manager.
 	 *
-	 * @param concreteUserAccountManager the new concrete user account manager
+	 * @param concreteUserAccountManager
+	 *            the new concrete user account manager
 	 */
 	public void setConcreteUserAccountManager(ConcreteUserAccountRepository concreteUserAccountManager) {
 		this.ConcreteUserAccountManager = concreteUserAccountManager;
@@ -189,7 +193,8 @@ public class AccountAdministration {
 	/**
 	 * Sets the user account manager.
 	 *
-	 * @param userAccountManager the new user account manager
+	 * @param userAccountManager
+	 *            the new user account manager
 	 */
 	public void setUserAccountManager(UserAccountManager userAccountManager) {
 		this.userAccountManager = userAccountManager;
@@ -227,8 +232,10 @@ public class AccountAdministration {
 	/**
 	 * Request pass.
 	 *
-	 * @param pass the pass
-	 * @param email the email
+	 * @param pass
+	 *            the pass
+	 * @param email
+	 *            the email
 	 * @return the string
 	 */
 	public String requestPass(String pass, String email) {
@@ -255,7 +262,8 @@ public class AccountAdministration {
 	/**
 	 * Sets the mail sender.
 	 *
-	 * @param sender the new mail sender
+	 * @param sender
+	 *            the new mail sender
 	 */
 	public void setMailSender(MailSender sender) {
 		this.concreteMailService = new ConcreteMailService(sender);
