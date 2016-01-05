@@ -108,41 +108,48 @@ public class AccountingService {
 	 * @return true, if successful
 	 */
 	public boolean registerNew(RegistrationForm regform) {
-		ConcreteUserAccount user;
+		boolean success = true;
+		ConcreteUserAccount user = null;
 		if (regform == null) {
-			return false;
+			success = false;
 		}
 		// Catch if Mail already registered
-		if (dataService.getConcreteUserAccoutnRepository().findByEmail(regform.getEmail()) != null) {
-			System.out.println("debug: Mail allredy registered");
-			return false;
+		if (success && dataService.getConcreteUserAccoutnRepository().findByEmail(regform.getEmail()) != null) {
+			System.out.println("debug: Mail already registered");
+			success = false;
 		}
-		try {
-			user = new ConcreteUserAccount(regform.getEmail(), regform.getName(), regform.getFirstname(),
-					regform.getLastname(), regform.getAddress(), regform.getZipCode(), regform.getCity(),
-					regform.getPassword(), Role.of("ROLE_CUSTOMER"), dataService.getUserAccountManager());
-			this.addUser(user);
-
-		} catch (Exception e) {
-			System.out.println("AccountCreation failed: npe: " + e.toString());
-			return false;
-		}
-		// Check Recrution
-		try {
-			if (this.isRecruit(regform.getEmail())) {
-				ConcreteUserAccount invitator = this.dataService.getConcreteUserAccoutnRepository()
-						.findByEmail(recruit2invite.get(regform.getEmail()));
-				invitator.setRecruits(user);
+		if (success) {
+			try {
+				user = new ConcreteUserAccount(regform.getEmail(), regform.getName(), regform.getFirstname(),
+						regform.getLastname(), regform.getAddress(), regform.getZipCode(), regform.getCity(),
+						regform.getPassword(), Role.of("ROLE_CUSTOMER"), dataService.getUserAccountManager());
+				this.addUser(user);
+	
+			} catch (Exception e) {
+				System.out.println("AccountCreation failed: npe: " + e.toString());
+				e.printStackTrace();
+				success = false;
 			}
-		} catch (Exception e) {
-			System.out.println("Recruitiong method failed" + e.toString());
-			return false;
+			// Check Recrution
+			if (success) {
+				try {
+					if (this.isRecruit(regform.getEmail())) {
+						ConcreteUserAccount invitator = this.dataService.getConcreteUserAccoutnRepository()
+								.findByEmail(recruit2invite.get(regform.getEmail()));
+						invitator.setRecruits(user);
+					}
+				} catch (Exception e) {
+					System.out.println("Recruitiong method failed: " + e.toString());
+					e.printStackTrace();
+					success = false;
+				}
+			}
 		}
 		// Register Customer
-		if (!RegisterCustomer(regform.getEmail()))
-			return false;
+		if (success && !RegisterCustomer(regform.getEmail()))
+			success = false;
 
-		return true;
+		return success;
 	}
 
 	/**

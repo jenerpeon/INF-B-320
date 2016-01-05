@@ -9,15 +9,30 @@ import org.springframework.stereotype.Service;
 
 import internetkaufhaus.entities.ConcreteOrder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ProductManagementService.
+ */
 @Service
 public class ProductManagementService {
 
+	/** The data service. */
 	@Autowired
 	private DataService dataService;
 
+	/**
+	 * Instantiates a new product management service.
+	 */
 	public ProductManagementService() {
+		System.out.print("");
 	}
 
+	/**
+	 * Gets the buying price.
+	 *
+	 * @param order the order
+	 * @return the buying price
+	 */
 	public Money getBuyingPrice(ConcreteOrder order) {
 		Money result = Money.of(0, EURO);
 		for (OrderLine i : order.getOrder().getOrderLines()) {

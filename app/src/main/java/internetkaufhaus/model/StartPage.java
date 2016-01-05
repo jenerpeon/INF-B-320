@@ -23,7 +23,7 @@ public class StartPage {
 	 * Instantiates a new start page.
 	 */
 	public StartPage() {
-
+		System.out.print("");
 	}
 
 	/**

@@ -98,7 +98,7 @@ public class CatalogController {
 	 * @return
 	 */
 	@RequestMapping("/sufu")
-	public String sufu(@RequestParam("search") String lookup, ModelMap model) {
+	public String sufu(@RequestParam("search") String lookup) {
 		return "redirect:/sufu/" + lookup;
 	}
 
