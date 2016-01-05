@@ -36,32 +36,16 @@
 				<div id="carousel-container" class="img-thumbnail">
 					<div id="carousel1" class="carousel slide" data-ride="carousel">
 						<ol class="carousel-indicators">
-					    	<li data-target="#carousel1" data-slide-to="0" class="active"></li>
-					    	<li data-target="#carousel1" data-slide-to="1"></li>
-					    	<li data-target="#carousel1" data-slide-to="2"></li>
+							<li th:each="product : ${banner}" data-target="#carousel1" data:slide-to="productStat"  data-slide-to="0" th:class="${productStat.first}? 'active'"></li>
 				    	</ol>
 					  	<div class="carousel-inner" role="listbox">
-					    	<div class="item active">
-					    		<img src="/resources/Bilder/Carousel_Placeholder.png" alt="First slide image" class="center-block">
-					    		<div class="carousel-caption">
-					        		<h3>First slide Heading</h3>
-					        		<p>First slide Caption</p>
+					  		<div class="item" th:classappend="${productStat.first}? 'active'" th:each="product : ${banner}">
+								<img th:src="@{'/resources/Bilder/Produkte/' + ${product.imagefile}}" alt="" class="center-block">
+								<div class="carousel-caption">
+					        		<h3 th:text="${product.category}">First slide Heading</h3>
+					        		<p th:text="${product.name}">First slide Caption</p>
 				          		</div>
-				        	</div>
-					    	<div class="item">
-					    		<img src="/resources/Bilder/Carousel_Placeholder.png" alt="Second slide image" class="center-block">
-					      		<div class="carousel-caption">
-					        		<h3>Second slide Heading</h3>
-					        		<p>Second slide Caption</p>
-				          		</div>
-				        	</div>
-					    	<div class="item">
-					    		<img src="/resources/Bilder/Carousel_Placeholder.png" alt="Third slide image" class="center-block">
-					      		<div class="carousel-caption">
-					        		<h3>Third slide Heading</h3>
-					        		<p>Third slide Caption</p>
-				          		</div>
-				        	</div>
+							</div>	
 				    	</div>
 					  	<a class="left carousel-control" href="#carousel1" data-slide="prev">
 					  		<span class="icon-prev"></span>
@@ -71,6 +55,7 @@
 					  	</a>
 					</div>
 				</div>
+				
 				<h2>Die Top 5 der bestbewertetsten Produkte</h2>
 				<div id="top-rated" class="top5">
 					
@@ -94,124 +79,18 @@
 						<div id=thumbnail-text>
 							<h3 class="thumbnail-category" th:text="${topSoldProduct.category}"></h3>
 							<h3 class="thumbnail-name" th:text="${topSoldProduct.name}"></h3>
-							<div class="rating">
-									<span class="filled" th:each="i : ${topSoldProduct.rating}">☆</span>
-							</div>
 						</div>
 					</div>
 				</div>
 				
 				<h2>Für Sie aktuell im Angebot</h2>
-				<div id="selection-container">
-					<div class="img-thumbnail">
-						<div class="caption">
-							<h4>Thumbnail Headline</h4>
-                    		<p>short thumbnail description</p>
-                    	</div>
-						<img src="/resources/Bilder/Carousel_Placeholder.png" alt="" class="center-block">
-					</div>
-					<div class="img-thumbnail">
-						<div class="caption">
-							<h4>Thumbnail Headline</h4>
-                    		<p>short thumbnail description</p>
-                    	</div>
-						<img src="/resources/Bilder/Carousel_Placeholder.png" alt="" class="center-block">
-					</div>
-					<div class="img-thumbnail">
-						<div class="caption">
-							<h4>Thumbnail Headline</h4>
-                    		<p>short thumbnail description</p>
-                    	</div>
-						<img src="/resources/Bilder/Carousel_Placeholder.png" alt="" class="center-block">
-					</div>
-					<div class="img-thumbnail">
-						<div class="caption">
-							<h4>Thumbnail Headline</h4>
-                    		<p>short thumbnail description</p>
-                    	</div>
-						<img src="/resources/Bilder/Carousel_Placeholder.png" alt="" class="center-block">
-					</div>
-					<div class="img-thumbnail">
-						<div class="caption">
-							<h4>Thumbnail Headline</h4>
-                    		<p>short thumbnail description</p>
-                    	</div>
-						<img src="/resources/Bilder/Carousel_Placeholder.png" alt="" class="center-block">
-					</div>
-					<div class="img-thumbnail">
-						<div class="caption">
-							<h4>Thumbnail Headline</h4>
-                    		<p>short thumbnail description</p>
-                    	</div>
-						<img src="/resources/Bilder/Carousel_Placeholder.png" alt="" class="center-block">
-					</div>
-					<div class="img-thumbnail">
-						<div class="caption">
-							<h4>Thumbnail Headline</h4>
-                    		<p>short thumbnail description</p>
-                    	</div>
-						<img src="/resources/Bilder/Carousel_Placeholder.png" alt="" class="center-block">
-					</div>
-					<div class="img-thumbnail">
-						<div class="caption">
-							<h4>Thumbnail Headline</h4>
-                    		<p>short thumbnail description</p>
-                    	</div>
-						<img src="/resources/Bilder/Carousel_Placeholder.png" alt="" class="center-block">
-					</div><div class="img-thumbnail">
-						<div class="caption">
-							<h4>Thumbnail Headline</h4>
-                    		<p>short thumbnail description</p>
-                    	</div>
-						<img src="/resources/Bilder/Carousel_Placeholder.png" alt="" class="center-block">
-					</div>
-					<div class="img-thumbnail">
-						<div class="caption">
-							<h4>Thumbnail Headline</h4>
-                    		<p>short thumbnail description</p>
-                    	</div>
-						<img src="/resources/Bilder/Carousel_Placeholder.png" alt="" class="center-block">
-					</div>
-					<div class="img-thumbnail">
-						<div class="caption">
-							<h4>Thumbnail Headline</h4>
-                    		<p>short thumbnail description</p>
-                    	</div>
-						<img src="/resources/Bilder/Carousel_Placeholder.png" alt="" class="center-block">
-					</div>
-					<div class="img-thumbnail">
-						<div class="caption">
-							<h4>Thumbnail Headline</h4>
-                    		<p>short thumbnail description</p>
-                    	</div>
-						<img src="/resources/Bilder/Carousel_Placeholder.png" alt="" class="center-block">
-					</div><div class="img-thumbnail">
-						<div class="caption">
-							<h4>Thumbnail Headline</h4>
-                    		<p>short thumbnail description</p>
-                    	</div>
-						<img src="/resources/Bilder/Carousel_Placeholder.png" alt="" class="center-block">
-					</div>
-					<div class="img-thumbnail">
-						<div class="caption">
-							<h4>Thumbnail Headline</h4>
-                    		<p>short thumbnail description</p>
-                    	</div>
-						<img src="/resources/Bilder/Carousel_Placeholder.png" alt="" class="center-block">
-					</div>
-					<div class="img-thumbnail">
-						<div class="caption">
-							<h4>Thumbnail Headline</h4>
-                    		<p>short thumbnail description</p>
-                    	</div>
-						<img src="/resources/Bilder/Carousel_Placeholder.png" alt="" class="center-block">
-					</div>
-					<div class="img-thumbnail">
-						<div class="caption">
-							<h4>Thumbnail Headline</h4>
-                    		<p>short thumbnail description</p>
-                    	</div>
-						<img src="/resources/Bilder/Carousel_Placeholder.png" alt="" class="center-block">
+				<div id="selection-container" class="top5">
+					<div class="img-thumbnail" th:each="product : ${selection}">
+						<img th:src="@{'/resources/Bilder/Produkte/' + ${product.imagefile}}" alt="" class="center-block">
+						<div id=thumbnail-text>
+							<h3 class="thumbnail-category" th:text="${product.category}"></h3>
+							<h3 class="thumbnail-name" th:text="${product.name}"></h3>
+						</div>
 					</div>
 				</div>
 			</div>

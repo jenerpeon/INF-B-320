@@ -60,7 +60,7 @@ public class ShopController {
 	 */
 	@RequestMapping(value = { "/", "/index" })
 	public String index(ModelMap model) {
-		model.addAttribute("prodList", catalog.findAll());
+		model.addAttribute("selection", this.startPage.getSelectionProducts());
 		model.addAttribute("banner", this.startPage.getBannerProducts());
 		model.addAttribute("selection", startPage.getSelectionProducts());
 		List<ConcreteProduct> top5rated = concreteCatalog
