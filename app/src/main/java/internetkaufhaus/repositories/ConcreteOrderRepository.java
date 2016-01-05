@@ -6,7 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import internetkaufhaus.entities.ConcreteOrder;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface ConcreteOrderRepository.
  */

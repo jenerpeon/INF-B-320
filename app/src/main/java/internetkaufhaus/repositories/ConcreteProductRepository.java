@@ -8,7 +8,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import internetkaufhaus.entities.ConcreteProduct;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface ConcreteProductRepository.
  */
@@ -17,8 +16,10 @@ public interface ConcreteProductRepository extends PagingAndSortingRepository<Co
 	/**
 	 * Find by category.
 	 *
-	 * @param category the category
-	 * @param sort the sort
+	 * @param category
+	 *            the category
+	 * @param sort
+	 *            the sort
 	 * @return the iterable
 	 */
 	Iterable<ConcreteProduct> findByCategory(String category, Sort sort);
@@ -26,14 +27,20 @@ public interface ConcreteProductRepository extends PagingAndSortingRepository<Co
 	/**
 	 * Find by category.
 	 *
-	 * @param category the category
-	 * @param pageable the pageable
+	 * @param category
+	 *            the category
+	 * @param pageable
+	 *            the pageable
 	 * @return the page
 	 */
 	Page<ConcreteProduct> findByCategory(String category, Pageable pageable);
 
-	/* (non-Javadoc)
-	 * @see org.springframework.data.repository.PagingAndSortingRepository#findAll(org.springframework.data.domain.Sort)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.springframework.data.repository.PagingAndSortingRepository#findAll(
+	 * org.springframework.data.domain.Sort)
 	 */
 	Iterable<ConcreteProduct> findAll(Sort sort);
 
@@ -44,15 +51,20 @@ public interface ConcreteProductRepository extends PagingAndSortingRepository<Co
 	 */
 	Iterable<ConcreteProduct> findAllByOrderByName();
 
-	/* (non-Javadoc)
-	 * @see org.springframework.data.repository.PagingAndSortingRepository#findAll(org.springframework.data.domain.Pageable)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.springframework.data.repository.PagingAndSortingRepository#findAll(
+	 * org.springframework.data.domain.Pageable)
 	 */
 	Page<ConcreteProduct> findAll(Pageable pageable);
 
 	/**
 	 * Find by product identifier.
 	 *
-	 * @param productIdentifier the product identifier
+	 * @param productIdentifier
+	 *            the product identifier
 	 * @return the concrete product
 	 */
 	ConcreteProduct findByProductIdentifier(ProductIdentifier productIdentifier);
