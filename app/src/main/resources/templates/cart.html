@@ -60,6 +60,8 @@
 				</table>
 
 				<p th:text="'Summe: ' + ${cart.price}">Summe</p>
+				<p th:text="'eingelöste Punkte:' +${credits}"></p>
+				<p th:text="'Preis nach Punktabzug: ' + ${points}"></p>
 				<p th:if="${cart.empty}">Leer</p>
 	
 				<div>
