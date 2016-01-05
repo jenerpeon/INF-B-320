@@ -1,10 +1,9 @@
 package internetkaufhaus.model;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-import org.javamoney.moneta.Money;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +32,7 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @Transactional
-public class StatisticsTest extends AbstractIntegrationTests{
+public class StatisticTest extends AbstractIntegrationTests {
 
 	@Autowired
 	private OrderManager<Order> orderManager;
@@ -43,10 +42,10 @@ public class StatisticsTest extends AbstractIntegrationTests{
 	private ConcreteProductRepository prods;
 	@Autowired
 	private ConcreteUserAccountRepository ConcreteUserAccountManager;
-	
+
 	@Before
 	public void init() {
-			Cart c = new Cart();
+		Cart c = new Cart();
 		for (ConcreteProduct p : prods.findAll()) {
 			c.addOrUpdateItem(p, Quantity.of(1));
 		}
@@ -74,48 +73,38 @@ public class StatisticsTest extends AbstractIntegrationTests{
 			order.setShippingTown(u.getCity());
 			order.setShippingZipCode(u.getZipCode());
 
-			orderManager.payOrder(o);// only set orderManager.payOrder(o), do
-										// not use
-										// orderManager.completeOrder(0), to
-										// complete Order look at the next line!
-			order.setStatus(OrderStatus.COMPLETED); // to complete Order do not
-													// use
-													// orderManager.completeOrder
+			orderManager.payOrder(o);
+			// only set orderManager.payOrder(o), do not use
+			// orderManager.completeOrder(0), to complete Order look at the next
+			// line!
+			order.setStatus(OrderStatus.COMPLETED);
+			// to complete Order do not use orderManager.completeOrder
 			order.setDateOrdered(LocalDateTime.now().minusDays(31));
 			concreteOrderRepo.save(order);
 			orderManager.save(o);
 
 		}
-  
+
 		c.clear();
-	
 
 	}
 
 	@Test
-	public void getTurnoverByIntervalTest() {
+	public void testGetTurnoverByInterval() {
 		assertTrue("hola", true);
 	}
 
 	@Test
-	public void getSalesByIntervalTest() {
+	public void testGetSalesByInterval() {
 		assertTrue("hola", true);
 	}
 
-	/* Purchcases and profit calculation are not yet implemented */
-
-	public List<Integer> getPurchasesByInterval(Interval i, int q) {
-		return null; // TODO: implement this
+	public void getPurchasesByInterval(Interval i, int q) {
 	}
 
-	public List<Money> getProfitByInterval(Interval i, int q) {
-		return null; // TODO: implement this
+	public void getProfitByInterval(Interval i, int q) {
 	}
 
-	public List<Integer> getRetoursByInterval(Interval i, int q) {
-		return null; // TODO: implement this
+	public void getRetoursByInterval(Interval i, int q) {
 	}
-
-
-
 }
