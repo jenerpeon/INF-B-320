@@ -197,9 +197,10 @@ public class ConcreteProduct extends Product {
 	 * @return true, if successful
 	 */
 	public boolean removeComment(Comment c) {
+		c.getUserAccount().removeComment(c);
 		c.setProduct(null);
 		c.setUser(null);
-		comments.remove(c);
+		this.comments.remove(c);
 		return true;
 	}
 

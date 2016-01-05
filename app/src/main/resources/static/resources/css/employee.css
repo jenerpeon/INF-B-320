@@ -62,6 +62,19 @@
 #workframe .article .picture img{
 	width: 50px;
 }
+
+#workframe .comment .text {
+	max-width: 400px;
+	white-space:normal;
+}
+
+#workframe .comment .product {
+	max-width: 150px;
+	white-space: normal; 
+}
+#workframe .comment .buttons {
+	max-width: 100px;
+}
 #workframe .edit-button {
 	width: 35px;
 	height: 35px;
