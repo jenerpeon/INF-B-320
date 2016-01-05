@@ -14,22 +14,57 @@ import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DataService.
+ */
 @Service
 public class DataService {
 
+	/** The catalog. */
 	private final Catalog<ConcreteProduct> catalog;
+
+	/** The inventory. */
 	private final Inventory<InventoryItem> inventory;
+
+	/** The concrete product repo. */
 	private final ConcreteProductRepository concreteProductRepo;
+
+	/** The concrete account repo. */
 	private final ConcreteUserAccountRepository concreteAccountRepo;
+
+	/** The user account manager. */
 	private final UserAccountManager userAccountManager;
+
+	/** The concrete order repo. */
 	private final ConcreteOrderRepository concreteOrderRepo;
+
+	/** The order manager. */
 	private final OrderManager<Order> orderManager;
 
+	/**
+	 * Instantiates a new data service.
+	 *
+	 * @param catalog
+	 *            the catalog
+	 * @param inventory
+	 *            the inventory
+	 * @param concreteProductRepo
+	 *            the concrete product repo
+	 * @param concreteAccountRepo
+	 *            the concrete account repo
+	 * @param userAccountManager
+	 *            the user account manager
+	 * @param concreteOrderRepo
+	 *            the concrete order repo
+	 * @param orderManager
+	 *            the order manager
+	 */
 	@Autowired
-	public DataService(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, 
+	public DataService(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory,
 			ConcreteProductRepository concreteProductRepo, ConcreteUserAccountRepository concreteAccountRepo,
 			UserAccountManager userAccountManager, ConcreteOrderRepository concreteOrderRepo,
-			OrderManager<Order> orderManager){
+			OrderManager<Order> orderManager) {
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.concreteProductRepo = concreteProductRepo;
@@ -38,32 +73,67 @@ public class DataService {
 		this.concreteOrderRepo = concreteOrderRepo;
 		this.orderManager = orderManager;
 	}
-	
-	public OrderManager<Order> getOrderManager(){
+
+	/**
+	 * Gets the order manager.
+	 *
+	 * @return the order manager
+	 */
+	public OrderManager<Order> getOrderManager() {
 		return this.orderManager;
 	}
-	
-	public Catalog<ConcreteProduct> getCatalog(){
+
+	/**
+	 * Gets the catalog.
+	 *
+	 * @return the catalog
+	 */
+	public Catalog<ConcreteProduct> getCatalog() {
 		return this.catalog;
 	}
-	
-	public Inventory<InventoryItem> getInventory(){
+
+	/**
+	 * Gets the inventory.
+	 *
+	 * @return the inventory
+	 */
+	public Inventory<InventoryItem> getInventory() {
 		return this.inventory;
 	}
-	
-	public ConcreteProductRepository getConcreteProductRepository(){
+
+	/**
+	 * Gets the concrete product repository.
+	 *
+	 * @return the concrete product repository
+	 */
+	public ConcreteProductRepository getConcreteProductRepository() {
 		return this.concreteProductRepo;
 	}
-	
-	public ConcreteUserAccountRepository getConcreteUserAccoutnRepository(){
+
+	/**
+	 * Gets the concrete user accoutn repository.
+	 *
+	 * @return the concrete user accoutn repository
+	 */
+	public ConcreteUserAccountRepository getConcreteUserAccoutnRepository() {
 		return this.concreteAccountRepo;
 	}
-	
-	public UserAccountManager getUserAccountManager(){
+
+	/**
+	 * Gets the user account manager.
+	 *
+	 * @return the user account manager
+	 */
+	public UserAccountManager getUserAccountManager() {
 		return this.userAccountManager;
 	}
-	
-	public ConcreteOrderRepository getConcreteOrderRepository(){
+
+	/**
+	 * Gets the concrete order repository.
+	 *
+	 * @return the concrete order repository
+	 */
+	public ConcreteOrderRepository getConcreteOrderRepository() {
 		return this.concreteOrderRepo;
 	}
 }
