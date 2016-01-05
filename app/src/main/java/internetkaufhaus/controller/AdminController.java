@@ -90,8 +90,10 @@ public class AdminController {
 
 	@ModelAttribute("adminNaviagtion")
 	public List<NavItem> addAdminNavigation() {
-		String adminNavigationName[] = { "Userverwaltung", "Bilanzen", "Statistiken", "Gewinnspiel" };
-		String adminNavigationLink[] = { "/admin/changeuser", "/admin/balance", "/admin/statistics", "/admin/lottery" };
+		//String adminNavigationName[] = { "Userverwaltung", "Bilanzen", "Statistiken", "Gewinnspiel" };
+		String adminNavigationName[] = { "Userverwaltung", "Bilanzen", "Gewinnspiel" };
+		//String adminNavigationLink[] = { "/admin/changeuser", "/admin/balance", "/admin/statistics", "/admin/lottery" };
+		String adminNavigationLink[] = { "/admin/changeuser", "/admin/balance", "/admin/lottery" };
 		List<NavItem> navigation = new ArrayList<NavItem>();
 		for (int i = 0; i < adminNavigationName.length; i++) {
 			NavItem nav = new NavItem(adminNavigationName[i], adminNavigationLink[i], "non-category");
@@ -274,7 +276,7 @@ public class AdminController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/admin/statistics")
+	/*@RequestMapping(value = "/admin/statistics")
 	public String getStatistics() {
 		// Statistic stat = new Statistic(orderManager);
 		LocalDateTime to = LocalDateTime.now();
@@ -302,7 +304,7 @@ public class AdminController {
 	@RequestMapping(value = "/admin/lottery")
 	public String competition() {
 		return "competition"; // TODO: what does this even do?
-	}
+	}*/
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?

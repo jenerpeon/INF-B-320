@@ -40,10 +40,12 @@
 				    	</ol>
 					  	<div class="carousel-inner" role="listbox">
 					  		<div class="item" th:classappend="${productStat.first}? 'active'" th:each="product : ${banner}">
-								<img th:src="@{'/resources/Bilder/Produkte/' + ${product.imagefile}}" alt="" class="center-block">
+								<a th:href="@{'/detail/'+${product.identifier}}">
+									<img th:src="@{'/resources/Bilder/Produkte/' + ${product.imagefile}}" alt="" class="center-block">
+								</a>
 								<div class="carousel-caption">
 					        		<h3 th:text="${product.category}">First slide Heading</h3>
-					        		<p th:text="${product.name}">First slide Caption</p>
+					        		<p th:href="@{'/detail/'+${product.identifier}}" th:text="${product.name}">First slide Caption</p>
 				          		</div>
 							</div>	
 				    	</div>
@@ -60,7 +62,9 @@
 				<div id="top-rated" class="top5">
 					
 					<div class="img-thumbnail" th:each="topRatedProduct : ${top5rated}">
-						<img th:src="@{'/resources/Bilder/Produkte/' + ${topRatedProduct.imagefile}}" alt="" class="center-block">
+						<a th:href="@{'/detail/'+${topRatedProduct.identifier}}">
+							<img th:src="@{'/resources/Bilder/Produkte/' + ${topRatedProduct.imagefile}}" alt="" class="center-block">
+						</a>
 						<div id=thumbnail-text>
 							<h3 class="thumbnail-category" th:text="${topRatedProduct.category}"></h3>
 							<h3 class="thumbnail-name" th:text="${topRatedProduct.name}"></h3>
@@ -75,7 +79,9 @@
 				<div id="top-sold" class="top5">
 					
 					<div class="img-thumbnail" th:each="topSoldProduct : ${top5sold}">
-						<img th:src="@{'/resources/Bilder/Produkte/' + ${topSoldProduct.imagefile}}" alt="" class="center-block">
+						<a th:href="@{'/detail/'+${topSoldProduct.identifier}}">
+							<img th:src="@{'/resources/Bilder/Produkte/' + ${topSoldProduct.imagefile}}" alt="" class="center-block">
+						</a>
 						<div id=thumbnail-text>
 							<h3 class="thumbnail-category" th:text="${topSoldProduct.category}"></h3>
 							<h3 class="thumbnail-name" th:text="${topSoldProduct.name}"></h3>
@@ -86,7 +92,9 @@
 				<h2>Für Sie aktuell im Angebot</h2>
 				<div id="selection-container" class="top5">
 					<div class="img-thumbnail" th:each="product : ${selection}">
-						<img th:src="@{'/resources/Bilder/Produkte/' + ${product.imagefile}}" alt="" class="center-block">
+						<a th:href="@{'/detail/'+${product.identifier}}">
+							<img th:src="@{'/resources/Bilder/Produkte/' + ${product.imagefile}}" alt="" class="center-block">
+						</a>
 						<div id=thumbnail-text>
 							<h3 class="thumbnail-category" th:text="${product.category}"></h3>
 							<h3 class="thumbnail-name" th:text="${product.name}"></h3>
