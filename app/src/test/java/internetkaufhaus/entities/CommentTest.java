@@ -82,5 +82,10 @@ public class CommentTest {
 		assertEquals("FormattedDate gesetzt", model.getFormatedDate(), formattedDate);
 
 	}
+	@Test 
+	public void testToString()
+	{
+		assertEquals("Das hier ist ein Kommentar", model.toString());
+	}
 
 }
