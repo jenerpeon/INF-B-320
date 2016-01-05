@@ -16,6 +16,10 @@ import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Creditmanager.
+ */
 @Component
 public class Creditmanager {
 
@@ -26,6 +30,11 @@ public class Creditmanager {
 	
 	private ConcreteOrderRepository concreteOrderRepo;
 
+	/**
+	 * Instantiates a new creditmanager.
+	 *
+	 * @param concreteOrderRepo the concrete order repo
+	 */
 	@Autowired
 	public Creditmanager(ConcreteOrderRepository concreteOrderRepo) {
 

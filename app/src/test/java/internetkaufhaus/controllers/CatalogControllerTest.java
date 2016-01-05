@@ -18,18 +18,27 @@ import internetkaufhaus.AbstractWebIntegrationTests;
 import internetkaufhaus.controller.CatalogController;
 import internetkaufhaus.model.Search;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CatalogControllerTest.
+ */
 public class CatalogControllerTest extends AbstractWebIntegrationTests {
 
+	/** The controller. */
 	@Autowired
 	CatalogController controller;
+	
+	/** The prodsearch. */
 	@Autowired
 	Search prodsearch;
 
+	/** The categories. */
 	public List<String> categories = new ArrayList<String>();
 
 	/**
-	 * 
-	 * @throws Exception
+	 * Sample mvc integration test.
+	 *
+	 * @throws Exception the exception
 	 */
 	@Test
 	public void sampleMvcIntegrationTest() throws Exception {

@@ -16,6 +16,7 @@ import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.model.StartPage;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 
+// TODO: Auto-generated Javadoc
 /**
  * This is the shop controller. It controls the shop. Or maybe it shops the
  * controls? You never know... In this class you may find the controllers for
@@ -28,20 +29,27 @@ import internetkaufhaus.repositories.ConcreteProductRepository;
 @SessionAttributes("cart")
 public class ShopController {
 
+	/** The start page. */
 	@Autowired
 	private StartPage startPage;
 
+	/** The catalog. */
 	private final Catalog<ConcreteProduct> catalog;
+	
+	/** The user account manager. */
 	private final UserAccountManager userAccountManager;
+	
+	/** The concrete catalog. */
 	private final ConcreteProductRepository concreteCatalog;
 
 	/**
 	 * This is the constructor. It's neither used nor does it contain any
 	 * functionality other than storing function arguments as class attribute,
 	 * what do you expect me to write here?
-	 * 
-	 * @param userAccountManager
-	 * @param catalog
+	 *
+	 * @param userAccountManager the user account manager
+	 * @param catalog the catalog
+	 * @param concreteCatalog the concrete catalog
 	 */
 	@Autowired
 	public ShopController(UserAccountManager userAccountManager, Catalog<ConcreteProduct> catalog,
@@ -54,9 +62,9 @@ public class ShopController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the main page.
-	 * 
-	 * @param model
-	 * @return
+	 *
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping(value = { "/", "/index" })
 	public String index(ModelMap model) {
@@ -83,9 +91,9 @@ public class ShopController {
 	}
 
 	/**
-	 * TODO: What does this do?
-	 * 
-	 * @return
+	 * TODO: What does this do?.
+	 *
+	 * @return the user account manager
 	 */
 	public UserAccountManager getUserAccountManager() {
 		return userAccountManager;

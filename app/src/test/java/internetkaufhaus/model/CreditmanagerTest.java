@@ -20,24 +20,45 @@ import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CreditmanagerTest.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 
 public class CreditmanagerTest {
+	
+	/** The acc. */
 	private ConcreteUserAccount acc;
+	
+	/** The user. */
 	private ConcreteUserAccount user;
+	
+	/** The manager. */
 	private Creditmanager manager;
+	
+	/** The o. */
 	private ConcreteOrder o;
+	
+	/** The order. */
 	private Order order;
 
+	/** The concrete order repo. */
 	@Autowired
 	ConcreteOrderRepository concreteOrderRepo;
+	
+	/** The order manager. */
 	@Autowired
 	OrderManager<Order> orderManager;
 
+	/** The u. */
 	@Autowired
 	UserAccountManager u;
 
+	/**
+	 * Inits the.
+	 */
 	@Before
 	public void init() {
 		this.manager = new Creditmanager(concreteOrderRepo);
@@ -86,6 +107,9 @@ public class CreditmanagerTest {
 
 	}
 
+	/**
+	 * Testupdate creditpoints by user.
+	 */
 	@Test
 	public void testupdateCreditpointsByUser() {
 		// assertTrue("0 pkte", acc.getCredits() == 0);

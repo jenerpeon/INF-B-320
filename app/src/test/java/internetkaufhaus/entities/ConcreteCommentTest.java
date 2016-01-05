@@ -11,22 +11,36 @@ import org.junit.Test;
 
 import internetkaufhaus.entities.Comment;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ConcreteCommentTest.
+ */
 public class ConcreteCommentTest {
 
+	/** The model. */
 	private Comment model;
 
+	/**
+	 * Inits the.
+	 */
 	@Before
 	public void init() {
 		Date now = new Date();
 		model = new Comment("Das hier ist ein Kommentar", 4, now, "12");
 	}
 
+	/**
+	 * Test get formated date.
+	 */
 	@Test
 	public void testGetFormatedDate() {
 
 		assertTrue("Datum erhalten", model.getFormatedDate().equals("12"));
 	}
 
+	/**
+	 * Test set formated date.
+	 */
 	@Test
 	public void testSetFormatedDate() {
 

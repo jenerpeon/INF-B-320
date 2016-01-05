@@ -12,9 +12,18 @@ import org.junit.Test;
 
 import internetkaufhaus.entities.ConcreteProduct;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class StartPageTest.
+ */
 public class StartPageTest {
+	
+	/** The start page. */
 	private StartPage startPage;
 
+	/**
+	 * Inits the.
+	 */
 	@Before
 	public void init() {
 		this.startPage = new StartPage();
@@ -22,6 +31,9 @@ public class StartPageTest {
 		this.startPage.setSelectionProducts(new ArrayList<ConcreteProduct>());
 	}
 
+	/**
+	 * Test.
+	 */
 	@Test
 	public void test() {
 		List<ConcreteProduct> list1 = new ArrayList<ConcreteProduct>();

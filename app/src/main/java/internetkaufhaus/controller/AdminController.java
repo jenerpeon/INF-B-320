@@ -41,6 +41,7 @@ import internetkaufhaus.services.ConcreteMailService;
 import internetkaufhaus.services.DataService;
 import internetkaufhaus.services.ProductManagementService;
 
+// TODO: Auto-generated Javadoc
 /**
  * This is the admin controller. It controls the admin. Or maybe it admins the
  * controls? You never know... In this class you may find the controllers for
@@ -54,32 +55,35 @@ import internetkaufhaus.services.ProductManagementService;
 @SessionAttributes("cart")
 public class AdminController {
 
+	/** The data service. */
 	@Autowired
 	private DataService dataService;
+	
+	/** The mail service. */
 	@Autowired
 	private ConcreteMailService mailService;
+	
+	/** The product management service. */
 	@Autowired
 	private ProductManagementService productManagementService;
 
+	/** The form. */
 	private final NewUserAccountForm form;
+	
+	/** The creditmanager. */
 	private final Creditmanager creditmanager;
+	
+	/** The concrete product repository. */
 	private final ConcreteProductRepository concreteProductRepository;
 
 	/**
 	 * This is the constructor. It's neither used nor does it contain any
 	 * functionality other than storing function arguments as class attribute,
 	 * what do you expect me to write here?
-	 * 
-	 * @param concreteOrderRepo
-	 *            singleton, passed by spring/salespoint
-	 * @param manager
-	 *            singleton, passed by spring/salespoint
-	 * @param umanager
-	 *            singleton, passed by spring/salespoint
-	 * @param creditmanager
-	 *            singleton, passed by spring/salespoint
-	 * @param form
-	 *            singleton, passed by spring/salespoint
+	 *
+	 * @param creditmanager            singleton, passed by spring/salespoint
+	 * @param form            singleton, passed by spring/salespoint
+	 * @param concreteProductRepository the concrete product repository
 	 */
 	@Autowired
 	public AdminController(Creditmanager creditmanager, NewUserAccountForm form, ConcreteProductRepository concreteProductRepository) {
@@ -88,6 +92,11 @@ public class AdminController {
 		this.creditmanager = creditmanager;
 	}
 
+	/**
+	 * Adds the admin navigation.
+	 *
+	 * @return the list
+	 */
 	@ModelAttribute("adminNaviagtion")
 	public List<NavItem> addAdminNavigation() {
 		//String adminNavigationName[] = { "Userverwaltung", "Bilanzen", "Statistiken", "Gewinnspiel" };
@@ -104,9 +113,9 @@ public class AdminController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * 
-	 * @param userAccount
-	 * @param model
+	 *
+	 * @param userAccount the user account
+	 * @param model the model
 	 * @return adminOverviewPage
 	 */
 	@RequestMapping("/admin")
@@ -117,8 +126,8 @@ public class AdminController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * 
-	 * @param model
+	 *
+	 * @param model the model
 	 * @return changeUserPage
 	 */
 	@RequestMapping(value = "/admin/changeuser")
@@ -134,8 +143,8 @@ public class AdminController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * 
-	 * @param id
+	 *
+	 * @param id the id
 	 * @return redirectToChangeUserPage
 	 */
 	@RequestMapping(value = "/admin/changeuser/deleteUser/{id}")
@@ -149,10 +158,10 @@ public class AdminController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * 
-	 * @param acc
-	 * @param model
-	 * @return
+	 *
+	 * @param acc the acc
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping(value = "/admin/changeuser/detail/{id}")
 	public String detailUser(@PathVariable("id") ConcreteUserAccount acc, ModelMap model) {
@@ -162,8 +171,8 @@ public class AdminController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * 
-	 * @return
+	 *
+	 * @return the string
 	 */
 	@RequestMapping("/admin/changeuser/addUser")
 	public String addArticle() {
@@ -172,11 +181,11 @@ public class AdminController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * 
-	 * @param createuserform
-	 * @param result
-	 * @param model
-	 * @return
+	 *
+	 * @param createuserform the createuserform
+	 * @param result the result
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping(value = "/admin/changeuser/addedUser", method = RequestMethod.POST)
 	public String addedUser(@ModelAttribute("CreateUserForm") @Valid CreateUserForm createuserform,
@@ -191,10 +200,10 @@ public class AdminController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * 
-	 * @param acc
-	 * @param model
-	 * @return
+	 *
+	 * @param acc the acc
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping(value = "/admin/changeuser/editUser/{id}")
 	public String editUser(@PathVariable("id") ConcreteUserAccount acc, ModelMap model) {
@@ -204,10 +213,10 @@ public class AdminController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * 
-	 * @param edituserform
-	 * @param result
-	 * @return
+	 *
+	 * @param edituserform the edituserform
+	 * @param result the result
+	 * @return the string
 	 */
 	@RequestMapping(value = "/admin/changeuser/editedUser", method = RequestMethod.POST)
 	public String editedUserUser(@ModelAttribute("EditUserForm") @Valid EditUserForm edituserform,
@@ -221,10 +230,10 @@ public class AdminController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * 
-	 * @param acc
-	 * @param model
-	 * @return
+	 *
+	 * @param acc the acc
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping(value = "/admin/changeuser/displayUser/{id}")
 	public String displayUser(@PathVariable("id") ConcreteUserAccount acc, ModelMap model) {
@@ -234,9 +243,9 @@ public class AdminController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * 
-	 * @param model
-	 * @return
+	 *
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping(value = "/admin/balance")
 	public String balance(ModelMap model) {
@@ -272,9 +281,9 @@ public class AdminController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * 
-	 * @param model
-	 * @return
+	 *
+	 * @param model the model
+	 * @return the winners
 	 */
 	/*@RequestMapping(value = "/admin/statistics")
 	public String getStatistics() {

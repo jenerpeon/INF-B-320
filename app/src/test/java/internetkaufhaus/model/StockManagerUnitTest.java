@@ -20,20 +20,46 @@ import java.util.Optional;
 
 import org.javamoney.moneta.Money;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class StockManagerUnitTest.
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class StockManagerUnitTest {
+	
+	/** The inventory. */
 	@Mock 
 	private ConcreteInventory<InventoryItem> inventory;
+	
+	/** The item. */
 	private Optional<InventoryItem> item;
+	
+	/** The prod. */
 	private ConcreteProduct prod;
+	
+	/**
+	 * The Class ItemMatcher.
+	 */
 	private class ItemMatcher extends ArgumentMatcher<InventoryItem>
 	{
+		
+		/** The q. */
 		private Quantity q;
+		
+		/**
+		 * Instantiates a new item matcher.
+		 *
+		 * @param q the q
+		 */
 		public ItemMatcher(int q)
 		{
 			super();
 			this.q = Quantity.of(q);
 		}
+		
+		/* (non-Javadoc)
+		 * @see org.mockito.ArgumentMatcher#matches(java.lang.Object)
+		 */
 		@Override
 		public boolean matches(Object item) {
 			if(((InventoryItem)item).getQuantity().equals(q))
@@ -46,6 +72,10 @@ public class StockManagerUnitTest {
 			}
 		}
 	}
+	
+	/**
+	 * Inits the.
+	 */
 	@Before
 	public void init()
 	{
@@ -53,6 +83,10 @@ public class StockManagerUnitTest {
 		this.item = Optional.of(new InventoryItem(this.prod, Quantity.of(10)));
 		when(inventory.findByProductIdentifier(any())).thenReturn(this.item);
 	}
+	
+	/**
+	 * Order article test.
+	 */
 	@Test
 	public void orderArticleTest()
 	{
@@ -60,6 +94,10 @@ public class StockManagerUnitTest {
 		stock.orderArticle(this.prod.getIdentifier(), Quantity.of(10));
 		verify(inventory).save(argThat(new ItemMatcher(20)));
 	}
+	
+	/**
+	 * Removes the article test.
+	 */
 	@Test
 	public void removeArticleTest()
 	{

@@ -10,10 +10,18 @@ import org.salespointframework.useraccount.UserAccount;
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ReturnManager.
+ */
 public class ReturnManager {
+	
 	/**
 	 * The ReturnManager class is made for the return of orders.
 	 *
+	 * @param concreteOrderRepo the concrete order repo
+	 * @param userAccount the user account
+	 * @return the concrete order during last two weeks
 	 */
 	
 	/**

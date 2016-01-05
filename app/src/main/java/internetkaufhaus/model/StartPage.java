@@ -28,6 +28,9 @@ public class StartPage {
 
 	/**
 	 * Instantiates a new start page.
+	 *
+	 * @param bannerProducts the banner products
+	 * @param selectionProducts the selection products
 	 */
 	public StartPage(List<ConcreteProduct> bannerProducts, List<ConcreteProduct> selectionProducts) {
 		this.bannerProducts = bannerProducts;

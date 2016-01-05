@@ -20,17 +20,26 @@ import org.springframework.transaction.annotation.Transactional;
 import internetkaufhaus.AbstractIntegrationTests;
 import internetkaufhaus.Application;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ConcreteOrderTest.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 
 @Transactional
 public class ConcreteOrderTest extends AbstractIntegrationTests {
 
+	/** The o. */
 	private ConcreteOrder o;
 
+	/** The u. */
 	@Autowired
 	private UserAccountManager u;
 
+	/**
+	 * Inits the.
+	 */
 	@Before
 	public void init() {
 		Cart cart = new Cart();
@@ -53,11 +62,17 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 
 	}
 
+	/**
+	 * Testget order lines size.
+	 */
 	@Test
 	public void testgetOrderLinesSize() {
 		assertTrue("Anzahl der Orderline", o.getOrderLinesSize() == 2);
 	}
 
+	/**
+	 * Testget total product number.
+	 */
 	@Test
 	public void testgetTotalProductNumber() {
 		assertTrue("Anzahl der Produkte", o.getTotalProductNumber() == 15);
