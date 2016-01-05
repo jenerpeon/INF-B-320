@@ -1,5 +1,6 @@
 package internetkaufhaus.advices;
 
+import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -7,7 +8,6 @@ import java.util.List;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.CartItem;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -107,8 +107,13 @@ public class HeaderAdvice {
 	 * @return "error500"
 	 */
 	@ExceptionHandler(value = Exception.class)
-	public String handleExceptions(Exception exception, ModelMap model) {
-		model.addAttribute("exception", exception.toString());
+	public String handleExceptions(Exception exception) {
+		if (exception instanceof AccessDeniedException) {
+			return "redirect:/#login";
+		}
+		System.out.println(exception.toString());
+		System.out.println(exception.getMessage());
+		exception.printStackTrace();
 		return "error500";
 	}
 }

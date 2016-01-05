@@ -9,75 +9,41 @@
 </head>
 
 <body>
-<div id="wrapper">
-	<div id="header" th:include="navigation :: navigation"></div>
+	<div id="wrapper">
+		<div id="header" th:include="navigation :: navigation"></div>
 
-	<main>
+		<main>
 		<div id="mainframe">
 			<div id="topLine">
 				<div id="path">
-					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
-					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
-					<a href="/employee" >Mitarbeiterportal</a>
-					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
-					<a href="/employee/changestartpage" >Startseite ändern</a>
+					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a> <img id="breadcrumb" src="/resources/Bilder/forward.png" /> <a href="/employee">Mitarbeiterportal</a> <img id="breadcrumb" src="/resources/Bilder/forward.png" /> <a href="/employee/changestartpage">Startseite ändern</a>
 				</div>
 			</div>
-			
+
 			<div id="workframe">
-				<form id="changeSettings" class="changeStartPageForm" th:action="@{'/employee/startpage/changedSetting'}" method="POST">
-					<fieldset>
-						<h2>Einstellungen</h2>
-						<ol>
-							<li>
-								<label for="totalCaroussel">Artikel im Karussel:</label>
-								<input type="number" name="totalCaroussel" id="totalCarousselfield" th:value="${totCar}" min="1" max="5"/>
-							</li>
-							<li>
-								<label for="totalSelection">Artikel in der Auswahl:</label>
-								<input type="number" name="totalSelection" id="totalSelectionfield" th:value="${totSel}" min="1" max="16"/>
-							</li>
-							<li>
-								<input type="submit" name="submitSettings" value="Einstellungen übernehmen"/>
-							</li>
-						</ol>
-					</fieldset>
-				</form>
 				<form id="changeStartPage" class="changeStartPageForm" th:action="@{'/employee/startpage/changedStartpage'}" method="POST">
 					<fieldset>
 						<h2>Karussel</h2>
-						<ol>
-							<li th:each="i : ${#numbers.sequence( 1, totCar)}">
-								<label th:text="'Artikel '+${i}+': '"></label>
-								<select th:name="@{'carousselArticle'+${i}}" size="1">
-									<option th:value="${concreteproduct.getId()}" th:each="concreteproduct : ${prod50}">
-										<a th:text="${concreteproduct.name}">Name</a>
-									</option>
-								</select>
-							</li>
-						</ol>
+						<select multiple="multiple" th:name="@{'bannerArticles'}" size="20">
+							<option th:selected="${concreteproduct.value == true ? 'selected' : 'false'}" th:value="${concreteproduct.key.getId()}" th:each="concreteproduct : ${bannerProducts}" th:text="${concreteproduct.key.name}">Name
+							</option>
+						</select>
 					</fieldset>
 					<fieldset>
 						<h2>Artikelauswahl</h2>
-						<ol>
-							<li th:each="i : ${#numbers.sequence( 1, totSel)}">
-								<label th:text="'Artikel '+${i}+': '"></label>
-								<select th:name="@{'selectionArticle'+${i}}" size="1">
-									<option th:value="${concreteproduct.getId()}" th:each="concreteproduct : ${prod50}">
-										<a th:text="${concreteproduct.name}">Name</a>
-									</option>
-								</select>
-							</li>
-						</ol>
+						<select multiple="multiple" th:name="@{'selectionArticles'}" size="20">
+							<option th:selected="${concreteproduct.value == true ? 'selected' : 'false'}" th:value="${concreteproduct.key.getId()}" th:each="concreteproduct : ${selectionProducts}" th:text="${concreteproduct.key.name}">Name
+							</option>
+						</select>
 					</fieldset>
 					<fieldset class="changeStartPageForm">
-						<input type="submit" value="Startseite übernehmen"/>
+						<input type="submit" value="Startseite übernehmen" />
 					</fieldset>
 				</form>
 			</div>
 		</div>
-	<div id="footer" th:include="footer :: footer"></div>
-	</main>
-</div>
+		<div id="footer" th:include="footer :: footer"></div>
+		</main>
+	</div>
 </body>
 </html>

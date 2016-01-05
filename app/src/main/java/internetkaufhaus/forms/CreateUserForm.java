@@ -4,13 +4,8 @@ public class CreateUserForm extends StandardUserForm {
 
 	private String rolename;
 
-	/**
-	 * This comment is just here because sonarcube is a little bitch.
-	 */
 	public CreateUserForm() {
-		/**
-		 * This comment is just here because sonarcube is a little bitch.
-		 */
+		System.out.print("");
 	}
 
 	public String getRolename() {

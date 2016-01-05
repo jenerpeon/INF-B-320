@@ -24,18 +24,20 @@ public class Competition {
 	 */
 
 	private ArrayList<ConcreteUserAccount> accs = new ArrayList<ConcreteUserAccount>();
-	
+
 	/** The winners. */
 	private ArrayList<ConcreteUserAccount> winners = new ArrayList<ConcreteUserAccount>();
-	
+
 	/** The creditmanager. */
 	private Creditmanager creditmanager;
 
 	/**
 	 * Instantiates a new competition.
 	 *
-	 * @param accs the accs
-	 * @param creditmanager the creditmanager
+	 * @param accs
+	 *            the accs
+	 * @param creditmanager
+	 *            the creditmanager
 	 */
 	public Competition(Iterable<ConcreteUserAccount> accs, Creditmanager creditmanager) {
 		for (ConcreteUserAccount acc : accs) {
@@ -79,7 +81,8 @@ public class Competition {
 	 * The notifyWinners method sends a congratulation email to the winners.
 	 *
 	 * @author heiner
-	 * @param sender the sender
+	 * @param sender
+	 *            the sender
 	 * @return ArrayList with
 	 */
 	public void notifyWinners(ConcreteMailService sender) {
@@ -98,14 +101,14 @@ public class Competition {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * Sets list of participants
-	 * @param accs ConcreteUserAccounts for the competition
-=======
-	 * Sets list of participants.
+	 * <<<<<<< HEAD Sets list of participants
+	 * 
+	 * @param accs
+	 *            ConcreteUserAccounts for the competition ======= Sets list of
+	 *            participants.
 	 *
-	 * @param accs the new accs
->>>>>>> 64d62d28489e373b8adbe81fe8b7b3f421f51fc2
+	 * @param accs
+	 *            the new accs >>>>>>> 64d62d28489e373b8adbe81fe8b7b3f421f51fc2
 	 */
 	public void setAccs(ArrayList<ConcreteUserAccount> accs) {
 		this.accs = accs;
