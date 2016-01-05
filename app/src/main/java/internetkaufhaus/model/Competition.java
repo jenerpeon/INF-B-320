@@ -83,7 +83,6 @@ public class Competition {
 	 * @author heiner
 	 * @param sender
 	 *            the sender
-	 * @return ArrayList with
 	 */
 	public void notifyWinners(ConcreteMailService sender) {
 		for (ConcreteUserAccount acc : winners) {
@@ -101,14 +100,10 @@ public class Competition {
 	}
 
 	/**
-	 * <<<<<<< HEAD Sets list of participants
-	 * 
-	 * @param accs
-	 *            ConcreteUserAccounts for the competition ======= Sets list of
-	 *            participants.
+	 * Sets list of participants.
 	 *
 	 * @param accs
-	 *            the new accs >>>>>>> 64d62d28489e373b8adbe81fe8b7b3f421f51fc2
+	 *            the new accs
 	 */
 	public void setAccs(ArrayList<ConcreteUserAccount> accs) {
 		this.accs = accs;

@@ -60,6 +60,7 @@ import internetkaufhaus.services.ConcreteMailService;
 import internetkaufhaus.services.NewsletterService;
 import internetkaufhaus.services.ProductManagementService;
 
+// TODO: Auto-generated Javadoc
 /**
  * This is the management controller. It controls the management. Or does it
  * manage the controls? You never know... In this class you may find the
@@ -73,21 +74,42 @@ import internetkaufhaus.services.ProductManagementService;
 @SessionAttributes("cart")
 public class ManagementController {
 
+	/** The product management service. */
 	@Autowired
 	private ProductManagementService productManagementService;
 
+	/** The start page. */
 	@Autowired
 	private StartPage startPage;
 
+	/** The Constant NONE. */
 	private static final Quantity NONE = Quantity.of(0);
+	
+	/** The catalog. */
 	private final Catalog<ConcreteProduct> catalog;
+	
+	/** The inventory. */
 	private final Inventory<InventoryItem> inventory;
+	
+	/** The prod search. */
 	private final Search prodSearch;
+	
+	/** The concrete order repo. */
 	private final ConcreteOrderRepository concreteOrderRepo;
+	
+	/** The concrete product repository. */
 	private final ConcreteProductRepository concreteProductRepository;
+	
+	/** The order manager. */
 	private final OrderManager<Order> orderManager;
+	
+	/** The stock. */
 	private final StockManager stock;
+	
+	/** The news manager. */
 	private final NewsletterService newsManager;
+	
+	/** The sender. */
 	private final ConcreteMailService sender;
 	// private final List<ConcreteProduct> carousselList;
 	// private final List<ConcreteProduct> selectionList;
@@ -96,16 +118,16 @@ public class ManagementController {
 	 * This is the constructor. It's neither used nor does it contain any
 	 * functionality other than storing function arguments as class attribute,
 	 * what do you expect me to write here?
-	 * 
-	 * @param concreteProductRepository
-	 * @param orderManager
-	 * @param concreteOrderRepo
-	 * @param catalog
-	 * @param inventory
-	 * @param prodSearch
-	 * @param stock
-	 * @param newsManager
-	 * @param sender
+	 *
+	 * @param concreteProductRepository the concrete product repository
+	 * @param orderManager the order manager
+	 * @param concreteOrderRepo the concrete order repo
+	 * @param catalog the catalog
+	 * @param inventory the inventory
+	 * @param prodSearch the prod search
+	 * @param stock the stock
+	 * @param newsManager the news manager
+	 * @param sender the sender
 	 */
 	@Autowired
 	public ManagementController(ConcreteProductRepository concreteProductRepository, OrderManager<Order> orderManager,
@@ -128,8 +150,8 @@ public class ManagementController {
 	/**
 	 * This is a Model Attribute. It Models Attributes. Or does it Attribute
 	 * Models? This function adds the Navigation Options to the navigation menu.
-	 * 
-	 * @return
+	 *
+	 * @return the list
 	 */
 	@ModelAttribute("employeeNaviagtion")
 	public List<NavItem> addEmployeeNavigation() {
@@ -149,10 +171,10 @@ public class ManagementController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the main menu for the administration interface of
 	 * employees.
-	 * 
-	 * @param userAccount
-	 * @param model
-	 * @return
+	 *
+	 * @param userAccount the user account
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping("/employee")
 	public String employeeStart(@LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
@@ -163,9 +185,9 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows all current products in the catalog, ascending by name.
-	 * 
-	 * @param model
-	 * @return
+	 *
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping("/employee/changecatalog")
 	public String articleManagement(ModelMap model) {
@@ -178,9 +200,9 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the addArticle-form for employees.
-	 * 
-	 * @param model
-	 * @return
+	 *
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping("/employee/changecatalog/addArticle")
 	public String addArticle(ModelMap model) {
@@ -191,10 +213,9 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page accepts a comment as given by its ID.
-	 * 
-	 * @param comId
-	 *            the comment to accept
-	 * @return
+	 *
+	 * @param comId            the comment to accept
+	 * @return the string
 	 */
 	@RequestMapping("/employee/acceptComment/{comId}")
 	public String acceptComments(@PathVariable("comId") long comId) {
@@ -213,10 +234,9 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page rejects a comment as given by its ID.
-	 * 
-	 * @param comId
-	 *            the comment to reject.
-	 * @return
+	 *
+	 * @param comId            the comment to reject.
+	 * @return the string
 	 */
 	@RequestMapping("/employee/deleteComment/{comId}")
 	public String deleteComments(@PathVariable("comId") long comId) {
@@ -243,9 +263,9 @@ public class ManagementController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows not (yet) accepted comments, so employees can review and
 	 * reject or accept them.
-	 * 
-	 * @param model
-	 * @return
+	 *
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping("/employee/comments")
 	public String comments(ModelMap model) {
@@ -260,11 +280,10 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the edit article form for employees.
-	 * 
-	 * @param prod
-	 *            the article to edit
-	 * @param model
-	 * @return
+	 *
+	 * @param prod            the article to edit
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping("/employee/changecatalog/editArticle/{prodId}")
 	public String editArticle(@PathVariable("prodId") ConcreteProduct prod, ModelMap model) {
@@ -279,14 +298,11 @@ public class ManagementController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page edits an article as requested by an employee and then redirects
 	 * the user to the article Overview.
-	 * 
-	 * @param editForm
-	 *            the form in which the employee specified which article to edit
-	 * @param img
-	 *            the new image which the should have.
-	 * @param result
-	 *            the result which (in)validates above mentioned form
-	 * @return
+	 *
+	 * @param editForm            the form in which the employee specified which article to edit
+	 * @param img            the new image which the should have.
+	 * @param result            the result which (in)validates above mentioned form
+	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/changecatalog/editedArticle", method = RequestMethod.POST)
 	public String editedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm,
@@ -333,14 +349,11 @@ public class ManagementController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page adds an article as requested by an employee and then redirects
 	 * the user to the article Overview.
-	 * 
-	 * @param editForm
-	 *            the form in which the employee specified which article to add
-	 * @param img
-	 *            the new image which the should have.
-	 * @param result
-	 *            the result which (in)validates above mentioned form
-	 * @return
+	 *
+	 * @param editForm            the form in which the employee specified which article to add
+	 * @param img            the new image which the should have.
+	 * @param result            the result which (in)validates above mentioned form
+	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/changecatalog/addedArticle", method = RequestMethod.POST)
 	public String addedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm,
@@ -380,11 +393,10 @@ public class ManagementController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the delete article form which the user has to fill to
 	 * confirm the deletion of an article.
-	 * 
-	 * @param prod
-	 *            the product ID of the article to remove
-	 * @param model
-	 * @return
+	 *
+	 * @param prod            the product ID of the article to remove
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping("/employee/changecatalog/deleteArticle/{prodId}")
 	public String deleteArticle(@PathVariable("prodId") ConcreteProduct prod, ModelMap model) {
@@ -397,9 +409,9 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page deletes an article given by its ID.
-	 * 
-	 * @param prod
-	 * @return
+	 *
+	 * @param prod the prod
+	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/changecatalog/deletedArticle/{prodId}", method = RequestMethod.GET)
 	public String deletedArticle(@PathVariable("prodId") ProductIdentifier prod) {
@@ -413,11 +425,10 @@ public class ManagementController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the order-article-form where employees choose how many
 	 * items of an article they want to order.
-	 * 
-	 * @param prod
-	 *            the ID of the article to order
-	 * @param model
-	 * @return
+	 *
+	 * @param prod            the ID of the article to order
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping("/employee/changecatalog/orderArticle/{prodId}")
 	public String orderArticle(@PathVariable("prodId") ConcreteProduct prod, ModelMap model) {
@@ -435,14 +446,11 @@ public class ManagementController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page orders a given amount of articles and then redirects to the
 	 * article management overview.
-	 * 
-	 * @param stockForm
-	 *            the form which contains the article and the amount to order
-	 * @param result
-	 *            the result which (in)validates the form
-	 * @param model
-	 * @param userAccount
-	 * @return
+	 *
+	 * @param stockForm            the form which contains the article and the amount to order
+	 * @param result            the result which (in)validates the form
+	 * @param userAccount the user account
+	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/changecatalog/orderedArticle", method = RequestMethod.GET)
 	public String orderedArticle(@ModelAttribute("StockForm") @Valid StockForm stockForm, BindingResult result,
@@ -464,10 +472,10 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page removes an article from stock.
-	 * 
-	 * @param stockForm
-	 * @param result
-	 * @return
+	 *
+	 * @param stockForm the stock form
+	 * @param result the result
+	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/changecatalog/decreasedArticle/{prodId}", method = RequestMethod.POST)
 	public String decreasedArticle(@ModelAttribute("StockForm") @Valid StockForm stockForm, BindingResult result) {
@@ -481,11 +489,9 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the menu to edit the start page.
-	 * 
-	 * @param totalCaroussel
-	 * @param totalSelection
-	 * @param model
-	 * @return
+	 *
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping("/employee/startpage")
 	public String editStartPage(ModelMap model) {
@@ -509,9 +515,10 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page is called when the start page editing form is filled.
-	 * 
-	 * @param changeStartPageForm
-	 * @return
+	 *
+	 * @param bannerArticles the banner articles
+	 * @param selectionArticles the selection articles
+	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/startpage/changedStartpage", method = RequestMethod.POST)
 	public String changeStartpage(@RequestParam("bannerArticles") List<ProductIdentifier> bannerArticles,
@@ -533,9 +540,9 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows an overview of all orders.
-	 * 
-	 * @param model
-	 * @return
+	 *
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/orders")
 	public String orders(ModelMap model) {
@@ -557,10 +564,10 @@ public class ManagementController {
 	 * This page marks an order as accepted, sends out the corresponding E-Mail
 	 * to the customer and then redirects the employee back to the order
 	 * management page.
-	 * 
-	 * @param orderId
-	 * @param model
-	 * @return
+	 *
+	 * @param orderId the order id
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/orders/accept/{orderId}", method = RequestMethod.GET)
 	public String acceptOrder(@PathVariable("orderId") Long orderId, ModelMap model) {
@@ -609,10 +616,10 @@ public class ManagementController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page cancels an order and then redirects the employee using the page
 	 * back to the order overview.
-	 * 
-	 * @param model
-	 * @param orderId
-	 * @return
+	 *
+	 * @param model the model
+	 * @param orderId the order id
+	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/orders/cancel/{orderId}", method = RequestMethod.GET)
 	public String cancelOrder(ModelMap model, @PathVariable("orderId") Long orderId) {
@@ -628,10 +635,10 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows details to a given order.
-	 * 
-	 * @param orderId
-	 * @param model
-	 * @return
+	 *
+	 * @param orderId the order id
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/orders/detail/{orderId}")
 	public String detailOrder(@PathVariable("orderId") Long orderId, ModelMap model) {
@@ -665,9 +672,9 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the users, which have subscribed to the newsletter.
-	 * 
-	 * @param model
-	 * @return
+	 *
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/newsletter")
 	public String newsletter(ModelMap model) {
@@ -678,10 +685,9 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the form to change the newsletter.
-	 * 
-	 * @param userAccount
-	 * @param model
-	 * @return
+	 *
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping("/employee/newsletter/changeNewsletter")
 	public String changeNewsletter(ModelMap model) {
@@ -692,10 +698,10 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page deletes an E-Mail from the newsletter.
-	 * 
-	 * @param mail
-	 * @param name
-	 * @return
+	 *
+	 * @param mail the mail
+	 * @param name the name
+	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/newsletter/deleteUserAbo/{mail}/{username}")
 	public String deleteUserAbo(@PathVariable("mail") String mail, @PathVariable("username") String name) {
@@ -708,10 +714,10 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page sends out the newsletter.
-	 * 
-	 * @param subject
-	 * @param mailBody
-	 * @return
+	 *
+	 * @param subject the subject
+	 * @param mailBody the mail body
+	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/newsletter/changeNewsletter/sendNewsletter", method = RequestMethod.GET)
 	public String sendNewsletter(@RequestParam("subject") String subject, @RequestParam("mailBody") String mailBody) {
@@ -729,9 +735,9 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * TODO: Javadoc
-	 * 
-	 * @param model
-	 * @return
+	 *
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/newsletter/oldAbos")
 	public String oldAbos(ModelMap model) {
@@ -744,11 +750,11 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * TODO: Javadoc
-	 * 
-	 * @param date
-	 * @param subject
-	 * @param model
-	 * @return
+	 *
+	 * @param date the date
+	 * @param subject the subject
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/newsletter/oldAbos/{date}/{subject}")
 	public String oldAbosdetails(@PathVariable("date") String date, @PathVariable("subject") String subject,
@@ -763,9 +769,9 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows a list of returned orders.
-	 * 
-	 * @param model
-	 * @return
+	 *
+	 * @param model the model
+	 * @return the retour list
 	 */
 	@RequestMapping(value = "/employee/returnedOrders")
 	public String getRetourList(ModelMap model) {
@@ -780,18 +786,18 @@ public class ManagementController {
 	}
 
 	/**
-	 * TODO: What does this do?
-	 * 
-	 * @return
+	 * TODO: What does this do?.
+	 *
+	 * @return the inventory
 	 */
 	public Inventory<InventoryItem> getInventory() {
 		return inventory;
 	}
 
 	/**
-	 * TODO: What does this do?
-	 * 
-	 * @return
+	 * TODO: What does this do?.
+	 *
+	 * @return the none
 	 */
 	public static Quantity getNone() {
 		return NONE;

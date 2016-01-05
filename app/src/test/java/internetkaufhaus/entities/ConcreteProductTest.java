@@ -19,12 +19,20 @@ import org.junit.Before;
 import org.junit.Test;
 import org.salespointframework.useraccount.UserAccount;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ConcreteProductTest.
+ */
 public class ConcreteProductTest {
 
+	/** The model. */
 	private ConcreteProduct model;
 	// private UserAccountManager manager;
 	// private ConcreteUserAccountRepository concretemanager;
 
+	/**
+	 * Inits the.
+	 */
 	@Before
 	public void init() {
 		// UserAccount dummy = new UserAccount("hans","schranz",
@@ -33,11 +41,17 @@ public class ConcreteProductTest {
 				"Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
 	}
 
+	/**
+	 * Test get name.
+	 */
 	@Test
 	public void testGetName() {
 		assertTrue("Beschreibung erhalten", model.getName().equals("Zigarre"));
 	}
 
+	/**
+	 * Testget imagefile.
+	 */
 	/*
 	 * @Test public void testComments() { ConcreteUserAccount dummdummy = new
 	 * ConcreteUserAccount("peon", "peon",Role.of("ROLE_CUSTOMER"), manager);
@@ -91,11 +105,19 @@ public class ConcreteProductTest {
 		}
 	}
 
+	/**
+	 * Test empty image file.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testEmptyImageFile() throws Exception {
 		model.setImagefile("");
 	}
 
+	/**
+	 * Test description.
+	 */
 	@Test
 	public void testDescription() {
 		String description = "";
@@ -115,11 +137,19 @@ public class ConcreteProductTest {
 		}
 	}
 
+	/**
+	 * Test empty description.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testEmptyDescription() throws Exception {
 		model.setDescription("");
 	}
 
+	/**
+	 * Test web link.
+	 */
 	@Test
 	public void testWebLink() {
 		String webLink = "";
@@ -139,11 +169,19 @@ public class ConcreteProductTest {
 		}
 	}
 
+	/**
+	 * Test empty web link.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testEmptyWebLink() throws Exception {
 		model.setWebLink("");
 	}
 
+	/**
+	 * Test category.
+	 */
 	@Test
 	public void testCategory() {
 		String category = "";
@@ -163,28 +201,48 @@ public class ConcreteProductTest {
 		}
 	}
 
+	/**
+	 * Test empty category.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testEmptyCategory() throws Exception {
 		model.setCategory("");
 	}
 
+	/**
+	 * Test get quantity.
+	 */
 	@Test
 	public void testGetQuantity() {
 		// TODO: Keine Ahnung, wie man das hier macht => Christoph fragen wegen
 		// Spring Test Framework
 	}
 
+	/**
+	 * Test set name error.
+	 *
+	 * @throws IllegalArgumentException the illegal argument exception
+	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetNameError() throws IllegalArgumentException {
 		model = new ConcreteProduct("", Money.of(1.99, EURO), Money.of(1.49, EURO), "Tabakwaren",
 				"Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
 	}
 
+	/**
+	 * Test set buying price.
+	 */
 	@Test
 	public void testSetBuyingPrice() {
 		model.setBuyingPrice(Money.of(200.35, EURO));
 		assertEquals("buyingPrice getter/setter don't seem to work.", model.getBuyingPrice(), Money.of(200.35, EURO));
 	}
+	
+	/**
+	 * Test get comments.
+	 */
 	@Test
 	public void testGetComments()
 	{
@@ -193,6 +251,10 @@ public class ConcreteProductTest {
 		model.addComment(c, acc);
 		assertTrue("GetComments defekt", model.getComments().iterator().next().equals(c));
 	}
+	
+	/**
+	 * Test add comment.
+	 */
 	@Test
 	public void testAddComment()
 	{
@@ -201,6 +263,10 @@ public class ConcreteProductTest {
 		model.addComment(c, acc);
 		assertTrue("AddComment defekt", model.getComments().iterator().next().equals(c));
 	}
+	
+	/**
+	 * Test is commentator.
+	 */
 	@Test
 	public void testIsCommentator()
 	{
@@ -211,6 +277,10 @@ public class ConcreteProductTest {
 		assertTrue("IsCommentator defekt", model.isCommentator(acc1));
 		assertFalse("IsCommentator defekt", model.isCommentator(acc2));
 	}
+	
+	/**
+	 * Test get rating.
+	 */
 	@Test
 	public void testGetRating()
 	{
@@ -221,6 +291,10 @@ public class ConcreteProductTest {
 		model.addComment(a, acc1);
 		assertTrue("GetRating defekt", model.getRating().iterator().hasNext()==true);
 	}
+	
+	/**
+	 * Testupdate average rating.
+	 */
 	@Test
 	public void testupdateAverageRating()
 	{
@@ -235,6 +309,10 @@ public class ConcreteProductTest {
 		model.updateAverageRating();
 		assertTrue("updateAverageRating defekt", model.getAverageRating()==4);
 	}
+	
+	/**
+	 * Testget average rating.
+	 */
 	@Test
 	public void testgetAverageRating()
 	{
@@ -249,6 +327,10 @@ public class ConcreteProductTest {
 		model.updateAverageRating();
 		assertTrue("getAverageRating defekt", model.getAverageRating()==4);
 	}
+	
+	/**
+	 * Testremove comment.
+	 */
 	@Test
 	public void testremoveComment()
 	{
@@ -258,6 +340,10 @@ public class ConcreteProductTest {
 		model.removeComment(a);
 		assertTrue("removeComment defekt", model.getComments().iterator().hasNext()==false);
 	}
+	
+	/**
+	 * Testget accepted comments.
+	 */
 	@Test
 	public void testgetAcceptedComments()
 	{
@@ -273,6 +359,10 @@ public class ConcreteProductTest {
 		assertTrue("getAcceptedComments defekt", model.getAcceptedComments().contains(a));
 		assertTrue("getAcceptedComments defekt", model.getAcceptedComments().contains(b));
 	}
+	
+	/**
+	 * Testget unaccepted comments.
+	 */
 	@Test
 	public void testgetUnacceptedComments()
 	{
@@ -286,22 +376,38 @@ public class ConcreteProductTest {
 		assertTrue("getUnacceptedComments defekt", model.getUnacceptedComments().contains(a));
 		assertTrue("getUnacceptedComments defekt", model.getUnacceptedComments().contains(b));
 	}
+	
+	/**
+	 * Testget buying price.
+	 */
 	@Test
 	public void testgetBuyingPrice()
 	{
 		assertTrue("getBuyingPrice defekt", model.getBuyingPrice().isEqualTo(Money.of(1.49, EURO)));
 	}
+	
+	/**
+	 * Testget price float.
+	 */
 	@Test
 	public void testgetPriceFloat()
 	{
 		assertTrue("getPriceFloat defekt ", model.getPriceFloat().equals("1,99€"));
 	}
+	
+	/**
+	 * Testincrease sold.
+	 */
 	@Test
 	public void testincreaseSold()
 	{
 		model.increaseSold(10);
 		assertTrue("increaseSold defekt", model.getSold()==10);
 	}
+	
+	/**
+	 * Testget sold.
+	 */
 	@Test
 	public void testgetSold()
 	{

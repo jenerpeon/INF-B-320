@@ -34,20 +34,33 @@ import internetkaufhaus.Initialize;
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class StockManagerTest.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @Transactional
 public class StockManagerTest extends AbstractIntegrationTests{
 
+	/** The model. */
 	private ConcreteProduct model;
 
+	/** The product catalog. */
 	@Autowired
 	ConcreteProductRepository productCatalog;
+	
+	/** The inventory. */
 	@Autowired
 	Inventory<InventoryItem> inventory;
+	
+	/** The product search. */
 	@Autowired
 	Search productSearch;
 
+	/**
+	 * Inits the.
+	 */
 	@Before
 	public void init() {
 		model = new ConcreteProduct("Zigarre", Money.of(1.99, EURO), Money.of(1.49, EURO), "Tabakwaren", "Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
@@ -56,6 +69,9 @@ public class StockManagerTest extends AbstractIntegrationTests{
 		inventory.save(inventoryItem);
 	}
 
+	/**
+	 * Order article test.
+	 */
 	@Test
 	public void orderArticleTest() {
 		ProductIdentifier prodId;

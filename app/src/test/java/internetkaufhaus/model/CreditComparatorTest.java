@@ -25,17 +25,28 @@ import internetkaufhaus.AbstractIntegrationTests;
 import internetkaufhaus.Application;
 import internetkaufhaus.entities.ConcreteUserAccount;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CreditComparatorTest.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = Application.class)
 @Transactional
 public class CreditComparatorTest extends AbstractIntegrationTests{
 	
+	/** The acc1. */
 	private ConcreteUserAccount acc1;
+	
+	/** The acc2. */
 	private ConcreteUserAccount acc2;
 
+	/** The u. */
 	@Autowired
 	UserAccountManager u;
 
+	/**
+	 * Inits the.
+	 */
 	@Before
 	public void init() {
 		acc1 = new ConcreteUserAccount("Username1", "Username1", Role.of("ROLE_CUSTOMER"), u);
@@ -45,6 +56,9 @@ public class CreditComparatorTest extends AbstractIntegrationTests{
 		acc2.setCredits(Money.of(3, EURO));
 	}
 
+	/**
+	 * Test compare.
+	 */
 	@Test
 	public void testCompare() {
 		List<ConcreteUserAccount> list = new ArrayList<ConcreteUserAccount>();

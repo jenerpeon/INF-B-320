@@ -26,11 +26,17 @@ import internetkaufhaus.controller.CatalogController;
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.model.Search;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CatalogControllerTest.
+ */
 public class CatalogControllerTest extends AbstractWebIntegrationTests {
 
 	private static final Quantity NONE = Quantity.of(0);
+
 	@Autowired
 	CatalogController controller;
+
 	@Autowired
 	Search prodsearch;
 	@Autowired
@@ -38,11 +44,13 @@ public class CatalogControllerTest extends AbstractWebIntegrationTests {
 	@Autowired
 	Inventory<InventoryItem> inventory;
 
+	/** The categories. */
 	public List<String> categories = new ArrayList<String>();
 
 	/**
-	 * 
-	 * @throws Exception
+	 * Sample mvc integration test.
+	 *
+	 * @throws Exception the exception
 	 */
 	@Test
 	public void sufuTest() throws Exception {

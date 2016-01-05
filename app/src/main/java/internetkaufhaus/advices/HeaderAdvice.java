@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import internetkaufhaus.model.NavItem;
 import internetkaufhaus.model.Search;
 
+// TODO: Auto-generated Javadoc
 /**
  * This is a Header Advice. It Advices Headers. Or does it Head Advices?
  * 
@@ -26,17 +27,15 @@ import internetkaufhaus.model.Search;
 @SessionAttributes("cart")
 public class HeaderAdvice {
 
+	/** The prod search. */
 	private final Search prodSearch;
 
 	/**
 	 * This is the constructor. It's neither used nor does it contain any
 	 * functionality other than storing function arguments as class attribute,
 	 * what do you expect me to write here? It's copied from CartController.
-	 * 
-	 * @param prodSearch
-	 *            singleton, passed by spring/salespoint
-	 * @param sender
-	 *            singleton, passed by spring/salespoint
+	 *
+	 * @param prodSearch            singleton, passed by spring/salespoint
 	 */
 	@Autowired
 	public HeaderAdvice(Search prodSearch) {
@@ -61,6 +60,12 @@ public class HeaderAdvice {
 		return navigation;
 	}
 
+	/**
+	 * Gets the cart.
+	 *
+	 * @param cart the cart
+	 * @return the cart
+	 */
 	@ModelAttribute("cart")
 	public Cart getCart(@ModelAttribute("cart") Cart cart) {
 		return cart;
@@ -70,8 +75,8 @@ public class HeaderAdvice {
 	 * This is a Model Attribute. It Models Attributes. Or does it Attribute
 	 * Models? Adds the current cart price to the variables used by thymeleaf so
 	 * an overview about the cart can be displayed in the navigation header.
-	 * 
-	 * @param cart
+	 *
+	 * @param cart the cart
 	 * @return cartPrice
 	 */
 	@ModelAttribute("cartprice")
@@ -84,8 +89,8 @@ public class HeaderAdvice {
 	 * Models? Adds the current number of items in the cart to the variables
 	 * used by thymeleaf so an overview about the cart can be displayed in the
 	 * navigation header.
-	 * 
-	 * @param cart
+	 *
+	 * @param cart the cart
 	 * @return cartSize
 	 */
 	@ModelAttribute("cartsize")
@@ -102,8 +107,8 @@ public class HeaderAdvice {
 	/**
 	 * This is an Exception Hander. It handles Exceptions. Or does it Except
 	 * Handles?
-	 * 
-	 * @param exception
+	 *
+	 * @param exception the exception
 	 * @return "error500"
 	 */
 	@ExceptionHandler(value = Exception.class)

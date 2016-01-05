@@ -22,23 +22,37 @@ import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.entities.ConcreteUserAccount;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ProductManagementServiceTest.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 
 public class ProductManagementServiceTest {
 
+	/** The service. */
 	private ProductManagementService service;
+	
+	/** The user acc. */
 	private UserAccount userAcc;
 
+	/** The u. */
 	@Autowired
 	private UserAccountManager u;
 
+	/**
+	 * Inits the.
+	 */
 	@Before
 	public void init() {
 		service = new ProductManagementService();
 		this.userAcc = new ConcreteUserAccount("Username1", "Username1", Role.of("ROLE_CUSTOMER"), u).getUserAccount();
 	}
 
+	/**
+	 * Test.
+	 */
 	@Test
 	public void test() {
 		ConcreteOrder order = new ConcreteOrder(this.userAcc, Cash.CASH);

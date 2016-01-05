@@ -43,6 +43,7 @@ import internetkaufhaus.model.ReturnManager;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.services.ConcreteMailService;
 
+// TODO: Auto-generated Javadoc
 /**
  * This is the cart controller. It controls the cart. Or maybe it carts the
  * controls? You never know... In this class you may find the controllers for
@@ -55,20 +56,23 @@ import internetkaufhaus.services.ConcreteMailService;
 @SessionAttributes("cart")
 class CartController {
 
+	/** The order manager. */
 	private final OrderManager<Order> orderManager;
+	
+	/** The sender. */
 	private final ConcreteMailService sender;
+	
+	/** The concrete order repo. */
 	private final ConcreteOrderRepository concreteOrderRepo;
 
 	/**
 	 * This is the constructor. It's neither used nor does it contain any
 	 * functionality other than storing function arguments as class attribute,
 	 * what do you expect me to write here?
-	 * 
-	 * @param userRepo
-	 * @param concreteOrderRepo
-	 * @param orderManager
-	 * @param prodSearch
-	 * @param sender
+	 *
+	 * @param concreteOrderRepo the concrete order repo
+	 * @param orderManager the order manager
+	 * @param sender the sender
 	 */
 	@Autowired
 	public CartController(ConcreteOrderRepository concreteOrderRepo, OrderManager<Order> orderManager,
@@ -83,11 +87,11 @@ class CartController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page adds a product to the cart and then redirects back to the
 	 * catalog.
-	 * 
-	 * @param concreteproduct
-	 * @param number
-	 * @param cart
-	 * @return
+	 *
+	 * @param concreteproduct the concreteproduct
+	 * @param number the number
+	 * @param cart the cart
+	 * @return the string
 	 */
 	@RequestMapping(value = "/cart", method = RequestMethod.POST)
 	public String addProduct(@RequestParam("prodId") ConcreteProduct concreteproduct,
@@ -104,8 +108,8 @@ class CartController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the cart.
-	 * 
-	 * @return
+	 *
+	 * @return the string
 	 */
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String cartRedirect() {
@@ -115,9 +119,9 @@ class CartController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page clears the cart.
-	 * 
-	 * @param cart
-	 * @return
+	 *
+	 * @param cart the cart
+	 * @return the string
 	 */
 	@RequestMapping(value = "/clearCart", method = RequestMethod.POST)
 	public String clearCart(@ModelAttribute Cart cart) {
@@ -128,10 +132,10 @@ class CartController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page removes one item from the cart.
-	 * 
-	 * @param cart
-	 * @param identifier
-	 * @return
+	 *
+	 * @param cart the cart
+	 * @param identifier the identifier
+	 * @return the string
 	 */
 	@RequestMapping(value = "/deleteItem", method = RequestMethod.POST)
 	public String deleteItem(@ModelAttribute Cart cart, @RequestParam("cid") String identifier) {
@@ -142,11 +146,11 @@ class CartController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page changes the amount of items of one product in the cart.
-	 * 
-	 * @param cart
-	 * @param identifier
-	 * @param amount
-	 * @return
+	 *
+	 * @param cart the cart
+	 * @param identifier the identifier
+	 * @param amount the amount
+	 * @return the string
 	 */
 	@RequestMapping(value = "/changeAmount", method = RequestMethod.POST)
 	public String changeAmount(@ModelAttribute Cart cart, @RequestParam("cid") String identifier,
@@ -161,11 +165,11 @@ class CartController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * 
-	 * @param option
-	 * @param userAccount
-	 * @param model
-	 * @return
+	 *
+	 * @param option the option
+	 * @param userAccount the user account
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping(value = "/orderdata/{option}", method = RequestMethod.POST)
 	public String orderdata(@PathVariable("option") int option, @LoggedIn Optional<UserAccount> userAccount,
@@ -178,11 +182,11 @@ class CartController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * 
-	 * @param option
-	 * @param userAccount
-	 * @param model
-	 * @return
+	 *
+	 * @param option the option
+	 * @param userAccount the user account
+	 * @param model the model
+	 * @return the string
 	 */
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 	@RequestMapping(value = "/orderdata/{option}", method = RequestMethod.GET)
@@ -196,16 +200,13 @@ class CartController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * 
-	 * @param modelmap
-	 * @param cart
-	 * @param paymentForm
-	 * @param result1
-	 * @param shippingAddressForm
-	 * @param billingAddressForm
-	 * @param userAccount
-	 * @param redir
-	 * @return
+	 *
+	 * @param cart the cart
+	 * @param paymentForm the payment form
+	 * @param result the result
+	 * @param userAccount the user account
+	 * @param redir the redir
+	 * @return the string
 	 */
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 	@RequestMapping(value = "/payed", method = RequestMethod.POST)
@@ -272,10 +273,10 @@ class CartController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * 
-	 * @param model
-	 * @param userAccount
-	 * @return
+	 *
+	 * @param model the model
+	 * @param userAccount the user account
+	 * @return the string
 	 */
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 	@RequestMapping(value = "/returOrders", method = RequestMethod.GET)
@@ -287,11 +288,10 @@ class CartController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * 
-	 * @param orderId
-	 * @param reason
-	 * @param cart
-	 * @return
+	 *
+	 * @param orderId the order id
+	 * @param reason the reason
+	 * @return the string
 	 */
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 	@RequestMapping(value = "/returOrders", method = RequestMethod.POST)

@@ -14,16 +14,27 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AbstractWebIntegrationTests.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @SpringApplicationConfiguration(classes = Application.class)
 public abstract class AbstractWebIntegrationTests {
 
+	/** The context. */
 	@Autowired WebApplicationContext context;
+	
+	/** The security filter chain. */
 	@Autowired FilterChainProxy securityFilterChain;
 
+	/** The mvc. */
 	protected MockMvc mvc;
 
+	/**
+	 * Sets the up.
+	 */
 	@Before
 	public void setUp() {
 

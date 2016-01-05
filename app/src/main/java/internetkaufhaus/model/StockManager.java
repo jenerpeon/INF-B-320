@@ -8,17 +8,20 @@ import org.springframework.stereotype.Component;
 
 import internetkaufhaus.repositories.ConcreteInventory;
 
+// TODO: Auto-generated Javadoc
 /**
  * The StockManager class is responsible for changing the amount of products at the depot.
  */
 @Component
 public class StockManager {
 
+	/** The inventory. */
 	private ConcreteInventory<InventoryItem> inventory;
 
 	/**
-	 * Constructor of StockManager
-	 * @param inventory
+	 * Constructor of StockManager.
+	 *
+	 * @param inventory the inventory
 	 */
 	@Autowired
 	public StockManager(ConcreteInventory<InventoryItem> inventory) {

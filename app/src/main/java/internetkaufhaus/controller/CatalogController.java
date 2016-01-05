@@ -38,6 +38,7 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 import internetkaufhaus.services.ConcreteMailService;
 import internetkaufhaus.services.NewsletterService;
 
+// TODO: Auto-generated Javadoc
 /**
  * This is the catalog controller. It controls the catalog. Or does it catalog
  * the controller? You never know... In this class you may find the controllers
@@ -49,27 +50,43 @@ import internetkaufhaus.services.NewsletterService;
 @Controller
 @SessionAttributes("cart")
 public class CatalogController {
+	
+	/** The Constant NONE. */
 	private static final Quantity NONE = Quantity.of(0);
+	
+	/** The catalog. */
 	private final Catalog<ConcreteProduct> catalog;
+	
+	/** The inventory. */
 	private final Inventory<InventoryItem> inventory;
+	
+	/** The concrete catalog. */
 	private final ConcreteProductRepository concreteCatalog;
+	
+	/** The prod search. */
 	private final Search prodSearch;
+	
+	/** The news manager. */
 	private final NewsletterService newsManager;
+	
+	/** The sender. */
 	private final ConcreteMailService sender;
+	
+	/** The usermanager. */
 	private final ConcreteUserAccountRepository usermanager;
 
 	/**
 	 * This is the constructor. It's neither used nor does it contain any
 	 * functionality other than storing function arguments as class attribute,
 	 * what do you expect me to write here?
-	 * 
-	 * @param catalog
-	 * @param inventory
-	 * @param prodSearch
-	 * @param concreteCatalog
-	 * @param newsManager
-	 * @param sender
-	 * @param usermanager
+	 *
+	 * @param catalog the catalog
+	 * @param inventory the inventory
+	 * @param prodSearch the prod search
+	 * @param concreteCatalog the concrete catalog
+	 * @param newsManager the news manager
+	 * @param sender the sender
+	 * @param usermanager the usermanager
 	 */
 	@Autowired
 	public CatalogController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch,
@@ -89,16 +106,12 @@ public class CatalogController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows a particular search result page as defined by the search
 	 * string and the pagenumber.
-	 * 
-	 * @param lookup
-	 *            the search string as entered by the user
-	 * @param number
-	 *            the page number the user requested
-	 * @param model
-	 * @return
+	 *
+	 * @param lookup            the search string as entered by the user
+	 * @return the string
 	 */
 	@RequestMapping("/sufu")
-	public String sufu(@RequestParam("search") String lookup, ModelMap model) {
+	public String sufu(@RequestParam("search") String lookup) {
 		return "redirect:/sufu/" + lookup;
 	}
 
@@ -106,13 +119,10 @@ public class CatalogController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows a particular search result page as defined by the search
 	 * string and the pagenumber.
-	 * 
-	 * @param lookup
-	 *            the search string as entered by the user
-	 * @param number
-	 *            the page number the user requested
-	 * @param model
-	 * @return
+	 *
+	 * @param lookup            the search string as entered by the user
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping("/sufu/{search}")
 	public String postsufu(@PathVariable("search") String lookup, ModelMap model) {
@@ -132,11 +142,10 @@ public class CatalogController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows all products of a certain category. This is deprecated.
 	 * TODO: Remove this(?)
-	 * 
-	 * @param category
-	 *            the category which the user wants to see.
-	 * @param model
-	 * @return
+	 *
+	 * @param category            the category which the user wants to see.
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping("/catalog/{type}")
 	public String category(@PathVariable("type") String category, ModelMap model) {
@@ -152,19 +161,14 @@ public class CatalogController {
 	 * Shows the requested catalog page as defined by category, number of items
 	 * per page (givenSplit), number of current page (givenNumber), display
 	 * style (representation) and order of sorting (sort).
-	 * 
-	 * @param category
-	 *            the category to display
-	 * @param givenSplit
-	 *            the number of items per page
-	 * @param givenNumber
-	 *            the page number
-	 * @param representation
-	 *            which page design to use
-	 * @param sort
-	 *            the order to sort the items in
-	 * @param model
-	 * @return
+	 *
+	 * @param category            the category to display
+	 * @param givenSplit            the number of items per page
+	 * @param givenNumber            the page number
+	 * @param representation            which page design to use
+	 * @param sort            the order to sort the items in
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping(path = "/catalog/{type}/{sorting}/{representation}/{split}/{pagenumber}", method = {
 			RequestMethod.POST, RequestMethod.GET })
@@ -240,13 +244,11 @@ public class CatalogController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * TODO: Is this deprecated?
-	 * 
-	 * @param pagable
-	 * @param category
-	 * @param number
-	 * @param split
-	 * @param model
-	 * @return
+	 *
+	 * @param category the category
+	 * @param number the number
+	 * @param split the split
+	 * @return the string
 	 */
 	@RequestMapping(value = "/catalog/{type}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)
 	public String changeStartPageSetting(@PathVariable("type") String category, @PathVariable("pagenumber") int number,
@@ -258,15 +260,13 @@ public class CatalogController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps? For
 	 * further documentation of this please refer to the function list50 in the
 	 * CatalogController, to which this redirects.
-	 * 
-	 * @param pagable
-	 * @param category
-	 * @param number
-	 * @param split
-	 * @param sort
-	 * @param representation
-	 * @param model
-	 * @return
+	 *
+	 * @param category the category
+	 * @param number the number
+	 * @param split the split
+	 * @param sort the sort
+	 * @param representation the representation
+	 * @return the string
 	 */
 	@RequestMapping(value = "/catalog/{type}/{sort}/{representation}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)
 	public String changeStartPageSetting(@PathVariable("type") String category, @PathVariable("pagenumber") int number,
@@ -279,11 +279,10 @@ public class CatalogController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the article page for a certain article as given by its
 	 * ID.
-	 * 
-	 * @param prod
-	 *            the article ID of the article to display
-	 * @param model
-	 * @return
+	 *
+	 * @param prod            the article ID of the article to display
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping("/detail/{prodId}")
 	public String detail(@PathVariable("prodId") ConcreteProduct prod, Model model) {
@@ -300,16 +299,13 @@ public class CatalogController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page submits a comment to an article and then redirects to the
 	 * corresponding article page.
-	 * 
-	 * @param prod
-	 *            the article ID of the article to comment on
-	 * @param comment
-	 *            the actual comment text
-	 * @param rating
-	 *            the rating associated with the comment
-	 * @param model
-	 * @param user
-	 * @return
+	 *
+	 * @param prod            the article ID of the article to comment on
+	 * @param comment            the actual comment text
+	 * @param rating            the rating associated with the comment
+	 * @param model the model
+	 * @param user the user
+	 * @return the string
 	 */
 	@RequestMapping(value = "/comment", method = RequestMethod.POST)
 	public String comment(@RequestParam("prodId") ConcreteProduct prod, @RequestParam("comment") String comment,
@@ -328,12 +324,11 @@ public class CatalogController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page registers a given user to the E-Mail-newsletter and sends a
 	 * confirmation E-Mail. It then redirects the user to the start page.
-	 * 
-	 * @param sendTo
-	 *            the E-Mail-Address to send the newsletter to.
-	 * @param model
-	 * @return
-	 * @throws ParseException
+	 *
+	 * @param sendTo            the E-Mail-Address to send the newsletter to.
+	 * @param model the model
+	 * @return the string
+	 * @throws ParseException the parse exception
 	 */
 	@RequestMapping(value = "/newsletter", method = RequestMethod.GET)
 	public String newsletter(@RequestParam("email") String sendTo, ModelMap model) throws ParseException {

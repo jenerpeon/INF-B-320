@@ -29,22 +29,36 @@ import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class StatisticTest.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @Transactional
 public class StatisticTest extends AbstractIntegrationTests {
 
+	/** The order manager. */
 	@Autowired
 	private OrderManager<Order> orderManager;
+
+	/** The concrete order repo. */
 	@Autowired
 	private ConcreteOrderRepository concreteOrderRepo;
+
+	/** The prods. */
 	@Autowired
 	private ConcreteProductRepository prods;
+
+	/** The Concrete user account manager. */
 	@Autowired
 	private ConcreteUserAccountRepository ConcreteUserAccountManager;
 
+	/**
+	 * Inits the test.
+	 */
 	@Before
-	public void init() {
+	public void initTest() {
 		Cart c = new Cart();
 		for (ConcreteProduct p : prods.findAll()) {
 			c.addOrUpdateItem(p, Quantity.of(1));
@@ -82,29 +96,50 @@ public class StatisticTest extends AbstractIntegrationTests {
 			order.setDateOrdered(LocalDateTime.now().minusDays(31));
 			concreteOrderRepo.save(order);
 			orderManager.save(o);
-
 		}
-
 		c.clear();
-
 	}
 
+	/**
+	 * Test get turnover by interval.
+	 */
 	@Test
 	public void testGetTurnoverByInterval() {
 		assertTrue("hola", true);
 	}
 
+	/**
+	 * Test get sales by interval.
+	 */
 	@Test
 	public void testGetSalesByInterval() {
 		assertTrue("hola", true);
 	}
 
-	public void getPurchasesByInterval(Interval i, int q) {
+	/**
+	 * Test get purchases by interval.
+	 *
+	 * @param i the i
+	 * @param q the q
+	 */
+	public void testGetPurchasesByInterval(Interval i, int q) {
 	}
 
-	public void getProfitByInterval(Interval i, int q) {
+	/**
+	 * Test get profit by interval.
+	 *
+	 * @param i the i
+	 * @param q the q
+	 */
+	public void testGetProfitByInterval(Interval i, int q) {
 	}
 
-	public void getRetoursByInterval(Interval i, int q) {
+	/**
+	 * Test get retours by interval.
+	 *
+	 * @param i the i
+	 * @param q the q
+	 */
+	public void testGetRetoursByInterval(Interval i, int q) {
 	}
 }

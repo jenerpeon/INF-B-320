@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import internetkaufhaus.entities.ConcreteProduct;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Search.
+ */
 @Component
 public class Search implements Serializable {
 
@@ -20,17 +24,33 @@ public class Search implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/** The search type. */
 	private HashMap<String, ArrayList<ConcreteProduct>> searchType;
+
+	/** The catalog. */
 	private Catalog<ConcreteProduct> catalog;
 
+	/**
+	 * Instantiates a new search.
+	 */
 	public Search() {
 		this.searchType = new HashMap<String, ArrayList<ConcreteProduct>>();
 	}
 
+	/**
+	 * Gets the search types.
+	 *
+	 * @return the search types
+	 */
 	public HashMap<String, ArrayList<ConcreteProduct>> getsearchTypes() {
 		return this.searchType;
 	}
 
+	/**
+	 * Gets the categories.
+	 *
+	 * @return the categories
+	 */
 	@ModelAttribute("categories")
 	public Iterable<String> getCategories() {
 		return searchType.keySet();
@@ -48,12 +68,18 @@ public class Search implements Serializable {
 		return searchType.get(cat);
 	}
 
+	/**
+	 * Sets the catalog.
+	 *
+	 * @param catalog
+	 *            the new catalog
+	 */
 	public void setCatalog(Catalog<ConcreteProduct> catalog) {
 		this.catalog = catalog;
 	}
 
 	/**
-	 * This comment is just here because sonarcube is a little bitch.
+	 * Gets the comments. Not implemented yet.
 	 */
 	public void getComments() {
 		// TODO: this needs to be implemented.
@@ -82,6 +108,13 @@ public class Search implements Serializable {
 
 	}
 
+	/**
+	 * Lookup_bar.
+	 *
+	 * @param str
+	 *            the str
+	 * @return the list
+	 */
 	public List<ConcreteProduct> lookup_bar(String str) {
 		if (str.isEmpty()) {
 			List<ConcreteProduct> lookup = new ArrayList<ConcreteProduct>();
@@ -99,6 +132,15 @@ public class Search implements Serializable {
 		return lookup;
 	}
 
+	/**
+	 * Lookup_bar.
+	 *
+	 * @param str
+	 *            the str
+	 * @param limit
+	 *            the limit
+	 * @return the list
+	 */
 	public List<ConcreteProduct> lookup_bar(String str, int limit) {
 		if (str.isEmpty()) {
 			List<ConcreteProduct> lookup = new ArrayList<ConcreteProduct>();
@@ -126,6 +168,12 @@ public class Search implements Serializable {
 		return lookup;
 	}
 
+	/**
+	 * Adds the prods.
+	 *
+	 * @param iterable
+	 *            the iterable
+	 */
 	public void addProds(Iterable<ConcreteProduct> iterable) {
 		for (ConcreteProduct prod : iterable) {
 			for (String cat : prod.getCategories()) {
@@ -137,6 +185,12 @@ public class Search implements Serializable {
 		}
 	}
 
+	/**
+	 * Delete.
+	 *
+	 * @param prodId
+	 *            the prod id
+	 */
 	public void delete(ConcreteProduct prodId) {
 		HashMap<String, ArrayList<ConcreteProduct>> list = getsearchTypes();
 		Iterable<String> cats = prodId.getCategories();

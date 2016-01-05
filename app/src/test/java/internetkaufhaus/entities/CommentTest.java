@@ -12,15 +12,26 @@ import org.javamoney.moneta.Money;
 import org.junit.Before;
 import org.junit.Test;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CommentTest.
+ */
 public class CommentTest {
 
+	/** The model. */
 	Comment model;
 
+	/**
+	 * Inits the.
+	 */
 	@Before
 	public void init() {
 		model = new Comment("Das hier ist ein Kommentar", 5, new Date(200000), "t");
 	}
 
+	/**
+	 * Test get comment id.
+	 */
 	@Test
 	public void testGetCommentId() {
 		long number = new Long(232424);
@@ -28,6 +39,9 @@ public class CommentTest {
 		assertTrue("Id wird zurückgegeben", model.getCommentid() == number);
 	}
 
+	/**
+	 * Test product.
+	 */
 	@Test
 	public void testProduct() {
 		ConcreteProduct prod = new ConcreteProduct("Zigarre", Money.of(1.99, EURO), Money.of(1.49, EURO), "Tabakwaren",
@@ -36,6 +50,9 @@ public class CommentTest {
 		assertTrue("Product wird zurückgegeben", model.getProduct() == prod);
 	}
 
+	/**
+	 * Test user.
+	 */
 	@Test
 	public void testUser() {
 		ConcreteUserAccount account = new ConcreteUserAccount();
@@ -43,6 +60,9 @@ public class CommentTest {
 		assertTrue("Account gesetzt", model.getUserAccount() == account);
 	}
 
+	/**
+	 * Test text.
+	 */
 	@Test
 	public void testText() {
 		String text = "Dieser Text soll angezeigt werden";
@@ -51,6 +71,9 @@ public class CommentTest {
 		assertTrue("Text gesetzt", model.toString() == text);
 	}
 
+	/**
+	 * Test rating.
+	 */
 	@Test
 	public void testRating() {
 		int rate = 5;
@@ -58,6 +81,9 @@ public class CommentTest {
 		assertTrue("Rating gesetzt", model.getRating() == rate);
 	}
 
+	/**
+	 * Test date.
+	 */
 	@Test
 	public void testDate() {
 		Date date = new Date(20000);
@@ -65,6 +91,9 @@ public class CommentTest {
 		assertTrue("Datum gesetzt", model.getDate() == date);
 	}
 
+	/**
+	 * Test accept.
+	 */
 	@Test
 	public void testAccept() {
 		model.accept();
@@ -73,6 +102,9 @@ public class CommentTest {
 		assertTrue("Kommentar ist nicht auf accept gesetzt", model.isAccepted() == false);
 	}
 
+	/**
+	 * Test formatted date.
+	 */
 	@Test
 	public void testFormattedDate() {
 		Date date = new Date(20000);
@@ -82,6 +114,10 @@ public class CommentTest {
 		assertEquals("FormattedDate gesetzt", model.getFormatedDate(), formattedDate);
 
 	}
+	
+	/**
+	 * Test to string.
+	 */
 	@Test 
 	public void testToString()
 	{

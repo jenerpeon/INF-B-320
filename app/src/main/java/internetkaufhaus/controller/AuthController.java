@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import internetkaufhaus.forms.RegistrationForm;
 import internetkaufhaus.services.AccountingService;
 
+// TODO: Auto-generated Javadoc
 /**
  * This is the authentication controller. It controls the authentication
  * process. Or maybe it authenticates the controls? You never know... In this
@@ -37,8 +38,13 @@ import internetkaufhaus.services.AccountingService;
 @SessionAttributes("cart")
 public class AuthController extends SalespointSecurityConfiguration {
 
+	/** The Constant LOGIN_ROUTE. */
 	private static final String LOGIN_ROUTE = "/login";
+	
+	/** The accounting service. */
 	private final AccountingService accountingService;
+	
+	/** The model and view. */
 	private ModelAndView modelAndView = new ModelAndView();
 
 	/**
@@ -55,6 +61,9 @@ public class AuthController extends SalespointSecurityConfiguration {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(org.springframework.security.config.annotation.web.builders.HttpSecurity)
+	 */
 	// TODO: Javadoc
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -68,8 +77,8 @@ public class AuthController extends SalespointSecurityConfiguration {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page may redirect you if you aren't logged in but should be. Spring
 	 * redirects you to /login so we redirect you to our login modal from there.
-	 * 
-	 * @return
+	 *
+	 * @return the string
 	 */
 	@RequestMapping(value = "/login")
 	public String loginRedirection() {
@@ -79,8 +88,8 @@ public class AuthController extends SalespointSecurityConfiguration {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the password reset page.
-	 * 
-	 * @return
+	 *
+	 * @return the string
 	 */
 	@RequestMapping(value = "/passreset")
 	public String resetPassword() {
@@ -90,13 +99,11 @@ public class AuthController extends SalespointSecurityConfiguration {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page sends out an email with a link to reset your password.
-	 * 
-	 * @param email
-	 *            the email associated to the account which password should be
+	 *
+	 * @param email            the email associated to the account which password should be
 	 *            changed, is expected to be passed as a post parameter.
-	 * @param pass
-	 *            the new password the user wants to have
-	 * @return
+	 * @param pass            the new password the user wants to have
+	 * @return the string
 	 */
 	@RequestMapping(value = "/NewPass", method = RequestMethod.POST)
 	public String newPass(@RequestParam("email") String email, @RequestParam("password") String pass) {
@@ -109,11 +116,10 @@ public class AuthController extends SalespointSecurityConfiguration {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page finalizes the password reset process. Its link gets passed via
 	 * E-Mail to the user.
-	 * 
-	 * @param key
-	 *            a personal key which was generated earlier and should be
+	 *
+	 * @param key            a personal key which was generated earlier and should be
 	 *            stored in db.
-	 * @return
+	 * @return the string
 	 */
 	@RequestMapping(value = "/NewPass/{key}")
 	public String changepassword(@PathVariable("key") String key) {
@@ -125,8 +131,8 @@ public class AuthController extends SalespointSecurityConfiguration {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page redirects users that may want to register and called the
 	 * /register page to the registration modal.
-	 * 
-	 * @return
+	 *
+	 * @return the string
 	 */
 	@RequestMapping(value = { "/register" })
 	public String register() {
@@ -137,13 +143,11 @@ public class AuthController extends SalespointSecurityConfiguration {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page accepts the registration form and registers a new user based on
 	 * the entered credentials.
-	 * 
-	 * @param registrationForm
-	 *            the form object containing the user to register
-	 * @param result
-	 *            the result object (in)validating the form
-	 * @param redir
-	 * @return
+	 *
+	 * @param registrationForm            the form object containing the user to register
+	 * @param result            the result object (in)validating the form
+	 * @param redir the redir
+	 * @return the string
 	 */
 	@RequestMapping("/registerNew")
 	public String registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm,
@@ -160,11 +164,11 @@ public class AuthController extends SalespointSecurityConfiguration {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the options to generate an invite link.
-	 * 
-	 * @param modelmap
-	 * @param recruit
-	 * @param userAccount
-	 * @return
+	 *
+	 * @param modelmap the modelmap
+	 * @param recruit the recruit
+	 * @param userAccount the user account
+	 * @return the string
 	 */
 	@RequestMapping(value = { "/recruit" })
 	public String recruitUser(ModelMap modelmap, @RequestParam(value = "email") String recruit,

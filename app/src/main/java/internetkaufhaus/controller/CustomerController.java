@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 
+// TODO: Auto-generated Javadoc
 /**
  * This is the customer controller. It controls the customer. Or does it
  * customize the controller? You never know... In this class you may find the
@@ -27,16 +28,20 @@ import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 @PreAuthorize("hasRole('ROLE_CUSTOMER')")
 @SessionAttributes("cart")
 public class CustomerController {
+	
+	/** The creditmanager. */
 	private final Creditmanager creditmanager;
+	
+	/** The user repo. */
 	private final ConcreteUserAccountRepository userRepo;
 
 	/**
 	 * This is the constructor. It's neither used nor does it contain any
 	 * functionality other than storing function arguments as class attribute,
 	 * what do you expect me to write here?
-	 * 
-	 * @param creditmanager
-	 * @param userRepo
+	 *
+	 * @param creditmanager the creditmanager
+	 * @param userRepo the user repo
 	 */
 	@Autowired
 	public CustomerController(Creditmanager creditmanager, ConcreteUserAccountRepository userRepo) {
@@ -48,11 +53,10 @@ public class CustomerController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the account details of a given account.
-	 * 
-	 * @param userAccount
-	 *            the account to show details about
-	 * @param model
-	 * @return
+	 *
+	 * @param userAccount            the account to show details about
+	 * @param model the model
+	 * @return the string
 	 */
 	@RequestMapping("/customer")
 	public String customer(@LoggedIn Optional<UserAccount> userAccount, ModelMap model) {

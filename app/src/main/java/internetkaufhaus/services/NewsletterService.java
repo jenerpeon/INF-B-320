@@ -30,6 +30,7 @@ public class NewsletterService {
 	 * Instantiates a new newsletter service.
 	 */
 	public NewsletterService() {
+		System.out.print("");
 	}
 
 	/**
