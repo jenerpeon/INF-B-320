@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Benutzerkonto</title>
+<link href="/resources/css/main.css" rel="stylesheet" type="text/css">
+<link href="/resources/css/employee.css" rel="stylesheet"
+	type="text/css">
+</head>
+<body>
+
+ <div id="header" th:include="navigation :: navigation"></div>
+
+	<div class="container">
+		<h1>Profilübersicht</h1>
+		
+		<div class="row">
+			
+			<div >
+				<div class="list-group">
+					<a href="/profil" class="list-group-item active">Profil</a>
+					<a href="/orders" class="list-group-item">Bestellungen</a>
+				</div>
+			</div>
+
+			<div >
+				<h1 th:inline="text" sec:authorize="isAuthenticated()" th:text="@{'Herzlich Willkommen ' +${acc.firstname}}"></h1>
+	
+		<table class="table">
+ 					<tr><td><a href="/orders">Bestellungen</a></td>
+ 						<td th:text="${ordercount}"></td>
+ 					</tr>
+ 					<tr><td>Rabattkontostand</td>
+ 						<td th:text="${points}"></td>
+ 					</tr>
+ 					<tr><td>Geworbene Freunde</td>
+ 						<td th:each="user:${recruits}" th:text="@{${user.getFirstname()}+ ' ' + ${user.getLastname()}}"></td>
+ 					</tr>
+ 					
+		</table>
+		<br />
+		<br />
+		<form method="post" action="/profil/change" >
+					<fieldset>
+						<legend>Daten anpassen</legend>
+						
+						
+						<div class="form-group">
+						<label for="name">Name</label>
+						<input id="name"  class="form-control" th:field="*{name}" th:errorclass="fieldError" type="text" name="name" />
+						</div>
+						<div class="form-group">
+						<label for="name">Vorname</label>
+						<input id="firstname"  class="form-control" th:field="*{firstname}" th:errorclass="fieldError" type="text" name="firstname" />
+						</div>
+						<div class="form-group">
+						<label for="password">Passwort</label>
+						<input id="password"  class="form-control" th:field="*{password}" th:errorclass="fieldError" type="text" name="password" /><br /> 
+						</div>
+						<div class="form-group">
+						<label for="email">E-Mail</label>
+						<input id="email"  class="form-control" th:field="*{email}" th:errorclass="fieldError" type="text" name="email" />
+						</div>
+						<div class="form-group">
+						<label for="street">Straße und Hausnummer</label><div class="row">
+						<div ><input id="street"  th:field="*{street}" th:errorclass="fieldError" type="text" name="street" /></div>
+						<div> <input id="number"   th:field="*{number}" th:errorclass="fieldError" type="text" name="number" /></div>
+						</div>
+						</div>
+						<div class="form-group">
+						<label for="plz">PLZ</label>
+						<input id="plz"  class="form-control" th:field="*{plz}" th:errorclass="fieldError" type="text" name="plz" />
+						</div>
+						<div class="form-group">
+						<label for="city">Ort</label>
+						<input id="city"  class="form-control" th:field="*{city}" th:errorclass="fieldError" type="text" name="city" />
+						</div>
+						
+						<input id="name"   th:field="*{username}" type="hidden"  />
+						
+						<input type="submit"  value="Speichern" />
+					</fieldset>
+				</form>
+		
+	</div>
+	</div>
+	</div>
+	
+	<div id="footer" th:include="footer :: footer"></div>
+	
+</body>
+</html>

@@ -69,4 +69,26 @@ public class NewUserAccountForm {
 		repo.save(acc);
 		return true;
 	}
+	
+	public boolean changeUser2( String firstname, String lastname, String address, String city, String zipCode, String email,Long id, String password) {
+		ConcreteUserAccount acc = repo.findOne(id);
+		if (acc == null) {
+			return false;
+		}
+		acc.setAddress(address);
+		acc.setCity(city);
+		acc.setEmail(email);
+		acc.setZipCode(zipCode);
+		
+		UserAccount usacc = acc.getUserAccount();
+		usacc.setFirstname(firstname);
+		usacc.setLastname(lastname);
+		usacc.setEmail(email);
+		
+		manager.save(usacc);
+		
+		manager.changePassword(usacc, password);
+		repo.save(acc);
+		return true;
+	}
 }

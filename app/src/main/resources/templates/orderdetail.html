@@ -17,20 +17,15 @@
 
 		<main>
 		<div id="mainframe">
-			<div id="topLine">
-				<div id="path">
-					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
-					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
-					<a href="/employee" >Mitarbeiterportal</a>
-					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
-					<a href="/employee/orders" >Bestellungen</a>
-					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
-					<a >Details zur Bestellung</a>
-				</div>
-			</div>
+	
 			
 			<div id="workframe">
+				
+				<p></p>
+				<p></p>
 				<h2 id="orderUser" th:text="@{'Bestellung von '+${order.getUser().getUsername()}}">Account:</h2>
+				<p></p>
+				
 				<table class="article">
 					<tr>
 						<td><a>Name</a></td>

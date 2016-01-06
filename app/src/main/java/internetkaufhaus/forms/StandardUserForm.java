@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * The Class StandardUserForm.
  */
 public class StandardUserForm {
-
+	
 	/** The name. */
 	@NotEmpty(message = "username is mandatory")
 	@Pattern(regexp = "([A-Za-z0-9])+", message = "username contains illegal characters")
@@ -229,5 +229,10 @@ public class StandardUserForm {
 	public void setCity(String city) {
 		this.city = city;
 	}
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 
 }

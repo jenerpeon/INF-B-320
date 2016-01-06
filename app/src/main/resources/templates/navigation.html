@@ -158,10 +158,8 @@
 							Willkommen</a></li>
 					<li sec:authorize="isAuthenticated()"><a
 						th:text="${#authentication.name}">Name</a></li>
-					<li sec:authorize="isAuthenticated()"><a th:href="@{'/login'}">Mein
-							Konto</a></li>
-					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a
-						th:href="@{/customer}">Punktestand</a></li>
+					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a 
+						th:href="@{'/customer'}">Mein Konto</a></li>
 					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a
 						href="#recruit-modal">Rekrutieren</a></li>
 					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a
@@ -253,7 +251,7 @@
 	</div>
 	<div id="navigation">
 		<ul class="nav">
-			<li th:if="${employeeNaviagtion == null and adminNaviagtion == null}"
+			<li th:if="${employeeNaviagtion == null and adminNaviagtion == null and customerNaviagtion == null}"
 				th:each="c : ${categories}"><a
 				th:href="@{'/catalog/'+${c.link}+'/name'+'/1'+'/6'+'/1'}"
 				th:text="${c.name}" th:id="${c.name}"></a></li>
@@ -262,6 +260,9 @@
 				th:text="${c.name}" th:id="${c.name}"></a></li>
 			<li th:if="${employeeNaviagtion != null}"
 				th:each="c : ${employeeNaviagtion}"><a th:href="${c.link}"
+				th:text="${c.name}" th:id="${c.name}"></a></li>
+			<li th:if="${customerNaviagtion != null}"
+				th:each="c : ${customerNaviagtion}"><a th:href="${c.link}"
 				th:text="${c.name}" th:id="${c.name}"></a></li>
 		</ul>
 	</div>

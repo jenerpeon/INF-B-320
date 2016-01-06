@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Meine Daten ändern</title>
+<link href="/resources/css/main.css" rel="stylesheet" type="text/css">
+<link href="/resources/css/admin.css" rel="stylesheet" type="text/css">
+<script src="/resources/script/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('label.tree-toggler').click(function() {
+			$(this).parent().children('ul.tree').toggle(300);
+		});
+	});
+</script>
+</head>
+
+<body>
+	<div id="wrapper">
+		<div id="header" th:include="navigation :: navigation"></div>
+
+		<main>
+		<div id="mainframe">
+		
+			
+			<div id="workframe">
+			<p></p>
+			<p></p>
+			<h1>Daten ändern</h1>
+			<p></p>
+				<form id="edituser" class="userform" th:action="@{'/customer/editedUser'}" method="POST" enctype="multipart/form-data" onsubmit='return checkForm();'>
+					<ol>
+						
+							<li>		
+								<label for="Vorname">Vorname: </label>
+								<input type="text" name="firstname" id="firstnamefield" th:value="${account.userAccount.firstname}" />
+						</li>
+							<li>		
+								<label for="Nachname">Nachname: </label>
+								<input type="text" name="lastname" id="lastnamefield" th:value="${account.userAccount.lastname}" />
+						</li>
+							<li>		
+								<label for="Adresse">Adresse: </label>
+								<input type="text" name="address" id="addressfield" th:value="${account.address}" />
+						</li>
+							<li>		
+								<label for="Ort">Ort: </label>
+								<input type="text" name="city" id="cityfield" th:value="${account.city}" />
+						</li>
+							<li>		
+								<label for="PLZ">PLZ: </label>
+								<input type="text" name="zipCode" id="zipCodefield" th:value="${account.zipCode}" />
+						</li>
+							<li>		
+								<label for="Email">Email: </label>
+								<input type="text" name="email" id="emailfield" th:value="${account.email}" />
+						</li>
+						<li>		
+								<label for="password">neues Passwort: </label>
+								<input type="text" name="password" id="passwordfield" placeholder="Passwort" required/>
+						</li>
+						<li>		
+								<label for="password">neues Passwort wiederholen: </label>
+								<input type="text" name="password-repetition" id="password-repetition-field" placeholder="Passwort wiederholen" required/>
+						</li>
+					
+					</ol>
+					<input type="hidden" th:value="${account.id}" name="id" />
+					<input type="submit" id="submitfield" value="Daten aktualisieren" />	
+				</form>	
+			</div>
+
+		</div>
+		</main>
+		<br>
+
+		<div id="footer" th:include="footer :: footer"></div>
+	</div>
+</body>
+</html>
+
