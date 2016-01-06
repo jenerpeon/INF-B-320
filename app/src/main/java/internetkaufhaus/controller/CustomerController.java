@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteUserAccount;
@@ -223,16 +224,18 @@ public class CustomerController {
 	}
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 *
-	 * @param edituserform the edituserform
-	 * @param result the result
+	 * 
+	 * @param edituserForm            the form object containing edited userinformation
+	 * @param result            the result object (in)validating the form
+	 
 	 * @return the string
 	 */
 	@RequestMapping(value = "/customer/editedUser", method = RequestMethod.POST)
 	public String editedUserUser(@ModelAttribute("EditUserForm2") @Valid EditUserForm2 edituserform,
-			BindingResult result) {
+			BindingResult result, RedirectAttributes redir) {
 		if (result.hasErrors()) {
-			return "redirect:/customer/profil/";
+			redir.addFlashAttribute("message", result.getAllErrors());
+				return  "redirect:/customer/profil";
 		}
 		form.changeUser2(edituserform.getFirstname(),edituserform.getLastname(),edituserform.getAddress(),edituserform.getCity(),edituserform.getZipCode(), edituserform.getEmail(),edituserform.getId(), edituserform.getPassword());
 		return "redirect:/customer/profil/";

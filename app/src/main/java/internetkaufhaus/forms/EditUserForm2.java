@@ -1,5 +1,11 @@
 package internetkaufhaus.forms;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class EditUserForm2.
@@ -8,23 +14,39 @@ public class EditUserForm2 {
 
 
 	/** The firstname.*/
+	@NotEmpty(message = "firstname is mandatory")
+	@Pattern(regexp = "([A-Za-z0-9])+", message = "firstname contains illegal characters")
 	private String firstname;
+	
 	/** The lastname.*/
+	@NotEmpty(message = "lastname is mandatory")
+	@Pattern(regexp = "([A-Za-z0-9])+", message = "lastname contains illegal characters")
 	private String lastname;
 	
 	/** The address.*/
+	@NotEmpty(message = "address field is mandatory")
+	@Pattern(regexp = "([A-Za-z0-9 ,.-])+", message = "address contains illegal characters")
 	private String address;
+	
 	/** The city. */
+	@NotEmpty(message = "city field is mandatory")
+	@Pattern(regexp = "([A-Za-z0-9,.-])+", message = "city contains illegal characters")
 	private String city;
+	
 	/** The zipCode.*/
+	@NotEmpty(message = "zipCode field is mandatory")
+	@Length(min = 5, max = 5, message = "zip-code is not 5 characters long, but should be")
+	@Pattern(regexp = "([0-9])+", message = "zip-code contains illegal characters")
 	private String zipCode;
+	
 	/** The Email.*/
+	@NotEmpty(message = "email field is mandatory")
+	@Email(message = "email is not a valid email")
 	private String email;
 	
-	
-	
-	
 	/** The password. */
+	@NotEmpty(message = "password field is mandatory")
+	@Length(min = 8, message = "password is too short")
 	private String password;
 	
 	/** The id. */
