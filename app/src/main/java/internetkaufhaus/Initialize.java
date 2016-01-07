@@ -4,18 +4,13 @@ import static org.salespointframework.core.Currencies.EURO;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import org.apache.commons.collections.IteratorUtils;
@@ -37,7 +32,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import de.svenjacobs.loremipsum.LoremIpsum;
-import internetkaufhaus.controller.CatalogController;
 import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
@@ -61,47 +55,56 @@ public class Initialize implements DataInitializer {
 
 	/** The start page. */
 	private final StartPage startPage;
-	
+
 	/** The concrete user account manager. */
 	private final ConcreteUserAccountRepository concreteUserAccountManager;
-	
+
 	/** The user account manager. */
 	private final UserAccountManager userAccountManager;
-	
+
 	/** The inventory. */
 	private final Inventory<InventoryItem> inventory;
-	
+
 	/** The product catalog. */
 	private final Catalog<ConcreteProduct> productCatalog;
-	
+
 	/** The order manager. */
 	private final OrderManager<Order> orderManager;
-	
+
 	/** The concrete product repository. */
 	private final ConcreteProductRepository concreteProductRepository;
-	
+
 	/** The concrete order repo. */
 	private final ConcreteOrderRepository concreteOrderRepo;
-	
+
 	/** The product search. */
 	private final Search productSearch;
-	
-	//private final Map<String, String> recruits;
+
+	// private final Map<String, String> recruits;
 
 	/**
 	 * This is the constructor. It's neither used nor does it contain any
 	 * functionality other than storing function arguments as class attribute,
 	 * what do you expect me to write here?
 	 *
-	 * @param startPage the start page
-	 * @param concreteOrderRepo            singleton, passed by spring/salespoint
-	 * @param productCatalog            singleton, passed by spring/salespoint
-	 * @param userAccountManager            singleton, passed by spring/salespoint
-	 * @param ConcreteUserAccountManager            singleton, passed by spring/salespoint
-	 * @param inventory            singleton, passed by spring/salespoint
-	 * @param orderManager            singleton, passed by spring/salespoint
-	 * @param productSearch            singleton, passed by spring/salespoint
-	 * @param concreteProductRepository            singleton, passed by spring/salespoint
+	 * @param startPage
+	 *            the start page
+	 * @param concreteOrderRepo
+	 *            singleton, passed by spring/salespoint
+	 * @param productCatalog
+	 *            singleton, passed by spring/salespoint
+	 * @param userAccountManager
+	 *            singleton, passed by spring/salespoint
+	 * @param ConcreteUserAccountManager
+	 *            singleton, passed by spring/salespoint
+	 * @param inventory
+	 *            singleton, passed by spring/salespoint
+	 * @param orderManager
+	 *            singleton, passed by spring/salespoint
+	 * @param productSearch
+	 *            singleton, passed by spring/salespoint
+	 * @param concreteProductRepository
+	 *            singleton, passed by spring/salespoint
 	 */
 	@Autowired
 	public Initialize(StartPage startPage, ConcreteOrderRepository concreteOrderRepo,
@@ -119,7 +122,7 @@ public class Initialize implements DataInitializer {
 		this.orderManager = orderManager;
 		this.concreteProductRepository = concreteProductRepository;
 		this.concreteOrderRepo = concreteOrderRepo;
-		//this.recruits = recruits;
+		// this.recruits = recruits;
 	}
 
 	/**
@@ -148,8 +151,10 @@ public class Initialize implements DataInitializer {
 	/**
 	 * This function initializes the catalog. Who would've thought!
 	 *
-	 * @param productCatalog the product catalog
-	 * @param productSearch the product search
+	 * @param productCatalog
+	 *            the product catalog
+	 * @param productSearch
+	 *            the product search
 	 */
 	private void initializeCatalog(Catalog<ConcreteProduct> productCatalog, Search productSearch) {
 		// prevents the Initializer to run in case of data persistance
@@ -487,19 +492,19 @@ public class Initialize implements DataInitializer {
 				Money.of(29.95, EURO), Money.of(23.96, EURO), "Schmuck",
 				"Wunderschöner Damenring aus 925er Silber der Marke Celesta. Der Damenring hat Zirkoniasteine und ist rosévergoldet.",
 				"https://eng.wikipedia.org/wiki/Fuzz", "SProdukt_368270033.jpg"));
-		
+
 		productCatalog.save(prods);
 		concreteProductRepository.save(prods);
 		productSearch.addProds(productCatalog.findAll());
 
 		this.startPage.setBannerProducts(new ArrayList<ConcreteProduct>());
 		Random random = new Random();
-		for (int i=0; i < 5 ; i++) {
+		for (int i = 0; i < 5; i++) {
 			this.startPage.addBannerProduct(prods.get(random.nextInt(prods.size())));
 		}
-		
+
 		this.startPage.setSelectionProducts(new ArrayList<ConcreteProduct>());
-		for (int i=0; i < 16 ; i++) {
+		for (int i = 0; i < 16; i++) {
 			this.startPage.addSelectionProduct(prods.get(random.nextInt(prods.size())));
 		}
 	}
@@ -507,8 +512,10 @@ public class Initialize implements DataInitializer {
 	/**
 	 * This function initializes the inventory. Who would've thought!
 	 *
-	 * @param productCatalog the product catalog
-	 * @param inventory the inventory
+	 * @param productCatalog
+	 *            the product catalog
+	 * @param inventory
+	 *            the inventory
 	 */
 	private void initializeInventory(Catalog<ConcreteProduct> productCatalog, Inventory<InventoryItem> inventory) {
 		// prevents the Initializer to run in case of data persistance
@@ -521,9 +528,11 @@ public class Initialize implements DataInitializer {
 	/**
 	 * This function initializes the users. Who would've thought!
 	 *
-	 * @param userAccountManager the user account manager
-	 * @param ConcreteUserAccountManager the concrete user account manager
-	 * @throws IOException 
+	 * @param userAccountManager
+	 *            the user account manager
+	 * @param ConcreteUserAccountManager
+	 *            the concrete user account manager
+	 * @throws IOException
 	 */
 	private void initializeUsers(UserAccountManager userAccountManager,
 			ConcreteUserAccountRepository ConcreteUserAccountManager) throws IOException {
@@ -543,95 +552,104 @@ public class Initialize implements DataInitializer {
 				"Musterstraße", "01069", "Definitiv nicht Dresden", "admin", customerRole, userAccountManager));
 		userAccounts.add(new ConcreteUserAccount("behrens_lars@gmx.de", "lars", "Lars", "Behrens", "Musterstraße",
 				"01069", "Definitiv nicht Dresden", "lars", customerRole, userAccountManager));
-		
+
 		List<String> accounts = FileUtils.readLines(new File("accounts.txt"), "utf-8");
-		
+
 		for (String accountString : accounts) {
 			List<String> data = Arrays.asList(accountString.split(","));
-			ConcreteUserAccount account = new ConcreteUserAccount(data.get(0),data.get(1),data.get(2),data.get(3),data.get(4),data.get(5),data.get(6),data.get(7),customerRole,userAccountManager);
+			ConcreteUserAccount account = new ConcreteUserAccount(data.get(0), data.get(1), data.get(2), data.get(3),
+					data.get(4), data.get(5), data.get(6), data.get(7), customerRole, userAccountManager);
 			userAccounts.add(account);
 		}
-		
+
 		for (ConcreteUserAccount account : userAccounts) {
 			Random random = new Random();
-			ConcreteUserAccount recruiter = userAccounts.get(random.nextInt(userAccounts.size()-1));
+			ConcreteUserAccount recruiter = userAccounts.get(random.nextInt(userAccounts.size() - 1));
 			recruiter.setRecruits(account);
-			//recruits.put(account.getId().toString(), recruiter.getId().toString());
+			// recruits.put(account.getId().toString(),
+			// recruiter.getId().toString());
 		}
-		
+
 		for (ConcreteUserAccount acc : userAccounts) {
 			userAccountManager.save(acc.getUserAccount());
 			ConcreteUserAccountManager.save(acc);
 		}
-		
+
 		ConcreteUserAccountManager.findByUserAccount(userAccountManager.findByUsername("lars").get())
 				.setRecruits(ConcreteUserAccountManager.findByEmail("adminBehrens@todesstern.ru"));
 		ConcreteUserAccountManager.findByUserAccount(userAccountManager.findByUsername("admin").get())
 				.setRecruits(ConcreteUserAccountManager.findByEmail("behrens_lars@gmx.de"));
 	}
-	
-	
+
 	private void initializeComments() {
-		
+
 		Collection<ConcreteProduct> prods = IteratorUtils.toList(concreteProductRepository.findAll().iterator());
-		Collection<ConcreteUserAccount> accountsCollection = IteratorUtils.toList(concreteUserAccountManager.findAll().iterator());
+		Collection<ConcreteUserAccount> accountsCollection = IteratorUtils
+				.toList(concreteUserAccountManager.findAll().iterator());
 		List<ConcreteUserAccount> accountsList = new ArrayList<ConcreteUserAccount>(accountsCollection);
-		
+
 		for (ConcreteProduct prod : prods) {
 			Random random = new Random();
 			LoremIpsum lorem = new LoremIpsum();
-			for (int i=0; i<random.nextInt(4)+2; i++) {
+			for (int i = 0; i < random.nextInt(4) + 2; i++) {
 				long epochNow = LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(1));
 				long epochBegin = 1403215200;
-				LocalDateTime commentDate = LocalDateTime.ofEpochSecond(epochBegin + ((long)(random.nextDouble()*(epochNow-epochBegin))), 0, ZoneOffset.ofHours(1));
-		
-				Comment comment = new Comment(lorem.getWords(random.nextInt(100)+50), random.nextInt(4)+1, commentDate, commentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
-				prod.addComment(comment, accountsList.get(random.nextInt(accountsList.size()-1)));
+				LocalDateTime commentDate = LocalDateTime.ofEpochSecond(
+						epochBegin + ((long) (random.nextDouble() * (epochNow - epochBegin))), 0,
+						ZoneOffset.ofHours(1));
+
+				Comment comment = new Comment(lorem.getWords(random.nextInt(100) + 50), random.nextInt(4) + 1,
+						commentDate, commentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+				prod.addComment(comment, accountsList.get(random.nextInt(accountsList.size() - 1)));
 			}
 		}
-		
+
 		for (ConcreteProduct prod : prods) {
 			for (Comment c : prod.getUnacceptedComments()) {
 				c.accept();
 				c.getProduct().updateAverageRating();
 			}
 		}
-		
+
 	}
 
 	/**
 	 * This function initializes the orders. Who would've thought!
 	 *
-	 * @param concreteOrderRepo the concrete order repo
-	 * @param prods the prods
-	 * @param orderManager the order manager
-	 * @param ConcreteUserAccountManager the concrete user account manager
+	 * @param concreteOrderRepo
+	 *            the concrete order repo
+	 * @param prods
+	 *            the prods
+	 * @param orderManager
+	 *            the order manager
+	 * @param ConcreteUserAccountManager
+	 *            the concrete user account manager
 	 */
 	private void initializeOrders(ConcreteOrderRepository concreteOrderRepo, ConcreteProductRepository prods,
 			OrderManager<Order> orderManager, ConcreteUserAccountRepository ConcreteUserAccountManager) {
 
 		Random rand = new Random();
-		
+
 		Collection<ConcreteProduct> allProducts = IteratorUtils.toList(productCatalog.findAll().iterator());
 		List<ConcreteProduct> allProductsList = new ArrayList<ConcreteProduct>(allProducts);
-		
+
 		for (ConcreteUserAccount u : ConcreteUserAccountManager.findByRole(Role.of("ROLE_CUSTOMER"))) {
-			int orderNumber = rand.nextInt(5)+2;
-			for (int i=0; i < orderNumber; i++) {
+			int orderNumber = rand.nextInt(5) + 2;
+			for (int i = 0; i < orderNumber; i++) {
 				Cart c = new Cart();
-				int productNumber = rand.nextInt(9)+1;
-				for (int j=0; j < productNumber; j++) {
-					ConcreteProduct prod = allProductsList.get(rand.nextInt(allProductsList.size()-1));
-					Quantity quant = Quantity.of(rand.nextInt(19)+1);
+				int productNumber = rand.nextInt(9) + 1;
+				for (int j = 0; j < productNumber; j++) {
+					ConcreteProduct prod = allProductsList.get(rand.nextInt(allProductsList.size() - 1));
+					Quantity quant = Quantity.of(rand.nextInt(19) + 1);
 					c.addOrUpdateItem(prod, quant);
 					prod.increaseSold(quant.getAmount().intValue());
 					concreteProductRepository.save(prod);
-					
+
 				}
-				
+
 				ConcreteOrder order = new ConcreteOrder(u.getUserAccount(), Cash.CASH);
 				c.addItemsTo(order.getOrder());
-				
+
 				order.setBillingGender("Herr");
 				order.setBillingFirstName(u.getUserAccount().getFirstname());
 				order.setBillingLastName(u.getUserAccount().getLastname());
@@ -647,68 +665,61 @@ public class Initialize implements DataInitializer {
 				order.setShippingHouseNumber("2");
 				order.setShippingTown(u.getCity());
 				order.setShippingZipCode(u.getZipCode());
-				
+
 				long epochNow = LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(1));
 				long epochBegin = 1403215200;
-				//long epochBegin = LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.ofHours(1));
-				LocalDateTime orderDate = LocalDateTime.ofEpochSecond(epochBegin + ((long)(rand.nextDouble()*(epochNow-epochBegin))), 0, ZoneOffset.ofHours(1));
+				// long epochBegin =
+				// LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.ofHours(1));
+				LocalDateTime orderDate = LocalDateTime.ofEpochSecond(
+						epochBegin + ((long) (rand.nextDouble() * (epochNow - epochBegin))), 0, ZoneOffset.ofHours(1));
 				order.setDateOrdered(orderDate);
-				
-				
+
 				orderManager.payOrder(order.getOrder());
 				// only set orderManager.payOrder(o), do not use
-				// orderManager.completeOrder(0), to complete Order look at the next
+				// orderManager.completeOrder(0), to complete Order look at the
+				// next
 				// line!
 				order.setStatus(OrderStatus.COMPLETED);
 				// to complete Order do not use orderManager.completeOrder
-				
+
 				concreteOrderRepo.save(order);
 				orderManager.save(order.getOrder());
-				
+
 				c.clear();
 			}
 		}
-		
-		
-		/*Cart c = new Cart();
-		for (ConcreteProduct p : prods.findAll()) {
-			if (rand.nextInt(2) > 0) {
-				c.addOrUpdateItem(p, Quantity.of(rand.nextInt(10)));
-			}
-		}
-		for (ConcreteUserAccount u : ConcreteUserAccountManager.findByRole(Role.of("ROLE_CUSTOMER"))) {
 
-			ConcreteOrder order = new ConcreteOrder(u.getUserAccount(), Cash.CASH);
-			c.addItemsTo(order.getOrder());
-
-			Order o = order.getOrder();
-			c.addItemsTo(o);
-
-			order.setBillingGender("Herr");
-			order.setBillingFirstName(u.getUserAccount().getFirstname());
-			order.setBillingLastName(u.getUserAccount().getLastname());
-			order.setBillingStreet(u.getAddress());
-			order.setBillingHouseNumber("2");
-			order.setBillingTown(u.getCity());
-			order.setBillingZipCode(u.getZipCode());
-
-			order.setShippingGender("Herr");
-			order.setShippingFirstName(u.getUserAccount().getFirstname());
-			order.setShippingLastName(u.getUserAccount().getLastname());
-			order.setShippingStreet(u.getAddress());
-			order.setShippingHouseNumber("2");
-			order.setShippingTown(u.getCity());
-			order.setShippingZipCode(u.getZipCode());
-			orderManager.payOrder(o);
-			// only set orderManager.payOrder(o), do not use
-			// orderManager.completeOrder(0), to complete Order look at the next
-			// line!
-			order.setStatus(OrderStatus.COMPLETED);
-			// to complete Order do not use orderManager.completeOrder
-			order.setDateOrdered(LocalDateTime.now().minusDays(31));
-			concreteOrderRepo.save(order);
-			orderManager.save(o);
-		}
-		c.clear();*/
+		/*
+		 * Cart c = new Cart(); for (ConcreteProduct p : prods.findAll()) { if
+		 * (rand.nextInt(2) > 0) { c.addOrUpdateItem(p,
+		 * Quantity.of(rand.nextInt(10))); } } for (ConcreteUserAccount u :
+		 * ConcreteUserAccountManager.findByRole(Role.of("ROLE_CUSTOMER"))) {
+		 * 
+		 * ConcreteOrder order = new ConcreteOrder(u.getUserAccount(),
+		 * Cash.CASH); c.addItemsTo(order.getOrder());
+		 * 
+		 * Order o = order.getOrder(); c.addItemsTo(o);
+		 * 
+		 * order.setBillingGender("Herr");
+		 * order.setBillingFirstName(u.getUserAccount().getFirstname());
+		 * order.setBillingLastName(u.getUserAccount().getLastname());
+		 * order.setBillingStreet(u.getAddress());
+		 * order.setBillingHouseNumber("2"); order.setBillingTown(u.getCity());
+		 * order.setBillingZipCode(u.getZipCode());
+		 * 
+		 * order.setShippingGender("Herr");
+		 * order.setShippingFirstName(u.getUserAccount().getFirstname());
+		 * order.setShippingLastName(u.getUserAccount().getLastname());
+		 * order.setShippingStreet(u.getAddress());
+		 * order.setShippingHouseNumber("2");
+		 * order.setShippingTown(u.getCity());
+		 * order.setShippingZipCode(u.getZipCode()); orderManager.payOrder(o);
+		 * // only set orderManager.payOrder(o), do not use //
+		 * orderManager.completeOrder(0), to complete Order look at the next //
+		 * line! order.setStatus(OrderStatus.COMPLETED); // to complete Order do
+		 * not use orderManager.completeOrder
+		 * order.setDateOrdered(LocalDateTime.now().minusDays(31));
+		 * concreteOrderRepo.save(order); orderManager.save(o); } c.clear();
+		 */
 	}
 }
