@@ -25,42 +25,48 @@
 				</div>
 			</div>
 			<div class="workframe">
-				<div id="firstcolumn">
-					<img class="picture" th:src="@{'/resources/Bilder/Produkte/' + ${concreteproduct.imagefile}}" />
+				<div id="firstrow">
+					<div id="firstcolumn">
+						<img class="picture" th:src="@{'/resources/Bilder/Produkte/' + ${concreteproduct.imagefile}}" />
+					</div>
+					<div id="secondcolumn">
+						<h1 th:text="${concreteproduct.name}">Artikle</h1>
+						<p class="description" th:text="${concreteproduct.description}">Beschreibung</p>
+						<hr/>
+						<div id="quantities">
+							<a class="quantity" th:text="@{'Vorrat: '+${quantity}}">10 Stück</a>
+							<form class="quantity-selection" method="post" action="/cart" th:if="${orderable}">
+								<input type="hidden" name="prodId" value="0" th:value="${concreteproduct.identifier}" />
+								<label for="number">Anzahl: </label>
+								<select name="dropDown" size="1">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</select> <input type="submit" value="Zum Warenkorb hinzufügen" />
+							</form>
+						</div>
+						<hr/>
+						<div class="rating">
+							<span class="filled" th:each="i : ${concreteproduct.rating}">☆</span>
+						</div>
+						<p th:text="${concreteproduct.ratings}+' Bewertung(en)'"></p>
+						<p class="price" th:text="@{'Preis: '+${concreteproduct.priceFloat}}">1 Euro</p>
+					</div>
 				</div>
-				<div id="secondcolumn">
-					<h1 th:text="${concreteproduct.name}">Artikle</h1>
-					<p class="description" th:text="${concreteproduct.description}">Beschreibung</p>
-					<hr/>
-					<div id="quantities">
-						<a class="quantity" th:text="@{'Vorrat: '+${quantity}}">10 Stück</a>
-						<form class="quantity-selection" method="post" action="/cart" th:if="${orderable}">
-							<input type="hidden" name="prodId" value="0" th:value="${concreteproduct.identifier}" />
-							<label for="number">Anzahl: </label>
-							<select name="dropDown" size="1">
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
-								<option>5</option>
-							</select> <input type="submit" value="Zum Warenkorb hinzufügen" />
-						</form>
-					</div>
-					<hr/>
-					<div class="rating">
-						<span class="filled" th:each="i : ${concreteproduct.rating}">☆</span>
-					</div>
-					<p th:text="${concreteproduct.ratings}+' Bewertung(en)'"></p>
-					<p class="price" th:text="@{'Preis: '+${concreteproduct.priceFloat}}">1 Euro</p>
+				<div id="secondrow">
 					<table id="comments" th:if="${not #lists.isEmpty(comments)}">
 						<tr>
 							<th><a >Kommentar</a></th>
 							<th><a >Bewertung</a></th>
+							<th><a> Kommentator</a></th>
 							<th><a >Zeit</a></th>
 						</tr>
 						<tr th:each="comment : ${comments}">
 							<td class="comment"><a th:text="${comment.text}">Kommentar</a></td>
 							<td class="rating"><a th:text="${comment.rating}">5 Sterne</a></td>
+							<td class="account"><a th:text="${comment.userAccount.userAccount.username}"></a></td>
 							<td class="time"><a th:text="${comment.formatedDate}">Datum</a></td>
 						</tr>
 					</table>
