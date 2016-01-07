@@ -602,7 +602,7 @@ public class Initialize implements DataInitializer {
 		List<ConcreteProduct> allProductsList = new ArrayList<ConcreteProduct>(allProducts);
 		
 		for (ConcreteUserAccount u : ConcreteUserAccountManager.findByRole(Role.of("ROLE_CUSTOMER"))) {
-			int orderNumber = rand.nextInt(5)+1;
+			int orderNumber = rand.nextInt(5)+2;
 			for (int i=0; i < orderNumber; i++) {
 				Cart c = new Cart();
 				int productNumber = rand.nextInt(9)+1;

@@ -11,6 +11,9 @@ import org.salespointframework.order.OrderManager;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.salespointframework.order.Order;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import internetkaufhaus.entities.ConcreteOrder;
+import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.forms.EditArticleForm;
 import internetkaufhaus.forms.EditCustomerForm;
@@ -119,7 +123,8 @@ public class CustomerController {
 	
 	@RequestMapping("/customer/orders")
 	public String customerOrders(@LoggedIn Optional<UserAccount> userAccount, ModelMap model) {
-		model.addAttribute("orders", concreteOrderRepo.findByUser(userAccount.get()));
+		Sort sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "dateOrdered", Sort.NullHandling.NATIVE));
+		model.addAttribute("orders", concreteOrderRepo.findByUser(userAccount.get(), sorting));
 		return "customerorders";
 	}
 	
@@ -141,7 +146,6 @@ public class CustomerController {
 		credit.updateCreditpointsByUser(caccount);
 		model.addAttribute("account", caccount);
 		//model.addAttribute("recruiter", userRepo.findByRecruits(accountList));
-		model.addAttribute("orders", concreteOrderRepo.findByUser(userAccount.get()));
 		return "customerpoints";
 	}
 	

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.salespointframework.useraccount.UserAccount;
+import org.springframework.data.domain.Sort;
 
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
@@ -36,8 +37,9 @@ public class ReturnManager {
 	public static List<ConcreteOrder> getConcreteOrderDuringLastTwoWeeks(ConcreteOrderRepository concreteOrderRepo, Optional<UserAccount> userAccount) {
 
 		LocalDateTime timeStart = LocalDateTime.now().minusWeeks(2);
-
-		Iterable<ConcreteOrder> ordersCompletedInReturnedTimeOne = concreteOrderRepo.findByUser(userAccount.get());
+		
+		Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "dateOrdered", Sort.NullHandling.NATIVE));
+		Iterable<ConcreteOrder> ordersCompletedInReturnedTimeOne = concreteOrderRepo.findByUser(userAccount.get(), sorting);
 
 		List<ConcreteOrder> ordersCompletedInReturnedTime = new ArrayList<ConcreteOrder>();
 

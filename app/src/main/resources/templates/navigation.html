@@ -161,11 +161,7 @@
 					<li sec:authorize="isAuthenticated()"><a th:href="@{'/customer'}">Mein
 							Konto</a></li>
 					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a
-						th:href="@{/customer}">Punktestand</a></li>
-					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a
 						href="#recruit-modal">Rekrutieren</a></li>
-					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a
-						th:href="@{'/returOrders'}">Rückgabe</a></li>
 					<li sec:authorize="!isAuthenticated()"><a href="#login-modal">Anmelden</a></li>
 					<li sec:authorize="!isAuthenticated()"><a
 						href="#registration-modal">Registrieren</a></li>

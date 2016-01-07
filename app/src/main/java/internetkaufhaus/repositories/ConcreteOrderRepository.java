@@ -2,14 +2,18 @@ package internetkaufhaus.repositories;
 
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.useraccount.UserAccount;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import internetkaufhaus.entities.ConcreteOrder;
 
 /**
  * The Interface ConcreteOrderRepository.
  */
-public interface ConcreteOrderRepository extends CrudRepository<ConcreteOrder, Long> {
+public interface ConcreteOrderRepository extends PagingAndSortingRepository<ConcreteOrder, Long> {
 	
 	/* (non-Javadoc)
 	 * @see org.springframework.data.repository.CrudRepository#findAll()
@@ -38,6 +42,6 @@ public interface ConcreteOrderRepository extends CrudRepository<ConcreteOrder, L
 	 * @param user the user
 	 * @return the iterable
 	 */
-	Iterable<ConcreteOrder> findByUser(UserAccount user);
+	Iterable<ConcreteOrder> findByUser(UserAccount user, Sort sort);
 
 }
