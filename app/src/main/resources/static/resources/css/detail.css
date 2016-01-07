@@ -1,6 +1,9 @@
 @charset "utf-8";
 
 .workframe {
+	
+}
+#firstrow {
 	display: flex;
 	align-items: flex-start;
 }
@@ -51,11 +54,14 @@
     color: gold;
     text-shadow:0 0 1px #666;
 }
-#secondcolumn table { border-collapse: collapse; }
+#secondrow {
+	
+}
+#secondrow table { border-collapse: collapse; }
 
-#secondcolumn td + td,
-#secondcolumn th + th { border-left: 1px solid; }
-#secondcolumn tr + tr { border-top: 1px solid; }
+#secondrow td + td,
+#secondrow th + th { border-left: 1px solid; }
+#secondrow tr + tr { border-top: 1px solid; }
 #comments {
 	width: 100%;
 }
@@ -65,7 +71,12 @@
 }
 
 #comments .comment {
-	text-align: justify;
+	text-align: left;
+	max-width: 300px;
+}
+
+#comments .account {
+	text-align: center;
 }
 
 #comments .rating {

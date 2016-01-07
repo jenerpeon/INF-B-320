@@ -140,6 +140,7 @@ public class Initialize implements DataInitializer {
 		// Inventory Items consist of one ConcreteProduct and a number
 		// representing the stock
 		initializeInventory(productCatalog, inventory);
+		initializeComments();
 		initializeOrders(concreteOrderRepo, concreteProductRepository, orderManager, concreteUserAccountManager);
 
 	}
@@ -487,22 +488,6 @@ public class Initialize implements DataInitializer {
 				"Wunderschöner Damenring aus 925er Silber der Marke Celesta. Der Damenring hat Zirkoniasteine und ist rosévergoldet.",
 				"https://eng.wikipedia.org/wiki/Fuzz", "SProdukt_368270033.jpg"));
 		
-		for (ConcreteProduct prod : prods) {
-			Random random = new Random();
-			LoremIpsum lorem = new LoremIpsum();
-			for (int i=0; i<random.nextInt(4)+2; i++) {
-				Comment comment = new Comment(lorem.getWords(random.nextInt(100)+50), random.nextInt(5)+1, java.sql.Date.valueOf(LocalDate.now()), LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
-				prod.addComment(comment, concreteUserAccountManager.findAll().iterator().next());
-			}
-		}
-		
-		for (ConcreteProduct prod : prods) {
-			for (Comment c : prod.getUnacceptedComments()) {
-				c.accept();
-				c.getProduct().updateAverageRating();
-			}
-		}
-		
 		productCatalog.save(prods);
 		concreteProductRepository.save(prods);
 		productSearch.addProds(productCatalog.findAll());
@@ -584,6 +569,35 @@ public class Initialize implements DataInitializer {
 		ConcreteUserAccountManager.findByUserAccount(userAccountManager.findByUsername("admin").get())
 				.setRecruits(ConcreteUserAccountManager.findByEmail("behrens_lars@gmx.de"));
 	}
+	
+	
+	private void initializeComments() {
+		
+		Collection<ConcreteProduct> prods = IteratorUtils.toList(concreteProductRepository.findAll().iterator());
+		Collection<ConcreteUserAccount> accountsCollection = IteratorUtils.toList(concreteUserAccountManager.findAll().iterator());
+		List<ConcreteUserAccount> accountsList = new ArrayList<ConcreteUserAccount>(accountsCollection);
+		
+		for (ConcreteProduct prod : prods) {
+			Random random = new Random();
+			LoremIpsum lorem = new LoremIpsum();
+			for (int i=0; i<random.nextInt(4)+2; i++) {
+				long epochNow = LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(1));
+				long epochBegin = 1403215200;
+				LocalDateTime commentDate = LocalDateTime.ofEpochSecond(epochBegin + ((long)(random.nextDouble()*(epochNow-epochBegin))), 0, ZoneOffset.ofHours(1));
+		
+				Comment comment = new Comment(lorem.getWords(random.nextInt(100)+50), random.nextInt(4)+1, commentDate, commentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+				prod.addComment(comment, accountsList.get(random.nextInt(accountsList.size()-1)));
+			}
+		}
+		
+		for (ConcreteProduct prod : prods) {
+			for (Comment c : prod.getUnacceptedComments()) {
+				c.accept();
+				c.getProduct().updateAverageRating();
+			}
+		}
+		
+	}
 
 	/**
 	 * This function initializes the orders. Who would've thought!
@@ -607,7 +621,11 @@ public class Initialize implements DataInitializer {
 				Cart c = new Cart();
 				int productNumber = rand.nextInt(9)+1;
 				for (int j=0; j < productNumber; j++) {
-					c.addOrUpdateItem(allProductsList.get(rand.nextInt(allProductsList.size()-1)), Quantity.of(rand.nextInt(19)+1));
+					ConcreteProduct prod = allProductsList.get(rand.nextInt(allProductsList.size()-1));
+					Quantity quant = Quantity.of(rand.nextInt(19)+1);
+					c.addOrUpdateItem(prod, quant);
+					prod.increaseSold(quant.getAmount().intValue());
+					concreteProductRepository.save(prod);
 					
 				}
 				

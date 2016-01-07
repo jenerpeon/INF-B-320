@@ -1,6 +1,7 @@
 package internetkaufhaus.controller;
 
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -310,7 +311,7 @@ public class CatalogController {
 	@RequestMapping(value = "/comment", method = RequestMethod.POST)
 	public String comment(@RequestParam("prodId") ConcreteProduct prod, @RequestParam("comment") String comment,
 			@RequestParam("rating") int rating, Model model, @LoggedIn Optional<UserAccount> user) {
-		Comment c = new Comment(comment, rating, new Date(), "");
+		Comment c = new Comment(comment, rating, LocalDateTime.now(), "");
 		if (!(comment.equals("")) && user.isPresent()) {
 			c.setFormatedDate(c.getDate());
 			prod.addComment(c, usermanager.findByUserAccount(user.get()));
