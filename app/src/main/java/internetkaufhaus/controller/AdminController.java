@@ -2,9 +2,12 @@ package internetkaufhaus.controller;
 
 import static org.salespointframework.core.Currencies.EURO;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -12,6 +15,8 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.javamoney.moneta.Money;
+import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.time.Interval;
 import org.salespointframework.useraccount.Role;
@@ -36,6 +41,8 @@ import internetkaufhaus.forms.NewUserAccountForm;
 import internetkaufhaus.model.Competition;
 import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.model.NavItem;
+import internetkaufhaus.model.Statistic;
+import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.services.ConcreteMailService;
 import internetkaufhaus.services.DataService;
@@ -75,6 +82,10 @@ public class AdminController {
 	
 	/** The concrete product repository. */
 	private final ConcreteProductRepository concreteProductRepository;
+	
+	private final OrderManager<Order> orderManager;
+	
+	private final ConcreteOrderRepository concreteOrderRepo;
 
 	/**
 	 * This is the constructor. It's neither used nor does it contain any
@@ -86,10 +97,12 @@ public class AdminController {
 	 * @param concreteProductRepository the concrete product repository
 	 */
 	@Autowired
-	public AdminController(Creditmanager creditmanager, NewUserAccountForm form, ConcreteProductRepository concreteProductRepository) {
+	public AdminController(Creditmanager creditmanager, NewUserAccountForm form, ConcreteProductRepository concreteProductRepository, OrderManager<Order> orderManager, ConcreteOrderRepository concreteOrderRepo) {
 		this.concreteProductRepository = concreteProductRepository;
 		this.form = form;
 		this.creditmanager = creditmanager;
+		this.orderManager = orderManager;
+		this.concreteOrderRepo = concreteOrderRepo;
 	}
 
 	/**
@@ -99,10 +112,10 @@ public class AdminController {
 	 */
 	@ModelAttribute("adminNaviagtion")
 	public List<NavItem> addAdminNavigation() {
-		//String adminNavigationName[] = { "Userverwaltung", "Bilanzen", "Statistiken", "Gewinnspiel" };
-		String adminNavigationName[] = { "Userverwaltung", "Bilanzen", "Gewinnspiel" };
-		//String adminNavigationLink[] = { "/admin/changeuser", "/admin/balance", "/admin/statistics", "/admin/lottery" };
-		String adminNavigationLink[] = { "/admin/changeuser", "/admin/balance", "/admin/lottery" };
+		String adminNavigationName[] = { "Userverwaltung", "Bilanzen", "Statistiken", "Gewinnspiel" };
+		//String adminNavigationName[] = { "Userverwaltung", "Bilanzen", "Gewinnspiel" };
+		String adminNavigationLink[] = { "/admin/changeuser", "/admin/balance", "/admin/statistics", "/admin/lottery" };
+		//String adminNavigationLink[] = { "/admin/changeuser", "/admin/balance", "/admin/lottery" };
 		List<NavItem> navigation = new ArrayList<NavItem>();
 		for (int i = 0; i < adminNavigationName.length; i++) {
 			NavItem nav = new NavItem(adminNavigationName[i], adminNavigationLink[i], "non-category");
@@ -285,9 +298,9 @@ public class AdminController {
 	 * @param model the model
 	 * @return the winners
 	 */
-	/*@RequestMapping(value = "/admin/statistics")
-	public String getStatistics() {
-		// Statistic stat = new Statistic(orderManager);
+	@RequestMapping(value = "/admin/statistics")
+	public String getStatistics(ModelMap model) {
+		
 		LocalDateTime to = LocalDateTime.now();
 		LocalDateTime from7Days = to.minusDays(7);
 		LocalDateTime from1Month = to.minusMonths(1);
@@ -297,7 +310,7 @@ public class AdminController {
 		LocalDateTime from5Year = to.minusYears(5);
 		LocalDateTime from10Year = to.minusYears(10);
 
-		Map<Interval, String> intervals = new HashMap<Interval, String>();
+		Map<Interval, String> intervals = new LinkedHashMap<Interval, String>();
 
 		intervals.put(Interval.from(from7Days).to(to), "day");
 		intervals.put(Interval.from(from1Month).to(to), "week");
@@ -306,14 +319,23 @@ public class AdminController {
 		intervals.put(Interval.from(from3Year).to(to), "year");
 		intervals.put(Interval.from(from5Year).to(to), "year");
 		intervals.put(Interval.from(from10Year).to(to), "year");
-
+		
+		List<Statistic> stats = new ArrayList<Statistic>();
+		
+		for (Interval key : intervals.keySet()) {
+			System.out.println(key);
+			Statistic stat = new Statistic(concreteOrderRepo, key, intervals.get(key));
+			stats.add(stat);
+		}
+		
+		model.addAttribute("stats", stats);
 		return "statistics";
 	}
 
 	@RequestMapping(value = "/admin/lottery")
 	public String competition() {
 		return "competition"; // TODO: what does this even do?
-	}*/
+	}
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?

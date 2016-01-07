@@ -3,6 +3,7 @@ package internetkaufhaus.entities;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 
@@ -219,7 +220,7 @@ public class Comment implements Serializable {
 	 *            the new formated date
 	 */
 	public void setFormatedDate(LocalDateTime date) {
-		SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.GERMANY);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, d MMM yyyy HH:mm", Locale.GERMANY);
 		String formatedDate = formatter.format(date);
 		this.formatedDate = formatedDate;
 

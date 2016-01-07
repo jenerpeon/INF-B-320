@@ -6,6 +6,7 @@ import static org.salespointframework.core.Currencies.EURO;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 
@@ -109,7 +110,7 @@ public class CommentTest {
 	@Test
 	public void testFormattedDate() {
 		LocalDateTime date = LocalDateTime.now();
-		SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.GERMANY);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, d MMM yyyy HH:mm", Locale.GERMANY);
 		String formattedDate = formatter.format(date);
 		model.setFormatedDate(date);
 		assertEquals("FormattedDate gesetzt", model.getFormatedDate(), formattedDate);

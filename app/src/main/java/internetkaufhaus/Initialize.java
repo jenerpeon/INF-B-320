@@ -654,7 +654,6 @@ public class Initialize implements DataInitializer {
 				LocalDateTime orderDate = LocalDateTime.ofEpochSecond(epochBegin + ((long)(rand.nextDouble()*(epochNow-epochBegin))), 0, ZoneOffset.ofHours(1));
 				order.setDateOrdered(orderDate);
 				
-				
 				orderManager.payOrder(order.getOrder());
 				// only set orderManager.payOrder(o), do not use
 				// orderManager.completeOrder(0), to complete Order look at the next
