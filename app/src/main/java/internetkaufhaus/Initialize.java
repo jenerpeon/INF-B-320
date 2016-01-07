@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Random;
 
 import org.apache.commons.collections.IteratorUtils;
-import org.apache.commons.io.FileUtils;
+//import org.apache.commons.io.FileUtils;
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Catalog;
 import org.salespointframework.core.DataInitializer;
@@ -36,7 +36,7 @@ import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import de.svenjacobs.loremipsum.LoremIpsum;
+//import de.svenjacobs.loremipsum.LoremIpsum;
 import internetkaufhaus.controller.CatalogController;
 import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteOrder;
@@ -489,11 +489,11 @@ public class Initialize implements DataInitializer {
 		
 		for (ConcreteProduct prod : prods) {
 			Random random = new Random();
-			LoremIpsum lorem = new LoremIpsum();
+			/*LoremIpsum lorem = new LoremIpsum();
 			for (int i=0; i<random.nextInt(4)+2; i++) {
 				Comment comment = new Comment(lorem.getWords(random.nextInt(100)+50), random.nextInt(5)+1, java.sql.Date.valueOf(LocalDate.now()), LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
 				prod.addComment(comment, concreteUserAccountManager.findAll().iterator().next());
-			}
+			}*/
 		}
 		
 		for (ConcreteProduct prod : prods) {
@@ -559,13 +559,13 @@ public class Initialize implements DataInitializer {
 		userAccounts.add(new ConcreteUserAccount("behrens_lars@gmx.de", "lars", "Lars", "Behrens", "Musterstraße",
 				"01069", "Definitiv nicht Dresden", "lars", customerRole, userAccountManager));
 		
-		List<String> accounts = FileUtils.readLines(new File("accounts.txt"), "utf-8");
+		/*List<String> accounts = FileUtils.readLines(new File("accounts.txt"), "utf-8");
 		
 		for (String accountString : accounts) {
 			List<String> data = Arrays.asList(accountString.split(","));
 			ConcreteUserAccount account = new ConcreteUserAccount(data.get(0),data.get(1),data.get(2),data.get(3),data.get(4),data.get(5),data.get(6),data.get(7),customerRole,userAccountManager);
 			userAccounts.add(account);
-		}
+		}*/
 		
 		for (ConcreteUserAccount account : userAccounts) {
 			Random random = new Random();
