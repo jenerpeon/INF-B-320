@@ -1,5 +1,7 @@
 package internetkaufhaus.repositories;
 
+import java.util.List;
+
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.springframework.data.repository.CrudRepository;
@@ -35,5 +37,7 @@ public interface ConcreteUserAccountRepository extends CrudRepository<ConcreteUs
 	 * @return the concrete user account
 	 */
 	ConcreteUserAccount findByUserAccount(UserAccount acc);
+	
+	//ConcreteUserAccount findByRecruits(List<ConcreteUserAccount> acc);
 
 }

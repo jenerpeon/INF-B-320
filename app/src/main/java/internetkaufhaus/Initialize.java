@@ -2,13 +2,24 @@ package internetkaufhaus;
 
 import static org.salespointframework.core.Currencies.EURO;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
+import org.apache.commons.collections.IteratorUtils;
+import org.apache.commons.io.FileUtils;
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Catalog;
 import org.salespointframework.core.DataInitializer;
@@ -25,6 +36,7 @@ import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import de.svenjacobs.loremipsum.LoremIpsum;
 import internetkaufhaus.controller.CatalogController;
 import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteOrder;
@@ -73,6 +85,8 @@ public class Initialize implements DataInitializer {
 	
 	/** The product search. */
 	private final Search productSearch;
+	
+	//private final Map<String, String> recruits;
 
 	/**
 	 * This is the constructor. It's neither used nor does it contain any
@@ -105,6 +119,7 @@ public class Initialize implements DataInitializer {
 		this.orderManager = orderManager;
 		this.concreteProductRepository = concreteProductRepository;
 		this.concreteOrderRepo = concreteOrderRepo;
+		//this.recruits = recruits;
 	}
 
 	/**
@@ -113,7 +128,12 @@ public class Initialize implements DataInitializer {
 	@Override
 	public void initialize() {
 		// fill the user database
-		initializeUsers(userAccountManager, concreteUserAccountManager);
+		try {
+			initializeUsers(userAccountManager, concreteUserAccountManager);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// fill the Catalog with Items
 		initializeCatalog(productCatalog, productSearch);
 		// fill inventory with Inventory items
@@ -469,9 +489,9 @@ public class Initialize implements DataInitializer {
 		
 		for (ConcreteProduct prod : prods) {
 			Random random = new Random();
+			LoremIpsum lorem = new LoremIpsum();
 			for (int i=0; i<random.nextInt(4)+2; i++) {
-				Comment comment = new Comment("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores"
-				, random.nextInt(5)+1, java.sql.Date.valueOf(LocalDate.now()), "");
+				Comment comment = new Comment(lorem.getWords(random.nextInt(100)+50), random.nextInt(5)+1, java.sql.Date.valueOf(LocalDate.now()), LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
 				prod.addComment(comment, concreteUserAccountManager.findAll().iterator().next());
 			}
 		}
@@ -518,9 +538,10 @@ public class Initialize implements DataInitializer {
 	 *
 	 * @param userAccountManager the user account manager
 	 * @param ConcreteUserAccountManager the concrete user account manager
+	 * @throws IOException 
 	 */
 	private void initializeUsers(UserAccountManager userAccountManager,
-			ConcreteUserAccountRepository ConcreteUserAccountManager) {
+			ConcreteUserAccountRepository ConcreteUserAccountManager) throws IOException {
 		// prevents the Initializer to run in case of data persistance
 		if (userAccountManager.findByUsername("peon").isPresent()) {
 			return;
@@ -537,11 +558,27 @@ public class Initialize implements DataInitializer {
 				"Musterstraße", "01069", "Definitiv nicht Dresden", "admin", customerRole, userAccountManager));
 		userAccounts.add(new ConcreteUserAccount("behrens_lars@gmx.de", "lars", "Lars", "Behrens", "Musterstraße",
 				"01069", "Definitiv nicht Dresden", "lars", customerRole, userAccountManager));
-
+		
+		List<String> accounts = FileUtils.readLines(new File("accounts.txt"), "utf-8");
+		
+		for (String accountString : accounts) {
+			List<String> data = Arrays.asList(accountString.split(","));
+			ConcreteUserAccount account = new ConcreteUserAccount(data.get(0),data.get(1),data.get(2),data.get(3),data.get(4),data.get(5),data.get(6),data.get(7),customerRole,userAccountManager);
+			userAccounts.add(account);
+		}
+		
+		for (ConcreteUserAccount account : userAccounts) {
+			Random random = new Random();
+			ConcreteUserAccount recruiter = userAccounts.get(random.nextInt(userAccounts.size()-1));
+			recruiter.setRecruits(account);
+			//recruits.put(account.getId().toString(), recruiter.getId().toString());
+		}
+		
 		for (ConcreteUserAccount acc : userAccounts) {
 			userAccountManager.save(acc.getUserAccount());
 			ConcreteUserAccountManager.save(acc);
 		}
+		
 		ConcreteUserAccountManager.findByUserAccount(userAccountManager.findByUsername("lars").get())
 				.setRecruits(ConcreteUserAccountManager.findByEmail("adminBehrens@todesstern.ru"));
 		ConcreteUserAccountManager.findByUserAccount(userAccountManager.findByUsername("admin").get())
@@ -560,7 +597,62 @@ public class Initialize implements DataInitializer {
 			OrderManager<Order> orderManager, ConcreteUserAccountRepository ConcreteUserAccountManager) {
 
 		Random rand = new Random();
-		Cart c = new Cart();
+		
+		Collection<ConcreteProduct> allProducts = IteratorUtils.toList(productCatalog.findAll().iterator());
+		List<ConcreteProduct> allProductsList = new ArrayList<ConcreteProduct>(allProducts);
+		
+		for (ConcreteUserAccount u : ConcreteUserAccountManager.findByRole(Role.of("ROLE_CUSTOMER"))) {
+			int orderNumber = rand.nextInt(5)+1;
+			for (int i=0; i < orderNumber; i++) {
+				Cart c = new Cart();
+				int productNumber = rand.nextInt(9)+1;
+				for (int j=0; j < productNumber; j++) {
+					c.addOrUpdateItem(allProductsList.get(rand.nextInt(allProductsList.size()-1)), Quantity.of(rand.nextInt(19)+1));
+					
+				}
+				
+				ConcreteOrder order = new ConcreteOrder(u.getUserAccount(), Cash.CASH);
+				c.addItemsTo(order.getOrder());
+				
+				order.setBillingGender("Herr");
+				order.setBillingFirstName(u.getUserAccount().getFirstname());
+				order.setBillingLastName(u.getUserAccount().getLastname());
+				order.setBillingStreet(u.getAddress());
+				order.setBillingHouseNumber("2");
+				order.setBillingTown(u.getCity());
+				order.setBillingZipCode(u.getZipCode());
+
+				order.setShippingGender("Herr");
+				order.setShippingFirstName(u.getUserAccount().getFirstname());
+				order.setShippingLastName(u.getUserAccount().getLastname());
+				order.setShippingStreet(u.getAddress());
+				order.setShippingHouseNumber("2");
+				order.setShippingTown(u.getCity());
+				order.setShippingZipCode(u.getZipCode());
+				
+				long epochNow = LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(1));
+				long epochBegin = 1403215200;
+				//long epochBegin = LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.ofHours(1));
+				LocalDateTime orderDate = LocalDateTime.ofEpochSecond(epochBegin + ((long)(rand.nextDouble()*(epochNow-epochBegin))), 0, ZoneOffset.ofHours(1));
+				order.setDateOrdered(orderDate);
+				
+				
+				orderManager.payOrder(order.getOrder());
+				// only set orderManager.payOrder(o), do not use
+				// orderManager.completeOrder(0), to complete Order look at the next
+				// line!
+				order.setStatus(OrderStatus.COMPLETED);
+				// to complete Order do not use orderManager.completeOrder
+				
+				concreteOrderRepo.save(order);
+				orderManager.save(order.getOrder());
+				
+				c.clear();
+			}
+		}
+		
+		
+		/*Cart c = new Cart();
 		for (ConcreteProduct p : prods.findAll()) {
 			if (rand.nextInt(2) > 0) {
 				c.addOrUpdateItem(p, Quantity.of(rand.nextInt(10)));
@@ -599,6 +691,6 @@ public class Initialize implements DataInitializer {
 			concreteOrderRepo.save(order);
 			orderManager.save(o);
 		}
-		c.clear();
+		c.clear();*/
 	}
 }

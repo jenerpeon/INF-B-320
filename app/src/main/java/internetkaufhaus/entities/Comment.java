@@ -33,7 +33,7 @@ public class Comment implements Serializable {
 
 	/** The text. */
 	// @NotEmpty(message="{Comment.text.NotEmpty}")
-	@Column(name = "TEXT")
+	@Column(name = "TEXT",length = 100000)
 	private String text;
 
 	/** The rating. */

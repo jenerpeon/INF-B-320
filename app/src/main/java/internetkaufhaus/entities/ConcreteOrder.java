@@ -4,6 +4,7 @@ import static org.salespointframework.core.Currencies.EURO;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 
@@ -394,7 +395,12 @@ public class ConcreteOrder implements Serializable {
 	public LocalDateTime getDateOrdered() {
 		return this.dateOrdered;
 	}
-
+	
+	public String getDateOrderedFormatted() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+		return this.dateOrdered.format(formatter);
+	}
+		
 	/**
 	 * Gets the returned.
 	 *
@@ -625,6 +631,10 @@ public class ConcreteOrder implements Serializable {
 		this.shippingAddressLine2 = shippingAddress.get(5);
 		this.shippingZipCode = shippingAddress.get(6);
 		this.shippingTown = shippingAddress.get(7);
+	}
+	
+	public boolean isRetournable() {
+		return (this.dateOrdered.isAfter(LocalDateTime.now().minusDays(30)) && !this.returned);
 	}
 
 	/**
