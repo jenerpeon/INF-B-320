@@ -1,32 +1,39 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>de.tudresden.inf.st.lab</groupId>
     <artifactId>swt22-PoeonProject</artifactId>
     <version>1.1.0.BUILD-SNAPSHOT</version>
+
     <name>swt15w22 - Software Engineering Lab</name>
+
     <parent>
         <groupId>de.tudresden.inf.st.lab</groupId>
         <artifactId>st-lab-parent</artifactId>
         <version>1.0.0.RELEASE</version>
     </parent>
+
     <dependencies>
+
         <dependency>
             <groupId>de.tudresden.inf.st</groupId>
             <artifactId>salespoint-framework</artifactId>
             <version>6.2.0.RELEASE</version>
         </dependency>
+
         <!-- Persistence -->
         <dependency>
             <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
+                <artifactId>h2</artifactId>
             <scope>runtime</scope>
            </dependency> 
         <dependency>
-            <groupId>net.sourceforge.nekohtml</groupId>
-            <artifactId>nekohtml</artifactId>
-            <version>1.9.22</version>
+                <groupId>net.sourceforge.nekohtml</groupId>
+                    <artifactId>nekohtml</artifactId>
+                <version>1.9.22</version>
         </dependency>
+        
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
@@ -42,48 +49,51 @@
           <artifactId>spring-test</artifactId>
           <scope>test</scope>
         </dependency>
+
         <dependency>
         	<groupId>org.neo4j</groupId>
         	<artifactId>neo4j-cypher-compiler-2.1</artifactId>
         	<version>2.1.8</version>
         </dependency>
-        <dependency>
-        	<groupId>de.sven-jacobs</groupId>
-        	<artifactId>loremipsum</artifactId>
-        	<version>1.0</version>
-        </dependency>
-        <dependency>
-        	<groupId>commons-io</groupId>
-        	<artifactId>commons-io</artifactId>
-        	<version>2.4</version>
-        </dependency>
     </dependencies>
+
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
         </plugins>
     </build>
+
     <repositories>
+
         <repository>
             <id>spring-libs-milestone</id>
             <url>https://repo.spring.io/libs-milestone</url>
         </repository>
+
         <repository>
             <id>salespointframework</id>
             <url>http://www.st.inf.tu-dresden.de/SalesPoint/repository</url>
         </repository>
+
+
     </repositories>
+
     <pluginRepositories>
         <pluginRepository>
             <id>spring-libs-milestone</id>
             <url>https://repo.spring.io/libs-milestone</url>
         </pluginRepository>
+
         <pluginRepository>
             <id>salespointframework</id>
             <url>http://www.st.inf.tu-dresden.de/SalesPoint/repository</url>
         </pluginRepository>
+
     </pluginRepositories>
+
 </project>
