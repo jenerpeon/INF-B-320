@@ -59,7 +59,7 @@ public class ConcreteUserAccountTest {
 	 */
 	@Test
 	public void testGetterSetter() {
-		Comment com = new Comment("Das hier ist ein Kommentar", 4, LocalDateTime.now(), "12");
+		Comment com = new Comment("Das hier ist ein Titel", "Das hier ist ein Kommentar", 4, LocalDateTime.now(), "12");
 		model1.addComment(com);
 		assertTrue("Com hinzugefügt", model1.getComments().size() == 1);
 		assertTrue("Com get", model1.getComments().contains(com));

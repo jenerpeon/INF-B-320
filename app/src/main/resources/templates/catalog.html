@@ -61,12 +61,6 @@
 			</div>
 
 			<div id="workframe">
-				<!-- <div id="catalognavigaton">
-					<a th:each="category: ${allCategory}"
-						th:href="@{'/catalog/'+${category}}">
-						<h1 th:text="${category}"></h1>
-					</a>
-				</div> -->
 				<div id="catalogview" th:switch="${representation}">
 					<hr />
 					<div id="pageControl">
@@ -149,7 +143,7 @@
 											th:text="${concreteproduct.description}">Beschreibung</p>
 									</div>
 									<div class="rating">
-										<span class="filled" th:each="i : ${concreteproduct.rating}">☆</span>
+										<span class="filled" th:each="i : ${#numbers.sequence(1, concreteproduct.averageRating)}">☆</span>
 									</div>
 									<a th:text="${concreteproduct.ratings}+' Bewertung(en)'"></a> <a
 										class="price" th:text="${concreteproduct.priceFloat}"></a>

@@ -53,8 +53,9 @@
 						<div id=thumbnail-text>
 							<h3 class="thumbnail-category" th:text="${topRatedProduct.category}"></h3>
 							<h3 class="thumbnail-name" th:text="${topRatedProduct.name}"></h3>
+							<h3 class="thumbnail-price" th:text="${topRatedProduct.priceFloat}"></h3>
 							<div class="rating">
-									<span class="filled" th:each="i : ${topRatedProduct.rating}">☆</span>
+								<span class="filled" th:each="i : ${#numbers.sequence(1, topRatedProduct.averageRating)}">☆</span>
 							</div>
 						</div>
 					</div>
@@ -70,6 +71,7 @@
 						<div id=thumbnail-text>
 							<h3 class="thumbnail-category" th:text="${topSoldProduct.category}"></h3>
 							<h3 class="thumbnail-name" th:text="${topSoldProduct.name}"></h3>
+							<h3 class="thumbnail-price" th:text="${topSoldProduct.priceFloat}"></h3>
 						</div>
 					</div>
 				</div>
@@ -83,6 +85,7 @@
 						<div id=thumbnail-text>
 							<h3 class="thumbnail-category" th:text="${product.category}"></h3>
 							<h3 class="thumbnail-name" th:text="${product.name}"></h3>
+							<h3 class="thumbnail-price" th:text="${product.priceFloat}"></h3>
 						</div>
 					</div>
 				</div>

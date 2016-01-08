@@ -48,6 +48,7 @@
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
 	font-size: 40px;
 	text-align: center;
+	flex-basis: 100%;
 }
 #workframe .edit-button {
 	width: 35px;

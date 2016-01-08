@@ -49,27 +49,27 @@
 						</div>
 						<hr/>
 						<div class="rating">
-							<span class="filled" th:each="i : ${concreteproduct.rating}">☆</span>
+							<span class="filled" th:each="i : ${#numbers.sequence(1, concreteproduct.averageRating)}">☆</span>
 						</div>
 						<p th:text="${concreteproduct.ratings}+' Bewertung(en)'"></p>
 						<p class="price" th:text="@{'Preis: '+${concreteproduct.priceFloat}}">1 Euro</p>
+						<p sec:authorize="hasAnyRole('ROLE_EMPLOYEE', 'ROLE_ADMIN')" th:text="@{'Verkauft: '+${concreteproduct.sold}}"></p>
 					</div>
 				</div>
 				<div id="secondrow">
-					<table id="comments" th:if="${not #lists.isEmpty(comments)}">
-						<tr>
-							<th><a >Kommentar</a></th>
-							<th><a >Bewertung</a></th>
-							<th><a> Kommentator</a></th>
-							<th><a >Zeit</a></th>
-						</tr>
-						<tr th:each="comment : ${comments}">
-							<td class="comment"><a th:text="${comment.text}">Kommentar</a></td>
-							<td class="rating"><a th:text="${comment.rating}">5 Sterne</a></td>
-							<td class="account"><a th:text="${comment.userAccount.userAccount.username}"></a></td>
-							<td class="time"><a th:text="${comment.formatedDate}">Datum</a></td>
-						</tr>
-					</table>
+					<h3>Kommentare und Bewertungen</h3>
+					<ul id="comments">
+						<li class="comment" th:each="comment : ${comments}">
+							<div class="title">
+								<div class="rating">
+									<span class="filled" th:each="i : ${#numbers.sequence(1, comment.rating)}">☆</span>
+								</div>
+								<a th:text="${comment.title}"></a>
+							</div>
+							<p class="name" th:text="@{'Von '+${comment.userAccount.userAccount.firstname}+' '+${comment.userAccount.userAccount.lastname}+' am '+${comment.formatedDate}}"></p>
+							<p class="text" th:text="${comment.text}">Kommentar</p>
+						</li>
+					</ul>
 					<div sec:authorize="hasRole('ROLE_CUSTOMER')">
 						<form method="post" action="/comment">
 							<fieldset>
@@ -77,6 +77,8 @@
 		
 								<input type="hidden" name="prodId" value="0"
 									th:value="${concreteproduct.identifier}" />
+								<label for="title">Titel:</label>
+								<input type="text" name="title" /><br/>
 								<textarea name="comment" cols="40" rows="5"> </textarea>
 								<br /> <label for="rating">Bewertung</label> <select
 									name="rating" size="1">

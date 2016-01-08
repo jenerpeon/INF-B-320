@@ -177,7 +177,7 @@ class CartController {
 		return userAccount.map(account -> {
 			model.addAttribute("option", option);
 			return "orderdata";
-		}).orElse("redirect:/login");
+		}).orElse("redirect:/#login-modal");
 	}
 
 	/**
@@ -195,7 +195,7 @@ class CartController {
 		return userAccount.map(account -> {
 			model.addAttribute("option", option);
 			return "orderdata";
-		}).orElse("redirect:/login");
+		}).orElse("redirect:/#login-modal");
 	}
 
 	/**

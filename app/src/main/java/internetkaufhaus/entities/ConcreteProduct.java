@@ -126,22 +126,6 @@ public class ConcreteProduct extends Product {
 	}
 
 	/**
-	 * Gets the rating.
-	 *
-	 * @return the rating
-	 */
-	public List<Integer> getRating() {
-		double rating = 0;
-		if (comments.isEmpty())
-			return null;
-		for (Comment c : this.getAcceptedComments()) {
-			rating += c.getRating();
-		}
-		rating = (rating / (this.getAcceptedComments().size()) + (0.5));
-		return IntStream.range(0, (int) rating).boxed().collect(Collectors.toList());
-	}
-
-	/**
 	 * Update average rating.
 	 */
 	public void updateAverageRating() {
@@ -158,7 +142,8 @@ public class ConcreteProduct extends Product {
 	 * @return the average rating
 	 */
 	public float getAverageRating() {
-		return this.averageRating;
+		updateAverageRating();
+		return Math.round(this.averageRating);
 	}
 
 	/**

@@ -33,6 +33,10 @@ public class Comment implements Serializable {
 	@Column(name = "ID")
 	private Long commentid;
 
+	/** The title. */
+	@Column(name = "TITLE",length = 100000)
+	private String title;
+	
 	/** The text. */
 	// @NotEmpty(message="{Comment.text.NotEmpty}")
 	@Column(name = "TEXT",length = 100000)
@@ -82,7 +86,8 @@ public class Comment implements Serializable {
 	 * @param t
 	 *            the t
 	 */
-	public Comment(String text, int rating, LocalDateTime dateTime, String t) {
+	public Comment(String title, String text, int rating, LocalDateTime dateTime, String t) {
+		this.title = title;
 		this.text = text;
 		this.rating = rating;
 		this.date = dateTime;
@@ -145,6 +150,10 @@ public class Comment implements Serializable {
 	 */
 	public void setProduct(ConcreteProduct product) {
 		this.product = product;
+	}
+	
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	/**
@@ -242,6 +251,10 @@ public class Comment implements Serializable {
 	 */
 	public long getId() {
 		return commentid;
+	}
+	
+	public String getTitle() {
+		return title;
 	}
 
 	/**

@@ -272,7 +272,7 @@ public class AdminController {
 	@RequestMapping(value = "/admin/changeuser/displayUser/{id}")
 	public String displayUser(@PathVariable("id") ConcreteUserAccount acc, ModelMap model) {
 		model.addAttribute("account", acc);
-		return "redirect:/admin/changeuser/edituser/"+acc.getId();
+		return "redirect:/admin/changeuser/editUser/"+acc.getId();
 	}
 
 	/**

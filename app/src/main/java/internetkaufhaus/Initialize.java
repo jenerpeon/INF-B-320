@@ -598,7 +598,7 @@ public class Initialize implements DataInitializer {
 						epochBegin + ((long) (random.nextDouble() * (epochNow - epochBegin))), 0,
 						ZoneOffset.ofHours(1));
 
-				Comment comment = new Comment(lorem.getWords(random.nextInt(100) + 10), random.nextInt(4) + 1,
+				Comment comment = new Comment(lorem.getWords(random.nextInt(10) + 4), lorem.getWords(random.nextInt(100) + 10), random.nextInt(4) + 1,
 						commentDate, commentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
 				prod.addComment(comment, accountsList.get(random.nextInt(accountsList.size() - 1)));
 			}

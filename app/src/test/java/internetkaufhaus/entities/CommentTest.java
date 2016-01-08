@@ -28,7 +28,7 @@ public class CommentTest {
 	 */
 	@Before
 	public void init() {
-		model = new Comment("Das hier ist ein Kommentar", 5, LocalDateTime.now(), "t");
+		model = new Comment("Das hier ist ein Titel", "Das hier ist ein Kommentar", 5, LocalDateTime.now(), "t");
 	}
 
 	/**
