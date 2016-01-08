@@ -39,7 +39,6 @@ import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.forms.CreateUserForm;
 import internetkaufhaus.forms.EditUserForm;
-import internetkaufhaus.forms.NewUserAccountForm;
 import internetkaufhaus.model.Competition;
 import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.model.NavItem;
@@ -48,6 +47,7 @@ import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.services.ConcreteMailService;
 import internetkaufhaus.services.DataService;
+import internetkaufhaus.services.HumanResourceService;
 import internetkaufhaus.services.ProductManagementService;
 
 // TODO: Auto-generated Javadoc
@@ -75,9 +75,10 @@ public class AdminController {
 	/** The product management service. */
 	@Autowired
 	private ProductManagementService productManagementService;
-
-	/** The form. */
-	private final NewUserAccountForm form;
+	
+	/** The HumanResourceService */
+	@Autowired
+	private HumanResourceService humanResourceService;
 	
 	/** The creditmanager. */
 	private final Creditmanager creditmanager;
@@ -99,9 +100,8 @@ public class AdminController {
 	 * @param concreteProductRepository the concrete product repository
 	 */
 	@Autowired
-	public AdminController(Creditmanager creditmanager, NewUserAccountForm form, ConcreteProductRepository concreteProductRepository, OrderManager<Order> orderManager, ConcreteOrderRepository concreteOrderRepo) {
+	public AdminController(Creditmanager creditmanager, ConcreteProductRepository concreteProductRepository, OrderManager<Order> orderManager, ConcreteOrderRepository concreteOrderRepo) {
 		this.concreteProductRepository = concreteProductRepository;
-		this.form = form;
 		this.creditmanager = creditmanager;
 		this.orderManager = orderManager;
 		this.concreteOrderRepo = concreteOrderRepo;
@@ -163,11 +163,8 @@ public class AdminController {
 	 * @return redirectToChangeUserPage
 	 */
 	@RequestMapping(value = "/admin/changeuser/deleteUser/{id}")
-	public String deleteUser(@PathVariable("id") Long id) {
-		dataService.getUserAccountManager()
-				.disable(dataService.getConcreteUserAccoutnRepository().findOne(id).getUserAccount().getId());
-		dataService.getConcreteUserAccoutnRepository().delete(id);
-
+	public String deleteUser(@PathVariable("id") Long id, @LoggedIn Optional<UserAccount> admin) {
+		humanResourceService.fireEmployee(id, admin);
 		return "redirect:/admin/changeuser";
 	}
 
@@ -217,7 +214,7 @@ public class AdminController {
 			model.addAttribute("message", result.getAllErrors());
 			return "changeusernewuser";
 		}
-		form.createUser(createuserform);
+		humanResourceService.hireEmployee(createuserform);
 		return "redirect:/admin/changeuser/";
 	}
 
@@ -254,11 +251,11 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/admin/changeuser/editedUser", method = RequestMethod.POST)
 	public String editedUserUser(@ModelAttribute("EditUserForm") @Valid EditUserForm edituserform,
-			BindingResult result) {
-		if (result.hasErrors()) {
+			BindingResult result, @LoggedIn Optional<UserAccount> acc) {
+		if (result.hasErrors()) {			
 			return "redirect:/admin/changeuser/";
 		}
-		form.changeUser(edituserform.getId(), edituserform.getEmail(), edituserform.getRolename(), edituserform.getPassword());
+		humanResourceService.changeEmployee(edituserform, acc);
 		return "redirect:/admin/changeuser/";
 	}
 
