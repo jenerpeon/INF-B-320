@@ -44,11 +44,11 @@ Onlineshop "Woods Super Dooper Shop"
 | urgent | /employee/orders/accept/1 | ... | Admin hat die Bestellung angenommen, versuche sie mit dem Mitarbeiter nochmal anzunehmen | Whitelabel Error Page: No value present
 | urgent | /#registration-modal | asd@asd | asd@asd.irgendwas sollte erst gehen|
 | urgent | redirect/#login-modal | | | Error resolving template "redirect/#login-modal", template might not exist
-| urgent | "Mein Konto" | | Kein Zugriff auf Schaltfläche |
+| fixed | "Mein Konto" | | Kein Zugriff auf Schaltfläche |
 | urgent | employee/newsletter/changeNewsletter | | Neuer Newsletter | Error resolving template "employeenavigation", template might not exist
 | urgent | /employee/newsletter/oldAbos | | Alter Newsletter | Error resolving template "employeenavigation", template might not exist
 | urgent | /admin/changeuser/addedUser | | "neuen" User asd als Admin hinzufügen, obwohl bereits existiert | Whitelabel Error Page: User with name asd already exists!
-| urgent | /admin/changeuser/addedUser | | neuen User "wer" anlegen als Admin | There was an unexpected error (type=Internal Server Error, status=500).
+| fixed | /admin/changeuser/addedUser | | neuen User "wer" anlegen als Admin | There was an unexpected error (type=Internal Server Error, status=500).
 org.hibernate.TransientPropertyValueException: object references an unsaved transient instance - save the transient instance before flushing : internetkaufhaus.entities.ConcreteUserAccount.userAccount -> org.salespointframework.useraccount.UserAccount; nested exception is java.lang.IllegalStateException: org.hibernate.TransientPropertyValueException: object references an unsaved transient instance - save the transient instance before flushing : internetkaufhaus.entities.ConcreteUserAccount.userAccount -> org.salespointframework.useraccount.UserAccount
 
 | fixed | /returOrders | | als Admin eingeloggt | Whitelabel Error Page: Zugriff verweigert
