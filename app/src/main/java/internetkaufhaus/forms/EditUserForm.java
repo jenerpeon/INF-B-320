@@ -1,28 +1,34 @@
 package internetkaufhaus.forms;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import cz.jirutka.validator.spring.SpELAssert;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EditUserForm.
  */
+@SpELAssert(value = "password.equals(passwordrepeat)", message = "Die Passwörter stimmen nicht überein")
 public class EditUserForm {
 
+	/** The email. */
+	@NotEmpty(message = "Bitte geben Sie eine E-Mail Adresse an.")
+	@Email(message = "Die E-Mail Adresse is ungültig.")
 	private String email;
 
 	/** The rolename. */
-//	@NotEmpty(message = "rolename is mandatory")
+	@NotEmpty(message = "Bitte geben Sie eine Rolle an.")
 	private String rolename;
 
 	/** The password. */
-	@NotEmpty(message = "password field is mandatory")
-	@Length(min = 8, message = "password is too short")
+	@NotEmpty(message = "Bitte geben Sie ein Passwort an.")
+	@Length(min = 8, message = "Das Passwort ist zu kurz.")
 	private String password;
-	
+
 	/** The passwordrepeat. */
-	@NotEmpty(message = "passwordrepeat field is mandatory")
-	@Length(min = 8, message = "password is too short")
+	@NotEmpty(message = "Bitte geben Sie ihr Passwort zu Überprüfung ein zweites mal an.")
 	private String passwordrepeat;
 	
 	/** The id. */
@@ -45,6 +51,7 @@ public class EditUserForm {
 	{
 		System.out.println("");
 	}
+	
 	public Long getId() {
 		return this.id;
 	}

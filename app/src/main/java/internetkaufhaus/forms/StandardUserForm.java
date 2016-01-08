@@ -7,10 +7,13 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import cz.jirutka.validator.spring.SpELAssert;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class StandardUserForm.
  */
+@SpELAssert(value = "password.equals(passwordrepeat)", message = "Die Passwörter stimmen nicht überein")
 public class StandardUserForm {
 
 	/** The name. */
@@ -57,16 +60,6 @@ public class StandardUserForm {
 	@NotEmpty(message = "Bitte geben Sie einen Nachnamen an.")
 	@Pattern(regexp = "([A-Za-z])+", message = "Der Nachname enthält ungültige Zeichen.")
 	private String lastname;
-
-	/**
-	 * Checks if is valid.
-	 *
-	 * @return true, if is valid
-	 */
-	@AssertTrue(message = "Die Passwörter stimmen nicht überein.")
-	private boolean passwordIsValid() {
-		return this.password != null && this.passwordrepeat != null && this.password.equals(this.passwordrepeat);
-	}
 
 	/**
 	 * Gets the firstname.

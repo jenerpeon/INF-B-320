@@ -75,11 +75,20 @@
 }
 
 #workframe #newuser {
-	margin: 10px 0px 0px 30px;
+	flex-basis: 100%
 }
 
 #workframe #edituser {
 	flex-basis: 60%;
+}
+
+#workframe #edituser label {
+	width: 25%;
+}
+
+#workframe #error {
+	list-style-type: none;
+	flex-basis: 100%;
 }
 
 .userform fieldset {
@@ -103,7 +112,7 @@
 .userform label {
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
 	float: left;
-	width: 35%;
+	width: 20%;
 	margin-right:0.5em;
     padding-top:0.2em;
   	text-align:left;

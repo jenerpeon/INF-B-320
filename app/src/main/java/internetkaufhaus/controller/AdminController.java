@@ -67,27 +67,27 @@ public class AdminController {
 	/** The data service. */
 	@Autowired
 	private DataService dataService;
-	
+
 	/** The mail service. */
 	@Autowired
 	private ConcreteMailService mailService;
-	
+
 	/** The product management service. */
 	@Autowired
 	private ProductManagementService productManagementService;
-	
+
 	/** The HumanResourceService */
 	@Autowired
 	private HumanResourceService humanResourceService;
-	
+
 	/** The creditmanager. */
 	private final Creditmanager creditmanager;
-	
+
 	/** The concrete product repository. */
 	private final ConcreteProductRepository concreteProductRepository;
-	
+
 	private final OrderManager<Order> orderManager;
-	
+
 	private final ConcreteOrderRepository concreteOrderRepo;
 
 	/**
@@ -95,12 +95,16 @@ public class AdminController {
 	 * functionality other than storing function arguments as class attribute,
 	 * what do you expect me to write here?
 	 *
-	 * @param creditmanager            singleton, passed by spring/salespoint
-	 * @param form            singleton, passed by spring/salespoint
-	 * @param concreteProductRepository the concrete product repository
+	 * @param creditmanager
+	 *            singleton, passed by spring/salespoint
+	 * @param form
+	 *            singleton, passed by spring/salespoint
+	 * @param concreteProductRepository
+	 *            the concrete product repository
 	 */
 	@Autowired
-	public AdminController(Creditmanager creditmanager, ConcreteProductRepository concreteProductRepository, OrderManager<Order> orderManager, ConcreteOrderRepository concreteOrderRepo) {
+	public AdminController(Creditmanager creditmanager, ConcreteProductRepository concreteProductRepository,
+			OrderManager<Order> orderManager, ConcreteOrderRepository concreteOrderRepo) {
 		this.concreteProductRepository = concreteProductRepository;
 		this.creditmanager = creditmanager;
 		this.orderManager = orderManager;
@@ -115,9 +119,11 @@ public class AdminController {
 	@ModelAttribute("adminNaviagtion")
 	public List<NavItem> addAdminNavigation() {
 		String adminNavigationName[] = { "Userverwaltung", "Bilanzen", "Statistiken", "Gewinnspiel" };
-		//String adminNavigationName[] = { "Userverwaltung", "Bilanzen", "Gewinnspiel" };
+		// String adminNavigationName[] = { "Userverwaltung", "Bilanzen",
+		// "Gewinnspiel" };
 		String adminNavigationLink[] = { "/admin/changeuser", "/admin/balance", "/admin/statistics", "/admin/lottery" };
-		//String adminNavigationLink[] = { "/admin/changeuser", "/admin/balance", "/admin/lottery" };
+		// String adminNavigationLink[] = { "/admin/changeuser",
+		// "/admin/balance", "/admin/lottery" };
 		List<NavItem> navigation = new ArrayList<NavItem>();
 		for (int i = 0; i < adminNavigationName.length; i++) {
 			NavItem nav = new NavItem(adminNavigationName[i], adminNavigationLink[i], "non-category");
@@ -129,8 +135,10 @@ public class AdminController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 *
-	 * @param userAccount the user account
-	 * @param model the model
+	 * @param userAccount
+	 *            the user account
+	 * @param model
+	 *            the model
 	 * @return adminOverviewPage
 	 */
 	@RequestMapping("/admin")
@@ -142,7 +150,8 @@ public class AdminController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 *
-	 * @param model the model
+	 * @param model
+	 *            the model
 	 * @return changeUserPage
 	 */
 	@RequestMapping(value = "/admin/changeuser")
@@ -159,7 +168,8 @@ public class AdminController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 * @return redirectToChangeUserPage
 	 */
 	@RequestMapping(value = "/admin/changeuser/deleteUser/{id}")
@@ -171,8 +181,10 @@ public class AdminController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 *
-	 * @param acc the acc
-	 * @param model the model
+	 * @param acc
+	 *            the acc
+	 * @param model
+	 *            the model
 	 * @return the string
 	 */
 	@RequestMapping(value = "/admin/changeuser/detail/{id}")
@@ -187,16 +199,19 @@ public class AdminController {
 	 * @return the string
 	 */
 	@RequestMapping("/admin/changeuser/addUser")
-	public String addArticle() {
+	public String addUser() {
 		return "changeusernewuser";
 	}
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 *
-	 * @param createuserform the createuserform
-	 * @param result the result
-	 * @param model the model
+	 * @param createuserform
+	 *            the createuserform
+	 * @param result
+	 *            the result
+	 * @param model
+	 *            the model
 	 * @return the string
 	 */
 	@RequestMapping(value = "/admin/changeuser/addedUser", method = RequestMethod.POST)
@@ -221,8 +236,10 @@ public class AdminController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 *
-	 * @param acc the acc
-	 * @param model the model
+	 * @param acc
+	 *            the acc
+	 * @param model
+	 *            the model
 	 * @return the string
 	 */
 	@RequestMapping(value = "/admin/changeuser/editUser/{id}")
@@ -231,8 +248,9 @@ public class AdminController {
 		Creditmanager credit = new Creditmanager(dataService.getConcreteOrderRepository());
 		credit.updateCreditpointsByUser(acc);
 		model.addAttribute("account", acc);
-		
-		Iterable<ConcreteOrder> orders = dataService.getConcreteOrderRepository().findByUser(acc.getUserAccount(), sorting);
+
+		Iterable<ConcreteOrder> orders = dataService.getConcreteOrderRepository().findByUser(acc.getUserAccount(),
+				sorting);
 		Money turnover = Money.of(0, "EUR");
 		for (ConcreteOrder order : orders) {
 			turnover = turnover.add(order.getOrder().getTotalPrice());
@@ -245,37 +263,63 @@ public class AdminController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 *
-	 * @param edituserform the edituserform
-	 * @param result the result
+	 * @param edituserform
+	 *            the edituserform
+	 * @param result
+	 *            the result
 	 * @return the string
 	 */
 	@RequestMapping(value = "/admin/changeuser/editedUser", method = RequestMethod.POST)
-	public String editedUserUser(@ModelAttribute("EditUserForm") @Valid EditUserForm edituserform,
-			BindingResult result, @LoggedIn Optional<UserAccount> acc) {
-		if (result.hasErrors()) {			
-			return "redirect:/admin/changeuser/";
+	public String editedUserUser(@ModelAttribute("EditUserForm") @Valid EditUserForm edituserform, BindingResult result,
+			@LoggedIn Optional<UserAccount> admin, ModelMap model) {
+		ConcreteUserAccount acc = dataService.getConcreteUserAccoutnRepository().findOne(edituserform.getId());
+		System.out.println(acc.getEmail().equals(edituserform.getEmail()));
+		if (dataService.getConcreteUserAccoutnRepository().findByEmail(edituserform.getEmail()).isPresent()
+				&& !(acc.getEmail().equals(edituserform.getEmail()))) {
+			ObjectError emailError = new ObjectError("email", "Die E-Mail Adresse wird bereits verwendet.");
+			result.addError(emailError);
 		}
-		humanResourceService.changeEmployee(edituserform, acc);
+		if (result.hasErrors()) {
+			Sort sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "dateOrdered", Sort.NullHandling.NATIVE));
+			Creditmanager credit = new Creditmanager(dataService.getConcreteOrderRepository());
+			credit.updateCreditpointsByUser(acc);
+			model.addAttribute("account", acc);
+
+			Iterable<ConcreteOrder> orders = dataService.getConcreteOrderRepository().findByUser(acc.getUserAccount(),
+					sorting);
+			Money turnover = Money.of(0, "EUR");
+			for (ConcreteOrder order : orders) {
+				turnover = turnover.add(order.getOrder().getTotalPrice());
+			}
+			model.addAttribute("orders", orders);
+			model.addAttribute("turnover", turnover);
+			model.addAttribute("message", result.getAllErrors());
+			return "changeuseredituser";
+		}
+		humanResourceService.changeEmployee(edituserform, admin);
 		return "redirect:/admin/changeuser/";
 	}
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 *
-	 * @param acc the acc
-	 * @param model the model
+	 * @param acc
+	 *            the acc
+	 * @param model
+	 *            the model
 	 * @return the string
 	 */
 	@RequestMapping(value = "/admin/changeuser/displayUser/{id}")
 	public String displayUser(@PathVariable("id") ConcreteUserAccount acc, ModelMap model) {
 		model.addAttribute("account", acc);
-		return "redirect:/admin/changeuser/editUser/"+acc.getId();
+		return "redirect:/admin/changeuser/editUser/" + acc.getId();
 	}
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 *
-	 * @param model the model
+	 * @param model
+	 *            the model
 	 * @return the string
 	 */
 	@RequestMapping(value = "/admin/balance")
@@ -296,7 +340,8 @@ public class AdminController {
 		double totalOpen = 0;
 		Map<ConcreteOrder, Double> stockOrders = new HashMap<ConcreteOrder, Double>();
 		for (ConcreteOrder order : ordersOpen) {
-			stockOrders.put(order, this.productManagementService.getBuyingPrice(order).getNumberStripped().doubleValue());
+			stockOrders.put(order,
+					this.productManagementService.getBuyingPrice(order).getNumberStripped().doubleValue());
 			totalOpen += stockOrders.get(order);
 		}
 
@@ -313,12 +358,13 @@ public class AdminController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 *
-	 * @param model the model
+	 * @param model
+	 *            the model
 	 * @return the winners
 	 */
 	@RequestMapping(value = "/admin/statistics")
 	public String getStatistics(ModelMap model) {
-		
+
 		LocalDateTime to = LocalDateTime.now();
 		LocalDateTime from7Days = to.minusDays(7);
 		LocalDateTime from1Month = to.minusMonths(1);
@@ -337,15 +383,15 @@ public class AdminController {
 		intervals.put(Interval.from(from3Year).to(to), "year");
 		intervals.put(Interval.from(from5Year).to(to), "year");
 		intervals.put(Interval.from(from10Year).to(to), "year");
-		
+
 		List<Statistic> stats = new ArrayList<Statistic>();
-		
+
 		for (Interval key : intervals.keySet()) {
 			System.out.println(key);
 			Statistic stat = new Statistic(concreteOrderRepo, key, intervals.get(key));
 			stats.add(stat);
 		}
-		
+
 		model.addAttribute("stats", stats);
 		return "statistics";
 	}
