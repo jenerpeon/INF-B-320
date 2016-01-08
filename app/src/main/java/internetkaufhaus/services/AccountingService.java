@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import internetkaufhaus.entities.ConcreteUserAccount;
-import internetkaufhaus.forms.CreateUserForm;
 import internetkaufhaus.forms.RegistrationForm;
 
 // TODO: Auto-generated Javadoc
