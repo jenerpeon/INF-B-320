@@ -100,7 +100,7 @@ public class HumanResourceService {
 		{
 			return false;
 		}
-		if(acc.getUserAccount().getId().equals(admin.get().getIdentifier()))
+		if(acc.getUserAccount().getId().equals(admin.get().getIdentifier()) && !(form.getRolename().equals("ROLE_ADMIN")))
 		{
 			return false;
 		}

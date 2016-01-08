@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import static org.salespointframework.core.Currencies.EURO;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 
@@ -26,7 +28,7 @@ public class CommentTest {
 	 */
 	@Before
 	public void init() {
-		model = new Comment("Das hier ist ein Kommentar", 5, new Date(200000), "t");
+		model = new Comment("Das hier ist ein Kommentar", 5, LocalDateTime.now(), "t");
 	}
 
 	/**
@@ -86,7 +88,7 @@ public class CommentTest {
 	 */
 	@Test
 	public void testDate() {
-		Date date = new Date(20000);
+		LocalDateTime date = LocalDateTime.now();
 		model.setDate(date);
 		assertTrue("Datum gesetzt", model.getDate() == date);
 	}
@@ -107,8 +109,8 @@ public class CommentTest {
 	 */
 	@Test
 	public void testFormattedDate() {
-		Date date = new Date(20000);
-		SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.GERMANY);
+		LocalDateTime date = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, d MMM yyyy HH:mm", Locale.GERMANY);
 		String formattedDate = formatter.format(date);
 		model.setFormatedDate(date);
 		assertEquals("FormattedDate gesetzt", model.getFormatedDate(), formattedDate);

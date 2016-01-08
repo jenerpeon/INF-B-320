@@ -13,7 +13,6 @@ public class CreateUserForm extends StandardUserForm {
 	 * Instantiates a new creates the user form.
 	 */
 	public CreateUserForm() {
-		System.out.print("");
 	}
 
 	/**

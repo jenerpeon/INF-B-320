@@ -2,9 +2,12 @@ package internetkaufhaus.controller;
 
 import static org.salespointframework.core.Currencies.EURO;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -12,17 +15,20 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.javamoney.moneta.Money;
+import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.time.Interval;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +42,8 @@ import internetkaufhaus.forms.EditUserForm;
 import internetkaufhaus.model.Competition;
 import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.model.NavItem;
+import internetkaufhaus.model.Statistic;
+import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.services.ConcreteMailService;
 import internetkaufhaus.services.DataService;
@@ -77,6 +85,10 @@ public class AdminController {
 	
 	/** The concrete product repository. */
 	private final ConcreteProductRepository concreteProductRepository;
+	
+	private final OrderManager<Order> orderManager;
+	
+	private final ConcreteOrderRepository concreteOrderRepo;
 
 	/**
 	 * This is the constructor. It's neither used nor does it contain any
@@ -88,9 +100,11 @@ public class AdminController {
 	 * @param concreteProductRepository the concrete product repository
 	 */
 	@Autowired
-	public AdminController(Creditmanager creditmanager, ConcreteProductRepository concreteProductRepository) {
+	public AdminController(Creditmanager creditmanager, ConcreteProductRepository concreteProductRepository, OrderManager<Order> orderManager, ConcreteOrderRepository concreteOrderRepo) {
 		this.concreteProductRepository = concreteProductRepository;
 		this.creditmanager = creditmanager;
+		this.orderManager = orderManager;
+		this.concreteOrderRepo = concreteOrderRepo;
 	}
 
 	/**
@@ -100,10 +114,10 @@ public class AdminController {
 	 */
 	@ModelAttribute("adminNaviagtion")
 	public List<NavItem> addAdminNavigation() {
-		//String adminNavigationName[] = { "Userverwaltung", "Bilanzen", "Statistiken", "Gewinnspiel" };
-		String adminNavigationName[] = { "Userverwaltung", "Bilanzen", "Gewinnspiel" };
-		//String adminNavigationLink[] = { "/admin/changeuser", "/admin/balance", "/admin/statistics", "/admin/lottery" };
-		String adminNavigationLink[] = { "/admin/changeuser", "/admin/balance", "/admin/lottery" };
+		String adminNavigationName[] = { "Userverwaltung", "Bilanzen", "Statistiken", "Gewinnspiel" };
+		//String adminNavigationName[] = { "Userverwaltung", "Bilanzen", "Gewinnspiel" };
+		String adminNavigationLink[] = { "/admin/changeuser", "/admin/balance", "/admin/statistics", "/admin/lottery" };
+		//String adminNavigationLink[] = { "/admin/changeuser", "/admin/balance", "/admin/lottery" };
 		List<NavItem> navigation = new ArrayList<NavItem>();
 		for (int i = 0; i < adminNavigationName.length; i++) {
 			NavItem nav = new NavItem(adminNavigationName[i], adminNavigationLink[i], "non-category");
@@ -188,6 +202,14 @@ public class AdminController {
 	@RequestMapping(value = "/admin/changeuser/addedUser", method = RequestMethod.POST)
 	public String addedUser(@ModelAttribute("CreateUserForm") @Valid CreateUserForm createuserform,
 			BindingResult result, ModelMap model) {
+		if (dataService.getUserAccountManager().findByUsername(createuserform.getName()).isPresent()) {
+			ObjectError usernameError = new ObjectError("name", "Der Benutzername existiert bereits.");
+			result.addError(usernameError);
+		}
+		if (dataService.getConcreteUserAccoutnRepository().findByEmail(createuserform.getEmail()).isPresent()) {
+			ObjectError emailError = new ObjectError("email", "Die E-Mail Adresse wird bereits verwendet.");
+			result.addError(emailError);
+		}
 		if (result.hasErrors()) {
 			model.addAttribute("message", result.getAllErrors());
 			return "changeusernewuser";
@@ -205,7 +227,18 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/admin/changeuser/editUser/{id}")
 	public String editUser(@PathVariable("id") ConcreteUserAccount acc, ModelMap model) {
+		Sort sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "dateOrdered", Sort.NullHandling.NATIVE));
+		Creditmanager credit = new Creditmanager(dataService.getConcreteOrderRepository());
+		credit.updateCreditpointsByUser(acc);
 		model.addAttribute("account", acc);
+		
+		Iterable<ConcreteOrder> orders = dataService.getConcreteOrderRepository().findByUser(acc.getUserAccount(), sorting);
+		Money turnover = Money.of(0, "EUR");
+		for (ConcreteOrder order : orders) {
+			turnover = turnover.add(order.getOrder().getTotalPrice());
+		}
+		model.addAttribute("orders", orders);
+		model.addAttribute("turnover", turnover);
 		return "changeuseredituser";
 	}
 
@@ -236,7 +269,7 @@ public class AdminController {
 	@RequestMapping(value = "/admin/changeuser/displayUser/{id}")
 	public String displayUser(@PathVariable("id") ConcreteUserAccount acc, ModelMap model) {
 		model.addAttribute("account", acc);
-		return "changeUserDisplay";
+		return "redirect:/admin/changeuser/edituser/"+acc.getId();
 	}
 
 	/**
@@ -283,9 +316,9 @@ public class AdminController {
 	 * @param model the model
 	 * @return the winners
 	 */
-	/*@RequestMapping(value = "/admin/statistics")
-	public String getStatistics() {
-		// Statistic stat = new Statistic(orderManager);
+	@RequestMapping(value = "/admin/statistics")
+	public String getStatistics(ModelMap model) {
+		
 		LocalDateTime to = LocalDateTime.now();
 		LocalDateTime from7Days = to.minusDays(7);
 		LocalDateTime from1Month = to.minusMonths(1);
@@ -295,7 +328,7 @@ public class AdminController {
 		LocalDateTime from5Year = to.minusYears(5);
 		LocalDateTime from10Year = to.minusYears(10);
 
-		Map<Interval, String> intervals = new HashMap<Interval, String>();
+		Map<Interval, String> intervals = new LinkedHashMap<Interval, String>();
 
 		intervals.put(Interval.from(from7Days).to(to), "day");
 		intervals.put(Interval.from(from1Month).to(to), "week");
@@ -304,14 +337,23 @@ public class AdminController {
 		intervals.put(Interval.from(from3Year).to(to), "year");
 		intervals.put(Interval.from(from5Year).to(to), "year");
 		intervals.put(Interval.from(from10Year).to(to), "year");
-
+		
+		List<Statistic> stats = new ArrayList<Statistic>();
+		
+		for (Interval key : intervals.keySet()) {
+			System.out.println(key);
+			Statistic stat = new Statistic(concreteOrderRepo, key, intervals.get(key));
+			stats.add(stat);
+		}
+		
+		model.addAttribute("stats", stats);
 		return "statistics";
 	}
 
 	@RequestMapping(value = "/admin/lottery")
 	public String competition() {
 		return "competition"; // TODO: what does this even do?
-	}*/
+	}
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?

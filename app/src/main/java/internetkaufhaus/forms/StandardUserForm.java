@@ -14,48 +14,48 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class StandardUserForm {
 
 	/** The name. */
-	@NotEmpty(message = "username is mandatory")
-	@Pattern(regexp = "([A-Za-z0-9])+", message = "username contains illegal characters")
+	@NotEmpty(message = "Bitte geben Sie einen Benutzernamen an.")
+	@Pattern(regexp = "([A-Za-z0-9])+", message = "Der Benutzername enthält unzulässige Zeichen.")
 	private String name;
 
 	/** The password. */
-	@NotEmpty(message = "password field is mandatory")
-	@Length(min = 8, message = "password is too short")
+	@NotEmpty(message = "Bitte geben Sie ein Passwort an.")
+	@Length(min = 8, message = "Das Passwort ist zu kurz.")
 	private String password;
 
 	/** The passwordrepeat. */
-	@NotEmpty(message = "password-repeat field is mandatory")
+	@NotEmpty(message = "Bitte geben Sie ihr Passwort zu Überprüfung ein zweites mal an.")
 	private String passwordrepeat;
 
 	/** The email. */
-	@NotEmpty(message = "email field is mandatory")
-	@Email(message = "email is not a valid email")
+	@NotEmpty(message = "Bitte geben Sie eine E-Mail Adresse an.")
+	@Email(message = "Die E-Mail Adresse is ungültig.")
 	private String email;
 
 	/** The address. */
-	@NotEmpty(message = "address field is mandatory")
-	@Pattern(regexp = "([A-Za-z0-9 ,.-])+", message = "address contains illegal characters")
+	@NotEmpty(message = "Bitte geben Sie eine Adresse an.")
+	@Pattern(regexp = "([A-Za-z0-9 ,.-])+", message = "Die Adresse enthält unzulässige Zeichen.")
 	private String address;
 
 	/** The zip code. */
-	@NotEmpty(message = "zipCode field is mandatory")
-	@Length(min = 5, max = 5, message = "zip-code is not 5 characters long, but should be")
-	@Pattern(regexp = "([0-9])+", message = "zip-code contains illegal characters")
+	@NotEmpty(message = "Bitte geben Sie eine Postleitzahl an.")
+	@Length(min = 5, max = 5, message = "Die Postleitzahl muss genau fünf Ziffern lang sein.")
+	@Pattern(regexp = "([0-9])+", message = "Die Postleitzahl enthält unzulässige Zeichen.")
 	private String zipCode;
 
 	/** The city. */
-	@NotEmpty(message = "city field is mandatory")
-	@Pattern(regexp = "([A-Za-z0-9,.-])+", message = "city contains illegal characters")
+	@NotEmpty(message = "Bitte geben Sie eine Stadt an.")
+	@Pattern(regexp = "([A-Za-z0-9,.-])+", message = "Die Stadt enthält ungültige Zeichen.")
 	private String city;
 
 	/** The firstname. */
-	@NotEmpty(message = "first-name field is mandatory")
-	@Pattern(regexp = "([A-Za-z])+", message = "first name contains illegal characters")
+	@NotEmpty(message = "Bitte geben Sie einen Vornamen an.")
+	@Pattern(regexp = "([A-Za-z])+", message = "Der Vorname enthält ungültige Zeichen.")
 	private String firstname;
 
 	/** The lastname. */
-	@NotEmpty(message = "last-name field is mandatory")
-	@Pattern(regexp = "([A-Za-z])+", message = "last name contains illegal characters")
+	@NotEmpty(message = "Bitte geben Sie einen Nachnamen an.")
+	@Pattern(regexp = "([A-Za-z])+", message = "Der Nachname enthält ungültige Zeichen.")
 	private String lastname;
 
 	/**
@@ -63,8 +63,8 @@ public class StandardUserForm {
 	 *
 	 * @return true, if is valid
 	 */
-	@AssertTrue(message = "password-repeat field should be equal to password field")
-	private boolean isValid() {
+	@AssertTrue(message = "Die Passwörter stimmen nicht überein.")
+	private boolean passwordIsValid() {
 		return this.password != null && this.passwordrepeat != null && this.password.equals(this.passwordrepeat);
 	}
 

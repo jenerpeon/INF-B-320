@@ -135,7 +135,7 @@ public class AccountingService {
 				try {
 					if (this.isRecruit(regform.getEmail())) {
 						ConcreteUserAccount invitator = this.dataService.getConcreteUserAccoutnRepository()
-								.findByEmail(recruit2invite.get(regform.getEmail()));
+								.findByEmail(recruit2invite.get(regform.getEmail())).get();
 						invitator.setRecruits(user);
 					}
 				} catch (Exception e) {
@@ -310,7 +310,7 @@ public class AccountingService {
 	public void verifyPass(String key) {
 		String email = this.key2email.get(key);
 		this.dataService.getUserAccountManager().changePassword(
-				dataService.getConcreteUserAccoutnRepository().findByEmail(email).getUserAccount(),
+				dataService.getConcreteUserAccoutnRepository().findByEmail(email).get().getUserAccount(),
 				email2pass.get(email));
 		this.key2email.remove(key);
 		this.email2pass.remove(email);

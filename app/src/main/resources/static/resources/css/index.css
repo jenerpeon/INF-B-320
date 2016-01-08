@@ -276,6 +276,11 @@
 	align-items: center;
 	border: none;
 	margin: 0 20px 0 0;
+	border: 1px solid white !important;
+}
+
+.top5 .img-thumbnail:hover {
+	border: 1px solid #d3d7cf !important;
 }
 
 .top5 .img-thumbnail a img {

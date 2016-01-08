@@ -462,6 +462,7 @@ public class ManagementController {
 				Quantity.of(stockForm.getQuantity()));
 		order.getOrder().add(orderLine);
 		order.setDateOrdered(LocalDateTime.now());
+		order.setStatus(OrderStatus.OPEN);
 		orderManager.save(order.getOrder());
 		concreteOrderRepo.save(order);
 		stock.orderArticle(stockForm.getProdId(), Quantity.of(stockForm.getQuantity()));

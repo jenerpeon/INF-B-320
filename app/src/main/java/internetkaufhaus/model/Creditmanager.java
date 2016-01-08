@@ -10,6 +10,7 @@ import org.salespointframework.order.OrderStatus;
 import org.salespointframework.time.Interval;
 import org.salespointframework.useraccount.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import internetkaufhaus.entities.ConcreteOrder;
@@ -56,8 +57,8 @@ public class Creditmanager {
 
 		Money credits = Money.of(0, EURO);
 		for (UserAccount user : recruits) {
-
-			for (ConcreteOrder order : concreteOrderRepo.findByUser(user)) {
+			Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "dateOrdered", Sort.NullHandling.NATIVE));
+			for (ConcreteOrder order : concreteOrderRepo.findByUser(user, sorting)) {
 				if (Interval.from(order.getDateOrdered()).to(LocalDateTime.now()).getDuration().toDays() >= 30 && order.getStatus().equals(OrderStatus.COMPLETED)) {
 					credits = credits.add(order.getOrder().getTotalPrice().multiply(20).divide(100));
 				}
