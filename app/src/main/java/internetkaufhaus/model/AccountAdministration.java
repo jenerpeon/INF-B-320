@@ -252,7 +252,7 @@ public class AccountAdministration {
 	 */
 	public void verifyPass(String key) {
 		String email = this.key2email.get(key);
-		this.userAccountManager.changePassword(ConcreteUserAccountManager.findByEmail(email).getUserAccount(),
+		this.userAccountManager.changePassword(ConcreteUserAccountManager.findByEmail(email).get().getUserAccount(),
 				email2pass.get(email));
 		this.key2email.remove(key);
 		this.email2pass.remove(email);

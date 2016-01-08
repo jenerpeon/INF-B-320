@@ -6,14 +6,24 @@ package internetkaufhaus.forms;
  */
 public class EditUserForm {
 
+	private String email;
+
 	/** The rolename. */
 	private String rolename;
-	
+
 	/** The password. */
 	private String password;
-	
+
 	/** The id. */
 	private Long id;
+
+	public String getEmail() {
+		return this.email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	/**
 	 * Gets the id.
@@ -27,7 +37,8 @@ public class EditUserForm {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -45,7 +56,8 @@ public class EditUserForm {
 	/**
 	 * Sets the rolename.
 	 *
-	 * @param rolename the new rolename
+	 * @param rolename
+	 *            the new rolename
 	 */
 	public void setRolename(String rolename) {
 		this.rolename = rolename;
@@ -63,7 +75,8 @@ public class EditUserForm {
 	/**
 	 * Sets the password.
 	 *
-	 * @param password the new password
+	 * @param password
+	 *            the new password
 	 */
 	public void setPassword(String password) {
 		this.password = password;

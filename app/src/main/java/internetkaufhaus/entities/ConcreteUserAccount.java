@@ -88,6 +88,7 @@ public class ConcreteUserAccount implements Serializable {
 	public ConcreteUserAccount(String username, String password, Role role, UserAccountManager u) {
 
 		this.userAccount = u.create(username, password, role);
+		this.role = role;
 		this.credits = Money.of(0, EURO);
 	}
 
@@ -310,7 +311,7 @@ public class ConcreteUserAccount implements Serializable {
 	 * @return the role
 	 */
 	public Role getRole() {
-		return this.userAccount.getRoles().iterator().next();
+		return this.role;
 	}
 
 	/**

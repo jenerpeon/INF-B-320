@@ -117,7 +117,7 @@ public class CustomerController {
 		caccount.getUserAccount().setFirstname(editForm.getFirstname());
 		caccount.getUserAccount().setLastname(editForm.getLastname());
 		userRepo.save(caccount);
-		form.changeUser(caccount.getId(), caccount.getRole().toString(), editForm.getPassword());
+		form.changeUser(caccount.getId(), editForm.getEmail(), caccount.getRole().toString(), editForm.getPassword());
 		return "redirect:/customer/data";
 	}
 	

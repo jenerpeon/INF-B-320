@@ -3,12 +3,27 @@
 <head>
 <meta charset="utf-8">
 <title>Statistiken</title>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
 <link href="/resources/css/admin.css" rel="stylesheet" type="text/css">
 <script src="/resources/script/jquery.min.js"></script>
 <script src="/resources/script/plotly-latest.min.js"></script>
-<script src="/resources/script/graph.js" type="text/javascript"></script>
-
+<script type="text/javascript">
+	
+	var stats = new Array();
+	<c:forEach items="${stats}" var="stat">
+		var statistic = new Object();
+		statistic.turnover = '${stat.turnover}';
+		statistic.orders = '${stat.orders}';
+		statistic.returns = '${stat.returns}';
+		statistic.expenses = '${stat.expenses}';
+		statistic.profit = '${stat.profit}';
+		stats.push(statistic);
+	</c:forEach>
+	$( document ).ready(function() {
+	    console.log( "ready!" );
+	});
+</script>
 </head>
 
 <body>
@@ -45,26 +60,6 @@
 					</div>
 				</div>
 			</div>
-			
-			<form>
-				<div th:each="stat,iterStat : ${stats}">
-					<div th:each="entry : ${stat.turnover}">
-						<input type="hidden" th:attr="onload=writeData${entry.key}" />
-					</div>
-					<div th:each="entry : ${stat.orders}">
-						<input type="hidden" th:attr="onload='writeData('${entry.key}','${entry.value}','${iterstat}',2)'" />
-					</div>
-					<div th:each="entry : ${stat.returns}">
-						<input type="hidden" th:attr="onload='writeData('${entry.key}','${entry.value}','${iterstat}',3)'" />
-					</div>
-					<div th:each="entry : ${stat.expenses}">
-						<input type="hidden" th:attr="onload='writeData('${entry.key}','${entry.value}','${iterstat}',4)'" />
-					</div>
-					<div th:each="entry : ${stat.profit}">
-						<input type="hidden" th:attr="onload='writeData('${entry.key}','${entry.value}','${iterstat}',5)'" />
-					</div>
-				</div>
-			</form>
 		</div>
 	</main>
 	<div id="footer" th:include="footer :: footer"></div>

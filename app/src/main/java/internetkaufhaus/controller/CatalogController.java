@@ -339,7 +339,7 @@ public class CatalogController {
 		if (usermanager.findByEmail(sendTo) == null) {
 			username = "Nicht registierter Abonnet";
 		} else {
-			username = usermanager.findByEmail(sendTo).getUserAccount().getUsername();
+			username = usermanager.findByEmail(sendTo).get().getUserAccount().getUsername();
 		}
 		newsManager.getMap().put(username, sendTo);
 		sender.sendMail(sendTo, text, "zu@googlemail.com", "NewsletterAbonnement");

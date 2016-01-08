@@ -41,8 +41,8 @@ public class NewUserAccountForm {
 	 */
 	public void createUser(CreateUserForm createuserform) {
 		ConcreteUserAccount cacc = new ConcreteUserAccount(createuserform.getName(),createuserform.getPassword(), Role.of(createuserform.getRolename()), manager);
-		repo.save(cacc);
 		manager.save(cacc.getUserAccount());
+		repo.save(cacc);
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class NewUserAccountForm {
 	 * @param password the password
 	 * @return true, if successful
 	 */
-	public boolean changeUser(Long id, String role, String password) {
+	public boolean changeUser(Long id, String email, String role, String password) {
 		ConcreteUserAccount acc = repo.findOne(id);
 		if (acc == null) {
 			return false;
@@ -65,8 +65,10 @@ public class NewUserAccountForm {
 		usacc.add(Role.of(role));
 		manager.save(usacc);
 		acc.setRole(Role.of(role));
+		acc.setEmail(email);
 		manager.changePassword(usacc, password);
 		repo.save(acc);
 		return true;
 	}
+
 }

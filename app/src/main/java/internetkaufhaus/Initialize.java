@@ -576,9 +576,9 @@ public class Initialize implements DataInitializer {
 		}
 
 		ConcreteUserAccountManager.findByUserAccount(userAccountManager.findByUsername("lars").get())
-				.setRecruits(ConcreteUserAccountManager.findByEmail("adminBehrens@todesstern.ru"));
+				.setRecruits(ConcreteUserAccountManager.findByEmail("adminBehrens@todesstern.ru").get());
 		ConcreteUserAccountManager.findByUserAccount(userAccountManager.findByUsername("admin").get())
-				.setRecruits(ConcreteUserAccountManager.findByEmail("behrens_lars@gmx.de"));
+				.setRecruits(ConcreteUserAccountManager.findByEmail("behrens_lars@gmx.de").get());
 	}
 
 	private void initializeComments() {
@@ -598,7 +598,7 @@ public class Initialize implements DataInitializer {
 						epochBegin + ((long) (random.nextDouble() * (epochNow - epochBegin))), 0,
 						ZoneOffset.ofHours(1));
 
-				Comment comment = new Comment(lorem.getWords(random.nextInt(100) + 50), random.nextInt(4) + 1,
+				Comment comment = new Comment(lorem.getWords(random.nextInt(100) + 10), random.nextInt(4) + 1,
 						commentDate, commentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
 				prod.addComment(comment, accountsList.get(random.nextInt(accountsList.size() - 1)));
 			}
@@ -634,13 +634,13 @@ public class Initialize implements DataInitializer {
 		List<ConcreteProduct> allProductsList = new ArrayList<ConcreteProduct>(allProducts);
 
 		for (ConcreteUserAccount u : ConcreteUserAccountManager.findByRole(Role.of("ROLE_CUSTOMER"))) {
-			int orderNumber = rand.nextInt(5) + 2;
+			int orderNumber = rand.nextInt(15) + 2;
 			for (int i = 0; i < orderNumber; i++) {
 				Cart c = new Cart();
-				int productNumber = rand.nextInt(9) + 1;
+				int productNumber = rand.nextInt(4) + 1;
 				for (int j = 0; j < productNumber; j++) {
 					ConcreteProduct prod = allProductsList.get(rand.nextInt(allProductsList.size() - 1));
-					Quantity quant = Quantity.of(rand.nextInt(19) + 1);
+					Quantity quant = Quantity.of(rand.nextInt(5) + 1);
 					c.addOrUpdateItem(prod, quant);
 					prod.increaseSold(quant.getAmount().intValue());
 					concreteProductRepository.save(prod);

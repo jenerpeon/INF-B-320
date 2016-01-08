@@ -23,10 +23,12 @@ import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -203,6 +205,14 @@ public class AdminController {
 	@RequestMapping(value = "/admin/changeuser/addedUser", method = RequestMethod.POST)
 	public String addedUser(@ModelAttribute("CreateUserForm") @Valid CreateUserForm createuserform,
 			BindingResult result, ModelMap model) {
+		if (dataService.getUserAccountManager().findByUsername(createuserform.getName()).isPresent()) {
+			ObjectError usernameError = new ObjectError("name", "Der Benutzername existiert bereits.");
+			result.addError(usernameError);
+		}
+		if (dataService.getConcreteUserAccoutnRepository().findByEmail(createuserform.getEmail()).isPresent()) {
+			ObjectError emailError = new ObjectError("email", "Die E-Mail Adresse wird bereits verwendet.");
+			result.addError(emailError);
+		}
 		if (result.hasErrors()) {
 			model.addAttribute("message", result.getAllErrors());
 			return "changeusernewuser";
@@ -220,7 +230,18 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/admin/changeuser/editUser/{id}")
 	public String editUser(@PathVariable("id") ConcreteUserAccount acc, ModelMap model) {
+		Sort sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "dateOrdered", Sort.NullHandling.NATIVE));
+		Creditmanager credit = new Creditmanager(dataService.getConcreteOrderRepository());
+		credit.updateCreditpointsByUser(acc);
 		model.addAttribute("account", acc);
+		
+		Iterable<ConcreteOrder> orders = dataService.getConcreteOrderRepository().findByUser(acc.getUserAccount(), sorting);
+		Money turnover = Money.of(0, "EUR");
+		for (ConcreteOrder order : orders) {
+			turnover = turnover.add(order.getOrder().getTotalPrice());
+		}
+		model.addAttribute("orders", orders);
+		model.addAttribute("turnover", turnover);
 		return "changeuseredituser";
 	}
 
@@ -237,7 +258,7 @@ public class AdminController {
 		if (result.hasErrors()) {
 			return "redirect:/admin/changeuser/";
 		}
-		form.changeUser(edituserform.getId(), edituserform.getRolename(), edituserform.getPassword());
+		form.changeUser(edituserform.getId(), edituserform.getEmail(), edituserform.getRolename(), edituserform.getPassword());
 		return "redirect:/admin/changeuser/";
 	}
 
@@ -251,7 +272,7 @@ public class AdminController {
 	@RequestMapping(value = "/admin/changeuser/displayUser/{id}")
 	public String displayUser(@PathVariable("id") ConcreteUserAccount acc, ModelMap model) {
 		model.addAttribute("account", acc);
-		return "changeUserDisplay";
+		return "redirect:/admin/changeuser/edituser/"+acc.getId();
 	}
 
 	/**
