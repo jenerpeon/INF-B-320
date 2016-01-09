@@ -50,7 +50,6 @@ public class HumanResourceService {
 		}
 		try
 		{
-			System.out.println("Test2");
 			acc = new ConcreteUserAccount(form.getEmail(), form.getName(), form.getFirstname(),
 					form.getLastname(), form.getAddress(), form.getZipCode(), form.getCity(),
 					form.getPassword(), Role.of(form.getRolename()), dataService.getUserAccountManager());

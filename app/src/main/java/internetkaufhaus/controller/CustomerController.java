@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,6 +99,7 @@ public class CustomerController {
 		Sort sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "dateOrdered", Sort.NullHandling.NATIVE));
 		model.addAttribute("orders", dataService.getConcreteOrderRepository().findByUser(
 				dataService.getConcreteUserAccountRepository().findByUserAccount(userAccount.get()).get(), sorting));
+		model.addAttribute("repo", dataService.getConcreteProductRepository());
 		return "customerorders";
 	}
 

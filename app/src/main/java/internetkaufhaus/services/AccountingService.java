@@ -63,9 +63,7 @@ public class AccountingService {
 	 */
 	public boolean addUser(ConcreteUserAccount user) {
 		try {
-			System.out.println("Test3");
 			dataService.getUserAccountManager().save(user.getUserAccount());
-			System.out.println("Test4");
 			dataService.getConcreteUserAccountRepository().save(user);
 		} catch (Exception e) {
 			System.out.println("Das anlegen des Benutzers ist gescheitert:" + e.toString());
