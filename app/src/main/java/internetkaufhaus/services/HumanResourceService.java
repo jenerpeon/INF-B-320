@@ -41,14 +41,11 @@ public class HumanResourceService {
 	public boolean hireEmployee(CreateUserForm form) {
 		ConcreteUserAccount acc = null;
 		// Checks if Email or username is already in use
-		System.out.println(accService.isRegistered(form.getEmail()));
-		System.out.println(!dataService.getUserAccountManager().findByUsername(form.getName()).isPresent());
 		if(accService.isRegistered(form.getEmail()) && !dataService.getUserAccountManager().findByUsername(form.getName()).isPresent())
 		{
 			return false;
 		}
-		if(!(form.getPassword().equals(form.getPasswordrepeat())))
-		{
+		if(!(form.getPassword().equals(form.getPasswordrepeat()))) {
 			return false;
 		}
 		try
@@ -104,10 +101,6 @@ public class HumanResourceService {
 			return false;
 		}
 		if(acc.getUserAccount().getId().equals(admin.get().getIdentifier()) && !(form.getRolename().equals("ROLE_ADMIN")))
-		{
-			return false;
-		}
-		if(!(form.getPassword().equals(form.getPasswordrepeat())))
 		{
 			return false;
 		}
