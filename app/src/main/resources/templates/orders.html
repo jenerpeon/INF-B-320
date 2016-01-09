@@ -44,39 +44,39 @@
 									<td><a>Status</a></th>
 									<td><a>Akzeptieren</a></td>
 								</tr>
-								<tr class="article" th:each="order : ${ordersPaid}" th:switch="${order.getUser().getFirstname()}">
-										<td><a target="newtab" th:href="@{'/employee/orders/detail/'+${order.getId()}}" th:text="${order.getOrder().getTotalPrice()}">Gesamtpreis</a></td>
+								<tr class="article" th:each="order : ${ordersPaid}" th:switch="${order.user.userAccount.firstname}">
+										<td><a target="newtab" th:href="@{'/employee/orders/detail/'+${order.id}}" th:text="${order.order.getTotalPrice()}">Gesamtpreis</a></td>
 										<td><a th:text="${order.getTotalProductNumber()}">Artikelanzahl</a></td>
-										<td th:case="null"><a th:text="${order.getUser().getUsername()}">Anzahl Artikel:</a></td>
-										<td th:case="*" ><a th:text="@{${order.getUser().getFirstname()}+' '+${order.getUser().getLastname()}}">Anzahl Artikel:</a></td>
-										<td><a th:text="${order.getStatus()}">Status</a></td>
+										<td th:case="null"><a th:text="${order.user.userAccount.username()}">Anzahl Artikel:</a></td>
+										<td th:case="*" ><a th:text="@{${order.user.userAccount.firstname}+' '+${order.user.userAccount.lastname}}">Anzahl Artikel:</a></td>
+										<td><a th:text="${order.status}">Status</a></td>
 										<td>
 											<div class="btn-group" role="group">
-												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/orders/accept/'+${order.getId()}}" class="accept-button" title="Edit Article"></button>
+												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/orders/accept/'+${order.id}}" class="accept-button" title="Edit Article"></button>
 											</div>
 										</td>
 								</tr>
-								<tr class="article" th:each="order : ${ordersCompleted}" th:switch="${order.getUser().getFirstname()}">
-										<td><a target="newtab" th:href="@{'/employee/orders/detail/'+${order.getId()}}" th:text="${order.getOrder().getTotalPrice()}">Gesamtpreis</a></td>
+								<tr class="article" th:each="order : ${ordersCompleted}" th:switch="${order.user.userAccount.firstname}">
+										<td><a target="newtab" th:href="@{'/employee/orders/detail/'+${order.id}}" th:text="${order.order.getTotalPrice()}">Gesamtpreis</a></td>
 										<td><a th:text="${order.getTotalProductNumber()}">Artikelanzahl</a></td>
-										<td th:case="null"><a th:text="${order.getUser().getUsername()}">Anzahl Artikel:</a></td>
-										<td th:case="*" ><a th:text="@{${order.getUser().getFirstname()}+' '+${order.getUser().getLastname()}}">Anzahl Artikel:</a></td>
-										<td><a th:text="${order.getStatus()}">Status</a></td>
+										<td th:case="null"><a th:text="${order.user.userAccount.username()}">Anzahl Artikel:</a></td>
+										<td th:case="*" ><a th:text="@{${order.user.userAccount.firstname}+' '+${order.user.userAccount.lastname}}">Anzahl Artikel:</a></td>
+										<td><a th:text="${order.status}">Status</a></td>
 										<td>
 											<div class="btn-group" role="group">
-												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/orders/accept/'+${order.getId()}}" class="accept-button" title="Edit Article"></button>
+												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/orders/accept/'+${order.id}}" class="accept-button" title="Edit Article"></button>
 											</div>
 										</td>
 								</tr>
-								<tr class="article" th:each="order : ${ordersCancelled}" th:switch="${order.getUser().getFirstname()}">
-										<td><a target="newtab" th:href="@{'/employee/orders/detail/'+${order.getId()}}" th:text="${order.getOrder().getTotalPrice()}">Gesamtpreis</a></td>
+								<tr class="article" th:each="order : ${ordersCancelled}" th:switch="${order.user.userAccount.firstname}">
+										<td><a target="newtab" th:href="@{'/employee/orders/detail/'+${order.id}}" th:text="${order.order.getTotalPrice()}">Gesamtpreis</a></td>
 										<td><a th:text="${order.getTotalProductNumber()}">Artikelanzahl</a></td>
-										<td th:case="null"><a th:text="${order.getUser().getUsername()}">Anzahl Artikel:</a></td>
-										<td th:case="*" ><a th:text="@{${order.getUser().getFirstname()}+' '+${order.getUser().getLastname()}}">Anzahl Artikel:</a></td>
-										<td><a th:text="${order.getStatus()}">Status</a></td>
+										<td th:case="null"><a th:text="${order.user.userAccount.username()}">Anzahl Artikel:</a></td>
+										<td th:case="*" ><a th:text="@{${order.user.userAccount.firstname}+' '+${order.user.userAccount.lastname}}">Anzahl Artikel:</a></td>
+										<td><a th:text="${order.status}">Status</a></td>
 										<td>
 											<div class="btn-group" role="group">
-												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/orders/accept/'+${order.getId()}}" class="accept-button" title="Edit Article"></button>
+												<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/orders/accept/'+${order.id}}" class="accept-button" title="Edit Article"></button>
 											</div>
 										</td>
 								</tr>

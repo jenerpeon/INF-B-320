@@ -3,20 +3,15 @@ package internetkaufhaus.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import org.javamoney.moneta.Money;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.time.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import internetkaufhaus.entities.ConcreteOrder;
-import internetkaufhaus.repositories.ConcreteOrderRepository;
+import internetkaufhaus.services.DataService;
 
 public class Statistic {
 	/**
@@ -25,7 +20,8 @@ public class Statistic {
 	 * intervals.
 	 */
 	
-	private final ConcreteOrderRepository concreteOrderRepo;
+	@Autowired
+	private DataService dataService;
 	
 	private Interval interval;
 	
@@ -36,10 +32,8 @@ public class Statistic {
 	private Map<LocalDate, Long> returns = new HashMap<LocalDate, Long>();
 	private Map<LocalDate, Money> expenses = new HashMap<LocalDate, Money>();
 	private Map<LocalDate, Money> profit = new HashMap<LocalDate, Money>();
-
-	@Autowired
-	public Statistic(ConcreteOrderRepository concreteOrderRepo, Interval interval, String unit) {
-		this.concreteOrderRepo = concreteOrderRepo;
+	
+	public Statistic(Interval interval, String unit) {
 		this.interval = interval;
 		this.unit = unit;
 		calculateStatistics();
@@ -117,7 +111,7 @@ public class Statistic {
 		switch (unit) {
 		case "day":
 			for (LocalDate j = end; j.isAfter(start) || j.isEqual(start); j = j.minusDays(1)) {
-				Iterable<ConcreteOrder> allOrders = concreteOrderRepo.findByInterval(Interval.from(LocalDateTime.of(j, midnight)).to(LocalDateTime.of(j, midnight.minusSeconds(1))));
+				Iterable<ConcreteOrder> allOrders = dataService.getConcreteOrderRepository().findByInterval(Interval.from(LocalDateTime.of(j, midnight)).to(LocalDateTime.of(j, midnight.minusSeconds(1))));
 				Money intervalMoney = Money.of(0, "EUR");
 				Long intervalOrders = (long) 0;
 				Long intervalReturns = (long) 0;
@@ -145,7 +139,7 @@ public class Statistic {
 			break;
 		case "week":
 			for (LocalDate j = end; j.isAfter(start) || j.isEqual(start); j = j.minusWeeks(1)) {
-				Iterable<ConcreteOrder> allOrders = concreteOrderRepo.findByInterval(
+				Iterable<ConcreteOrder> allOrders = dataService.getConcreteOrderRepository().findByInterval(
 						Interval.from(LocalDateTime.of(j.minusDays(6), midnight)).to(LocalDateTime.of(j, midnight)));
 				Money intervalMoney = Money.of(0, "EUR");
 				Long intervalOrders = (long) 0;
@@ -174,7 +168,7 @@ public class Statistic {
 			break;
 		case "month":
 			for (LocalDate j = end; j.isAfter(start) || j.isEqual(start); j = j.minusMonths(1)) {
-				Iterable<ConcreteOrder> allOrders = concreteOrderRepo.findByInterval(
+				Iterable<ConcreteOrder> allOrders = dataService.getConcreteOrderRepository().findByInterval(
 						Interval.from(LocalDateTime.of(j.minusMonths(1).plusDays(1), midnight))
 								.to(LocalDateTime.of(j, midnight)));
 				Money intervalMoney = Money.of(0, "EUR");
@@ -204,7 +198,7 @@ public class Statistic {
 			break;
 		case "year":
 			for (LocalDate j = end; j.isAfter(start) || j.isEqual(start); j = j.minusYears(1)) {
-				Iterable<ConcreteOrder> allOrders = concreteOrderRepo.findByInterval(
+				Iterable<ConcreteOrder> allOrders = dataService.getConcreteOrderRepository().findByInterval(
 						Interval.from(LocalDateTime.of(j.minusYears(1).plusDays(1), midnight))
 								.to(LocalDateTime.of(j, midnight)));
 				Money intervalMoney = Money.of(0, "EUR");

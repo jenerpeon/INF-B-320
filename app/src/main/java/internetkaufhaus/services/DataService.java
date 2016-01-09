@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import internetkaufhaus.entities.ConcreteProduct;
+import internetkaufhaus.repositories.ConcreteInventory;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
@@ -26,6 +27,8 @@ public class DataService {
 
 	/** The inventory. */
 	private final Inventory<InventoryItem> inventory;
+
+	private final ConcreteInventory<InventoryItem> concreteInventory;
 
 	/** The concrete product repo. */
 	private final ConcreteProductRepository concreteProductRepo;
@@ -62,11 +65,12 @@ public class DataService {
 	 */
 	@Autowired
 	public DataService(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory,
-			ConcreteProductRepository concreteProductRepo, ConcreteUserAccountRepository concreteAccountRepo,
-			UserAccountManager userAccountManager, ConcreteOrderRepository concreteOrderRepo,
-			OrderManager<Order> orderManager) {
+			ConcreteInventory<InventoryItem> concreteInventory, ConcreteProductRepository concreteProductRepo,
+			ConcreteUserAccountRepository concreteAccountRepo, UserAccountManager userAccountManager,
+			ConcreteOrderRepository concreteOrderRepo, OrderManager<Order> orderManager) {
 		this.catalog = catalog;
 		this.inventory = inventory;
+		this.concreteInventory = concreteInventory;
 		this.concreteProductRepo = concreteProductRepo;
 		this.concreteAccountRepo = concreteAccountRepo;
 		this.userAccountManager = userAccountManager;
@@ -100,6 +104,10 @@ public class DataService {
 	public Inventory<InventoryItem> getInventory() {
 		return this.inventory;
 	}
+	
+	public ConcreteInventory<InventoryItem> getConcreteInventory() {
+		return this.concreteInventory;
+	}
 
 	/**
 	 * Gets the concrete product repository.
@@ -115,7 +123,7 @@ public class DataService {
 	 *
 	 * @return the concrete user accoutn repository
 	 */
-	public ConcreteUserAccountRepository getConcreteUserAccoutnRepository() {
+	public ConcreteUserAccountRepository getConcreteUserAccountRepository() {
 		return this.concreteAccountRepo;
 	}
 

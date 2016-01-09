@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteUserAccount;
-import internetkaufhaus.repositories.ConcreteOrderRepository;
+import internetkaufhaus.services.DataService;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -28,18 +28,14 @@ public class Creditmanager {
 	 * The Creditmanager class is responsible for increasing the credits of the invitator everytime the recruiter buy products.
 	 *
 	 */
-	
-	private ConcreteOrderRepository concreteOrderRepo;
+	private final DataService dataService;
 
 	/**
 	 * Instantiates a new creditmanager.
-	 *
-	 * @param concreteOrderRepo the concrete order repo
 	 */
 	@Autowired
-	public Creditmanager(ConcreteOrderRepository concreteOrderRepo) {
-
-		this.concreteOrderRepo = concreteOrderRepo;
+	public Creditmanager(DataService dataService) {
+		this.dataService = dataService;
 	}
 
 	// Method to update the credit amount of the given ConcreteUserAccount
@@ -49,18 +45,16 @@ public class Creditmanager {
 	 * The updateCreditpointsByUser is responsible for increasing the credit amount by 20% of the sales value for completed orders after one month.
 	 * 
 	 * @param recruiter ConcreteUserAccount which get the credits and recruited the buyer.
-
-	 *
+	 * 
 	 */
 	public void updateCreditpointsByUser(ConcreteUserAccount recruiter) {
-		List<UserAccount> recruits = recruiter.getRecruits();
-
+		List<ConcreteUserAccount> recruits = recruiter.getRecruits();
 		Money credits = Money.of(0, EURO);
-		for (UserAccount user : recruits) {
+		for (ConcreteUserAccount user : recruits) {
 			Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "dateOrdered", Sort.NullHandling.NATIVE));
-			for (ConcreteOrder order : concreteOrderRepo.findByUser(user, sorting)) {
+			for (ConcreteOrder order : dataService.getConcreteOrderRepository().findByUser(user, sorting)) {
 				if (Interval.from(order.getDateOrdered()).to(LocalDateTime.now()).getDuration().toDays() >= 30 && order.getStatus().equals(OrderStatus.COMPLETED)) {
-					credits = credits.add(order.getOrder().getTotalPrice().multiply(20).divide(100));
+					credits = credits.add(order.getOrder().getTotalPrice().divide(100));
 				}
 			}
 			recruiter.setCredits(credits);

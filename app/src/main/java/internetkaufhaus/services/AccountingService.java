@@ -63,10 +63,12 @@ public class AccountingService {
 	 */
 	public boolean addUser(ConcreteUserAccount user) {
 		try {
+			System.out.println("Test3");
 			dataService.getUserAccountManager().save(user.getUserAccount());
-			dataService.getConcreteUserAccoutnRepository().save(user);
+			System.out.println("Test4");
+			dataService.getConcreteUserAccountRepository().save(user);
 		} catch (Exception e) {
-			System.out.println("Adding userAccount failed." + e.toString());
+			System.out.println("Das anlegen des Benutzers ist gescheitert:" + e.toString());
 			return false;
 		}
 		return true;
@@ -82,10 +84,10 @@ public class AccountingService {
 	public boolean deleteUser(Long id) {
 		try {
 			dataService.getUserAccountManager().disable(
-					dataService.getConcreteUserAccoutnRepository().findOne(id).getUserAccount().getIdentifier());
-			dataService.getConcreteUserAccoutnRepository().delete(id);
+					dataService.getConcreteUserAccountRepository().findOne(id).getUserAccount().getIdentifier());
+			dataService.getConcreteUserAccountRepository().delete(id);
 		} catch (Exception e) {
-			System.out.println("deleting User Failed:" + e.toString());
+			System.out.println("Das löschen des Benutzers ist gescheitert:" + e.toString());
 			return false;
 		}
 		return true;
@@ -96,7 +98,14 @@ public class AccountingService {
 	 *
 	 * @return true, if successful
 	 */
-	public boolean updateUser() {
+	public boolean updateUser(ConcreteUserAccount user) {
+		try {
+			dataService.getUserAccountManager().save(user.getUserAccount());
+			dataService.getConcreteUserAccountRepository().save(user);
+		} catch (Exception e) {
+			System.out.println("Das ändern des Benutzer ist gescheitert:" + e.toString());
+			return false;
+		}
 		return true;
 	}
 
@@ -114,7 +123,7 @@ public class AccountingService {
 			success = false;
 		}
 		// Catch if Mail already registered
-		if (success && dataService.getConcreteUserAccoutnRepository().findByEmail(regform.getEmail()) != null) {
+		if (success && dataService.getConcreteUserAccountRepository().findByEmail(regform.getEmail()) != null) {
 			System.out.println("debug: Mail already registered");
 			success = false;
 		}
@@ -134,7 +143,7 @@ public class AccountingService {
 			if (success) {
 				try {
 					if (this.isRecruit(regform.getEmail())) {
-						ConcreteUserAccount invitator = this.dataService.getConcreteUserAccoutnRepository()
+						ConcreteUserAccount invitator = this.dataService.getConcreteUserAccountRepository()
 								.findByEmail(recruit2invite.get(regform.getEmail())).get();
 						invitator.setRecruits(user);
 					}
@@ -160,7 +169,7 @@ public class AccountingService {
 	 * @return true, if successful
 	 */
 	public boolean RegisterCustomer(String email) {
-		if (dataService.getConcreteUserAccoutnRepository().findByEmail(email) == null) {
+		if (dataService.getConcreteUserAccountRepository().findByEmail(email) == null) {
 			System.out.println("Customer Allready registered with this mail");
 			return false;
 		}
@@ -215,7 +224,7 @@ public class AccountingService {
 	 * @return true, if is registered
 	 */
 	public boolean isRegistered(String email) {
-		if (this.dataService.getConcreteUserAccoutnRepository().findByEmail(email) != null)
+		if (this.dataService.getConcreteUserAccountRepository().findByEmail(email).isPresent())
 			return true;
 		return false;
 	}
@@ -310,7 +319,7 @@ public class AccountingService {
 	public void verifyPass(String key) {
 		String email = this.key2email.get(key);
 		this.dataService.getUserAccountManager().changePassword(
-				dataService.getConcreteUserAccoutnRepository().findByEmail(email).get().getUserAccount(),
+				dataService.getConcreteUserAccountRepository().findByEmail(email).get().getUserAccount(),
 				email2pass.get(email));
 		this.key2email.remove(key);
 		this.email2pass.remove(email);

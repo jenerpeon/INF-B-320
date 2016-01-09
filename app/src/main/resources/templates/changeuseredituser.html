@@ -101,8 +101,8 @@
 				<h3>Geworbene Nutzer:</h3>
 				<ul>
 					<li th:each="recruited : ${account.recruits}">
-					<a th:text="${recruited.username}"></a><br/>
-					<a th:text="${recruited.email}"></a>
+					<a th:text="${recruited.userAccount.username}"></a><br/>
+					<a th:text="${recruited.userAccount.email}"></a>
 					</li>
 				</ul>
 				<h3 th:text="@{'Punktestand: ' + ${account.credits}}">Punktestand:</h3>

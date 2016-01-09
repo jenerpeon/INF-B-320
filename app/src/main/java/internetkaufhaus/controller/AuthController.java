@@ -42,7 +42,8 @@ public class AuthController extends SalespointSecurityConfiguration {
 	private static final String LOGIN_ROUTE = "/login";
 	
 	/** The accounting service. */
-	private final AccountingService accountingService;
+	@Autowired
+	private AccountingService accountingService;
 	
 	/** The model and view. */
 	private ModelAndView modelAndView = new ModelAndView();
@@ -51,13 +52,8 @@ public class AuthController extends SalespointSecurityConfiguration {
 	 * This is the constructor. It's neither used nor does it contain any
 	 * functionality other than storing function arguments as class attribute,
 	 * what do you expect me to write here?
-	 * 
-	 * @param accountingService
-	 *            singleton, passed by spring/salespoint
 	 */
-	@Autowired
-	public AuthController(AccountingService accountingService) {
-		this.accountingService = accountingService;
+	public AuthController() {
 
 	}
 

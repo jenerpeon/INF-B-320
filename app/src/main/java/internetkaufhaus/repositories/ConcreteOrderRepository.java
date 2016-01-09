@@ -7,14 +7,11 @@ import java.util.Collection;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.time.Interval;
-import org.salespointframework.useraccount.UserAccount;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import internetkaufhaus.entities.ConcreteOrder;
+import internetkaufhaus.entities.ConcreteUserAccount;
 
 /**
  * The Interface ConcreteOrderRepository.
@@ -55,7 +52,7 @@ public interface ConcreteOrderRepository extends PagingAndSortingRepository<Conc
 	 *            the user
 	 * @return the iterable
 	 */
-	Iterable<ConcreteOrder> findByUser(UserAccount user, Sort sort);
+	Iterable<ConcreteOrder> findByUser(ConcreteUserAccount user, Sort sort);
 
 	/**
 	 * Find by order.

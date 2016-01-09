@@ -1,6 +1,5 @@
 package internetkaufhaus.forms;
 
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;

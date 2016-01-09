@@ -24,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import internetkaufhaus.AbstractWebIntegrationTests;
 import internetkaufhaus.controller.CatalogController;
 import internetkaufhaus.entities.ConcreteProduct;
-import internetkaufhaus.model.Search;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -37,8 +36,6 @@ public class CatalogControllerTest extends AbstractWebIntegrationTests {
 	@Autowired
 	CatalogController controller;
 
-	@Autowired
-	Search prodsearch;
 	@Autowired
 	Catalog<ConcreteProduct> catalog;
 	@Autowired
@@ -93,7 +90,6 @@ public class CatalogControllerTest extends AbstractWebIntegrationTests {
 	 * Integration test for an individual controller.
 	 */
 	@Test
-	@SuppressWarnings("unchecked")
 	public void CatalogControllerIntegrationTest() {
 		assertTrue("blafsel", true);
 		/*
