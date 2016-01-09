@@ -66,7 +66,8 @@
 							</div>
 							<div class="informationBlock product">
 								<p th:text="@{${orderLine.quantity}+' von '+${orderLine.productName}}"></p>
-								<p th:text="${orderLine.price}"></p>
+								<p th:text="@{'Einzelpreis: '+${repo.findOne(orderLine.getProductIdentifier()).price}}"></p>
+								<p th:text="@{'Gesamtpreis: '+${orderLine.price}}"></p>
 							</div>
 							<div class="informationBlock process">
 								<ul class="status">

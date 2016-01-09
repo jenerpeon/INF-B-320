@@ -1,10 +1,10 @@
 @charset "utf-8";
 
 #mainframe {
-	width: 950px;
+	width: 915px;
 	margin-left: auto;
 	margin-right: auto;
-	padding-left: 100px;
+	padding-left: 50px;
 }
 
 #workframe {
