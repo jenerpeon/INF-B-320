@@ -22,7 +22,6 @@ import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -36,7 +35,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.forms.PaymentForm;
-import internetkaufhaus.model.ReturnManager;
 import internetkaufhaus.services.ConcreteMailService;
 import internetkaufhaus.services.DataService;
 
@@ -283,23 +281,6 @@ class CartController {
 
 			return "redirect:/";
 		}).orElse("redirect:/login");
-	}
-
-	/**
-	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 *
-	 * @param model
-	 *            the model
-	 * @param userAccount
-	 *            the user account
-	 * @return the string
-	 */
-	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
-	@RequestMapping(value = "/returOrders", method = RequestMethod.GET)
-	public String returnRedirect(Model model, @LoggedIn Optional<UserAccount> userAccount) {
-		model.addAttribute("ordersCompletedInReturnTime", ReturnManager
-				.getConcreteOrderDuringLastTwoWeeks(dataService, userAccount));
-		return "returOrders";
 	}
 
 	/**

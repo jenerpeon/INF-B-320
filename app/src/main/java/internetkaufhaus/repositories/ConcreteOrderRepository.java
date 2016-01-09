@@ -79,5 +79,7 @@ public interface ConcreteOrderRepository extends PagingAndSortingRepository<Conc
 		Iterable<ConcreteOrder> iter = (Iterable<ConcreteOrder>)collect;
 		return iter;
 	}
+	
+	Iterable<ConcreteOrder> findByReturnedTrue();
 
 }

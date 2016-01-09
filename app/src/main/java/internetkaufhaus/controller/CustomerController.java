@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;

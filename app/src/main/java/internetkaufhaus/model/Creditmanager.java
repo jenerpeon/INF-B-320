@@ -8,7 +8,6 @@ import java.util.List;
 import org.javamoney.moneta.Money;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.time.Interval;
-import org.salespointframework.useraccount.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;

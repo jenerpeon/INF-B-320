@@ -58,6 +58,27 @@ public class ProductManagementService {
 
 		return true;
 	}
+	
+	public boolean editProduct(EditArticleForm form, MultipartFile img) {
+		if(dataService.getConcreteProductRepository().findOne(form.getProdId().getId())==null) {
+			return false;
+		}
+		ConcreteProduct prod = form.getProdId();
+
+		prod.setCategory(form.getCategory());
+		prod.addCategory(form.getCategory());
+		prod.setName(form.getName());
+		prod.setPrice(Money.of(form.getPrice(), EURO));
+		prod.setBuyingPrice(Money.of(form.getBuyingPrice(), EURO));
+		prod.setDescription(form.getDescription());
+
+		if (!(img.getOriginalFilename().isEmpty())) {
+			prod.setImagefile(img.getOriginalFilename());
+		}
+
+		dataService.getConcreteProductRepository().save(prod);
+		return true;
+	}
 
 	public boolean deleteProduct(ProductIdentifier id) {
 		try {

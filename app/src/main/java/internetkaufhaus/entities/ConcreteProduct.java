@@ -52,6 +52,8 @@ public class ConcreteProduct extends Product {
 	/** The buying price. */
 	@Column(name = "BUYING_PRICE")
 	private BigDecimal buyingPrice;
+	
+	private BigDecimal priceDecimal;
 
 	/** The average rating. */
 	@Column
@@ -92,6 +94,7 @@ public class ConcreteProduct extends Product {
 		super(name, price);
 		this.addCategory(category);
 		this.buyingPrice = buyingPrice.getNumberStripped();
+		this.priceDecimal = price.getNumberStripped();
 		this.description = description;
 		this.webLink = webLink;
 		this.imagefile = imagefile;

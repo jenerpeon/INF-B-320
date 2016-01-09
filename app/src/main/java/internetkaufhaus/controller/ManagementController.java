@@ -1,6 +1,5 @@
 package internetkaufhaus.controller;
 
-import static org.salespointframework.core.Currencies.EURO;
 import static org.salespointframework.order.OrderStatus.OPEN;
 
 import java.io.BufferedOutputStream;
@@ -18,7 +17,6 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.apache.commons.collections.IteratorUtils;
-import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.order.Order;
@@ -187,148 +185,7 @@ public class ManagementController {
 		model.addAttribute("categories", dataService.getConcreteProductRepository().getCategories());
 		return "changecatalognewitem";
 	}
-
-	/**
-	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * This page accepts a comment as given by its ID.
-	 *
-	 * @param comId
-	 *            the comment to accept
-	 * @return the string
-	 */
-	@RequestMapping("/employee/acceptComment/{comId}")
-	public String acceptComments(@PathVariable("comId") long comId) {
-		for (ConcreteProduct prod : dataService.getConcreteProductRepository().findAll()) {
-			for (Comment c : prod.getUnacceptedComments()) {
-				if (c.getId() == comId) {
-					c.accept();
-					c.getProduct().updateAverageRating();
-					dataService.getConcreteProductRepository().save(prod);
-				}
-			}
-		}
-		return "redirect:/employee/comments";
-	}
-
-	/**
-	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * This page rejects a comment as given by its ID.
-	 *
-	 * @param comId
-	 *            the comment to reject.
-	 * @return the string
-	 */
-	@RequestMapping("/employee/deleteComment/{comId}")
-	public String deleteComments(@PathVariable("comId") long comId) {
-		boolean break_outer = false;
-		for (ConcreteProduct prod : dataService.getConcreteProductRepository().findAll()) {
-			if (break_outer)
-				break;
-			for (Comment c : prod.getComments()) {
-				if (c.getId() == comId) {
-					prod.removeComment(c);
-					prod.updateAverageRating();
-					break_outer = true;
-					dataService.getConcreteProductRepository().save(prod);
-					break;
-				}
-			}
-		}
-
-		return "redirect:/employee/comments";
-	}
-
-	/**
-	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * This page shows not (yet) accepted comments, so employees can review and
-	 * reject or accept them.
-	 *
-	 * @param model
-	 *            the model
-	 * @return the string
-	 */
-	@RequestMapping("/employee/comments")
-	public String comments(ModelMap model) {
-		List<Comment> comlist = new ArrayList<Comment>();
-		for (ConcreteProduct prods : dataService.getConcreteProductRepository().findAll()) {
-			comlist.addAll(prods.getUnacceptedComments());
-		}
-		model.addAttribute("Comments", comlist);
-		return "comments";
-	}
-
-	/**
-	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * This page shows the edit article form for employees.
-	 *
-	 * @param prod
-	 *            the article to edit
-	 * @param model
-	 *            the model
-	 * @return the string
-	 */
-	@RequestMapping("/employee/changecatalog/editArticle/{prodId}")
-	public String editArticle(@PathVariable("prodId") ConcreteProduct prod, ModelMap model) {
-		model.addAttribute("categories", dataService.getConcreteProductRepository().getCategories());
-		model.addAttribute("concreteproduct", prod);
-		model.addAttribute("price", prod.getPrice().getNumber());
-		model.addAttribute("buyingPrice", prod.getBuyingPrice().getNumber());
-		return "changecatalogchangeitem";
-	}
-
-	/**
-	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * This page edits an article as requested by an employee and then redirects
-	 * the user to the article Overview.
-	 *
-	 * @param editForm
-	 *            the form in which the employee specified which article to edit
-	 * @param img
-	 *            the new image which the should have.
-	 * @param result
-	 *            the result which (in)validates above mentioned form
-	 * @return the string
-	 */
-	@RequestMapping(value = "/employee/changecatalog/editedArticle", method = RequestMethod.POST)
-	public String editedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm,
-			@RequestParam("image") MultipartFile img, BindingResult result) {
-		if (result.hasErrors()) {
-			return "redirect:/employee/changecatalog/editArticle/";
-		}
-
-		if (!img.isEmpty()) {
-			try {
-				byte[] bytes = img.getBytes();
-				BufferedOutputStream stream = new BufferedOutputStream(
-						new FileOutputStream(new File(img.getOriginalFilename())));
-				// TODO: generate filename
-				stream.write(bytes);
-				stream.close();
-			} catch (Exception e) {
-				System.out.println("Error while uploading image file: " + e.getMessage());
-			}
-		} else {
-			System.out.println("no file submitted, nothing to see here.");
-		}
-
-		ConcreteProduct prod = editForm.getProdId();
-
-		prod.setCategory(editForm.getCategory());
-		prod.addCategory(editForm.getCategory());
-		prod.setName(editForm.getName());
-		prod.setPrice(Money.of(editForm.getPrice(), EURO));
-		prod.setBuyingPrice(Money.of(editForm.getBuyingPrice(), EURO));
-		prod.setDescription(editForm.getDescription());
-
-		if (!(img.getOriginalFilename().isEmpty())) {
-			prod.setImagefile(img.getOriginalFilename());
-		}
-
-		dataService.getConcreteProductRepository().save(prod);
-
-		return "redirect:/employee/changecatalog";
-	}
-
+	
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page adds an article as requested by an employee and then redirects
@@ -366,7 +223,66 @@ public class ManagementController {
 		productManagementService.addProduct(editForm, img);
 		return "redirect:/employee/changecatalog";
 	}
+	
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows the edit article form for employees.
+	 *
+	 * @param prod
+	 *            the article to edit
+	 * @param model
+	 *            the model
+	 * @return the string
+	 */
+	@RequestMapping("/employee/changecatalog/editArticle/{prodId}")
+	public String editArticle(@PathVariable("prodId") ConcreteProduct prod, ModelMap model) {
+		model.addAttribute("categories", dataService.getConcreteProductRepository().getCategories());
+		model.addAttribute("concreteproduct", prod);
+		model.addAttribute("price", prod.getPrice().getNumber());
+		model.addAttribute("buyingPrice", prod.getBuyingPrice().getNumber());
+		return "changecatalogchangeitem";
+	}
+	
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page edits an article as requested by an employee and then redirects
+	 * the user to the article Overview.
+	 *
+	 * @param editForm
+	 *            the form in which the employee specified which article to edit
+	 * @param img
+	 *            the new image which the should have.
+	 * @param result
+	 *            the result which (in)validates above mentioned form
+	 * @return the string
+	 */
+	@RequestMapping(value = "/employee/changecatalog/editedArticle", method = RequestMethod.POST)
+	public String editedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm,
+			@RequestParam("image") MultipartFile img, BindingResult result) {
+		if (result.hasErrors()) {
+			return "redirect:/employee/changecatalog/editArticle/";
+		}
 
+		if (!img.isEmpty()) {
+			try {
+				byte[] bytes = img.getBytes();
+				BufferedOutputStream stream = new BufferedOutputStream(
+						new FileOutputStream(new File(img.getOriginalFilename())));
+				// TODO: generate filename
+				stream.write(bytes);
+				stream.close();
+			} catch (Exception e) {
+				System.out.println("Error while uploading image file: " + e.getMessage());
+			}
+		} else {
+			System.out.println("no file submitted, nothing to see here.");
+		}
+		
+		productManagementService.editProduct(editForm, img);
+
+		return "redirect:/employee/changecatalog";
+	}
+	
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the delete article form which the user has to fill to
@@ -399,7 +315,7 @@ public class ManagementController {
 		productManagementService.deleteProduct(prod);
 		return "redirect:/employee/changecatalog";
 	}
-
+	
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the order-article-form where employees choose how many
@@ -465,61 +381,76 @@ public class ManagementController {
 		productManagementService.destroyProduct(stockForm, userAccount);
 		return "redirect:/employee/changecatalog";
 	}
-
+	
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * This page shows the menu to edit the start page.
+	 * This page shows not (yet) accepted comments, so employees can review and
+	 * reject or accept them.
 	 *
 	 * @param model
 	 *            the model
 	 * @return the string
 	 */
-	@RequestMapping("/employee/startpage")
-	public String editStartPage(ModelMap model) {
-		Map<ConcreteProduct, Boolean> bannerProducts = new HashMap<ConcreteProduct, Boolean>();
-		for (ConcreteProduct i : dataService.getConcreteProductRepository().findAll()) {
-			bannerProducts.put(i,
-					this.startPage.getBannerProducts() != null && this.startPage.getBannerProducts().contains(i));
+	@RequestMapping("/employee/comments")
+	public String comments(ModelMap model) {
+		List<Comment> comlist = new ArrayList<Comment>();
+		for (ConcreteProduct prods : dataService.getConcreteProductRepository().findAll()) {
+			comlist.addAll(prods.getUnacceptedComments());
 		}
-		model.addAttribute("bannerProducts", bannerProducts);
-		Map<ConcreteProduct, Boolean> selectionProducts = new HashMap<ConcreteProduct, Boolean>();
-		for (ConcreteProduct i : dataService.getConcreteProductRepository().findAll()) {
-			selectionProducts.put(i,
-					this.startPage.getSelectionProducts() != null && this.startPage.getSelectionProducts().contains(i));
-		}
-		model.addAttribute("selectionProducts", selectionProducts);
-		System.out.println(bannerProducts);
-		System.out.println(selectionProducts);
-		return "changestartpage";
+		model.addAttribute("Comments", comlist);
+		return "comments";
 	}
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * This page is called when the start page editing form is filled.
+	 * This page accepts a comment as given by its ID.
 	 *
-	 * @param bannerArticles
-	 *            the banner articles
-	 * @param selectionArticles
-	 *            the selection articles
+	 * @param comId
+	 *            the comment to accept
 	 * @return the string
 	 */
-	@RequestMapping(value = "/employee/startpage/changedStartpage", method = RequestMethod.POST)
-	public String changeStartpage(@RequestParam("bannerArticles") List<ProductIdentifier> bannerArticles,
-			@RequestParam("selectionArticles") List<ProductIdentifier> selectionArticles) {
-		List<ConcreteProduct> bannerProducts = new ArrayList<ConcreteProduct>();
-		for (ProductIdentifier i : bannerArticles) {
-			bannerProducts.add(dataService.getConcreteProductRepository().findOne(i));
+	@RequestMapping("/employee/acceptComment/{comId}")
+	public String acceptComments(@PathVariable("comId") long comId) {
+		for (ConcreteProduct prod : dataService.getConcreteProductRepository().findAll()) {
+			for (Comment c : prod.getUnacceptedComments()) {
+				if (c.getId() == comId) {
+					c.accept();
+					c.getProduct().updateAverageRating();
+					dataService.getConcreteProductRepository().save(prod);
+				}
+			}
 		}
-		this.startPage.setBannerProducts(bannerProducts);
-
-		List<ConcreteProduct> selectionProducts = new ArrayList<ConcreteProduct>();
-		for (ProductIdentifier i : selectionArticles) {
-			selectionProducts.add(dataService.getConcreteProductRepository().findOne(i));
-		}
-		this.startPage.setSelectionProducts(selectionProducts);
-		return "redirect:/employee/startpage";
+		return "redirect:/employee/comments";
 	}
 
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page rejects a comment as given by its ID.
+	 *
+	 * @param comId
+	 *            the comment to reject.
+	 * @return the string
+	 */
+	@RequestMapping("/employee/deleteComment/{comId}")
+	public String deleteComments(@PathVariable("comId") long comId) {
+		boolean break_outer = false;
+		for (ConcreteProduct prod : dataService.getConcreteProductRepository().findAll()) {
+			if (break_outer)
+				break;
+			for (Comment c : prod.getComments()) {
+				if (c.getId() == comId) {
+					prod.removeComment(c);
+					prod.updateAverageRating();
+					break_outer = true;
+					dataService.getConcreteProductRepository().save(prod);
+					break;
+				}
+			}
+		}
+
+		return "redirect:/employee/comments";
+	}
+	
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows an overview of all orders.
@@ -530,21 +461,12 @@ public class ManagementController {
 	 */
 	@RequestMapping(value = "/employee/orders")
 	public String orders(ModelMap model) {
-		Iterable<ConcreteOrder> ordersPaid = dataService.getConcreteOrderRepository().findByStatus(OrderStatus.PAID);
-		Iterable<ConcreteOrder> ordersCancelled = dataService.getConcreteOrderRepository()
-				.findByStatus(OrderStatus.CANCELLED);
-		Iterable<ConcreteOrder> ordersCompleted = dataService.getConcreteOrderRepository()
-				.findByStatus(OrderStatus.COMPLETED);
-		// System.out.println("Paid Orders:" + ordersPaid + "Cancelled Orders:"
-		// + ordersCancelled + "Completed Orders:" + ordersCompleted);
-
-		model.addAttribute("ordersPaid", ordersPaid);
-		model.addAttribute("ordersCancelled", ordersCancelled);
-		model.addAttribute("ordersCompleted", ordersCompleted);
+		model.addAttribute("ordersPaid", dataService.getConcreteOrderRepository().findByStatus(OrderStatus.PAID));
+		model.addAttribute("ordersCancelled", dataService.getConcreteOrderRepository().findByStatus(OrderStatus.CANCELLED));
+		model.addAttribute("ordersCompleted", dataService.getConcreteOrderRepository().findByStatus(OrderStatus.COMPLETED));
 		return "orders";
-
 	}
-
+	
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page marks an order as accepted, sends out the corresponding E-Mail
@@ -663,6 +585,60 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows the menu to edit the start page.
+	 *
+	 * @param model
+	 *            the model
+	 * @return the string
+	 */
+	@RequestMapping("/employee/startpage")
+	public String editStartPage(ModelMap model) {
+		Map<ConcreteProduct, Boolean> bannerProducts = new HashMap<ConcreteProduct, Boolean>();
+		for (ConcreteProduct i : dataService.getConcreteProductRepository().findAll()) {
+			bannerProducts.put(i,
+					this.startPage.getBannerProducts() != null && this.startPage.getBannerProducts().contains(i));
+		}
+		model.addAttribute("bannerProducts", bannerProducts);
+		Map<ConcreteProduct, Boolean> selectionProducts = new HashMap<ConcreteProduct, Boolean>();
+		for (ConcreteProduct i : dataService.getConcreteProductRepository().findAll()) {
+			selectionProducts.put(i,
+					this.startPage.getSelectionProducts() != null && this.startPage.getSelectionProducts().contains(i));
+		}
+		model.addAttribute("selectionProducts", selectionProducts);
+		System.out.println(bannerProducts);
+		System.out.println(selectionProducts);
+		return "changestartpage";
+	}
+
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page is called when the start page editing form is filled.
+	 *
+	 * @param bannerArticles
+	 *            the banner articles
+	 * @param selectionArticles
+	 *            the selection articles
+	 * @return the string
+	 */
+	@RequestMapping(value = "/employee/startpage/changedStartpage", method = RequestMethod.POST)
+	public String changeStartpage(@RequestParam("bannerArticles") List<ProductIdentifier> bannerArticles,
+			@RequestParam("selectionArticles") List<ProductIdentifier> selectionArticles) {
+		List<ConcreteProduct> bannerProducts = new ArrayList<ConcreteProduct>();
+		for (ProductIdentifier i : bannerArticles) {
+			bannerProducts.add(dataService.getConcreteProductRepository().findOne(i));
+		}
+		this.startPage.setBannerProducts(bannerProducts);
+
+		List<ConcreteProduct> selectionProducts = new ArrayList<ConcreteProduct>();
+		for (ProductIdentifier i : selectionArticles) {
+			selectionProducts.add(dataService.getConcreteProductRepository().findOne(i));
+		}
+		this.startPage.setSelectionProducts(selectionProducts);
+		return "redirect:/employee/startpage";
+	}
+
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the users, which have subscribed to the newsletter.
 	 *
 	 * @param model
@@ -777,14 +753,8 @@ public class ManagementController {
 	 * @return the retour list
 	 */
 	@RequestMapping(value = "/employee/returnedOrders")
-	public String getRetourList(ModelMap model) {
-		List<ConcreteOrder> retourList = new ArrayList<ConcreteOrder>();
-		for (ConcreteOrder o : dataService.getConcreteOrderRepository().findAll()) {
-			if (o.getReturned() == true) {
-				retourList.add(o);
-			}
-		}
-		model.addAttribute("retourList", retourList);
+	public String returnedOrders(ModelMap model) {
+		model.addAttribute("ordersReturned", dataService.getConcreteOrderRepository().findByReturnedTrue());
 		return "returnedOrders";
 	}
 

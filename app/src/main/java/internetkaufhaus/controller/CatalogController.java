@@ -184,11 +184,11 @@ public class CatalogController {
 			sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "name", Sort.NullHandling.NATIVE));
 			break;
 		case "price,asc":
-			sorting = new Sort(Arrays.asList(new Sort.Order(Sort.Direction.ASC, "price", Sort.NullHandling.NATIVE),
+			sorting = new Sort(Arrays.asList(new Sort.Order(Sort.Direction.ASC, "priceDecimal", Sort.NullHandling.NATIVE),
 					new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE)));
 			break;
 		case "price,desc":
-			sorting = new Sort(Arrays.asList(new Sort.Order(Sort.Direction.DESC, "price", Sort.NullHandling.NATIVE),
+			sorting = new Sort(Arrays.asList(new Sort.Order(Sort.Direction.DESC, "priceDecimal", Sort.NullHandling.NATIVE),
 					new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE)));
 			break;
 		default:
