@@ -605,8 +605,6 @@ public class ManagementController {
 					this.startPage.getSelectionProducts() != null && this.startPage.getSelectionProducts().contains(i));
 		}
 		model.addAttribute("selectionProducts", selectionProducts);
-		System.out.println(bannerProducts);
-		System.out.println(selectionProducts);
 		return "changestartpage";
 	}
 

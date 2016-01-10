@@ -1,14 +1,12 @@
 package internetkaufhaus.repositories;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.salespointframework.catalog.ProductIdentifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 
 import internetkaufhaus.entities.ConcreteProduct;
 
@@ -73,27 +71,10 @@ public interface ConcreteProductRepository extends PagingAndSortingRepository<Co
 	 */
 	ConcreteProduct findOne(ProductIdentifier productIdentifier);
 	
-	default public Iterable<ConcreteProduct> findByName(String name) {
-		String nameLowerCase = name.toLowerCase();
-		Collection<ConcreteProduct> collect = new ArrayList<ConcreteProduct>();
-		Iterable<ConcreteProduct> allProducts = this.findAll();
-		for (ConcreteProduct prod : allProducts) {
-			if (prod.getName().toLowerCase().contains(nameLowerCase)) {
-				collect.add(prod);
-			}
-		}
-		Iterable<ConcreteProduct> iter = (Iterable<ConcreteProduct>)collect;
-		return iter;
-	}
+	@Query("SELECT c FROM ConcreteProduct c WHERE LOWER(c.name) LIKE LOWER(CONCAT('%',:name,'%'))")
+	Iterable<ConcreteProduct> findByName(@Param("name") String name);
 	
-	default public Iterable<String> getCategories() {
-		List<String> categories = new ArrayList<String>(); 
-		for (ConcreteProduct prod : this.findAll()) {
-			if (!categories.contains(prod.getCategory())) {
-				categories.add(prod.getCategory());
-			}
-		}
-		return categories;
-	}
+	@Query("SELECT DISTINCT c.category FROM ConcreteProduct c")
+	Iterable<String> getCategories();
 
 }

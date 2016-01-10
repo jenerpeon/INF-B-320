@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -107,7 +108,7 @@ public class ConcreteOrder implements Serializable {
 	/**
 	 * Instantiates a new concrete order.
 	 */
-	@SuppressWarnings({ "unused" })
+	@SuppressWarnings("unused")
 	private ConcreteOrder() {
 
 	}

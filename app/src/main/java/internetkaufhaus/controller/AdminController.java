@@ -354,8 +354,9 @@ public class AdminController {
 
 		for (Interval key : intervals.keySet()) {
 			System.out.println(key);
-			Statistic stat = new Statistic(key, intervals.get(key));
+			Statistic stat = new Statistic(dataService, key, intervals.get(key));
 			stats.add(stat);
+			System.out.println("Bestellungen: "+stat.getOrders()+" Retouren: "+stat.getReturns()+" Umsatz: "+stat.getTurnover()+" Gewinn "+stat.getProfit());
 		}
 
 		model.addAttribute("stats", stats);

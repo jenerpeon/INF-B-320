@@ -1,14 +1,12 @@
 package internetkaufhaus.repositories;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderStatus;
-import org.salespointframework.time.Interval;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteUserAccount;
@@ -24,7 +22,7 @@ public interface ConcreteOrderRepository extends PagingAndSortingRepository<Conc
 	 * @see org.springframework.data.repository.CrudRepository#findAll()
 	 */
 	Iterable<ConcreteOrder> findAll();
-	
+
 	Iterable<ConcreteOrder> findAll(Sort sort);
 
 	/**
@@ -62,23 +60,14 @@ public interface ConcreteOrderRepository extends PagingAndSortingRepository<Conc
 	 * @return the iterable
 	 */
 	ConcreteOrder findByOrder(Order order);
-	
+
 	Iterable<ConcreteOrder> findByDateOrdered(LocalDateTime time);
 	
-	default public Iterable<ConcreteOrder> findByInterval(Interval interval) {
-		LocalDateTime end = interval.getEnd();
-		LocalDateTime begin = interval.getStart();
-		Collection<ConcreteOrder> collect = new ArrayList<ConcreteOrder>();
-		Iterable<ConcreteOrder> allOrders = this.findAll();
-		for (ConcreteOrder order : allOrders) {
-			LocalDateTime orderTime = order.getDateOrdered();
-			if ((orderTime.isBefore(end) || orderTime.isEqual(end)) && (orderTime.isAfter(begin) || orderTime.isEqual(begin))) {
-				collect.add(order);
-			}
-		}
-		Iterable<ConcreteOrder> iter = (Iterable<ConcreteOrder>)collect;
-		return iter;
-	}
+	@Query("SELECT c FROM ConcreteOrder c WHERE c.status = :status AND c.returned = false AND c.dateOrdered >= :begin AND c.dateOrdered <= :end")
+	Iterable<ConcreteOrder> findByIntervalAndStatusAndNotReturned(@Param("begin") LocalDateTime begin, @Param("end") LocalDateTime end, @Param("status") OrderStatus status);
+	
+	@Query("SELECT c FROM ConcreteOrder c WHERE c.status = :status AND c.returned = true AND c.dateOrdered >= :begin AND c.dateOrdered <= :end")
+	Iterable<ConcreteOrder> findByIntervalAndStatusAndReturned(@Param("begin") LocalDateTime begin, @Param("end") LocalDateTime end, @Param("status") OrderStatus status);
 	
 	Iterable<ConcreteOrder> findByReturnedTrue();
 

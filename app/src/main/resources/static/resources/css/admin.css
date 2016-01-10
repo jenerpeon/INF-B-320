@@ -180,6 +180,10 @@
 	text-align: center;
 }
 
+#stockOrders {
+	vertical-align: sub;
+}
+
 .orderTable {
 	border: 0;
 }
