@@ -220,7 +220,7 @@ public class AdminController {
 		Iterable<ConcreteOrder> orders = dataService.getConcreteOrderRepository().findByUser(acc, sorting);
 		Money turnover = Money.of(0, "EUR");
 		for (ConcreteOrder order : orders) {
-			turnover = turnover.add(order.getOrder().getTotalPrice());
+			turnover = turnover.add(order.getTotalPrice());
 		}
 		model.addAttribute("orders", orders);
 		model.addAttribute("turnover", turnover);
@@ -255,7 +255,7 @@ public class AdminController {
 			Iterable<ConcreteOrder> orders = dataService.getConcreteOrderRepository().findByUser(acc, sorting);
 			Money turnover = Money.of(0, "EUR");
 			for (ConcreteOrder order : orders) {
-				turnover = turnover.add(order.getOrder().getTotalPrice());
+				turnover = turnover.add(order.getTotalPrice());
 			}
 			model.addAttribute("orders", orders);
 			model.addAttribute("turnover", turnover);
@@ -298,7 +298,7 @@ public class AdminController {
 		Map<ConcreteOrder, Double> customerOrders = new HashMap<ConcreteOrder, Double>();
 		for (ConcreteOrder order : ordersCompleted) {
 			if (order.getReturned() == false) {
-				customerOrders.put(order, order.getOrder().getTotalPrice().getNumberStripped().doubleValue());
+				customerOrders.put(order, order.getTotalPrice().getNumberStripped().doubleValue());
 				totalPaid += customerOrders.get(order);
 			}
 		}

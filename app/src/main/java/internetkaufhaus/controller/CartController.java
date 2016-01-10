@@ -12,8 +12,9 @@ import javax.validation.Valid;
 import org.javamoney.moneta.Money;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.CartItem;
-import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderIdentifier;
 import org.salespointframework.order.OrderLine;
+import org.salespointframework.order.OrderStatus;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.payment.CreditCard;
 import org.salespointframework.quantity.Quantity;
@@ -234,9 +235,8 @@ class CartController {
 
 			ConcreteOrder order = new ConcreteOrder(
 					dataService.getConcreteUserAccountRepository().findByUserAccount(account).get(), Cash.CASH);
-			Order o = order.getOrder();
 
-			cart.addItemsTo(o);
+			cart.addItemsTo(order);
 
 			String billingAddress = paymentForm.getBillingFirstName() + " " + paymentForm.getBillingLastName() + "\n"
 					+ paymentForm.getBillingStreet() + " " + paymentForm.getBillingHouseNumber() + "\n"
@@ -248,28 +248,26 @@ class CartController {
 					paymentForm.getExpiryDateLocalDateTime(), paymentForm.getCardVerificationCode(),
 					dailyWithdrawalLimit, creditLimit);
 
-			o.setPaymentMethod(paymentMethod);
+			order.setPaymentMethod(paymentMethod);
 
 			order.setBillingAddress(paymentForm.getBillingAddress());
 
 			order.setShippingAddress(paymentForm.getShippingAddress());
 
 			order.setDateOrdered(LocalDateTime.now());
-			dataService.getOrderManager().save(o);
-			dataService.getOrderManager().payOrder(o);
 
-			order.setStatus(o.getOrderStatus());
+			order.setStatus(OrderStatus.COMPLETED);
 			dataService.getConcreteOrderRepository().save(order);
 
 			String articles = "";
-			Iterator<OrderLine> i = order.getOrder().getOrderLines().iterator();
+			Iterator<OrderLine> i = order.getOrderLines().iterator();
 			OrderLine current;
 			while (i.hasNext()) {
 				current = i.next();
 				articles += "\n" + current.getQuantity().toString() + "x " + current.getProductName() + " für gesamt "
 						+ current.getPrice().toString();
 			}
-			articles += "\nGesamtpreis: " + order.getOrder().getTotalPrice().toString();
+			articles += "\nGesamtpreis: " + order.getTotalPrice().toString();
 
 			cart.clear();
 
@@ -281,23 +279,6 @@ class CartController {
 
 			return "redirect:/";
 		}).orElse("redirect:/login");
-	}
-
-	/**
-	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 *
-	 * @param orderId
-	 *            the order id
-	 * @param reason
-	 *            the reason
-	 * @return the string
-	 */
-	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
-	@RequestMapping(value = "/returOrders", method = RequestMethod.POST)
-	public String returnOrder(@RequestParam("orderId") Long orderId, @RequestParam("dropDown") String reason) {
-		dataService.getConcreteOrderRepository().findById(orderId).setReturned(true);
-		dataService.getConcreteOrderRepository().findById(orderId).setReturnReason(reason);
-		return "redirect:/";
 	}
 
 }

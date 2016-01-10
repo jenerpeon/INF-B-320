@@ -1,23 +1,18 @@
 package internetkaufhaus.entities;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.apache.commons.collections.IteratorUtils;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderStatus;
-import org.salespointframework.payment.Cash;
-import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.payment.PaymentMethod;
+import com.google.common.collect.Iterators;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -25,23 +20,18 @@ import org.salespointframework.useraccount.UserAccount;
  */
 @Entity
 @Table(name = "CORDER")
-public class ConcreteOrder implements Serializable {
+public class ConcreteOrder extends Order {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The status. */
-	// private OrderManager<Order> orderManager;
-	private OrderStatus status;
-
 	/** The user. */
 	@OneToOne
 	private ConcreteUserAccount user;
-
-	/** The id. */
-	@Id
-	@GeneratedValue
-	private Long id;
+	
+	private LocalDateTime dateOrdered;
+	
+	private OrderStatus status;
 
 	/** The billing gender. */
 	private String billingGender;
@@ -91,13 +81,6 @@ public class ConcreteOrder implements Serializable {
 	/** The shipping town. */
 	private String shippingTown;
 
-	/** The date ordered. */
-	private LocalDateTime dateOrdered;
-
-	/** The order. */
-	@OneToOne
-	private Order order;
-
 	/** The returned. */
 	private boolean returned = false;
 
@@ -107,7 +90,7 @@ public class ConcreteOrder implements Serializable {
 	/**
 	 * Instantiates a new concrete order.
 	 */
-	@SuppressWarnings("unused")
+	@SuppressWarnings({ "unused", "deprecation" })
 	private ConcreteOrder() {
 
 	}
@@ -120,10 +103,46 @@ public class ConcreteOrder implements Serializable {
 	 * @param cash
 	 *            the cash
 	 */
-	public ConcreteOrder(ConcreteUserAccount account, Cash cash) {
-		this.order = new Order(account.getUserAccount(), cash);
-		this.status = this.order.getOrderStatus();
+	public ConcreteOrder(ConcreteUserAccount account, PaymentMethod pay) {
+		super(account.getUserAccount(), pay);
 		this.user = account;
+		this.dateOrdered = LocalDateTime.now();
+		this.status = super.getOrderStatus();
+	}
+	
+	/**
+	 * Sets the user account.
+	 *
+	 * @param account
+	 *            the new user account
+	 */
+	public void setUser(ConcreteUserAccount user) {
+		this.user = user;
+	}
+	
+	/**
+	 * Gets the user.
+	 *
+	 * @return the user
+	 */
+	public ConcreteUserAccount getUser() {
+		return this.user;
+	}
+	
+	public void setDateOrdered(LocalDateTime dateOrdered) {
+		this.dateOrdered = dateOrdered;
+	}
+	
+	public LocalDateTime getDateOrdered() {
+		return this.dateOrdered;
+	}
+	
+	public void setStatus(OrderStatus status) {
+		this.status = status;
+	}
+	
+	public OrderStatus getStatus() {
+		return this.status;
 	}
 
 	/**
@@ -133,15 +152,6 @@ public class ConcreteOrder implements Serializable {
 	 */
 	public String getBillingGender() {
 		return billingGender;
-	}
-
-	/**
-	 * Gets the order.
-	 *
-	 * @return the order
-	 */
-	public Order getOrder() {
-		return this.order;
 	}
 
 	/**
@@ -280,24 +290,12 @@ public class ConcreteOrder implements Serializable {
 	}
 
 	/**
-	 * Sets the date ordered.
-	 *
-	 * @param dateOrdered
-	 *            the new date ordered
-	 */
-	public void setDateOrdered(LocalDateTime dateOrdered) {
-		this.dateOrdered = dateOrdered;
-	}
-
-	/**
 	 * Gets the order lines size.
 	 *
 	 * @return the order lines size
 	 */
-	@SuppressWarnings("unchecked")
 	public int getOrderLinesSize() {
-		Collection<OrderLine> orderLines = IteratorUtils.toList(this.order.getOrderLines().iterator());
-		return orderLines.size();
+		return Iterators.size(this.getOrderLines().iterator());
 	}
 
 	/**
@@ -307,20 +305,10 @@ public class ConcreteOrder implements Serializable {
 	 */
 	public int getTotalProductNumber() {
 		int total = 0;
-		Iterable<OrderLine> orderLines = this.order.getOrderLines();
-		for (OrderLine orderLine : orderLines) {
+		for (OrderLine orderLine : super.getOrderLines()) {
 			total += Integer.parseInt(orderLine.getQuantity().toString());
 		}
 		return total;
-	}
-
-	/**
-	 * Gets the date ordered.
-	 *
-	 * @return the date ordered
-	 */
-	public LocalDateTime getDateOrdered() {
-		return this.dateOrdered;
 	}
 	
 	public String getDateOrderedFormatted() {
@@ -498,35 +486,6 @@ public class ConcreteOrder implements Serializable {
 	}
 
 	/**
-	 * Sets the user account.
-	 *
-	 * @param account
-	 *            the new user account
-	 */
-	public void setUserAccount(UserAccount account) {
-		this.setUserAccount(account);
-	}
-
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * Sets the id.
-	 *
-	 * @param id
-	 *            the new id
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	/**
 	 * Sets the billing address.
 	 *
 	 * @param billingAddress
@@ -572,39 +531,6 @@ public class ConcreteOrder implements Serializable {
 	 */
 	public void setReturned(boolean returned) {
 		this.returned = returned;
-	}
-
-	/**
-	 * Gets the user.
-	 *
-	 * @return the user
-	 */
-	public ConcreteUserAccount getUser() {
-		return user;
-	}
-
-	/**
-	 * Gets the status.
-	 *
-	 * @return the status
-	 */
-	/*
-	 * public void setOrderManager(OrderManager<Order> orderManager){
-	 * this.orderManager = orderManager; } public OrderManager<Order>
-	 * getOrderManager(){ return this.orderManager; }
-	 */
-	public OrderStatus getStatus() {
-		return this.status;
-	}
-
-	/**
-	 * Sets the status.
-	 *
-	 * @param state
-	 *            the new status
-	 */
-	public void setStatus(OrderStatus state) {
-		this.status = state;
 	}
 
 	/**

@@ -1,7 +1,7 @@
 package internetkaufhaus.repositories;
 
 import java.time.LocalDateTime;
-import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderIdentifier;
 import org.salespointframework.order.OrderStatus;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
@@ -33,15 +33,9 @@ public interface ConcreteOrderRepository extends PagingAndSortingRepository<Conc
 	 * @return the iterable
 	 */
 	Iterable<ConcreteOrder> findByStatus(OrderStatus state);
-
-	/**
-	 * Find by id.
-	 *
-	 * @param id
-	 *            the id
-	 * @return the concrete order
-	 */
-	ConcreteOrder findById(Long id);
+	
+	@Query("SELECT c FROM ConcreteOrder c WHERE c.id = :id")
+	ConcreteOrder findOne(@Param("id") OrderIdentifier id);
 
 	/**
 	 * Find by user.
@@ -51,15 +45,6 @@ public interface ConcreteOrderRepository extends PagingAndSortingRepository<Conc
 	 * @return the iterable
 	 */
 	Iterable<ConcreteOrder> findByUser(ConcreteUserAccount user, Sort sort);
-
-	/**
-	 * Find by order.
-	 *
-	 * @param order
-	 *            the order
-	 * @return the iterable
-	 */
-	ConcreteOrder findByOrder(Order order);
 
 	Iterable<ConcreteOrder> findByDateOrdered(LocalDateTime time);
 	

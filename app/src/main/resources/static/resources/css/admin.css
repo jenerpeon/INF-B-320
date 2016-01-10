@@ -134,9 +134,9 @@
 	clear: both;  
 }
 
-#workframe #userStatistics h3 {
+#workframe h3 {
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
-	margin: 10px 0 0 0;
+	margin: 10px 0;
 	font-style: italic;
 }
 
@@ -150,7 +150,7 @@
 
 #comments {
 	width: 100%;
-	margin-top: 50px;
+	margin-top: 20px;
 }
 
 #comments td {

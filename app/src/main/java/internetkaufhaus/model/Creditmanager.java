@@ -53,7 +53,7 @@ public class Creditmanager {
 			Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "dateOrdered", Sort.NullHandling.NATIVE));
 			for (ConcreteOrder order : dataService.getConcreteOrderRepository().findByUser(user, sorting)) {
 				if (Interval.from(order.getDateOrdered()).to(LocalDateTime.now()).getDuration().toDays() >= 30 && order.getStatus().equals(OrderStatus.COMPLETED)) {
-					credits = credits.add(order.getOrder().getTotalPrice().divide(100));
+					credits = credits.add(order.getTotalPrice().divide(100));
 				}
 			}
 			recruiter.setCredits(credits);

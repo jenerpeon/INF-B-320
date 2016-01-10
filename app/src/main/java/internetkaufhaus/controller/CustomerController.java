@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.salespointframework.order.OrderIdentifier;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,8 +105,8 @@ public class CustomerController {
 
 	@RequestMapping(value = "/customer/orders/return", method = RequestMethod.POST)
 	public String customerOrdersReturn(@LoggedIn Optional<UserAccount> userAccount,
-			@RequestParam("orderId") Long orderId, @RequestParam("reason") String reason) {
-		ConcreteOrder order = dataService.getConcreteOrderRepository().findById(orderId);
+			@RequestParam("orderId") OrderIdentifier orderId, @RequestParam("reason") String reason) {
+		ConcreteOrder order = dataService.getConcreteOrderRepository().findOne(orderId);
 		if (order.getUser().getUserAccount().equals(userAccount.get())) {
 			order.setReturned(true);
 			order.setReturnReason(reason);

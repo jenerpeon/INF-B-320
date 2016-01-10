@@ -102,10 +102,9 @@ public class ProductManagementService {
 		ConcreteOrder order = new ConcreteOrder(dataService.getConcreteUserAccountRepository().findByUserAccount(userAccount.get()).get(), Cash.CASH);
 		OrderLine orderLine = new OrderLine(dataService.getConcreteProductRepository().findOne(form.getProdId()),
 				Quantity.of(form.getQuantity()));
-		order.getOrder().add(orderLine);
+		order.add(orderLine);
 		order.setDateOrdered(LocalDateTime.now());
 		order.setStatus(OrderStatus.OPEN);
-		dataService.getOrderManager().save(order.getOrder());
 		dataService.getConcreteOrderRepository().save(order);
 		dataService.getConcreteInventory().findByProductIdentifier(form.getProdId()).ifPresent(x -> {
 			x.increaseQuantity(Quantity.of(form.getQuantity()));
@@ -140,7 +139,7 @@ public class ProductManagementService {
 	 */
 	public Money getBuyingPrice(ConcreteOrder order) {
 		Money result = Money.of(0, EURO);
-		for (OrderLine i : order.getOrder().getOrderLines()) {
+		for (OrderLine i : order.getOrderLines()) {
 			result = result.add(this.dataService.getConcreteProductRepository().findOne(i.getProductIdentifier())
 					.getBuyingPrice().multiply(i.getQuantity().getAmount()));
 		}
