@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -28,7 +29,7 @@ public class ConcreteOrder extends Order {
 	private static final long serialVersionUID = 1L;
 
 	/** The user. */
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	private ConcreteUserAccount user;
 	
 	private LocalDateTime dateOrdered;

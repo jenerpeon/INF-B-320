@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
 import internetkaufhaus.entities.ConcreteUserAccount;
@@ -37,5 +39,7 @@ public interface ConcreteUserAccountRepository extends CrudRepository<ConcreteUs
 	 * @return the concrete user account
 	 */
 	Optional<ConcreteUserAccount> findByUserAccount(UserAccount acc);
+	
+	Page<ConcreteUserAccount> findByRole(Role role, Pageable pageable);
 
 }

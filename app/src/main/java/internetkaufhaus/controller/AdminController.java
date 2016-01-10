@@ -376,9 +376,7 @@ public class AdminController {
 	@RequestMapping(value = "/admin/competitionButton")
 	public String getWinners(ModelMap model) {
 
-		Competition com = new Competition(
-				dataService.getConcreteUserAccountRepository().findByRole(Role.of("ROLE_CUSTOMER")),
-				new Creditmanager(dataService));
+		Competition com = new Competition(dataService);
 
 		model.addAttribute("winners", com.getWinners());
 		com.getWinners().forEach(x -> System.out.println(x.getUserAccount().getUsername() + " " + x.getCredits()));
