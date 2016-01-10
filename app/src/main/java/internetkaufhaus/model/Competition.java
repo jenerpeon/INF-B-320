@@ -7,7 +7,6 @@ import java.util.Iterator;
 import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.services.ConcreteMailService;
 
-// TODO: Auto-generated Javadoc
 /**
  * Competition in which the Customers who gained the most CreditPoints are
  * rewarded with a prize.

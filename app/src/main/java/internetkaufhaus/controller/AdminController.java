@@ -196,7 +196,6 @@ public class AdminController {
 			model.addAttribute("message", result.getAllErrors());
 			return "changeusernewuser";
 		}
-		System.out.println("Test");
 		humanResourceService.hireEmployee(createuserform);
 		return "redirect:/admin/changeuser/";
 	}
