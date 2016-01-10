@@ -6,7 +6,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,10 +15,9 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.apache.commons.collections.IteratorUtils;
 import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.InventoryItem;
-import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderIdentifier;
 import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.quantity.Quantity;
@@ -92,20 +90,6 @@ public class ManagementController {
 	 * functionality other than storing function arguments as class attribute,
 	 * what do you expect me to write here?
 	 *
-	 * @param concreteProductRepository
-	 *            the concrete product repository
-	 * @param orderManager
-	 *            the order manager
-	 * @param concreteOrderRepo
-	 *            the concrete order repo
-	 * @param catalog
-	 *            the catalog
-	 * @param inventory
-	 *            the inventory
-	 * @param prodSearch
-	 *            the prod search
-	 * @param stock
-	 *            the stock
 	 * @param newsManager
 	 *            the news manager
 	 * @param sender
@@ -479,45 +463,40 @@ public class ManagementController {
 	 *            the model
 	 * @return the string
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/employee/orders/accept/{orderId}", method = RequestMethod.GET)
-	public String acceptOrder(@PathVariable("orderId") Long orderId, ModelMap model) {
+	public String acceptOrder(@PathVariable("orderId") OrderIdentifier orderId, ModelMap model) {
 
-		ConcreteOrder o = dataService.getConcreteOrderRepository().findById(orderId);
+		ConcreteOrder o = dataService.getConcreteOrderRepository().findOne(orderId);
 		if (o == null) {
 			model.addAttribute("msg", "error in acceptOrder, no Order with qualifier" + orderId + "found");
 			return "index";
 		}
 
-		Order order = o.getOrder();
 		o.setStatus(OrderStatus.COMPLETED);
 		dataService.getConcreteOrderRepository().save(o);
 
-		Iterable<OrderLine> orders = order.getOrderLines();
-		Collection<OrderLine> orderLines = IteratorUtils.toList(orders.iterator());
-		for (OrderLine orderLine : orderLines) {
+		for (OrderLine orderLine : o.getOrderLines()) {
 			ConcreteProduct prod = dataService.getConcreteProductRepository().findOne(orderLine.getProductIdentifier());
 			prod.increaseSold(orderLine.getQuantity().getAmount().intValue());
 			dataService.getConcreteProductRepository().save(prod);
 		}
 
-		String mail = "Sehr geehrte(r) " + order.getUserAccount().getFirstname() + " "
-				+ order.getUserAccount().getLastname() + "!\n";
-		mail += "Ihre unten aufgeführte Bestellung vom " + order.getDateCreated().toString()
+		String mail = "Sehr geehrte(r) " + o.getUserAccount().getFirstname() + " "
+				+ o.getUserAccount().getLastname() + "!\n";
+		mail += "Ihre unten aufgeführte Bestellung vom " + o.getDateCreated().toString()
 				+ " wurde von einem unserer Mitarbeiter bearbeitet und ist nun auf dem Weg zu Ihnen!\n";
 		mail += "Es handelt sich um Ihre Bestellung folgender Artikel:";
-		Iterator<OrderLine> i = order.getOrderLines().iterator();
+		Iterator<OrderLine> i = o.getOrderLines().iterator();
 		OrderLine current;
 		while (i.hasNext()) {
 			current = i.next();
 			mail += "\n" + current.getQuantity().toString() + "x " + current.getProductName() + " für gesamt "
 					+ current.getPrice().toString();
 		}
-		mail += "\nGesamtpreis: " + order.getTotalPrice().toString();
+		mail += "\nGesamtpreis: " + o.getTotalPrice().toString();
 
-		sender.sendMail(order.getUserAccount().getEmail(), mail, "nobody@nothing.com", "Bestellung bearbeitet!");
+		sender.sendMail(o.getUserAccount().getEmail(), mail, "nobody@nothing.com", "Bestellung bearbeitet!");
 
-		// orderManager.completeOrder(o.getOrder());
 		return "redirect:/employee/orders";
 	}
 
@@ -533,13 +512,14 @@ public class ManagementController {
 	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/orders/cancel/{orderId}", method = RequestMethod.GET)
-	public String cancelOrder(ModelMap model, @PathVariable("orderId") Long orderId) {
-		ConcreteOrder o = dataService.getConcreteOrderRepository().findById(orderId);
+	public String cancelOrder(ModelMap model, @PathVariable("orderId") OrderIdentifier orderId) {
+		ConcreteOrder o = dataService.getConcreteOrderRepository().findOne(orderId);
 		if (o == null) {
 			model.addAttribute("msg", "error in acceptOrder, no Order with qualifier" + orderId + "found");
 			return "index";
 		}
-		dataService.getOrderManager().cancelOrder(o.getOrder());
+		o.setStatus(OrderStatus.CANCELLED);
+		dataService.getConcreteOrderRepository().save(o);
 		return "redirect:/employee/orders";
 	}
 
@@ -554,30 +534,30 @@ public class ManagementController {
 	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/orders/detail/{orderId}")
-	public String detailOrder(@PathVariable("orderId") Long orderId, ModelMap model) {
-		ConcreteOrder o = dataService.getConcreteOrderRepository().findById(orderId);
+	public String detailOrder(@PathVariable("orderId") OrderIdentifier orderId, ModelMap model) {
+		ConcreteOrder o = dataService.getConcreteOrderRepository().findOne(orderId);
 		if (o == null) {
 			model.addAttribute("msg", "error in acceptOrder, no Order with qualifier" + orderId + "found");
 			return "index";
 		}
 
-		if (dataService.getConcreteOrderRepository().findById(orderId).getStatus() == OPEN) {
+		if (dataService.getConcreteOrderRepository().findOne(orderId).getStatus() == OPEN) {
 			Map<OrderLine, Double> orderLines = new HashMap<OrderLine, Double>();
-			for (OrderLine i : o.getOrder().getOrderLines()) {
+			for (OrderLine i : o.getOrderLines()) {
 				orderLines.put(i, dataService.getConcreteProductRepository().findOne(i.getProductIdentifier())
 						.getBuyingPrice().multiply(i.getQuantity().getAmount()).getNumberStripped().doubleValue());
 			}
 			model.addAttribute("orderLines", orderLines);
 			model.addAttribute("totalPrice", this.productManagementService
-					.getBuyingPrice(dataService.getConcreteOrderRepository().findById(orderId)));
+					.getBuyingPrice(dataService.getConcreteOrderRepository().findOne(orderId)));
 		} else {
 			Map<OrderLine, Double> orderLines = new HashMap<OrderLine, Double>();
-			for (OrderLine i : o.getOrder().getOrderLines()) {
+			for (OrderLine i : o.getOrderLines()) {
 				orderLines.put(i, i.getPrice().getNumberStripped().doubleValue());
 			}
 			model.addAttribute("orderLines", orderLines);
 			model.addAttribute("totalPrice",
-					dataService.getConcreteOrderRepository().findById(orderId).getOrder().getTotalPrice());
+					dataService.getConcreteOrderRepository().findOne(orderId).getTotalPrice());
 		}
 		model.addAttribute("order", o);
 		return "orderdetail";

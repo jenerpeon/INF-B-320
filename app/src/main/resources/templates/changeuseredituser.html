@@ -109,13 +109,14 @@
 				<h3>Bestellungen:</h3>
 				<ul>
 					<li th:each="order : ${orders}">
-						<a th:text="@{${order.getTotalProductNumber()}+' Produkte für '+${order.order.totalPrice}}"></a><br/>
+						<a th:text="@{${order.getTotalProductNumber()}+' Produkte für '+${order.totalPrice}}"></a><br/>
 						<a th:text="@{'Retourniert: '+${order.returned}}"></a>
 					</li>
 					<li><a th:text="@{'Gesamtumsatz: '+${turnover}}"></a></li>
 				</ul>
 				</div>
 				<div id="comments" th:if="${account.role.name}=='ROLE_CUSTOMER'">
+					<h3>Abgegebene Kommentare und Bewertungen:</h3>
 					<table th:if="${not #lists.isEmpty(account.comments)}">
 						<tr>
 							<th><a >Produkt</a></th>

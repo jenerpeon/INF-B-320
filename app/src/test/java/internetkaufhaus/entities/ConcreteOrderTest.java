@@ -31,8 +31,8 @@ import internetkaufhaus.services.DataService;
 
 public class ConcreteOrderTest extends AbstractIntegrationTests {
 
-	/** The o. */
-	private ConcreteOrder o;
+	/** The model. */
+	private ConcreteOrder model;
 	
 	private ConcreteUserAccount acc; 
 	
@@ -63,9 +63,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 				"https://eng.wikipedia.org/wiki/Fuzz", "allini-pinot-chardonnay-schaumwein--1.jpg");
 		cart.addOrUpdateItem(prod1, Quantity.of(10));
 		cart.addOrUpdateItem(prod2, Quantity.of(5));
-		this.o = new ConcreteOrder(this.acc, Cash.CASH);
-		cart.addItemsTo(o.getOrder());
-		// o.getOrderLinesSize();
+		this.model = new ConcreteOrder(this.acc, Cash.CASH);
+		cart.addItemsTo(model);
 
 	}
 
@@ -74,7 +73,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testgetOrderLinesSize() {
-		assertTrue("Anzahl der Orderline", o.getOrderLinesSize() == 2);
+		assertTrue("Anzahl der Orderline", model.getOrderLinesSize() == 2);
 	}
 
 	/**
@@ -82,7 +81,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testgetTotalProductNumber() {
-		assertTrue("Anzahl der Produkte", o.getTotalProductNumber() == 15);
+		assertTrue("Anzahl der Produkte", model.getTotalProductNumber() == 15);
 	}
 
 	/**
@@ -90,16 +89,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testBillingGender() {
-		o.setBillingGender("male");
-		assertEquals("male", o.getBillingGender());
-	}
-
-	/**
-	 * Testget order.
-	 */
-	@Test
-	public void testOrder() {
-		assertNotNull(o.getOrder());
+		model.setBillingGender("male");
+		assertEquals("male", model.getBillingGender());
 	}
 
 	/**
@@ -107,8 +98,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testBillingFirstName() {
-		o.setBillingFirstName("Hans");
-		assertEquals("Hans", o.getBillingFirstName());
+		model.setBillingFirstName("Hans");
+		assertEquals("Hans", model.getBillingFirstName());
 	}
 
 	/**
@@ -116,8 +107,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testBillingLastName() {
-		o.setBillingLastName("Wurst");
-		assertEquals("Wurst", o.getBillingLastName());
+		model.setBillingLastName("Wurst");
+		assertEquals("Wurst", model.getBillingLastName());
 	}
 
 	/**
@@ -125,8 +116,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testBillingStreet() {
-		o.setBillingStreet("Straße");
-		assertEquals("Straße", o.getBillingStreet());
+		model.setBillingStreet("Straße");
+		assertEquals("Straße", model.getBillingStreet());
 	}
 
 	/**
@@ -134,8 +125,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testBillingHouseNumber() {
-		o.setBillingHouseNumber("5");
-		assertEquals("5", o.getBillingHouseNumber());
+		model.setBillingHouseNumber("5");
+		assertEquals("5", model.getBillingHouseNumber());
 	}
 
 	/**
@@ -143,8 +134,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testBillingAddressLine2() {
-		o.setBillingAddressLine2("Zeile2");
-		assertEquals("Zeile2", o.getBillingAddressLine2());
+		model.setBillingAddressLine2("Zeile2");
+		assertEquals("Zeile2", model.getBillingAddressLine2());
 	}
 
 	/**
@@ -152,8 +143,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testBillingZipCode() {
-		o.setBillingZipCode("12345");
-		assertEquals("12345", o.getBillingZipCode());
+		model.setBillingZipCode("12345");
+		assertEquals("12345", model.getBillingZipCode());
 	}
 
 	/**
@@ -161,8 +152,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testBillingTown() {
-		o.setBillingTown("Stadt");
-		assertEquals("Stadt", o.getBillingTown());
+		model.setBillingTown("Stadt");
+		assertEquals("Stadt", model.getBillingTown());
 	}
 
 	/**
@@ -170,8 +161,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testShippingGender() {
-		o.setShippingGender("male");
-		assertEquals("male", o.getShippingGender());
+		model.setShippingGender("male");
+		assertEquals("male", model.getShippingGender());
 	}
 
 	/**
@@ -179,8 +170,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testShippingFirstName() {
-		o.setShippingFirstName("Hans");
-		assertEquals("Hans", o.getShippingFirstName());
+		model.setShippingFirstName("Hans");
+		assertEquals("Hans", model.getShippingFirstName());
 	}
 
 	/**
@@ -188,8 +179,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testShippingLastName() {
-		o.setShippingLastName("Wurst");
-		assertEquals("Wurst", o.getShippingLastName());
+		model.setShippingLastName("Wurst");
+		assertEquals("Wurst", model.getShippingLastName());
 	}
 
 	/**
@@ -197,8 +188,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testShippingStreet() {
-		o.setShippingStreet("Straße");
-		assertEquals("Straße", o.getShippingStreet());
+		model.setShippingStreet("Straße");
+		assertEquals("Straße", model.getShippingStreet());
 	}
 
 	/**
@@ -206,8 +197,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testShippingHouseNumber() {
-		o.setShippingHouseNumber("5");
-		assertEquals("5", o.getShippingHouseNumber());
+		model.setShippingHouseNumber("5");
+		assertEquals("5", model.getShippingHouseNumber());
 	}
 
 	/**
@@ -215,8 +206,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testShippingAddressLine2() {
-		o.setShippingAddressLine2("Zeile2");
-		assertEquals("Zeile2", o.getShippingAddressLine2());
+		model.setShippingAddressLine2("Zeile2");
+		assertEquals("Zeile2", model.getShippingAddressLine2());
 	}
 
 	/**
@@ -224,8 +215,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testShippingZipCode() {
-		o.setShippingZipCode("12345");
-		assertEquals("12345", o.getShippingZipCode());
+		model.setShippingZipCode("12345");
+		assertEquals("12345", model.getShippingZipCode());
 	}
 
 	/**
@@ -233,8 +224,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testShippingTown() {
-		o.setShippingTown("Stadt");
-		assertEquals("Stadt", o.getShippingTown());
+		model.setShippingTown("Stadt");
+		assertEquals("Stadt", model.getShippingTown());
 	}
 
 	/**
@@ -242,8 +233,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testOrderLinesSize() {
-		System.out.println("orderLinesSize:"+o.getOrderLinesSize());
-		assertTrue("getOrderlineSize defekt", o.getOrderLinesSize() == 2);
+		System.out.println("orderLinesSize:"+model.getOrderLinesSize());
+		assertTrue("getOrderlineSize defekt", model.getOrderLinesSize() == 2);
 	}
 
 	/**
@@ -252,8 +243,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	@Test
 	public void testDateOrdered() {
 		LocalDateTime time = LocalDateTime.now();
-		o.setDateOrdered(time);
-		assertEquals(time, o.getDateOrdered());
+		model.setDateOrdered(time);
+		assertEquals(time, model.getDateOrdered());
 	}
 
 	/**
@@ -261,7 +252,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testTotalProductNumber() {
-		assertTrue("getTotalProductNumber defekt", o.getTotalProductNumber() == 15);
+		assertTrue("getTotalProductNumber defekt", model.getTotalProductNumber() == 15);
 	}
 
 	/**
@@ -269,18 +260,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testReturned() {
-		o.setReturned(true);
-		assertTrue("getReturned defekt", o.getReturned() == true);
-	}
-	
-	/**
-	 * Test set id.
-	 */
-	@Test
-	public void testId() {
-		o.setId(Long.valueOf(42));
-		assertTrue("setId defekt", o.getId().longValue() == 42);
-
+		model.setReturned(true);
+		assertTrue("getReturned defekt", model.getReturned() == true);
 	}
 
 	/**
@@ -288,7 +269,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testUser() {
-		assertEquals(this.acc, o.getUser());
+		assertEquals(this.acc, model.getUser());
 	}
 
 	/**
@@ -296,8 +277,8 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testReturnReason() {
-		o.setReturnReason("nein");
-		assertEquals("nein", o.getReturnReason());
+		model.setReturnReason("nein");
+		assertEquals("nein", model.getReturnReason());
 	}
 
 }

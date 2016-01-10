@@ -123,10 +123,10 @@ public class Statistic {
 				Long intervalReturns = (long) Iterators.size(returnedOrders.iterator());
 				Money intervalStockMoney = Money.of(0, "EUR");
 				for (ConcreteOrder order : completedOrders) {
-					intervalMoney = intervalMoney.add(order.getOrder().getTotalPrice());
+					intervalMoney = intervalMoney.add(order.getTotalPrice());
 				}
 				for (ConcreteOrder order : openOrders) {
-					intervalStockMoney = intervalStockMoney.add(order.getOrder().getTotalPrice());
+					intervalStockMoney = intervalStockMoney.add(order.getTotalPrice());
 				}
 				
 				orders.put(j, intervalOrders);
@@ -151,10 +151,10 @@ public class Statistic {
 				Long intervalReturns = (long) Iterators.size(returnedOrders.iterator());
 				Money intervalStockMoney = Money.of(0, "EUR");
 				for (ConcreteOrder order : completedOrders) {
-					intervalMoney = intervalMoney.add(order.getOrder().getTotalPrice());
+					intervalMoney = intervalMoney.add(order.getTotalPrice());
 				}
 				for (ConcreteOrder order : openOrders) {
-					intervalStockMoney = intervalStockMoney.add(order.getOrder().getTotalPrice());
+					intervalStockMoney = intervalStockMoney.add(order.getTotalPrice());
 				}
 				
 				orders.put(j, intervalOrders);
@@ -179,10 +179,10 @@ public class Statistic {
 				Long intervalReturns = (long) Iterators.size(returnedOrders.iterator());
 				Money intervalStockMoney = Money.of(0, "EUR");
 				for (ConcreteOrder order : completedOrders) {
-					intervalMoney = intervalMoney.add(order.getOrder().getTotalPrice());
+					intervalMoney = intervalMoney.add(order.getTotalPrice());
 				}
 				for (ConcreteOrder order : openOrders) {
-					intervalStockMoney = intervalStockMoney.add(order.getOrder().getTotalPrice());
+					intervalStockMoney = intervalStockMoney.add(order.getTotalPrice());
 				}
 				
 				orders.put(j, intervalOrders);
@@ -207,10 +207,10 @@ public class Statistic {
 				Long intervalReturns = (long) Iterators.size(returnedOrders.iterator());
 				Money intervalStockMoney = Money.of(0, "EUR");
 				for (ConcreteOrder order : completedOrders) {
-					intervalMoney = intervalMoney.add(order.getOrder().getTotalPrice());
+					intervalMoney = intervalMoney.add(order.getTotalPrice());
 				}
 				for (ConcreteOrder order : openOrders) {
-					intervalStockMoney = intervalStockMoney.add(order.getOrder().getTotalPrice());
+					intervalStockMoney = intervalStockMoney.add(order.getTotalPrice());
 				}
 				
 				orders.put(j, intervalOrders);

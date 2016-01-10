@@ -26,8 +26,7 @@ public class CreditComparator implements Comparator<ConcreteUserAccount> {
 	 */
 	@Override
 	public int compare(ConcreteUserAccount o1, ConcreteUserAccount o2) {
-		return Integer.valueOf(o1.getCredits().getNumber().toString())
-				.compareTo(Integer.valueOf(o2.getCredits().getNumber().toString()));
+		return new Long(o1.getCredits()).compareTo(new Long(o2.getCredits()));
 	}
 
 }

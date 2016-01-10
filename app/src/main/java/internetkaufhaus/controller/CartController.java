@@ -12,8 +12,8 @@ import javax.validation.Valid;
 import org.javamoney.moneta.Money;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.CartItem;
-import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderLine;
+import org.salespointframework.order.OrderStatus;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.payment.CreditCard;
 import org.salespointframework.quantity.Quantity;
@@ -34,7 +34,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
+import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.forms.PaymentForm;
+import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.services.ConcreteMailService;
 import internetkaufhaus.services.DataService;
 
@@ -232,11 +234,11 @@ class CartController {
 			org.javamoney.moneta.Money creditLimit = Money.of(1000000000, EURO);
 			LocalDateTime validFrom = LocalDateTime.MIN;
 
-			ConcreteOrder order = new ConcreteOrder(
-					dataService.getConcreteUserAccountRepository().findByUserAccount(account).get(), Cash.CASH);
-			Order o = order.getOrder();
+			ConcreteUserAccount caccount = dataService.getConcreteUserAccountRepository().findByUserAccount(account)
+					.get();
+			ConcreteOrder order = new ConcreteOrder(caccount, Cash.CASH);
 
-			cart.addItemsTo(o);
+			cart.addItemsTo(order);
 
 			String billingAddress = paymentForm.getBillingFirstName() + " " + paymentForm.getBillingLastName() + "\n"
 					+ paymentForm.getBillingStreet() + " " + paymentForm.getBillingHouseNumber() + "\n"
@@ -248,28 +250,36 @@ class CartController {
 					paymentForm.getExpiryDateLocalDateTime(), paymentForm.getCardVerificationCode(),
 					dailyWithdrawalLimit, creditLimit);
 
-			o.setPaymentMethod(paymentMethod);
+			order.setPaymentMethod(paymentMethod);
 
 			order.setBillingAddress(paymentForm.getBillingAddress());
 
 			order.setShippingAddress(paymentForm.getShippingAddress());
 
 			order.setDateOrdered(LocalDateTime.now());
-			dataService.getOrderManager().save(o);
-			dataService.getOrderManager().payOrder(o);
+			
+			Creditmanager credit = new Creditmanager(dataService);
+			credit.updateCreditpointsByUser(caccount);
 
-			order.setStatus(o.getOrderStatus());
+			if (order.getTotalPrice().isGreaterThanOrEqualTo(Money.of(caccount.getCredits(),"EUR").divide(10))) {
+				order.setUsedDiscountPoints(caccount.getCredits());
+			}
+			else {
+				order.setUsedDiscountPoints(Math.round(order.getTotalPrice().multiply(10).getNumberStripped().doubleValue()));
+			}
+
+				order.setStatus(OrderStatus.COMPLETED);
 			dataService.getConcreteOrderRepository().save(order);
 
 			String articles = "";
-			Iterator<OrderLine> i = order.getOrder().getOrderLines().iterator();
+			Iterator<OrderLine> i = order.getOrderLines().iterator();
 			OrderLine current;
 			while (i.hasNext()) {
 				current = i.next();
 				articles += "\n" + current.getQuantity().toString() + "x " + current.getProductName() + " für gesamt "
 						+ current.getPrice().toString();
 			}
-			articles += "\nGesamtpreis: " + order.getOrder().getTotalPrice().toString();
+			articles += "\nGesamtpreis: " + order.getTotalPrice().toString();
 
 			cart.clear();
 
@@ -281,23 +291,6 @@ class CartController {
 
 			return "redirect:/";
 		}).orElse("redirect:/login");
-	}
-
-	/**
-	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 *
-	 * @param orderId
-	 *            the order id
-	 * @param reason
-	 *            the reason
-	 * @return the string
-	 */
-	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
-	@RequestMapping(value = "/returOrders", method = RequestMethod.POST)
-	public String returnOrder(@RequestParam("orderId") Long orderId, @RequestParam("dropDown") String reason) {
-		dataService.getConcreteOrderRepository().findById(orderId).setReturned(true);
-		dataService.getConcreteOrderRepository().findById(orderId).setReturnReason(reason);
-		return "redirect:/";
 	}
 
 }

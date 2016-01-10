@@ -626,11 +626,11 @@ public class Initialize implements DataInitializer {
 				}
 
 				ConcreteOrder order = new ConcreteOrder(u, Cash.CASH);
-				orderCart.addItemsTo(order.getOrder());
+				orderCart.addItemsTo(order);
 
 				ConcreteOrder stock = new ConcreteOrder(dataService.getConcreteUserAccountRepository()
 						.findByUserAccount(dataService.getUserAccountManager().findByUsername("saul").get()).get(), Cash.CASH);
-				stockCart.addItemsTo(stock.getOrder());
+				stockCart.addItemsTo(stock);
 
 				order.setBillingGender("Herr");
 				order.setBillingFirstName(u.getUserAccount().getFirstname());
@@ -658,20 +658,12 @@ public class Initialize implements DataInitializer {
 				
 				stock.setDateOrdered(orderDate);
 
-				dataService.getOrderManager().payOrder(order.getOrder());
-				// only set orderManager.payOrder(o), do not use
-				// orderManager.completeOrder(0), to complete Order look at the
-				// next
-				// line!
 				order.setStatus(OrderStatus.COMPLETED);
-				// to complete Order do not use orderManager.completeOrder
 
 				dataService.getConcreteOrderRepository().save(order);
-				dataService.getOrderManager().save(order.getOrder());
 				
 				if (!stockCart.isEmpty()) {
 					dataService.getConcreteOrderRepository().save(stock);
-					dataService.getOrderManager().save(stock.getOrder());
 				}
 
 				orderCart.clear();

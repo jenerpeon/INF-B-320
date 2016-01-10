@@ -62,8 +62,7 @@ public class ConcreteUserAccount implements Serializable {
 	private String city;
 
 	/** The credits. */
-	@Column(length = 2000)
-	private Money credits;
+	private long credits;
 	
 	/** The role. */
 	private Role role;
@@ -89,7 +88,7 @@ public class ConcreteUserAccount implements Serializable {
 
 		this.userAccount = u.create(username, password, role);
 		this.role = role;
-		this.credits = Money.of(0, EURO);
+		this.credits = 0;
 	}
 
 	/**
@@ -109,7 +108,7 @@ public class ConcreteUserAccount implements Serializable {
 	 * @param recruits the recruits
 	 */
 	public ConcreteUserAccount(String email, String username, String firstname, String lastname, String address,
-			String zipCode, String city, String password, Role role, UserAccountManager u, int credits,
+			String zipCode, String city, String password, Role role, UserAccountManager u, long credits,
 			List<ConcreteUserAccount> recruits) {
 		this.userAccount = u.create(username, password, role);
 		this.recruits = recruits;
@@ -120,7 +119,7 @@ public class ConcreteUserAccount implements Serializable {
 		this.city = city;
 		this.userAccount.setEmail(email);
 		this.email = email;
-		this.credits = Money.of(credits, EURO);
+		this.credits = credits;
 		this.role = role;
 	}
 
@@ -148,7 +147,7 @@ public class ConcreteUserAccount implements Serializable {
 		this.city = city;
 		this.userAccount.setEmail(email);
 		this.email = email;
-		this.credits = Money.of(0, EURO);
+		this.credits = 0;
 		this.role = role;
 	}
 
@@ -319,7 +318,7 @@ public class ConcreteUserAccount implements Serializable {
 	 *
 	 * @return the credits
 	 */
-	public Money getCredits() {
+	public long getCredits() {
 		return this.credits;
 	}
 
@@ -328,7 +327,7 @@ public class ConcreteUserAccount implements Serializable {
 	 *
 	 * @param credits the new credits
 	 */
-	public void setCredits(Money credits) {
+	public void setCredits(long credits) {
 		this.credits = credits;
 	}
 

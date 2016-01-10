@@ -1,7 +1,7 @@
 package internetkaufhaus.repositories;
 
 import java.time.LocalDateTime;
-import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderIdentifier;
 import org.salespointframework.order.OrderStatus;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
@@ -33,15 +33,9 @@ public interface ConcreteOrderRepository extends PagingAndSortingRepository<Conc
 	 * @return the iterable
 	 */
 	Iterable<ConcreteOrder> findByStatus(OrderStatus state);
-
-	/**
-	 * Find by id.
-	 *
-	 * @param id
-	 *            the id
-	 * @return the concrete order
-	 */
-	ConcreteOrder findById(Long id);
+	
+	@Query("SELECT c FROM ConcreteOrder c WHERE c.id = :id")
+	ConcreteOrder findOne(@Param("id") OrderIdentifier id);
 
 	/**
 	 * Find by user.
@@ -52,15 +46,6 @@ public interface ConcreteOrderRepository extends PagingAndSortingRepository<Conc
 	 */
 	Iterable<ConcreteOrder> findByUser(ConcreteUserAccount user, Sort sort);
 
-	/**
-	 * Find by order.
-	 *
-	 * @param order
-	 *            the order
-	 * @return the iterable
-	 */
-	ConcreteOrder findByOrder(Order order);
-
 	Iterable<ConcreteOrder> findByDateOrdered(LocalDateTime time);
 	
 	@Query("SELECT c FROM ConcreteOrder c WHERE c.status = :status AND c.returned = false AND c.dateOrdered >= :begin AND c.dateOrdered <= :end")
@@ -70,5 +55,11 @@ public interface ConcreteOrderRepository extends PagingAndSortingRepository<Conc
 	Iterable<ConcreteOrder> findByIntervalAndStatusAndReturned(@Param("begin") LocalDateTime begin, @Param("end") LocalDateTime end, @Param("status") OrderStatus status);
 	
 	Iterable<ConcreteOrder> findByReturnedTrue();
+	
+	@Query("SELECT c FROM ConcreteOrder c WHERE c.user = :user AND c.usedDiscountPoints > 0")
+	Iterable<ConcreteOrder> findByUserAndDiscount(@Param("user") ConcreteUserAccount user);
+	
+	@Query("SELECT c FROM ConcreteOrder c WHERE c.user = :user AND c.returned = :returned")
+	Iterable<ConcreteOrder> findByUserAndReturned(@Param("user") ConcreteUserAccount user, @Param("returned") boolean returned);
 
 }
