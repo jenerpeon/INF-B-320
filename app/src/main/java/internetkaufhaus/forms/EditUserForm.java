@@ -1,12 +1,13 @@
 package internetkaufhaus.forms;
 
+import javax.validation.constraints.Pattern;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import cz.jirutka.validator.spring.SpELAssert;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class EditUserForm.
  */
@@ -30,6 +31,32 @@ public class EditUserForm {
 	/** The passwordrepeat. */
 	@NotEmpty(message = "Bitte geben Sie ihr Passwort zu Überprüfung ein zweites mal an.")
 	private String passwordrepeat;
+	
+	/** The firstname. */
+	@NotEmpty(message = "Bitte geben Sie einen Vornamen an.")
+	@Pattern(regexp = "([A-Za-z])+", message = "Der Vorname enthält ungültige Zeichen.")
+	private String firstname;
+
+	/** The lastname. */
+	@NotEmpty(message = "Bitte geben Sie einen Nachnamen an.")
+	@Pattern(regexp = "([A-Za-z])+", message = "Der Nachname enthält ungültige Zeichen.")
+	private String lastname;
+	
+	/** The address. */
+	@NotEmpty(message = "Bitte geben Sie eine Adresse an.")
+	@Pattern(regexp = "([A-Za-z0-9 ,.-])+", message = "Die Adresse enthält unzulässige Zeichen.")
+	private String address;
+	
+	/** The city. */
+	@NotEmpty(message = "Bitte geben Sie eine Stadt an.")
+	@Pattern(regexp = "([A-Za-z0-9,.-])+", message = "Die Stadt enthält ungültige Zeichen.")
+	private String city;
+	
+	/** The zip code. */
+	@NotEmpty(message = "Bitte geben Sie eine Postleitzahl an.")
+	@Length(min = 5, max = 5, message = "Die Postleitzahl muss genau fünf Ziffern lang sein.")
+	@Pattern(regexp = "([0-9])+", message = "Die Postleitzahl enthält unzulässige Zeichen.")
+	private String zipCode;
 	
 	/** The id. */
 	private Long id;
@@ -117,6 +144,46 @@ public class EditUserForm {
 	 */
 	public void setPasswordrepeat(String passwordrepeat) {
 		this.passwordrepeat = passwordrepeat;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
 	}
 
 }
