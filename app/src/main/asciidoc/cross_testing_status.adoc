@@ -40,8 +40,8 @@ Onlineshop "Woods Super Dooper Shop"
 | could not reproduce | /payed | Adresse eingegeben | bestellen drücken, um Einkaufswagen zu kaufen | Whitelabel Error Page: Zugriff verweigert
 | marginal | /?cartsize=0&cartprice=EUR+0#login-modal | ... | Klick auf "Mein Konto" : Wo ist die Übersicht über mein Konto? Ich kann mich immer nur anmelden; wo kann ich mein Rabattguthaben einsehen? Warum wird kein Rabatt bei der Bestellung verrechnet?| ...
 | marginal | /cart | nothing | ich kann leere Bestellungen machen|...
-| urgent | /admin/changeuser/editUser/3 | unterschiedliche Passwörter | Passwörter müssen nicht gleich sein, werden nicht verglichen | Userstatus geändert
-| urgent | /employee/orders/accept/1 | ... | Admin hat die Bestellung angenommen, versuche sie mit dem Mitarbeiter nochmal anzunehmen | Whitelabel Error Page: No value present
+| fixed | /admin/changeuser/editUser/3 | unterschiedliche Passwörter | Passwörter müssen nicht gleich sein, werden nicht verglichen | Userstatus geändert
+| could not reproduce | /employee/orders/accept/1 | ... | Admin hat die Bestellung angenommen, versuche sie mit dem Mitarbeiter nochmal anzunehmen | Whitelabel Error Page: No value present
 | urgent | /#registration-modal | asd@asd | asd@asd.irgendwas sollte erst gehen|
 | urgent | redirect/#login-modal | | | Error resolving template "redirect/#login-modal", template might not exist
 | urgent | "Mein Konto" | | Kein Zugriff auf Schaltfläche |
