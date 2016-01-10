@@ -4,18 +4,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class StandardUserFormTest.
- */
-public class StandardUserFormTest {
+public class EditCustomerFormTest {
 	
-	/** The model. */
-	private StandardUserForm model = new StandardUserForm();
+	private EditCustomerForm model = new EditCustomerForm();
 	
-	/**
-	 * Firs name test.
-	 */
 	@Test
 	public void firstNameTest() {
 		model.setFirstname("Martin");
@@ -29,15 +21,6 @@ public class StandardUserFormTest {
 	public void lastNameTest() {
 		model.setLastname("Bens");
 		assertTrue("Nachname erhalten", model.getLastname().equals("Bens"));
-	}
-	
-	/**
-	 * Name test.
-	 */
-	@Test
-	public void nameTest() {
-		model.setName("spigo");
-		assertTrue("Benutzername erhalten", model.getName().equals("spigo"));
 	}
 	
 	/**
@@ -93,6 +76,5 @@ public class StandardUserFormTest {
 		model.setCity("Dresden");
 		assertTrue("Stadt erhalten", model.getCity().equals("Dresden"));
 	}
-	
-	
+
 }

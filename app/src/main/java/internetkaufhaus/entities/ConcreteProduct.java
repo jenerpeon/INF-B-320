@@ -53,6 +53,7 @@ public class ConcreteProduct extends Product {
 	@Column(name = "BUYING_PRICE")
 	private BigDecimal buyingPrice;
 	
+	@Column(name = "PRICE_DECIMAL")
 	private BigDecimal priceDecimal;
 
 	/** The average rating. */
@@ -366,6 +367,12 @@ public class ConcreteProduct extends Product {
 	 */
 	public void setBuyingPrice(Money buyingPrice) {
 		this.buyingPrice = buyingPrice.getNumberStripped();
+	}
+	
+	@Override
+	public void setPrice(Money price) {
+		super.setPrice(price);
+		this.priceDecimal = price.getNumberStripped();
 	}
 
 }
