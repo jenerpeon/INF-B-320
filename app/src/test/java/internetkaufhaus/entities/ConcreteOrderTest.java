@@ -3,7 +3,6 @@ package internetkaufhaus.entities;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 import static org.salespointframework.core.Currencies.EURO;
 
 import java.time.LocalDateTime;
@@ -12,10 +11,7 @@ import org.javamoney.moneta.Money;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.salespointframework.catalog.Product;
 import org.salespointframework.order.Cart;
-import org.salespointframework.order.Order;
-import org.salespointframework.order.OrderLine;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.Role;
@@ -91,21 +87,12 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	public void testgetTotalProductNumber() {
 		assertTrue("Anzahl der Produkte", o.getTotalProductNumber() == 15);
 	}
-	
-	/**
-	 * Testget billing gender.
-	 */
-	@Test
-	public void testgetBillingGender() {
-		o.setBillingGender("male");
-		assertEquals("male", o.getBillingGender());
-	}
 
 	/**
 	 * Testset billing gender.
 	 */
 	@Test
-	public void testsetBillingGender() {
+	public void testBillingGender() {
 		o.setBillingGender("male");
 		assertEquals("male", o.getBillingGender());
 	}
@@ -114,7 +101,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Testget order.
 	 */
 	@Test
-	public void testgetOrder() {
+	public void testOrder() {
 		assertNotNull(o.getOrder());
 	}
 
@@ -122,7 +109,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Testget billing first name.
 	 */
 	@Test
-	public void testgetBillingFirstName() {
+	public void testBillingFirstName() {
 		o.setBillingFirstName("Hans");
 		assertEquals("Hans", o.getBillingFirstName());
 	}
@@ -131,7 +118,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Test get billing last name.
 	 */
 	@Test
-	public void testGetBillingLastName() {
+	public void testBillingLastName() {
 		o.setBillingLastName("Wurst");
 		assertEquals("Wurst", o.getBillingLastName());
 	}
@@ -140,7 +127,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Test get billing street.
 	 */
 	@Test
-	public void testGetBillingStreet() {
+	public void testBillingStreet() {
 		o.setBillingStreet("Straße");
 		assertEquals("Straße", o.getBillingStreet());
 	}
@@ -149,7 +136,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Test get billing house number.
 	 */
 	@Test
-	public void testGetBillingHouseNumber() {
+	public void testBillingHouseNumber() {
 		o.setBillingHouseNumber("5");
 		assertEquals("5", o.getBillingHouseNumber());
 	}
@@ -158,7 +145,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Testget billing address line2.
 	 */
 	@Test
-	public void testgetBillingAddressLine2() {
+	public void testBillingAddressLine2() {
 		o.setBillingAddressLine2("Zeile2");
 		assertEquals("Zeile2", o.getBillingAddressLine2());
 	}
@@ -167,7 +154,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Test get billing zip code.
 	 */
 	@Test
-	public void testGetBillingZipCode() {
+	public void testBillingZipCode() {
 		o.setBillingZipCode("12345");
 		assertEquals("12345", o.getBillingZipCode());
 	}
@@ -176,7 +163,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Test get billing town.
 	 */
 	@Test
-	public void testGetBillingTown() {
+	public void testBillingTown() {
 		o.setBillingTown("Stadt");
 		assertEquals("Stadt", o.getBillingTown());
 	}
@@ -185,16 +172,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Test get shipping gender.
 	 */
 	@Test
-	public void testGetShippingGender() {
-		o.setShippingGender("male");
-		assertEquals("male", o.getShippingGender());
-	}
-
-	/**
-	 * Test set shipping gender.
-	 */
-	@Test
-	public void testSetShippingGender() {
+	public void testShippingGender() {
 		o.setShippingGender("male");
 		assertEquals("male", o.getShippingGender());
 	}
@@ -203,7 +181,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Test get shipping first name.
 	 */
 	@Test
-	public void testGetShippingFirstName() {
+	public void testShippingFirstName() {
 		o.setShippingFirstName("Hans");
 		assertEquals("Hans", o.getShippingFirstName());
 	}
@@ -212,7 +190,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Test get shipping last name.
 	 */
 	@Test
-	public void testGetShippingLastName() {
+	public void testShippingLastName() {
 		o.setShippingLastName("Wurst");
 		assertEquals("Wurst", o.getShippingLastName());
 	}
@@ -221,7 +199,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Test get shipping street.
 	 */
 	@Test
-	public void testGetShippingStreet() {
+	public void testShippingStreet() {
 		o.setShippingStreet("Straße");
 		assertEquals("Straße", o.getShippingStreet());
 	}
@@ -230,7 +208,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Test get shipping house number.
 	 */
 	@Test
-	public void testGetShippingHouseNumber() {
+	public void testShippingHouseNumber() {
 		o.setShippingHouseNumber("5");
 		assertEquals("5", o.getShippingHouseNumber());
 	}
@@ -239,7 +217,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Testget shipping address line2.
 	 */
 	@Test
-	public void testgetShippingAddressLine2() {
+	public void testShippingAddressLine2() {
 		o.setShippingAddressLine2("Zeile2");
 		assertEquals("Zeile2", o.getShippingAddressLine2());
 	}
@@ -248,7 +226,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Testget shipping zip code.
 	 */
 	@Test
-	public void testgetShippingZipCode() {
+	public void testShippingZipCode() {
 		o.setShippingZipCode("12345");
 		assertEquals("12345", o.getShippingZipCode());
 	}
@@ -257,7 +235,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Testget shipping town.
 	 */
 	@Test
-	public void testgetShippingTown() {
+	public void testShippingTown() {
 		o.setShippingTown("Stadt");
 		assertEquals("Stadt", o.getShippingTown());
 	}
@@ -266,7 +244,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Test get order lines size.
 	 */
 	@Test
-	public void testGetOrderLinesSize() {
+	public void testOrderLinesSize() {
 		System.out.println("orderLinesSize:"+o.getOrderLinesSize());
 		assertTrue("getOrderlineSize defekt", o.getOrderLinesSize() == 2);
 	}
@@ -275,7 +253,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Test set date ordered.
 	 */
 	@Test
-	public void testSetDateOrdered() {
+	public void testDateOrdered() {
 		LocalDateTime time = LocalDateTime.now();
 		o.setDateOrdered(time);
 		assertEquals(time, o.getDateOrdered());
@@ -285,170 +263,24 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Test get total product number.
 	 */
 	@Test
-	public void testGetTotalProductNumber() {
+	public void testTotalProductNumber() {
 		assertTrue("getTotalProductNumber defekt", o.getTotalProductNumber() == 15);
-	}
-
-	/**
-	 * Test get date ordered.
-	 */
-	@Test
-	public void testGetDateOrdered() {
-		LocalDateTime time = LocalDateTime.now();
-		o.setDateOrdered(time);
-		assertEquals(time, o.getDateOrdered());
 	}
 
 	/**
 	 * Test get returned.
 	 */
 	@Test
-	public void testGetReturned() {
+	public void testReturned() {
 		o.setReturned(true);
 		assertTrue("getReturned defekt", o.getReturned() == true);
 	}
-
-	/**
-	 * Testset billing first name.
-	 */
-	@Test
-	public void testsetBillingFirstName() {
-		o.setBillingFirstName("Hans");
-		assertEquals("Hans", o.getBillingFirstName());
-	}
-
-	/**
-	 * Testset billing last name.
-	 */
-	@Test
-	public void testsetBillingLastName() {
-		o.setBillingLastName("Wurst");
-		assertEquals("Wurst", o.getBillingLastName());
-	}
-
-	/**
-	 * Testset billing street.
-	 */
-	@Test
-	public void testsetBillingStreet() {
-		o.setBillingStreet("Straße");
-		assertEquals("Straße", o.getBillingStreet());
-	}
-
-	/**
-	 * Testset billing house number.
-	 */
-	@Test
-	public void testsetBillingHouseNumber() {
-		o.setBillingHouseNumber("5");
-		assertEquals("5", o.getBillingHouseNumber());
-	}
-
-	/**
-	 * Testset billing address line2.
-	 */
-	@Test
-	public void testsetBillingAddressLine2() {
-		o.setBillingAddressLine2("Zeile2");
-		assertEquals("Zeile2", o.getBillingAddressLine2());
-	}
-
-	/**
-	 * Testset billing zip code.
-	 */
-	@Test
-	public void testsetBillingZipCode() {
-		o.setBillingZipCode("12345");
-		assertEquals("12345", o.getBillingZipCode());
-	}
-
-	/**
-	 * Testset billing town.
-	 */
-	@Test
-	public void testsetBillingTown() {
-		o.setBillingTown("Stadt");
-		assertEquals("Stadt", o.getBillingTown());
-	}
-
-	/**
-	 * Testset shipping first name.
-	 */
-	@Test
-	public void testsetShippingFirstName() {
-		o.setShippingFirstName("Hans");
-		assertEquals("Hans", o.getShippingFirstName());
-	}
-
-	/**
-	 * Testset shipping last name.
-	 */
-	@Test
-	public void testsetShippingLastName() {
-		o.setShippingLastName("Wurst");
-		assertEquals("Wurst", o.getShippingLastName());
-	}
-
-	/**
-	 * Testset shipping street.
-	 */
-	@Test
-	public void testsetShippingStreet() {
-		o.setShippingStreet("Straße");
-		assertEquals("Straße", o.getShippingStreet());
-	}
-
-	/**
-	 * Testset shipping house number.
-	 */
-	@Test
-	public void testsetShippingHouseNumber() {
-		o.setShippingHouseNumber("5");
-		assertEquals("5", o.getShippingHouseNumber());
-	}
-
-	/**
-	 * Testset shipping address line2.
-	 */
-	@Test
-	public void testsetShippingAddressLine2() {
-		o.setShippingAddressLine2("Zeile2");
-		assertEquals("Zeile2", o.getShippingAddressLine2());
-	}
-
-	/**
-	 * Testset shipping zip code.
-	 */
-	@Test
-	public void testsetShippingZipCode() {
-		o.setShippingZipCode("12345");
-		assertEquals("12345", o.getShippingZipCode());
-	}
-
-	/**
-	 * Testset shipping town.
-	 */
-	@Test
-	public void testsetShippingTown() {
-		o.setShippingTown("Stadt");
-		assertEquals("Stadt", o.getShippingTown());
-	}
-
+	
 	/**
 	 * Test set id.
 	 */
 	@Test
-	public void testSetId() {
-		o.setId(Long.valueOf(42));
-		assertTrue("setId defekt", o.getId().longValue() == 42);
-
-	}
-
-	/**
-	 * Test get id.
-	 */
-	@Test
-	public void testGetId() {
+	public void testId() {
 		o.setId(Long.valueOf(42));
 		assertTrue("setId defekt", o.getId().longValue() == 42);
 
@@ -458,7 +290,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Test get user.
 	 */
 	@Test
-	public void testGetUser() {
+	public void testUser() {
 		assertEquals(this.acc, o.getUser());
 	}
 
@@ -466,7 +298,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 * Test set return reason.
 	 */
 	@Test
-	public void testSetReturnReason() {
+	public void testReturnReason() {
 		o.setReturnReason("nein");
 		assertEquals("nein", o.getReturnReason());
 	}

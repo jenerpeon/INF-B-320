@@ -9,7 +9,6 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -125,75 +124,6 @@ public class ConcreteOrder implements Serializable {
 		this.order = new Order(account.getUserAccount(), cash);
 		this.status = this.order.getOrderStatus();
 		this.user = account;
-	}
-
-	/**
-	 * Instantiates a new concrete order.
-	 *
-	 * @param billingGender
-	 *            the billing gender
-	 * @param billingFirstName
-	 *            the billing first name
-	 * @param billingLastName
-	 *            the billing last name
-	 * @param billingStreet
-	 *            the billing street
-	 * @param billingHouseNumber
-	 *            the billing house number
-	 * @param billingAddressLine2
-	 *            the billing address line2
-	 * @param billingZipCode
-	 *            the billing zip code
-	 * @param billingTown
-	 *            the billing town
-	 * @param shippingGender
-	 *            the shipping gender
-	 * @param shippingFirstName
-	 *            the shipping first name
-	 * @param shippingLastName
-	 *            the shipping last name
-	 * @param shippingStreet
-	 *            the shipping street
-	 * @param shippingHouseNumber
-	 *            the shipping house number
-	 * @param shippingAddressLine2
-	 *            the shipping address line2
-	 * @param shippingZipCode
-	 *            the shipping zip code
-	 * @param shippingTown
-	 *            the shipping town
-	 * @param dateOrdered
-	 *            the date ordered
-	 * @param order
-	 *            the order
-	 */
-	public ConcreteOrder(String billingGender, String billingFirstName, String billingLastName, String billingStreet,
-			String billingHouseNumber, String billingAddressLine2, String billingZipCode, String billingTown,
-			String shippingGender, String shippingFirstName, String shippingLastName, String shippingStreet,
-			String shippingHouseNumber, String shippingAddressLine2, String shippingZipCode, String shippingTown,
-			LocalDateTime dateOrdered, Order order) {
-		this.billingGender = billingGender;
-		this.billingFirstName = billingFirstName;
-		this.billingLastName = billingLastName;
-		this.billingStreet = billingStreet;
-		this.billingHouseNumber = billingHouseNumber;
-		this.billingAddressLine2 = billingAddressLine2;
-		this.billingZipCode = billingZipCode;
-		this.billingTown = billingTown;
-
-		this.shippingGender = shippingGender;
-		this.shippingFirstName = shippingFirstName;
-		this.shippingLastName = shippingLastName;
-		this.shippingStreet = shippingStreet;
-		this.shippingHouseNumber = shippingHouseNumber;
-		this.shippingAddressLine2 = shippingAddressLine2;
-		this.shippingZipCode = shippingZipCode;
-		this.shippingTown = shippingTown;
-
-		this.dateOrdered = dateOrdered;
-		this.order = order;
-		this.status = order.getOrderStatus();
-
 	}
 
 	/**

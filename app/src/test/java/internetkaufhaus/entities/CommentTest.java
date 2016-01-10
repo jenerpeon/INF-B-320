@@ -4,10 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.salespointframework.core.Currencies.EURO;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Locale;
 
 import org.javamoney.moneta.Money;
@@ -35,7 +33,7 @@ public class CommentTest {
 	 * Test get comment id.
 	 */
 	@Test
-	public void testGetCommentId() {
+	public void testCommentId() {
 		long number = new Long(232424);
 		model.setCommentid(number);
 		assertTrue("Id wird zurückgegeben", model.getCommentid() == number);
@@ -61,6 +59,12 @@ public class CommentTest {
 		model.setUser(account);
 		assertTrue("Account gesetzt", model.getUserAccount() == account);
 	}
+	
+	@Test
+	public void testTitle() {
+		model.setTitle("Ich bin ein Titel");
+		assertTrue("Titel gesetzt", model.getTitle().equals("Ich bin ein Titel"));
+	}
 
 	/**
 	 * Test text.
@@ -70,7 +74,6 @@ public class CommentTest {
 		String text = "Dieser Text soll angezeigt werden";
 		model.setText(text);
 		assertTrue("Text gesetzt", model.getText() == text);
-		assertTrue("Text gesetzt", model.toString() == text);
 	}
 
 	/**
