@@ -40,4 +40,16 @@ public class EditUserFormTest {
 		assertTrue("Passwort erhalten", model.getPassword().equals("Missetat begangen"));
 	}
 	
+	@Test
+	public void passwortRepeatTest() {
+		model.setPasswordrepeat("Missetat begangen");
+		assertTrue("Passwort wiederholung erhalten", model.getPasswordrepeat().equals("Missetat begangen"));
+	}
+	
+	@Test
+	public void emailTest() {
+		model.setEmail("test@test.de");
+		assertTrue("E-Mail erhalten", model.getEmail().equals("test@test.de"));
+	}
+	
 }

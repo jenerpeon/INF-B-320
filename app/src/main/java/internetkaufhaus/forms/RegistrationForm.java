@@ -7,10 +7,13 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import cz.jirutka.validator.spring.SpELAssert;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class RegistrationForm.
  */
+@SpELAssert(value = "password.equals(passwordrepeat)", message = "Die Passwörter stimmen nicht überein")
 public class RegistrationForm {
 
 	/** The name. */
@@ -57,16 +60,6 @@ public class RegistrationForm {
 	@NotEmpty(message = "last-name field is mandatory")
 	@Pattern(regexp = "([A-Za-z -])+", message = "last name contains illegal characters")
 	private String lastname;
-
-	/**
-	 * Checks if is valid.
-	 *
-	 * @return true, if is valid
-	 */
-	@AssertTrue(message = "password-repeat field should be equal to password field")
-	private boolean isValid() {
-		return this.password != null && this.passwordrepeat != null && this.password.equals(this.passwordrepeat);
-	}
 
 	/**
 	 * This comment is just here because sonarcube is a little bitch.
