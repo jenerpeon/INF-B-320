@@ -30,6 +30,15 @@
 					<ul>
 						<li th:each="recruited : ${account.recruits}"><a th:text="@{${recruited.userAccount.username} + ' (' + ${recruited.email} + ')'}"></a>
 					</ul>
+				<h3>Ihre Bestellungen mit Rabattpunkten:</h3>
+					<ul>
+						<li th:each="order : ${discountOrders}">
+						<a th:text="@{'Bestellung vom '+${order.dateOrderedFormatted}}"></a><br/>
+						<a th:text="@{${order.getTotalProductNumber()}+' Produkte für '+${order.totalPrice}}"></a><br/>
+						<a th:text="@{'Eingesetzte Punkte: '+${order.usedDiscountPoints}}"></a><br/>
+						<a th:text="@{'Retourniert: '+${order.returned}}"></a>
+						</li>
+					</ul>
 				<h3 th:text="@{'Punktestand: ' + ${account.credits}}">Punktestand:</h3>
 				
 			</div>

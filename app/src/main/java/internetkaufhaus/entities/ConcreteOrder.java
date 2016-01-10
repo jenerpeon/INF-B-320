@@ -8,10 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.javamoney.moneta.Money;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderStatus;
-import org.salespointframework.payment.PaymentMethod;
+import org.salespointframework.payment.Cash;
+import org.salespointframework.payment.PaymentCard;
 import com.google.common.collect.Iterators;
 
 // TODO: Auto-generated Javadoc
@@ -32,6 +34,8 @@ public class ConcreteOrder extends Order {
 	private LocalDateTime dateOrdered;
 	
 	private OrderStatus status;
+	
+	private long usedDiscountPoints = 0;
 
 	/** The billing gender. */
 	private String billingGender;
@@ -103,7 +107,14 @@ public class ConcreteOrder extends Order {
 	 * @param cash
 	 *            the cash
 	 */
-	public ConcreteOrder(ConcreteUserAccount account, PaymentMethod pay) {
+	public ConcreteOrder(ConcreteUserAccount account, Cash pay) {
+		super(account.getUserAccount(), pay);
+		this.user = account;
+		this.dateOrdered = LocalDateTime.now();
+		this.status = super.getOrderStatus();
+	}
+	
+	public ConcreteOrder(ConcreteUserAccount account, PaymentCard pay) {
 		super(account.getUserAccount(), pay);
 		this.user = account;
 		this.dateOrdered = LocalDateTime.now();
@@ -143,6 +154,14 @@ public class ConcreteOrder extends Order {
 	
 	public OrderStatus getStatus() {
 		return this.status;
+	}
+	
+	public void setUsedDiscountPoints(long usedDiscountPoints) {
+		this.usedDiscountPoints = usedDiscountPoints;
+	}
+	
+	public long getUsedDiscountPoints() {
+		return this.usedDiscountPoints;
 	}
 
 	/**
@@ -309,6 +328,11 @@ public class ConcreteOrder extends Order {
 			total += Integer.parseInt(orderLine.getQuantity().toString());
 		}
 		return total;
+	}
+	
+	@Override
+	public Money getTotalPrice() {
+		return super.getTotalPrice().subtract(Money.of(this.getUsedDiscountPoints(), "EUR").divide(100));
 	}
 	
 	public String getDateOrderedFormatted() {

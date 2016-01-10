@@ -55,5 +55,11 @@ public interface ConcreteOrderRepository extends PagingAndSortingRepository<Conc
 	Iterable<ConcreteOrder> findByIntervalAndStatusAndReturned(@Param("begin") LocalDateTime begin, @Param("end") LocalDateTime end, @Param("status") OrderStatus status);
 	
 	Iterable<ConcreteOrder> findByReturnedTrue();
+	
+	@Query("SELECT c FROM ConcreteOrder c WHERE c.user = :user AND c.usedDiscountPoints > 0")
+	Iterable<ConcreteOrder> findByUserAndDiscount(@Param("user") ConcreteUserAccount user);
+	
+	@Query("SELECT c FROM ConcreteOrder c WHERE c.user = :user AND c.returned = :returned")
+	Iterable<ConcreteOrder> findByUserAndReturned(@Param("user") ConcreteUserAccount user, @Param("returned") boolean returned);
 
 }

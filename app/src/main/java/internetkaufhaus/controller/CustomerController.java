@@ -122,6 +122,7 @@ public class CustomerController {
 				.findByUserAccount(userAccount.get()).get();
 		credit.updateCreditpointsByUser(caccount);
 		model.addAttribute("account", caccount);
+		model.addAttribute("discountOrders", dataService.getConcreteOrderRepository().findByUserAndDiscount(caccount));
 		// model.addAttribute("recruiter",
 		// userRepo.findByRecruits(accountList));
 		return "customerpoints";

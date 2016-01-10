@@ -1,11 +1,8 @@
 package internetkaufhaus.model;
 
 import static org.junit.Assert.assertTrue;
-import static org.salespointframework.core.Currencies.EURO;
-
 import java.util.ArrayList;
 
-import org.javamoney.moneta.Money;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,8 +10,6 @@ import org.salespointframework.useraccount.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
-
 import internetkaufhaus.AbstractIntegrationTests;
 import internetkaufhaus.Application;
 import internetkaufhaus.entities.ConcreteUserAccount;
@@ -61,7 +56,7 @@ public class CompetitionTest extends AbstractIntegrationTests {
 			ConcreteUserAccount acc = new ConcreteUserAccount("kunde" + i + "@todesstern.ru", "mockup" + i, "Kunde" + i,
 					"Kundenname" + i, "Kundenstraße" + i, "12345", "Definitiv nicht Dresden", "kunde" + i, customerRole,
 					data.getUserAccountManager());
-			acc.setCredits(Money.of(i, EURO));
+			acc.setCredits(i);
 			this.accs.add(acc);
 		}
 		this.comp = new Competition(accs, creditmanager);

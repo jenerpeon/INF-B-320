@@ -71,13 +71,17 @@
 							</div>
 							<div class="informationBlock process">
 								<ul class="status">
-									<li><a th:text="@{'Bezahlt mit ' + ${order.paymentMethod}}"></a></li>
+									<li>
+										<a th:if="${order.paymentMethod.getClass().getName()} == org.salespointframework.payment.Cash" >Bezahlt mit Bargeld</a>
+										<a th:if="${order.paymentMethod.getClass().getName()} == org.salespointframework.payment.CreditCard">Bezahlt mit Kreditkarte</a>
+									</li>
 									<li>
 										<img th:if="${order.status.toString()  == 'PAID' or order.status.toString()  == 'COMPLETED'}" src="/resources/Bilder/paid.png" alt="" title="bezahlt"/>
 										<img th:if="${order.status.toString()  == 'COMPLETED'}" src="/resources/Bilder/accept.png" alt="" title="akzeptiert"/>
 										<img th:if="${order.status.toString()  == 'CANCELED'}" src="/resources/Bilder/cancel.png" alt="" title="abgelehnt"/>
 										<img th:if="${order.returned}" src="/resources/Bilder/return.png" alt="" title="zurückgegeben"/>
 									</li>
+									<li><a th:text="@{'Eingesetzte Rabattpunkte: '+ ${order.usedDiscountPoints}}"></a></li>
 								</ul>
 								<div class="return" th:if="${order.isRetournable()}">
 									<form method="post" th:action="@{/customer/orders/return}">

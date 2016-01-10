@@ -12,7 +12,6 @@ import javax.validation.Valid;
 import org.javamoney.moneta.Money;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.CartItem;
-import org.salespointframework.order.OrderIdentifier;
 import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.payment.Cash;
@@ -35,7 +34,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
+import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.forms.PaymentForm;
+import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.services.ConcreteMailService;
 import internetkaufhaus.services.DataService;
 
@@ -233,8 +234,9 @@ class CartController {
 			org.javamoney.moneta.Money creditLimit = Money.of(1000000000, EURO);
 			LocalDateTime validFrom = LocalDateTime.MIN;
 
-			ConcreteOrder order = new ConcreteOrder(
-					dataService.getConcreteUserAccountRepository().findByUserAccount(account).get(), Cash.CASH);
+			ConcreteUserAccount caccount = dataService.getConcreteUserAccountRepository().findByUserAccount(account)
+					.get();
+			ConcreteOrder order = new ConcreteOrder(caccount, Cash.CASH);
 
 			cart.addItemsTo(order);
 
@@ -255,8 +257,18 @@ class CartController {
 			order.setShippingAddress(paymentForm.getShippingAddress());
 
 			order.setDateOrdered(LocalDateTime.now());
+			
+			Creditmanager credit = new Creditmanager(dataService);
+			credit.updateCreditpointsByUser(caccount);
 
-			order.setStatus(OrderStatus.COMPLETED);
+			if (order.getTotalPrice().isGreaterThanOrEqualTo(Money.of(caccount.getCredits(),"EUR").divide(10))) {
+				order.setUsedDiscountPoints(caccount.getCredits());
+			}
+			else {
+				order.setUsedDiscountPoints(Math.round(order.getTotalPrice().multiply(10).getNumberStripped().doubleValue()));
+			}
+
+				order.setStatus(OrderStatus.COMPLETED);
 			dataService.getConcreteOrderRepository().save(order);
 
 			String articles = "";

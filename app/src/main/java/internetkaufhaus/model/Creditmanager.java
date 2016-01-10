@@ -1,11 +1,8 @@
 package internetkaufhaus.model;
 
-import static org.salespointframework.core.Currencies.EURO;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.javamoney.moneta.Money;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.time.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,15 +45,18 @@ public class Creditmanager {
 	 */
 	public void updateCreditpointsByUser(ConcreteUserAccount recruiter) {
 		List<ConcreteUserAccount> recruits = recruiter.getRecruits();
-		Money credits = Money.of(0, EURO);
+		double credits = 0;
+		Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "dateOrdered", Sort.NullHandling.NATIVE));
 		for (ConcreteUserAccount user : recruits) {
-			Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "dateOrdered", Sort.NullHandling.NATIVE));
 			for (ConcreteOrder order : dataService.getConcreteOrderRepository().findByUser(user, sorting)) {
 				if (Interval.from(order.getDateOrdered()).to(LocalDateTime.now()).getDuration().toDays() >= 30 && order.getStatus().equals(OrderStatus.COMPLETED)) {
-					credits = credits.add(order.getTotalPrice().divide(100));
+					credits = credits + order.getTotalPrice().getNumber().doubleValue();
 				}
 			}
-			recruiter.setCredits(credits);
 		}
+		for (ConcreteOrder order : dataService.getConcreteOrderRepository().findByUserAndReturned(recruiter, false)) {
+			credits = credits - order.getUsedDiscountPoints();
+		}
+		recruiter.setCredits(Math.round(credits));
 	}
 }

@@ -1,13 +1,10 @@
 package internetkaufhaus.entities;
 
 import static org.junit.Assert.assertTrue;
-import static org.salespointframework.core.Currencies.EURO;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.javamoney.moneta.Money;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -82,9 +79,9 @@ public class ConcreteUserAccountTest {
 		model1.setAddress("Adress1");
 		assertTrue("Adresse geänder", model1.getAddress().equals("Adress1"));
 
-		assertTrue("Credit get", model2.getCredits().equals(Money.of(2, "EUR")));
-		model2.setCredits(Money.of(4, EURO));
-		assertTrue("Credit geändert", model2.getCredits().equals(Money.of(4, "EUR")));
+		assertTrue("Credit get", model2.getCredits() == 2);
+		model2.setCredits(4);
+		assertTrue("Credit geändert", model2.getCredits() == 4);
 
 		assertTrue("Recruits get", model2.getRecruits().get(0) == model1);
 
