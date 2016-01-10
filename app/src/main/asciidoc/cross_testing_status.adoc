@@ -19,7 +19,7 @@ Onlineshop "Woods Super Dooper Shop"
 | fixed | /employee/changecatalog/editArticle/... | … | Kategorie wird nicht geändert | … 
 | fixed | /employee/changecatalog/editArticle/... | … | Preis wird nicht geändert | … 
 | fixed | /employee/changecatalog/editArticle/... | fehlerhafte Eingaben | Validierung schlägt ohne Feedback fehl | Validation failed for object='editArticleForm'. Error count: 1 
-| urgent | /employee/changecatalog/addedArticle | … | es können keine Artikel hinzugefügt werden | leere Seite 
+| fixed | /employee/changecatalog/addedArticle | … | es können keine Artikel hinzugefügt werden | leere Seite 
 | fixed | /employee/deleteComment/... | … | Kommentare können nicht gelöscht werden | No message available 
 | fixed | /employee/comments | ... | Löschen von Kommentaren liefert ein Whitelabel Error | Whitelabel Error
 | fixed | /employee/comments | ... | des weitern weiß man nicht zu welchem Artikel die Kommentare gehören | Whitelabel Error
