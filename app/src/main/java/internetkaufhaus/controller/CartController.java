@@ -14,7 +14,6 @@ import org.salespointframework.order.Cart;
 import org.salespointframework.order.CartItem;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderLine;
-import org.salespointframework.order.OrderManager;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.payment.CreditCard;
 import org.salespointframework.quantity.Quantity;
@@ -22,11 +21,8 @@ import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,9 +35,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.forms.PaymentForm;
-import internetkaufhaus.model.ReturnManager;
-import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.services.ConcreteMailService;
+import internetkaufhaus.services.DataService;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -56,30 +51,26 @@ import internetkaufhaus.services.ConcreteMailService;
 @SessionAttributes("cart")
 class CartController {
 
-	/** The order manager. */
-	private final OrderManager<Order> orderManager;
-	
+	@Autowired
+	private DataService dataService;
+
 	/** The sender. */
 	private final ConcreteMailService sender;
-	
-	/** The concrete order repo. */
-	private final ConcreteOrderRepository concreteOrderRepo;
 
 	/**
 	 * This is the constructor. It's neither used nor does it contain any
 	 * functionality other than storing function arguments as class attribute,
 	 * what do you expect me to write here?
 	 *
-	 * @param concreteOrderRepo the concrete order repo
-	 * @param orderManager the order manager
-	 * @param sender the sender
+	 * @param concreteOrderRepo
+	 *            the concrete order repo
+	 * @param orderManager
+	 *            the order manager
+	 * @param sender
+	 *            the sender
 	 */
 	@Autowired
-	public CartController(ConcreteOrderRepository concreteOrderRepo, OrderManager<Order> orderManager,
-			ConcreteMailService sender) {
-		Assert.notNull(orderManager, "OrderManager must not be null!");
-		this.orderManager = orderManager;
-		this.concreteOrderRepo = concreteOrderRepo;
+	public CartController(ConcreteMailService sender) {
 		this.sender = sender;
 	}
 
@@ -88,9 +79,12 @@ class CartController {
 	 * This page adds a product to the cart and then redirects back to the
 	 * catalog.
 	 *
-	 * @param concreteproduct the concreteproduct
-	 * @param number the number
-	 * @param cart the cart
+	 * @param concreteproduct
+	 *            the concreteproduct
+	 * @param number
+	 *            the number
+	 * @param cart
+	 *            the cart
 	 * @return the string
 	 */
 	@RequestMapping(value = "/cart", method = RequestMethod.POST)
@@ -120,7 +114,8 @@ class CartController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page clears the cart.
 	 *
-	 * @param cart the cart
+	 * @param cart
+	 *            the cart
 	 * @return the string
 	 */
 	@RequestMapping(value = "/clearCart", method = RequestMethod.POST)
@@ -133,8 +128,10 @@ class CartController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page removes one item from the cart.
 	 *
-	 * @param cart the cart
-	 * @param identifier the identifier
+	 * @param cart
+	 *            the cart
+	 * @param identifier
+	 *            the identifier
 	 * @return the string
 	 */
 	@RequestMapping(value = "/deleteItem", method = RequestMethod.POST)
@@ -147,9 +144,12 @@ class CartController {
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page changes the amount of items of one product in the cart.
 	 *
-	 * @param cart the cart
-	 * @param identifier the identifier
-	 * @param amount the amount
+	 * @param cart
+	 *            the cart
+	 * @param identifier
+	 *            the identifier
+	 * @param amount
+	 *            the amount
 	 * @return the string
 	 */
 	@RequestMapping(value = "/changeAmount", method = RequestMethod.POST)
@@ -166,9 +166,12 @@ class CartController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 *
-	 * @param option the option
-	 * @param userAccount the user account
-	 * @param model the model
+	 * @param option
+	 *            the option
+	 * @param userAccount
+	 *            the user account
+	 * @param model
+	 *            the model
 	 * @return the string
 	 */
 	@RequestMapping(value = "/orderdata/{option}", method = RequestMethod.POST)
@@ -177,15 +180,18 @@ class CartController {
 		return userAccount.map(account -> {
 			model.addAttribute("option", option);
 			return "orderdata";
-		}).orElse("redirect:/login");
+		}).orElse("redirect:/#login-modal");
 	}
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 *
-	 * @param option the option
-	 * @param userAccount the user account
-	 * @param model the model
+	 * @param option
+	 *            the option
+	 * @param userAccount
+	 *            the user account
+	 * @param model
+	 *            the model
 	 * @return the string
 	 */
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
@@ -195,17 +201,22 @@ class CartController {
 		return userAccount.map(account -> {
 			model.addAttribute("option", option);
 			return "orderdata";
-		}).orElse("redirect:/login");
+		}).orElse("redirect:/#login-modal");
 	}
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 *
-	 * @param cart the cart
-	 * @param paymentForm the payment form
-	 * @param result the result
-	 * @param userAccount the user account
-	 * @param redir the redir
+	 * @param cart
+	 *            the cart
+	 * @param paymentForm
+	 *            the payment form
+	 * @param result
+	 *            the result
+	 * @param userAccount
+	 *            the user account
+	 * @param redir
+	 *            the redir
 	 * @return the string
 	 */
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
@@ -221,7 +232,8 @@ class CartController {
 			org.javamoney.moneta.Money creditLimit = Money.of(1000000000, EURO);
 			LocalDateTime validFrom = LocalDateTime.MIN;
 
-			ConcreteOrder order = new ConcreteOrder(account, Cash.CASH);
+			ConcreteOrder order = new ConcreteOrder(
+					dataService.getConcreteUserAccountRepository().findByUserAccount(account).get(), Cash.CASH);
 			Order o = order.getOrder();
 
 			cart.addItemsTo(o);
@@ -243,11 +255,11 @@ class CartController {
 			order.setShippingAddress(paymentForm.getShippingAddress());
 
 			order.setDateOrdered(LocalDateTime.now());
-			orderManager.save(o);
-			orderManager.payOrder(o);
+			dataService.getOrderManager().save(o);
+			dataService.getOrderManager().payOrder(o);
 
 			order.setStatus(o.getOrderStatus());
-			concreteOrderRepo.save(order);
+			dataService.getConcreteOrderRepository().save(order);
 
 			String articles = "";
 			Iterator<OrderLine> i = order.getOrder().getOrderLines().iterator();
@@ -274,31 +286,17 @@ class CartController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 *
-	 * @param model the model
-	 * @param userAccount the user account
-	 * @return the string
-	 */
-	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
-	@RequestMapping(value = "/returOrders", method = RequestMethod.GET)
-	public String returnRedirect(Model model, @LoggedIn Optional<UserAccount> userAccount) {
-		model.addAttribute("ordersCompletedInReturnTime",
-				ReturnManager.getConcreteOrderDuringLastTwoWeeks(concreteOrderRepo, userAccount));
-		return "returOrders";
-	}
-
-	/**
-	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 *
-	 * @param orderId the order id
-	 * @param reason the reason
+	 * @param orderId
+	 *            the order id
+	 * @param reason
+	 *            the reason
 	 * @return the string
 	 */
 	@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 	@RequestMapping(value = "/returOrders", method = RequestMethod.POST)
 	public String returnOrder(@RequestParam("orderId") Long orderId, @RequestParam("dropDown") String reason) {
-		concreteOrderRepo.findById(orderId).setReturned(true);
-		concreteOrderRepo.findById(orderId).setReturnReason(reason);
-		concreteOrderRepo.save(concreteOrderRepo.findById(orderId));
+		dataService.getConcreteOrderRepository().findById(orderId).setReturned(true);
+		dataService.getConcreteOrderRepository().findById(orderId).setReturnReason(reason);
 		return "redirect:/";
 	}
 

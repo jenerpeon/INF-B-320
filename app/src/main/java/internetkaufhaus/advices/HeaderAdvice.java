@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import internetkaufhaus.model.NavItem;
-import internetkaufhaus.model.Search;
+import internetkaufhaus.services.DataService;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -27,19 +27,15 @@ import internetkaufhaus.model.Search;
 @SessionAttributes("cart")
 public class HeaderAdvice {
 
-	/** The prod search. */
-	private final Search prodSearch;
+	@Autowired
+	private DataService dataService;
 
 	/**
 	 * This is the constructor. It's neither used nor does it contain any
 	 * functionality other than storing function arguments as class attribute,
 	 * what do you expect me to write here? It's copied from CartController.
-	 *
-	 * @param prodSearch            singleton, passed by spring/salespoint
 	 */
-	@Autowired
-	public HeaderAdvice(Search prodSearch) {
-		this.prodSearch = prodSearch;
+	public HeaderAdvice() {
 	}
 
 	/**
@@ -51,7 +47,7 @@ public class HeaderAdvice {
 	 */
 	@ModelAttribute("categories")
 	public List<NavItem> addCatalog() {
-		Iterable<String> categories = prodSearch.getCategories();
+		Iterable<String> categories = dataService.getConcreteProductRepository().getCategories();
 		List<NavItem> navigation = new ArrayList<NavItem>();
 		for (String category : categories) {
 			NavItem nav = new NavItem(category, category, "category");

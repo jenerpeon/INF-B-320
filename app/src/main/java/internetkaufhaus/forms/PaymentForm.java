@@ -50,7 +50,6 @@ public class PaymentForm {
 	 * Instantiates a new payment form.
 	 */
 	public PaymentForm() {
-		System.out.print("");
 	}
 
 	/**

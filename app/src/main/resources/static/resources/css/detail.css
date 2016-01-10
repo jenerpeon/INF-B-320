@@ -9,6 +9,7 @@
 }
 #firstcolumn img {
 	width: 300px;
+	padding-right: 20px;
 }
 #secondcolumn h1 {
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
@@ -36,26 +37,26 @@
 	width: 350px;
 }
 
-#secondcolumn .rating {
+.rating {
     unicode-bidi: bidi-override;
     direction: rtl;
     text-align: left;
 }
-#secondcolumn .rating span {
+.rating span {
     display: inline-block;
     position: relative;
     width:1.1em;
     font-size:1.4em;
     color: gold;
 }
-#secondcolumn .rating .filled:before {
+.rating .filled:before {
     content: "\2605";
     position: absolute;
     color: gold;
     text-shadow:0 0 1px #666;
 }
-#secondrow {
-	
+#secondrow h3{
+	font-style: italic;
 }
 #secondrow table { border-collapse: collapse; }
 
@@ -63,7 +64,8 @@
 #secondrow th + th { border-left: 1px solid; }
 #secondrow tr + tr { border-top: 1px solid; }
 #comments {
-	width: 100%;
+	list-style-type: none;
+	padding: 0;
 }
 
 #comments td {
@@ -72,17 +74,28 @@
 
 #comments .comment {
 	text-align: left;
-	max-width: 300px;
 }
 
-#comments .account {
-	text-align: center;
+#comments .name {
+	text-align: left;
+	margin: 5px 0;
 }
 
 #comments .rating {
-	text-align: center;
+	text-align: left;
+	float: left;
+	width: 160px;
 }
 
-#comments .time {
-	text-align: center;
+#comments .title {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+#comments .title a {
+	max-width: 400px;
+	overflow: hidden;
+	white-space: nowrap; 
+	text-overflow: ellipsis;
 }

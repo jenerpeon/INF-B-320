@@ -35,11 +35,11 @@ public class ProductManagementServiceTest {
 	private ProductManagementService service;
 	
 	/** The user acc. */
-	private UserAccount userAcc;
+	private ConcreteUserAccount userAcc;
 
 	/** The u. */
 	@Autowired
-	private UserAccountManager u;
+	private DataService data;
 
 	/**
 	 * Inits the.
@@ -47,7 +47,7 @@ public class ProductManagementServiceTest {
 	@Before
 	public void init() {
 		service = new ProductManagementService();
-		this.userAcc = new ConcreteUserAccount("Username1", "Username1", Role.of("ROLE_CUSTOMER"), u).getUserAccount();
+		this.userAcc = new ConcreteUserAccount("Username1", "Username1", Role.of("ROLE_CUSTOMER"), data.getUserAccountManager());
 	}
 
 	/**

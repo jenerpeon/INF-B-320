@@ -1,4 +1,4 @@
-package internetkaufhaus.model;
+/*package internetkaufhaus.model;
 
 import static org.junit.Assert.assertTrue;
 
@@ -28,35 +28,23 @@ import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
+import internetkaufhaus.services.DataService;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class StatisticTest.
- */
+ *//*
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @Transactional
 public class StatisticTest extends AbstractIntegrationTests {
 
-	/** The order manager. */
 	@Autowired
-	private OrderManager<Order> orderManager;
-
-	/** The concrete order repo. */
-	@Autowired
-	private ConcreteOrderRepository concreteOrderRepo;
-
-	/** The prods. */
-	@Autowired
-	private ConcreteProductRepository prods;
-
-	/** The Concrete user account manager. */
-	@Autowired
-	private ConcreteUserAccountRepository ConcreteUserAccountManager;
+	private DataService data;
 
 	/**
 	 * Inits the test.
-	 */
+	 *//*
 	@Before
 	public void initTest() {
 		Cart c = new Cart();
@@ -102,7 +90,7 @@ public class StatisticTest extends AbstractIntegrationTests {
 
 	/**
 	 * Test get turnover by interval.
-	 */
+	 *//*
 	@Test
 	public void testGetTurnoverByInterval() {
 		assertTrue("hola", true);
@@ -110,7 +98,7 @@ public class StatisticTest extends AbstractIntegrationTests {
 
 	/**
 	 * Test get sales by interval.
-	 */
+	 *//*
 	@Test
 	public void testGetSalesByInterval() {
 		assertTrue("hola", true);
@@ -121,7 +109,7 @@ public class StatisticTest extends AbstractIntegrationTests {
 	 *
 	 * @param i the i
 	 * @param q the q
-	 */
+	 *//*
 	public void testGetPurchasesByInterval(Interval i, int q) {
 	}
 
@@ -130,7 +118,7 @@ public class StatisticTest extends AbstractIntegrationTests {
 	 *
 	 * @param i the i
 	 * @param q the q
-	 */
+	 *//*
 	public void testGetProfitByInterval(Interval i, int q) {
 	}
 
@@ -139,7 +127,7 @@ public class StatisticTest extends AbstractIntegrationTests {
 	 *
 	 * @param i the i
 	 * @param q the q
-	 */
+	 *//*
 	public void testGetRetoursByInterval(Interval i, int q) {
 	}
-}
+}*/

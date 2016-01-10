@@ -17,7 +17,7 @@ public class RegistrationFormTest {
 	 * Firs name test.
 	 */
 	@Test
-	public void firsNameTest() {
+	public void firstNameTest() {
 		model.setFirstname("Martin");
 		assertTrue("Vorname erhalten", model.getFirstname().equals("Martin"));
 	}

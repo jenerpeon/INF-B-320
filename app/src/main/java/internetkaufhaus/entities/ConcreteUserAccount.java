@@ -38,7 +38,7 @@ public class ConcreteUserAccount implements Serializable {
 	
 	/** The recruits. */
 	@ManyToMany
-	private List<UserAccount> recruits = new ArrayList<UserAccount>();
+	private List<ConcreteUserAccount> recruits = new ArrayList<ConcreteUserAccount>();
 	
 	/** The id. */
 	@Id
@@ -88,6 +88,7 @@ public class ConcreteUserAccount implements Serializable {
 	public ConcreteUserAccount(String username, String password, Role role, UserAccountManager u) {
 
 		this.userAccount = u.create(username, password, role);
+		this.role = role;
 		this.credits = Money.of(0, EURO);
 	}
 
@@ -109,7 +110,7 @@ public class ConcreteUserAccount implements Serializable {
 	 */
 	public ConcreteUserAccount(String email, String username, String firstname, String lastname, String address,
 			String zipCode, String city, String password, Role role, UserAccountManager u, int credits,
-			List<UserAccount> recruits) {
+			List<ConcreteUserAccount> recruits) {
 		this.userAccount = u.create(username, password, role);
 		this.recruits = recruits;
 		this.userAccount.setFirstname(firstname);
@@ -300,7 +301,7 @@ public class ConcreteUserAccount implements Serializable {
 	 *
 	 * @return the recruits
 	 */
-	public List<UserAccount> getRecruits() {
+	public List<ConcreteUserAccount> getRecruits() {
 		return this.recruits;
 	}
 
@@ -310,7 +311,7 @@ public class ConcreteUserAccount implements Serializable {
 	 * @return the role
 	 */
 	public Role getRole() {
-		return this.userAccount.getRoles().iterator().next();
+		return this.role;
 	}
 
 	/**
@@ -318,8 +319,8 @@ public class ConcreteUserAccount implements Serializable {
 	 *
 	 * @return the credits
 	 */
-	public int getCredits() {
-		return (int) (credits.getNumber().doubleValue() + 0.5);
+	public Money getCredits() {
+		return this.credits;
 	}
 
 	/**
@@ -338,11 +339,11 @@ public class ConcreteUserAccount implements Serializable {
 	 */
 	public void setRecruits(ConcreteUserAccount user) {
 		if (recruits == null) {
-			List<UserAccount> recruit = new ArrayList<UserAccount>();
-			recruit.add(user.getUserAccount());
+			List<ConcreteUserAccount> recruit = new ArrayList<ConcreteUserAccount>();
+			recruit.add(user);
 			this.recruits = recruit;
 		} else {
-			this.recruits.add(user.getUserAccount());
+			this.recruits.add(user);
 		}
 
 	}

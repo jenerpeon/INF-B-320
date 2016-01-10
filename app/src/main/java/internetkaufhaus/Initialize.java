@@ -16,31 +16,25 @@ import java.util.Random;
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.io.FileUtils;
 import org.javamoney.moneta.Money;
-import org.salespointframework.catalog.Catalog;
 import org.salespointframework.core.DataInitializer;
-import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.order.Cart;
-import org.salespointframework.order.Order;
-import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.Role;
-import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.google.common.collect.Iterators;
 
 import de.svenjacobs.loremipsum.LoremIpsum;
 import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.entities.ConcreteUserAccount;
-import internetkaufhaus.model.Search;
 import internetkaufhaus.model.StartPage;
-import internetkaufhaus.repositories.ConcreteOrderRepository;
-import internetkaufhaus.repositories.ConcreteProductRepository;
-import internetkaufhaus.repositories.ConcreteUserAccountRepository;
+import internetkaufhaus.services.DataService;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -56,29 +50,7 @@ public class Initialize implements DataInitializer {
 	/** The start page. */
 	private final StartPage startPage;
 
-	/** The concrete user account manager. */
-	private final ConcreteUserAccountRepository concreteUserAccountManager;
-
-	/** The user account manager. */
-	private final UserAccountManager userAccountManager;
-
-	/** The inventory. */
-	private final Inventory<InventoryItem> inventory;
-
-	/** The product catalog. */
-	private final Catalog<ConcreteProduct> productCatalog;
-
-	/** The order manager. */
-	private final OrderManager<Order> orderManager;
-
-	/** The concrete product repository. */
-	private final ConcreteProductRepository concreteProductRepository;
-
-	/** The concrete order repo. */
-	private final ConcreteOrderRepository concreteOrderRepo;
-
-	/** The product search. */
-	private final Search productSearch;
+	private final DataService dataService;
 
 	// private final Map<String, String> recruits;
 
@@ -107,21 +79,9 @@ public class Initialize implements DataInitializer {
 	 *            singleton, passed by spring/salespoint
 	 */
 	@Autowired
-	public Initialize(StartPage startPage, ConcreteOrderRepository concreteOrderRepo,
-			Catalog<ConcreteProduct> productCatalog, UserAccountManager userAccountManager,
-			ConcreteUserAccountRepository ConcreteUserAccountManager, Inventory<InventoryItem> inventory,
-			OrderManager<Order> orderManager, Search productSearch,
-			ConcreteProductRepository concreteProductRepository) {
+	public Initialize(StartPage startPage, DataService dataService) {
 		this.startPage = startPage;
-		this.inventory = inventory;
-		this.concreteUserAccountManager = ConcreteUserAccountManager;
-		this.userAccountManager = userAccountManager;
-		this.productCatalog = productCatalog;
-		this.productSearch = productSearch;
-		this.productSearch.setCatalog(productCatalog);
-		this.orderManager = orderManager;
-		this.concreteProductRepository = concreteProductRepository;
-		this.concreteOrderRepo = concreteOrderRepo;
+		this.dataService = dataService;
 		// this.recruits = recruits;
 	}
 
@@ -132,19 +92,19 @@ public class Initialize implements DataInitializer {
 	public void initialize() {
 		// fill the user database
 		try {
-			initializeUsers(userAccountManager, concreteUserAccountManager);
+			initializeUsers();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// fill the Catalog with Items
-		initializeCatalog(productCatalog, productSearch);
+		initializeCatalog();
 		// fill inventory with Inventory items
 		// Inventory Items consist of one ConcreteProduct and a number
 		// representing the stock
-		initializeInventory(productCatalog, inventory);
+		initializeInventory();
 		initializeComments();
-		initializeOrders(concreteOrderRepo, concreteProductRepository, orderManager, concreteUserAccountManager);
+		initializeOrders();
 
 	}
 
@@ -156,9 +116,9 @@ public class Initialize implements DataInitializer {
 	 * @param productSearch
 	 *            the product search
 	 */
-	private void initializeCatalog(Catalog<ConcreteProduct> productCatalog, Search productSearch) {
+	private void initializeCatalog() {
 		// prevents the Initializer to run in case of data persistance
-		if (productCatalog.count() > 0) {
+		if (Iterators.size(dataService.getConcreteProductRepository().findAll().iterator()) > 0) {
 			return;
 		}
 		List<ConcreteProduct> prods = new ArrayList<ConcreteProduct>();
@@ -493,9 +453,7 @@ public class Initialize implements DataInitializer {
 				"Wunderschöner Damenring aus 925er Silber der Marke Celesta. Der Damenring hat Zirkoniasteine und ist rosévergoldet.",
 				"https://eng.wikipedia.org/wiki/Fuzz", "SProdukt_368270033.jpg"));
 
-		productCatalog.save(prods);
-		concreteProductRepository.save(prods);
-		productSearch.addProds(productCatalog.findAll());
+		dataService.getConcreteProductRepository().save(prods);
 
 		this.startPage.setBannerProducts(new ArrayList<ConcreteProduct>());
 		Random random = new Random();
@@ -517,11 +475,11 @@ public class Initialize implements DataInitializer {
 	 * @param inventory
 	 *            the inventory
 	 */
-	private void initializeInventory(Catalog<ConcreteProduct> productCatalog, Inventory<InventoryItem> inventory) {
+	private void initializeInventory() {
 		// prevents the Initializer to run in case of data persistance
-		for (ConcreteProduct prod : productCatalog.findAll()) {
-			InventoryItem inventoryItem = new InventoryItem(prod, Quantity.of(50));
-			inventory.save(inventoryItem);
+		for (ConcreteProduct prod : dataService.getConcreteProductRepository().findAll()) {
+			InventoryItem inventoryItem = new InventoryItem(prod, Quantity.of(0));
+			dataService.getConcreteInventory().save(inventoryItem);
 		}
 	}
 
@@ -534,10 +492,9 @@ public class Initialize implements DataInitializer {
 	 *            the concrete user account manager
 	 * @throws IOException
 	 */
-	private void initializeUsers(UserAccountManager userAccountManager,
-			ConcreteUserAccountRepository ConcreteUserAccountManager) throws IOException {
+	private void initializeUsers() throws IOException {
 		// prevents the Initializer to run in case of data persistance
-		if (userAccountManager.findByUsername("peon").isPresent()) {
+		if (dataService.getUserAccountManager().findByUsername("peon").isPresent()) {
 			return;
 		}
 
@@ -546,19 +503,21 @@ public class Initialize implements DataInitializer {
 		final Role employeeRole = Role.of("ROLE_EMPLOYEE");
 
 		List<ConcreteUserAccount> userAccounts = new ArrayList<ConcreteUserAccount>();
-		userAccounts.add(new ConcreteUserAccount("peon", "peon", adminRole, userAccountManager));
-		userAccounts.add(new ConcreteUserAccount("saul", "saul", employeeRole, userAccountManager));
+		userAccounts.add(new ConcreteUserAccount("peon", "peon", adminRole, dataService.getUserAccountManager()));
+		userAccounts.add(new ConcreteUserAccount("saul", "saul", employeeRole, dataService.getUserAccountManager()));
 		userAccounts.add(new ConcreteUserAccount("adminBehrens@todesstern.ru", "admin", "admin", "Behrens",
-				"Musterstraße", "01069", "Definitiv nicht Dresden", "admin", customerRole, userAccountManager));
+				"Musterstraße", "01069", "Definitiv nicht Dresden", "admin", customerRole,
+				dataService.getUserAccountManager()));
 		userAccounts.add(new ConcreteUserAccount("behrens_lars@gmx.de", "lars", "Lars", "Behrens", "Musterstraße",
-				"01069", "Definitiv nicht Dresden", "lars", customerRole, userAccountManager));
+				"01069", "Definitiv nicht Dresden", "lars", customerRole, dataService.getUserAccountManager()));
 
 		List<String> accounts = FileUtils.readLines(new File("accounts.txt"), "utf-8");
 
 		for (String accountString : accounts) {
 			List<String> data = Arrays.asList(accountString.split(","));
 			ConcreteUserAccount account = new ConcreteUserAccount(data.get(0), data.get(1), data.get(2), data.get(3),
-					data.get(4), data.get(5), data.get(6), data.get(7), customerRole, userAccountManager);
+					data.get(4), data.get(5), data.get(6), data.get(7), customerRole,
+					dataService.getUserAccountManager());
 			userAccounts.add(account);
 		}
 
@@ -571,21 +530,25 @@ public class Initialize implements DataInitializer {
 		}
 
 		for (ConcreteUserAccount acc : userAccounts) {
-			userAccountManager.save(acc.getUserAccount());
-			ConcreteUserAccountManager.save(acc);
+			dataService.getUserAccountManager().save(acc.getUserAccount());
+			dataService.getConcreteUserAccountRepository().save(acc);
 		}
 
-		ConcreteUserAccountManager.findByUserAccount(userAccountManager.findByUsername("lars").get())
-				.setRecruits(ConcreteUserAccountManager.findByEmail("adminBehrens@todesstern.ru"));
-		ConcreteUserAccountManager.findByUserAccount(userAccountManager.findByUsername("admin").get())
-				.setRecruits(ConcreteUserAccountManager.findByEmail("behrens_lars@gmx.de"));
+		dataService.getConcreteUserAccountRepository()
+				.findByUserAccount(dataService.getUserAccountManager().findByUsername("lars").get()).get().setRecruits(
+						dataService.getConcreteUserAccountRepository().findByEmail("adminBehrens@todesstern.ru").get());
+		dataService.getConcreteUserAccountRepository()
+				.findByUserAccount(dataService.getUserAccountManager().findByUsername("admin").get()).get()
+				.setRecruits(dataService.getConcreteUserAccountRepository().findByEmail("behrens_lars@gmx.de").get());
 	}
 
+	@SuppressWarnings("unchecked")
 	private void initializeComments() {
 
-		Collection<ConcreteProduct> prods = IteratorUtils.toList(concreteProductRepository.findAll().iterator());
+		Collection<ConcreteProduct> prods = IteratorUtils
+				.toList(dataService.getConcreteProductRepository().findAll().iterator());
 		Collection<ConcreteUserAccount> accountsCollection = IteratorUtils
-				.toList(concreteUserAccountManager.findAll().iterator());
+				.toList(dataService.getConcreteUserAccountRepository().findAll().iterator());
 		List<ConcreteUserAccount> accountsList = new ArrayList<ConcreteUserAccount>(accountsCollection);
 
 		for (ConcreteProduct prod : prods) {
@@ -598,8 +561,9 @@ public class Initialize implements DataInitializer {
 						epochBegin + ((long) (random.nextDouble() * (epochNow - epochBegin))), 0,
 						ZoneOffset.ofHours(1));
 
-				Comment comment = new Comment(lorem.getWords(random.nextInt(100) + 50), random.nextInt(4) + 1,
-						commentDate, commentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+				Comment comment = new Comment(lorem.getWords(random.nextInt(10) + 4),
+						lorem.getWords(random.nextInt(100) + 10), random.nextInt(4) + 1, commentDate,
+						commentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
 				prod.addComment(comment, accountsList.get(random.nextInt(accountsList.size() - 1)));
 			}
 		}
@@ -625,30 +589,48 @@ public class Initialize implements DataInitializer {
 	 * @param ConcreteUserAccountManager
 	 *            the concrete user account manager
 	 */
-	private void initializeOrders(ConcreteOrderRepository concreteOrderRepo, ConcreteProductRepository prods,
-			OrderManager<Order> orderManager, ConcreteUserAccountRepository ConcreteUserAccountManager) {
+	@SuppressWarnings("unchecked")
+	private void initializeOrders() {
 
 		Random rand = new Random();
 
-		Collection<ConcreteProduct> allProducts = IteratorUtils.toList(productCatalog.findAll().iterator());
+		Collection<ConcreteProduct> allProducts = IteratorUtils
+				.toList(dataService.getConcreteProductRepository().findAll().iterator());
 		List<ConcreteProduct> allProductsList = new ArrayList<ConcreteProduct>(allProducts);
 
-		for (ConcreteUserAccount u : ConcreteUserAccountManager.findByRole(Role.of("ROLE_CUSTOMER"))) {
-			int orderNumber = rand.nextInt(5) + 2;
+		for (ConcreteUserAccount u : dataService.getConcreteUserAccountRepository()
+				.findByRole(Role.of("ROLE_CUSTOMER"))) {
+			int orderNumber = rand.nextInt(3) + 2;
 			for (int i = 0; i < orderNumber; i++) {
-				Cart c = new Cart();
-				int productNumber = rand.nextInt(9) + 1;
+				Cart orderCart = new Cart();
+				Cart stockCart = new Cart();
+				int productNumber = rand.nextInt(2) + 1;
 				for (int j = 0; j < productNumber; j++) {
 					ConcreteProduct prod = allProductsList.get(rand.nextInt(allProductsList.size() - 1));
-					Quantity quant = Quantity.of(rand.nextInt(19) + 1);
-					c.addOrUpdateItem(prod, quant);
+					Quantity quant = Quantity.of(rand.nextInt(5) + 1);
+					orderCart.addOrUpdateItem(prod, quant);
+					while (!dataService.getConcreteInventory().findByProduct(prod).get().hasSufficientQuantity(quant)) {
+						stockCart.addOrUpdateItem(prod, Quantity.of(20));
+						dataService.getConcreteInventory().findByProduct(prod).ifPresent(x -> {
+							x.increaseQuantity(Quantity.of(20));
+							dataService.getConcreteInventory().save(x);
+						});
+					}
+					dataService.getConcreteInventory().findByProduct(prod).ifPresent(x -> {
+						x.decreaseQuantity(quant);
+						dataService.getConcreteInventory().save(x);
+					});
 					prod.increaseSold(quant.getAmount().intValue());
-					concreteProductRepository.save(prod);
+					dataService.getConcreteProductRepository().save(prod);
 
 				}
 
-				ConcreteOrder order = new ConcreteOrder(u.getUserAccount(), Cash.CASH);
-				c.addItemsTo(order.getOrder());
+				ConcreteOrder order = new ConcreteOrder(u, Cash.CASH);
+				orderCart.addItemsTo(order.getOrder());
+
+				ConcreteOrder stock = new ConcreteOrder(dataService.getConcreteUserAccountRepository()
+						.findByUserAccount(dataService.getUserAccountManager().findByUsername("saul").get()).get(), Cash.CASH);
+				stockCart.addItemsTo(stock.getOrder());
 
 				order.setBillingGender("Herr");
 				order.setBillingFirstName(u.getUserAccount().getFirstname());
@@ -673,8 +655,10 @@ public class Initialize implements DataInitializer {
 				LocalDateTime orderDate = LocalDateTime.ofEpochSecond(
 						epochBegin + ((long) (rand.nextDouble() * (epochNow - epochBegin))), 0, ZoneOffset.ofHours(1));
 				order.setDateOrdered(orderDate);
+				
+				stock.setDateOrdered(orderDate);
 
-				orderManager.payOrder(order.getOrder());
+				dataService.getOrderManager().payOrder(order.getOrder());
 				// only set orderManager.payOrder(o), do not use
 				// orderManager.completeOrder(0), to complete Order look at the
 				// next
@@ -682,10 +666,16 @@ public class Initialize implements DataInitializer {
 				order.setStatus(OrderStatus.COMPLETED);
 				// to complete Order do not use orderManager.completeOrder
 
-				concreteOrderRepo.save(order);
-				orderManager.save(order.getOrder());
+				dataService.getConcreteOrderRepository().save(order);
+				dataService.getOrderManager().save(order.getOrder());
+				
+				if (!stockCart.isEmpty()) {
+					dataService.getConcreteOrderRepository().save(stock);
+					dataService.getOrderManager().save(stock.getOrder());
+				}
 
-				c.clear();
+				orderCart.clear();
+				stockCart.clear();
 			}
 		}
 

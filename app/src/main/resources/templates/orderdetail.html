@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="utf-8">
-<title>Main Page</title>
+<title>Bestellung</title>
 <script src="/resources/script/jquery-1.11.2.min.js" type="text/javascript"></script>
 <script src="/resources/script/bootstrap.min.js" type="text/javascript"></script>
 <link href="/resources/css/main.css" rel="stylesheet" type=text/css>
@@ -30,7 +30,7 @@
 			</div>
 			
 			<div id="workframe">
-				<h2 id="orderUser" th:text="@{'Bestellung von '+${order.getUser().getUsername()}}">Account:</h2>
+				<h2 id="orderUser" th:text="@{'Bestellung von '+${order.user.userAccount.username}}">Account:</h2>
 				<table class="article">
 					<tr>
 						<td><a>Name</a></td>
@@ -44,8 +44,10 @@
 				</table>
 				
 				<p th:text="@{'Preis der Bestellung: '+${totalPrice}}">Preis: </p>
-				<p th:text="@{'Kunde der Bestellung: '+${order.getUser().getUsername()}}">Kunde: </p>
-				<p th:text="@{'Status der Bestellung: '+${order.getStatus()}}">Status: </p>
+				<p th:text="@{'Kunde der Bestellung: '+${order.user.userAccount.username}}">Kunde: </p>
+				<p th:text="@{'Status der Bestellung: '+${order.status}}">Status: </p>
+				<p th:text="@{'Retouniert: '+${order.returned}}"></p>
+				<p th:if="${order.returned} == true" th:text="@{'Grund: '+${order.returnReason}}"></p>
 				<form id="orderData">
 					<fieldset class="orderDataGroup">
 						<h2>Versandadresse:</h2>

@@ -19,6 +19,7 @@ import internetkaufhaus.Application;
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
+import internetkaufhaus.services.DataService;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -28,43 +29,35 @@ import internetkaufhaus.repositories.ConcreteOrderRepository;
 @SpringApplicationConfiguration(classes = Application.class)
 
 public class CreditmanagerTest {
-	
+
 	/** The acc. */
 	private ConcreteUserAccount acc;
-	
+
 	/** The user. */
 	private ConcreteUserAccount user;
-	
+
 	/** The manager. */
 	private Creditmanager manager;
-	
+
 	/** The o. */
 	private ConcreteOrder o;
-	
+
 	/** The order. */
 	private Order order;
 
-	/** The concrete order repo. */
 	@Autowired
-	ConcreteOrderRepository concreteOrderRepo;
-	
-	/** The order manager. */
-	@Autowired
-	OrderManager<Order> orderManager;
-
-	/** The u. */
-	@Autowired
-	UserAccountManager u;
+	private DataService data;
 
 	/**
 	 * Inits the.
 	 */
 	@Before
 	public void init() {
-		this.manager = new Creditmanager(concreteOrderRepo);
-		this.user = new ConcreteUserAccount("Username1", "Username1", Role.of("ROLE_CUSTOMER"), u);
+		this.manager = new Creditmanager(data);
+		this.user = new ConcreteUserAccount("Username1", "Username1", Role.of("ROLE_CUSTOMER"),
+				data.getUserAccountManager());
 		this.acc = new ConcreteUserAccount("test@mail.com", "Username2", "Firstname", "Lastname", "Adress", "ZipCode",
-				"City", "Password", Role.of("ROLE_EMPLOYEE"), u);
+				"City", "Password", Role.of("ROLE_EMPLOYEE"), data.getUserAccountManager());
 
 		user.setRecruits(acc);
 
@@ -116,6 +109,6 @@ public class CreditmanagerTest {
 		Money credits = Money.of(14, EURO);
 		acc.setCredits(credits);
 		manager.updateCreditpointsByUser(acc);
-		assertEquals("UpdatePoints", acc.getCredits(), 14);
+		assertEquals("UpdatePoints", acc.getCredits(), Money.of(14, "EUR"));
 	}
 }

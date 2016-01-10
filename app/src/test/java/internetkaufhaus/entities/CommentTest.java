@@ -4,9 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.salespointframework.core.Currencies.EURO;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 import org.javamoney.moneta.Money;
@@ -27,14 +26,14 @@ public class CommentTest {
 	 */
 	@Before
 	public void init() {
-		model = new Comment("Das hier ist ein Kommentar", 5, LocalDateTime.now(), "t");
+		model = new Comment("Das hier ist ein Titel", "Das hier ist ein Kommentar", 5, LocalDateTime.now(), "t");
 	}
 
 	/**
 	 * Test get comment id.
 	 */
 	@Test
-	public void testGetCommentId() {
+	public void testCommentId() {
 		long number = new Long(232424);
 		model.setCommentid(number);
 		assertTrue("Id wird zurückgegeben", model.getCommentid() == number);
@@ -60,6 +59,12 @@ public class CommentTest {
 		model.setUser(account);
 		assertTrue("Account gesetzt", model.getUserAccount() == account);
 	}
+	
+	@Test
+	public void testTitle() {
+		model.setTitle("Ich bin ein Titel");
+		assertTrue("Titel gesetzt", model.getTitle().equals("Ich bin ein Titel"));
+	}
 
 	/**
 	 * Test text.
@@ -69,7 +74,6 @@ public class CommentTest {
 		String text = "Dieser Text soll angezeigt werden";
 		model.setText(text);
 		assertTrue("Text gesetzt", model.getText() == text);
-		assertTrue("Text gesetzt", model.toString() == text);
 	}
 
 	/**
@@ -109,7 +113,7 @@ public class CommentTest {
 	@Test
 	public void testFormattedDate() {
 		LocalDateTime date = LocalDateTime.now();
-		SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.GERMANY);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, d MMM yyyy HH:mm", Locale.GERMANY);
 		String formattedDate = formatter.format(date);
 		model.setFormatedDate(date);
 		assertEquals("FormattedDate gesetzt", model.getFormatedDate(), formattedDate);

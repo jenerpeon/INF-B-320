@@ -2,17 +2,10 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Artikelverwaltung</title>
+<title>Benutzer</title>
 <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
 <link href="/resources/css/admin.css" rel="stylesheet" type="text/css">
 <script src="/resources/script/jquery.min.js" type="text/javascript"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('label.tree-toggler').click(function() {
-			$(this).parent().children('ul.tree').toggle(300);
-		});
-	});
-</script>
 </head>
 
 <body>
@@ -29,26 +22,65 @@
 					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
 					<a href="/admin/changeuser" >Userverwaltung</a>
 					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
-					<a >User ändern</a>
+					<a >Benutzer</a>
 				</div>
 			</div>
 			
 			<div id="workframe">
+			<ul id="error" th:if="${message != null}">
+				<li th:each="line : ${message}"><a th:text="${line.getDefaultMessage()}"></a></li>
+			</ul>
 				<form id="edituser" class="userform" th:action="@{'/admin/changeuser/editedUser'}" method="POST" enctype="multipart/form-data" onsubmit='return checkForm();'>
-					<ol>
-						<li>		
-								<label for="name">Name: </label>
-								<input type="text" name="name" id="namefield" th:value="${account.userAccount.Username}" disabled/>
-						</li>
-						<li>		
-								<label for="password">Passwort: </label>
-								<input type="text" name="password" id="passwordfield" placeholder="Passwort" required/>
-						</li>
-						<li>		
-								<label for="password">Passwort wiederholen: </label>
-								<input type="text" name="password-repetition" id="password-repetition-field" placeholder="Passwort wiederholen" required/>
-						</li>
-						<li>
+					<fieldset>
+						<legend>
+							<span>Login Daten</span>
+						</legend>
+						<ol>
+							<li><label for="name">Benutzername:</label> <input
+								type="text" id="name" name="name" th:value="${account.userAccount.username}" disabled/></li>
+							<li th:if="${account.role.name}=='ROLE_CUSTOMER'"><label for="login-name">E-Mail Adresse:</label> <input
+								type="text" id="email" name="email" th:value="${account.email}" /></li>
+							<li><label for="login-password">Passwort:</label> <input
+								type="password" id="password" name="password" value=""  />
+							</li>
+							<li><label for="login-passwordrepeat">Passwort
+								wiederholen:</label> <input type="password" id="passwordrepeat"
+								name="passwordrepeat" value="" /></li>
+						</ol>
+					</fieldset>
+					<fieldset th:if="${account.role.name}=='ROLE_CUSTOMER'">
+						<legend>
+							<span>Klarname</span>
+						</legend>
+						<ol>
+							<li><label for="firstname">Vorname:</label> <input
+								type="text" id="firstname" name="firstname" th:value="${account.userAccount.firstname}" disabled/>
+							</li>
+							<li><label for="lastname">Nachname:</label> <input
+								type="text" id="lastname" name="lastname" th:value="${account.userAccount.lastname}" disabled/>
+							</li>
+						</ol>
+					</fieldset>
+
+					<fieldset th:if="${account.role.name}=='ROLE_CUSTOMER'">
+						<legend>
+							<span>Adresse</span>
+						</legend>
+						<ol>
+							<li><label for="address">Adresszeile 1:</label> <input
+								type="text" id="address" name="address" th:value="${account.address}" disabled/></li>
+							<li><label for="city">Stadt:</label> <input type="text"
+								id="city" name="city" th:value="${account.city}" disabled/></li>
+							<li><label for="zipCode">Postleitzahl:</label> <input
+								type="text" id="zipCode" name="zipCode" th:value="${account.zipCode}" disabled/></li>
+						</ol>
+					</fieldset>
+					<fieldset>
+						<legend>
+							<span>Rolle</span>
+						</legend>
+						<ol>
+							<li>
 								<label for="role">Rolle: </label>
 								<select th:switch="${account.role.name}" name="rolename" id="rolefield" size="1">
 									<option th:case="'ROLE_EMPLOYEE'" value="ROLE_EMPLOYEE" selected>Mitarbeiter</option>
@@ -57,18 +89,52 @@
 									<option th:if="${account.role.name}!='ROLE_ADMIN'" value="ROLE_ADMIN">Administrator</option>
 									<option th:case="'ROLE_CUSTOMER'" value="ROLE_CUSTOMER" selected>Kunde</option>
 									<option th:if="${account.role.name}!='ROLE_CUSTOMER'" value="ROLE_CUSTOMER">Kunde</option>
-									
 								</select>
-						</li>
-					</ol>
+							</li>
+						</ol>
+					</fieldset>
 					<input type="hidden" th:value="${account.id}" name="id" />
 					<input type="submit" id="submitfield" value="User aktualisieren" />	
-				</form>	
+				</form>
+				<div id="userStatistics" th:if="${account.role.name}=='ROLE_CUSTOMER'">
+				<h3 th:text="@{'Geworben von: '}"></h3>
+				<h3>Geworbene Nutzer:</h3>
+				<ul>
+					<li th:each="recruited : ${account.recruits}">
+					<a th:text="${recruited.userAccount.username}"></a><br/>
+					<a th:text="${recruited.userAccount.email}"></a>
+					</li>
+				</ul>
+				<h3 th:text="@{'Punktestand: ' + ${account.credits}}">Punktestand:</h3>
+				<h3>Bestellungen:</h3>
+				<ul>
+					<li th:each="order : ${orders}">
+						<a th:text="@{${order.getTotalProductNumber()}+' Produkte für '+${order.order.totalPrice}}"></a><br/>
+						<a th:text="@{'Retourniert: '+${order.returned}}"></a>
+					</li>
+					<li><a th:text="@{'Gesamtumsatz: '+${turnover}}"></a></li>
+				</ul>
+				</div>
+				<div id="comments" th:if="${account.role.name}=='ROLE_CUSTOMER'">
+					<table th:if="${not #lists.isEmpty(account.comments)}">
+						<tr>
+							<th><a >Produkt</a></th>
+							<th><a >Kommentar</a></th>
+							<th><a >Bewertung</a></th>
+							<th><a >Zeit</a></th>
+						</tr>
+						<tr th:each="comment : ${account.comments}">
+							<td class="product"><a th:href="@{'/detail/'+${comment.product.identifier}}" th:text="${comment.product.name}">Name</a></td>
+							<td class="comment"><a th:text="${comment.text}">Kommentar</a></td>
+							<td class="rating"><a th:text="${comment.rating}">5 Sterne</a></td>
+							<td class="time"><a th:text="${comment.formatedDate}">Datum</a></td>
+						</tr>
+					</table>
+				</div>
 			</div>
 
 		</div>
 		</main>
-		<br>
 
 		<div id="footer" th:include="footer :: footer"></div>
 	</div>

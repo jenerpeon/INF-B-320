@@ -1,7 +1,5 @@
 package internetkaufhaus.entities;
 
-import static org.salespointframework.core.Currencies.EURO;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,14 +13,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.collections.IteratorUtils;
-import org.javamoney.moneta.Money;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.useraccount.UserAccount;
-
-import internetkaufhaus.repositories.ConcreteProductRepository;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -41,7 +36,7 @@ public class ConcreteOrder implements Serializable {
 
 	/** The user. */
 	@OneToOne
-	private UserAccount user;
+	private ConcreteUserAccount user;
 
 	/** The id. */
 	@Id
@@ -112,7 +107,7 @@ public class ConcreteOrder implements Serializable {
 	/**
 	 * Instantiates a new concrete order.
 	 */
-	@SuppressWarnings({ "unused" })
+	@SuppressWarnings("unused")
 	private ConcreteOrder() {
 
 	}
@@ -125,79 +120,10 @@ public class ConcreteOrder implements Serializable {
 	 * @param cash
 	 *            the cash
 	 */
-	public ConcreteOrder(UserAccount account, Cash cash) {
-		this.order = new Order(account, cash);
+	public ConcreteOrder(ConcreteUserAccount account, Cash cash) {
+		this.order = new Order(account.getUserAccount(), cash);
 		this.status = this.order.getOrderStatus();
 		this.user = account;
-	}
-
-	/**
-	 * Instantiates a new concrete order.
-	 *
-	 * @param billingGender
-	 *            the billing gender
-	 * @param billingFirstName
-	 *            the billing first name
-	 * @param billingLastName
-	 *            the billing last name
-	 * @param billingStreet
-	 *            the billing street
-	 * @param billingHouseNumber
-	 *            the billing house number
-	 * @param billingAddressLine2
-	 *            the billing address line2
-	 * @param billingZipCode
-	 *            the billing zip code
-	 * @param billingTown
-	 *            the billing town
-	 * @param shippingGender
-	 *            the shipping gender
-	 * @param shippingFirstName
-	 *            the shipping first name
-	 * @param shippingLastName
-	 *            the shipping last name
-	 * @param shippingStreet
-	 *            the shipping street
-	 * @param shippingHouseNumber
-	 *            the shipping house number
-	 * @param shippingAddressLine2
-	 *            the shipping address line2
-	 * @param shippingZipCode
-	 *            the shipping zip code
-	 * @param shippingTown
-	 *            the shipping town
-	 * @param dateOrdered
-	 *            the date ordered
-	 * @param order
-	 *            the order
-	 */
-	public ConcreteOrder(String billingGender, String billingFirstName, String billingLastName, String billingStreet,
-			String billingHouseNumber, String billingAddressLine2, String billingZipCode, String billingTown,
-			String shippingGender, String shippingFirstName, String shippingLastName, String shippingStreet,
-			String shippingHouseNumber, String shippingAddressLine2, String shippingZipCode, String shippingTown,
-			LocalDateTime dateOrdered, Order order) {
-		this.billingGender = billingGender;
-		this.billingFirstName = billingFirstName;
-		this.billingLastName = billingLastName;
-		this.billingStreet = billingStreet;
-		this.billingHouseNumber = billingHouseNumber;
-		this.billingAddressLine2 = billingAddressLine2;
-		this.billingZipCode = billingZipCode;
-		this.billingTown = billingTown;
-
-		this.shippingGender = shippingGender;
-		this.shippingFirstName = shippingFirstName;
-		this.shippingLastName = shippingLastName;
-		this.shippingStreet = shippingStreet;
-		this.shippingHouseNumber = shippingHouseNumber;
-		this.shippingAddressLine2 = shippingAddressLine2;
-		this.shippingZipCode = shippingZipCode;
-		this.shippingTown = shippingTown;
-
-		this.dateOrdered = dateOrdered;
-		this.order = order;
-		this.status = order.getOrderStatus();
-
 	}
 
 	/**
@@ -368,6 +294,7 @@ public class ConcreteOrder implements Serializable {
 	 *
 	 * @return the order lines size
 	 */
+	@SuppressWarnings("unchecked")
 	public int getOrderLinesSize() {
 		Collection<OrderLine> orderLines = IteratorUtils.toList(this.order.getOrderLines().iterator());
 		return orderLines.size();
@@ -652,7 +579,7 @@ public class ConcreteOrder implements Serializable {
 	 *
 	 * @return the user
 	 */
-	public UserAccount getUser() {
+	public ConcreteUserAccount getUser() {
 		return user;
 	}
 

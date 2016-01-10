@@ -13,6 +13,7 @@ import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import internetkaufhaus.entities.ConcreteProduct;
+import internetkaufhaus.repositories.ConcreteInventory;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
@@ -33,6 +34,9 @@ public class DataServiceTest {
 	/** The inventory. */
 	@Autowired
 	private Inventory<InventoryItem> inventory;
+	
+	@Autowired
+	private ConcreteInventory<InventoryItem> concreteInventory;
 
 	/** The concrete product repo. */
 	@Autowired
@@ -59,7 +63,7 @@ public class DataServiceTest {
 	 */
 	@Before
 	public void init() {
-		this.dataService = new DataService(this.catalog, this.inventory, this.concreteProductRepo,
+		this.dataService = new DataService(this.catalog, this.inventory, this.concreteInventory, this.concreteProductRepo,
 				this.concreteAccountRepo, this.userAccountManager, this.concreteOrderRepo, this.orderManager);
 	}
 
@@ -94,7 +98,7 @@ public class DataServiceTest {
 	@Test
 	public void testGetConcreteAccountRepo() {
 		assertEquals("testGetConcreteAccountRepo", this.concreteAccountRepo,
-				this.dataService.getConcreteUserAccoutnRepository());
+				this.dataService.getConcreteUserAccountRepository());
 	}
 
 	/**

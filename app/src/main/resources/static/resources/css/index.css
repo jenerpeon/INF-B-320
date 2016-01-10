@@ -268,7 +268,7 @@
 }
 
 .top5 .img-thumbnail {
-	height: 450px;
+	height: 460px;
 	width: 200px;
 	display: flex;
 	flex-direction: column;
@@ -276,6 +276,11 @@
 	align-items: center;
 	border: none;
 	margin: 0 20px 0 0;
+	border: 1px solid white !important;
+}
+
+.top5 .img-thumbnail:hover {
+	border: 1px solid #d3d7cf !important;
 }
 
 .top5 .img-thumbnail a img {
@@ -304,6 +309,12 @@
   	padding-bottom: 0px;
 }
 
+.top5 .img-thumbnail .thumbnail-price {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+  	font-size: 14px;
+  	text-align: center;
+}
+
 #top-rated {
 	width: 920px;
 	overflow-x: auto;
@@ -315,7 +326,7 @@
 }
 
 #top-sold .img-thumbnail {
-	height: 370px;
+	height: 420px;
 }
 
 .rating {
@@ -351,7 +362,7 @@
 }
 
 #selection-container .img-thumbnail {
-	height: 370px;
+	height: 420px;
 	margin: 10px 0;
 }
 

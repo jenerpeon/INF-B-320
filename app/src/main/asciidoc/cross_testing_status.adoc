@@ -20,13 +20,13 @@ Onlineshop "Woods Super Dooper Shop"
 | urgent | /employee/changecatalog/editArticle/... | … | Preis wird nicht geändert | … 
 | urgent | /employee/changecatalog/editArticle/... | fehlerhafte Eingaben | Validierung schlägt ohne Feedback fehl | Validation failed for object='editArticleForm'. Error count: 1 
 | urgent | /employee/changecatalog/addedArticle | … | es können keine Artikel hinzugefügt werden | leere Seite 
-| urgent | /employee/deleteComment/... | … | Kommentare können nicht gelöscht werden | No message available 
-| urgent | /employee/comments | ... | Löschen von Kommentaren liefert ein Whitelabel Error | Whitelabel Error
+| fixed | /employee/deleteComment/... | … | Kommentare können nicht gelöscht werden | No message available 
+| fixed | /employee/comments | ... | Löschen von Kommentaren liefert ein Whitelabel Error | Whitelabel Error
 | fixed | /employee/comments | ... | des weitern weiß man nicht zu welchem Artikel die Kommentare gehören | Whitelabel Error
 | wontfix | /detail/... | … | es können nur bis zu 5 Artikel in den Warenkorb gelegt werden | ... 
 | wontfix | /admin/balance | ... | Bilanz muss im Negativen beginnen ... die Waren müssen ja etwas gekostet haben und dürfen nicht als Einnahmen gezählt werden ! | ...
 | urgent | /admin/statistics | ... | Statistiken gehen garnicht | ... 
-| urgent | /employee/startpage/changedStartpage | 4 Artikel im Karussell; anderen Artikel ausgewählt | Startseite übernehmen gedrückt | WhiteLabel Error : POST not supported
+| fixed | /employee/startpage/changedStartpage | 4 Artikel im Karussell; anderen Artikel ausgewählt | Startseite übernehmen gedrückt | WhiteLabel Error : POST not supported
 | urgent | /employee/newsletter | … | beide Button funktionieren nicht | Whitelabel Error Page : Error resolving template "employeenavigation"
 | marginal | home | ... | angemeldet als Mitarbeiter, klick auf "Mein Konto"|erneutes anmelden ohne vorheriges abmelden möglich
 | urgent | home | ... | falsche Eingabe bei der Anmeldung | es passiert nichts, keine Fehlermeldung, stattdessen wird der aktuell angemeldete Kunde abgemeldet
@@ -38,17 +38,17 @@ Onlineshop "Woods Super Dooper Shop"
 | fixed | /payed | richtige Adresse, fast richtige Kreditkarte | bezahlen drücken | Whitelabel Error Page: Validation failed for object='billingAdressForm'. Error count: 13
 | fixed | /payed | theoretisch formkorrekte Eingabe | es kommen immer Fehler | Whitelabel Error Page: Validation failed for object='billingAdressForm'. Error count: 13
 | could not reproduce | /payed | Adresse eingegeben | bestellen drücken, um Einkaufswagen zu kaufen | Whitelabel Error Page: Zugriff verweigert
-| marginal | /?cartsize=0&cartprice=EUR+0#login-modal | ... | Klick auf "Mein Konto" : Wo ist die Übersicht über mein Konto? Ich kann mich immer nur anmelden; wo kann ich mein Rabattguthaben einsehen? Warum wird kein Rabatt bei der Bestellung verrechnet?| ...
+| fixed | /?cartsize=0&cartprice=EUR+0#login-modal | ... | Klick auf "Mein Konto" : Wo ist die Übersicht über mein Konto? Ich kann mich immer nur anmelden; wo kann ich mein Rabattguthaben einsehen? Warum wird kein Rabatt bei der Bestellung verrechnet?| ...
 | marginal | /cart | nothing | ich kann leere Bestellungen machen|...
 | fixed | /admin/changeuser/editUser/3 | unterschiedliche Passwörter | Passwörter müssen nicht gleich sein, werden nicht verglichen | Userstatus geändert
 | could not reproduce | /employee/orders/accept/1 | ... | Admin hat die Bestellung angenommen, versuche sie mit dem Mitarbeiter nochmal anzunehmen | Whitelabel Error Page: No value present
 | urgent | /#registration-modal | asd@asd | asd@asd.irgendwas sollte erst gehen|
 | urgent | redirect/#login-modal | | | Error resolving template "redirect/#login-modal", template might not exist
-| urgent | "Mein Konto" | | Kein Zugriff auf Schaltfläche |
+| fixed | "Mein Konto" | | Kein Zugriff auf Schaltfläche |
 | urgent | employee/newsletter/changeNewsletter | | Neuer Newsletter | Error resolving template "employeenavigation", template might not exist
 | urgent | /employee/newsletter/oldAbos | | Alter Newsletter | Error resolving template "employeenavigation", template might not exist
-| urgent | /admin/changeuser/addedUser | | "neuen" User asd als Admin hinzufügen, obwohl bereits existiert | Whitelabel Error Page: User with name asd already exists!
-| urgent | /admin/changeuser/addedUser | | neuen User "wer" anlegen als Admin | There was an unexpected error (type=Internal Server Error, status=500).
+| fixed | /admin/changeuser/addedUser | | "neuen" User asd als Admin hinzufügen, obwohl bereits existiert | Whitelabel Error Page: User with name asd already exists!
+| fixed | /admin/changeuser/addedUser | | neuen User "wer" anlegen als Admin | There was an unexpected error (type=Internal Server Error, status=500).
 org.hibernate.TransientPropertyValueException: object references an unsaved transient instance - save the transient instance before flushing : internetkaufhaus.entities.ConcreteUserAccount.userAccount -> org.salespointframework.useraccount.UserAccount; nested exception is java.lang.IllegalStateException: org.hibernate.TransientPropertyValueException: object references an unsaved transient instance - save the transient instance before flushing : internetkaufhaus.entities.ConcreteUserAccount.userAccount -> org.salespointframework.useraccount.UserAccount
 
 | fixed | /returOrders | | als Admin eingeloggt | Whitelabel Error Page: Zugriff verweigert
