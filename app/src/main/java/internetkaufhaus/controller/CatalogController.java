@@ -3,7 +3,6 @@ package internetkaufhaus.controller;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -12,8 +11,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.mockito.internal.util.collections.Sets;
-import org.salespointframework.catalog.Catalog;
-import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount;
@@ -31,12 +28,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.google.common.collect.Iterators;
+
 import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteProduct;
-import internetkaufhaus.model.Search;
-import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 import internetkaufhaus.services.ConcreteMailService;
+import internetkaufhaus.services.DataService;
 import internetkaufhaus.services.NewsletterService;
 
 // TODO: Auto-generated Javadoc
@@ -52,20 +50,11 @@ import internetkaufhaus.services.NewsletterService;
 @SessionAttributes("cart")
 public class CatalogController {
 
+	@Autowired
+	private DataService dataService;
+
 	/** The Constant NONE. */
 	private static final Quantity NONE = Quantity.of(0);
-
-	/** The catalog. */
-	private final Catalog<ConcreteProduct> catalog;
-
-	/** The inventory. */
-	private final Inventory<InventoryItem> inventory;
-
-	/** The concrete catalog. */
-	private final ConcreteProductRepository concreteCatalog;
-
-	/** The prod search. */
-	private final Search prodSearch;
 
 	/** The news manager. */
 	private final NewsletterService newsManager;
@@ -73,41 +62,21 @@ public class CatalogController {
 	/** The sender. */
 	private final ConcreteMailService sender;
 
-	/** The usermanager. */
-	private final ConcreteUserAccountRepository usermanager;
-
 	/**
 	 * This is the constructor. It's neither used nor does it contain any
 	 * functionality other than storing function arguments as class attribute,
 	 * what do you expect me to write here?
 	 *
-	 * @param catalog
-	 *            the catalog
-	 * @param inventory
-	 *            the inventory
-	 * @param prodSearch
-	 *            the prod search
-	 * @param concreteCatalog
-	 *            the concrete catalog
 	 * @param newsManager
 	 *            the news manager
 	 * @param sender
 	 *            the sender
-	 * @param usermanager
-	 *            the usermanager
 	 */
 	@Autowired
-	public CatalogController(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory, Search prodSearch,
-			ConcreteProductRepository concreteCatalog, NewsletterService newsManager, ConcreteMailService sender,
+	public CatalogController(NewsletterService newsManager, ConcreteMailService sender,
 			ConcreteUserAccountRepository usermanager) {
-
-		this.catalog = catalog;
-		this.inventory = inventory;
-		this.prodSearch = prodSearch;
-		this.concreteCatalog = concreteCatalog;
 		this.newsManager = newsManager;
 		this.sender = sender;
-		this.usermanager = usermanager;
 	}
 
 	/**
@@ -138,8 +107,7 @@ public class CatalogController {
 	@RequestMapping("/sufu/{search}")
 	public String postsufu(@PathVariable("search") String lookup, ModelMap model) {
 		try {
-			int split = 10;
-			model.addAttribute("prods", prodSearch.lookup_bar(lookup, 20));
+			model.addAttribute("prods", dataService.getConcreteProductRepository().findByName(lookup));
 			model.addAttribute("search", lookup);
 			model.addAttribute("representation", 1);
 		} catch (Exception e) {
@@ -162,11 +130,7 @@ public class CatalogController {
 	 */
 	@RequestMapping("/catalog/{type}")
 	public String category(@PathVariable("type") String category, ModelMap model) {
-
-		model.addAttribute("category", category);
-		model.addAttribute("ProdsOfCategory", prodSearch.getProdsByCategory(category));
-
-		return "catalog";
+		return "redirect:/catalog/" + category + '/' + "name,asc/1/6/1";
 	}
 
 	/**
@@ -220,18 +184,18 @@ public class CatalogController {
 			sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "name", Sort.NullHandling.NATIVE));
 			break;
 		case "price,asc":
-			sorting = new Sort(Arrays.asList(new Sort.Order(Sort.Direction.ASC, "price", Sort.NullHandling.NATIVE),
+			sorting = new Sort(Arrays.asList(new Sort.Order(Sort.Direction.ASC, "priceDecimal", Sort.NullHandling.NATIVE),
 					new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE)));
 			break;
 		case "price,desc":
-			sorting = new Sort(Arrays.asList(new Sort.Order(Sort.Direction.DESC, "price", Sort.NullHandling.NATIVE),
+			sorting = new Sort(Arrays.asList(new Sort.Order(Sort.Direction.DESC, "priceDecimal", Sort.NullHandling.NATIVE),
 					new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE)));
 			break;
 		default:
 			sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE));
 		}
 
-		Page<ConcreteProduct> page = concreteCatalog.findByCategory(category,
+		Page<ConcreteProduct> page = dataService.getConcreteProductRepository().findByCategory(category,
 				new PageRequest(givenNumber - 1, split, sorting));
 		List<ConcreteProduct> prods = page.getContent();
 
@@ -246,10 +210,11 @@ public class CatalogController {
 		}
 		model.addAttribute("category", category);
 		model.addAttribute("number", number);
-		Set<Integer> quantities = Sets.newSet(split, 2, 3, 4, 5, 10, 15, 25, 50, 100, 150, 250, 500,
-				prodSearch.getProdsByCategory(category).size());
-		quantities.removeIf(i -> i > prodSearch.getProdsByCategory(category).size());
-		model.addAttribute("maximum", prodSearch.getProdsByCategory(category).size());
+		
+		int maxQuantity = Iterators.size(dataService.getConcreteProductRepository().findByCategory(category,  sorting).iterator());
+		Set<Integer> quantities = Sets.newSet(split, 2, 3, 4, 5, 10, 15, 25, 50, 100, 150, 250, 500, maxQuantity);
+		quantities.removeIf(i -> i > maxQuantity);
+		model.addAttribute("maximum", maxQuantity);
 		model.addAttribute("quantities", new TreeSet<Integer>(quantities));
 		model.addAttribute("sort", sort);
 		model.addAttribute("representation", representation);
@@ -258,24 +223,6 @@ public class CatalogController {
 		model.addAttribute("numbers",
 				IntStream.range(1, page.getTotalPages() + 1).boxed().collect(Collectors.toList()));
 		return "catalog";
-	}
-
-	/**
-	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * TODO: Is this deprecated?
-	 *
-	 * @param category
-	 *            the category
-	 * @param number
-	 *            the number
-	 * @param split
-	 *            the split
-	 * @return the string
-	 */
-	@RequestMapping(value = "/catalog/{type}/{split}/{pagenumber}/changedSetting", method = RequestMethod.POST)
-	public String changeStartPageSetting(@PathVariable("type") String category, @PathVariable("pagenumber") int number,
-			@RequestParam("total") int split) {
-		return "redirect:/catalog/" + category + '/' + split + '/' + number;
 	}
 
 	/**
@@ -315,7 +262,7 @@ public class CatalogController {
 	 */
 	@RequestMapping("/detail/{prodId}")
 	public String detail(@PathVariable("prodId") ConcreteProduct prod, Model model) {
-		Optional<InventoryItem> item = inventory.findByProductIdentifier(prod.getIdentifier());
+		Optional<InventoryItem> item = dataService.getInventory().findByProductIdentifier(prod.getIdentifier());
 		Quantity quantity = item.map(InventoryItem::getQuantity).orElse(NONE);
 		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("quantity", quantity);
@@ -348,8 +295,9 @@ public class CatalogController {
 		Comment c = new Comment(title, comment, rating, LocalDateTime.now(), "");
 		if (!(comment.equals("")) && user.isPresent()) {
 			c.setFormatedDate(c.getDate());
-			prod.addComment(c, usermanager.findByUserAccount(user.get()));
-			catalog.save(prod);
+			prod.addComment(c, dataService.getConcreteUserAccountRepository().findByUserAccount(user.get()).get());
+			dataService.getConcreteProductRepository().save(prod);
+			//catalog.save(prod);
 			model.addAttribute("time", c.getFormatedDate());
 		}
 		return "redirect:detail/" + prod.getIdentifier();
@@ -373,15 +321,14 @@ public class CatalogController {
 		String text = "Sie haben sich für den Woods Super Dooper Shop Newsletter angemeldet.";
 		String username;
 
-		if (usermanager.findByEmail(sendTo) == null) {
+		if (dataService.getConcreteUserAccountRepository().findByEmail(sendTo) == null) {
 			username = "Nicht registierter Abonnet";
 		} else {
-			username = usermanager.findByEmail(sendTo).get().getUserAccount().getUsername();
+			username = dataService.getConcreteUserAccountRepository().findByEmail(sendTo).get().getUserAccount().getUsername();
 		}
 		newsManager.getMap().put(username, sendTo);
 		sender.sendMail(sendTo, text, "zu@googlemail.com", "NewsletterAbonnement");
-		model.addAttribute("prodList", catalog.findAll());
-		return "index";
+		return "redirect:/";
 
 	}
 }

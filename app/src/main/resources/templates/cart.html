@@ -61,7 +61,7 @@
 
 				<p th:text="'Summe: ' + ${cart.price}">Summe</p>
 				<p th:if="${cart.empty}">Leer</p>
-	
+				
 				<div>
 					<form class="form" method="post" action="orderdata/1">
 						<input type="submit" th:value="Bezahlen" value="kaufen" />

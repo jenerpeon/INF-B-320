@@ -2,10 +2,8 @@ package internetkaufhaus.controller;
 
 import static org.salespointframework.core.Currencies.EURO;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,8 +13,6 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.javamoney.moneta.Money;
-import org.salespointframework.order.Order;
-import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.time.Interval;
 import org.salespointframework.useraccount.Role;
@@ -43,8 +39,6 @@ import internetkaufhaus.model.Competition;
 import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.model.NavItem;
 import internetkaufhaus.model.Statistic;
-import internetkaufhaus.repositories.ConcreteOrderRepository;
-import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.services.ConcreteMailService;
 import internetkaufhaus.services.DataService;
 import internetkaufhaus.services.HumanResourceService;
@@ -80,35 +74,12 @@ public class AdminController {
 	@Autowired
 	private HumanResourceService humanResourceService;
 
-	/** The creditmanager. */
-	private final Creditmanager creditmanager;
-
-	/** The concrete product repository. */
-	private final ConcreteProductRepository concreteProductRepository;
-
-	private final OrderManager<Order> orderManager;
-
-	private final ConcreteOrderRepository concreteOrderRepo;
-
 	/**
 	 * This is the constructor. It's neither used nor does it contain any
 	 * functionality other than storing function arguments as class attribute,
 	 * what do you expect me to write here?
-	 *
-	 * @param creditmanager
-	 *            singleton, passed by spring/salespoint
-	 * @param form
-	 *            singleton, passed by spring/salespoint
-	 * @param concreteProductRepository
-	 *            the concrete product repository
 	 */
-	@Autowired
-	public AdminController(Creditmanager creditmanager, ConcreteProductRepository concreteProductRepository,
-			OrderManager<Order> orderManager, ConcreteOrderRepository concreteOrderRepo) {
-		this.concreteProductRepository = concreteProductRepository;
-		this.creditmanager = creditmanager;
-		this.orderManager = orderManager;
-		this.concreteOrderRepo = concreteOrderRepo;
+	public AdminController() {
 	}
 
 	/**
@@ -119,11 +90,7 @@ public class AdminController {
 	@ModelAttribute("adminNaviagtion")
 	public List<NavItem> addAdminNavigation() {
 		String adminNavigationName[] = { "Userverwaltung", "Bilanzen", "Statistiken", "Gewinnspiel" };
-		// String adminNavigationName[] = { "Userverwaltung", "Bilanzen",
-		// "Gewinnspiel" };
 		String adminNavigationLink[] = { "/admin/changeuser", "/admin/balance", "/admin/statistics", "/admin/lottery" };
-		// String adminNavigationLink[] = { "/admin/changeuser",
-		// "/admin/balance", "/admin/lottery" };
 		List<NavItem> navigation = new ArrayList<NavItem>();
 		for (int i = 0; i < adminNavigationName.length; i++) {
 			NavItem nav = new NavItem(adminNavigationName[i], adminNavigationLink[i], "non-category");
@@ -159,9 +126,9 @@ public class AdminController {
 		Role roleCustomer = Role.of("ROLE_CUSTOMER");
 		Role roleAdmin = Role.of("ROLE_ADMIN");
 		Role roleEmployee = Role.of("ROLE_EMPLOYEE");
-		model.addAttribute("employees", dataService.getConcreteUserAccoutnRepository().findByRole(roleEmployee));
-		model.addAttribute("customers", dataService.getConcreteUserAccoutnRepository().findByRole(roleCustomer));
-		model.addAttribute("admins", dataService.getConcreteUserAccoutnRepository().findByRole(roleAdmin));
+		model.addAttribute("employees", dataService.getConcreteUserAccountRepository().findByRole(roleEmployee));
+		model.addAttribute("customers", dataService.getConcreteUserAccountRepository().findByRole(roleCustomer));
+		model.addAttribute("admins", dataService.getConcreteUserAccountRepository().findByRole(roleAdmin));
 		return "changeuser";
 	}
 
@@ -221,7 +188,7 @@ public class AdminController {
 			ObjectError usernameError = new ObjectError("name", "Der Benutzername existiert bereits.");
 			result.addError(usernameError);
 		}
-		if (dataService.getConcreteUserAccoutnRepository().findByEmail(createuserform.getEmail()).isPresent()) {
+		if (dataService.getConcreteUserAccountRepository().findByEmail(createuserform.getEmail()).isPresent()) {
 			ObjectError emailError = new ObjectError("email", "Die E-Mail Adresse wird bereits verwendet.");
 			result.addError(emailError);
 		}
@@ -229,6 +196,7 @@ public class AdminController {
 			model.addAttribute("message", result.getAllErrors());
 			return "changeusernewuser";
 		}
+		System.out.println("Test");
 		humanResourceService.hireEmployee(createuserform);
 		return "redirect:/admin/changeuser/";
 	}
@@ -245,12 +213,11 @@ public class AdminController {
 	@RequestMapping(value = "/admin/changeuser/editUser/{id}")
 	public String editUser(@PathVariable("id") ConcreteUserAccount acc, ModelMap model) {
 		Sort sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "dateOrdered", Sort.NullHandling.NATIVE));
-		Creditmanager credit = new Creditmanager(dataService.getConcreteOrderRepository());
+		Creditmanager credit = new Creditmanager(dataService);
 		credit.updateCreditpointsByUser(acc);
 		model.addAttribute("account", acc);
 
-		Iterable<ConcreteOrder> orders = dataService.getConcreteOrderRepository().findByUser(acc.getUserAccount(),
-				sorting);
+		Iterable<ConcreteOrder> orders = dataService.getConcreteOrderRepository().findByUser(acc, sorting);
 		Money turnover = Money.of(0, "EUR");
 		for (ConcreteOrder order : orders) {
 			turnover = turnover.add(order.getOrder().getTotalPrice());
@@ -272,21 +239,20 @@ public class AdminController {
 	@RequestMapping(value = "/admin/changeuser/editedUser", method = RequestMethod.POST)
 	public String editedUserUser(@ModelAttribute("EditUserForm") @Valid EditUserForm edituserform, BindingResult result,
 			@LoggedIn Optional<UserAccount> admin, ModelMap model) {
-		ConcreteUserAccount acc = dataService.getConcreteUserAccoutnRepository().findOne(edituserform.getId());
+		ConcreteUserAccount acc = dataService.getConcreteUserAccountRepository().findOne(edituserform.getId());
 		System.out.println(acc.getEmail().equals(edituserform.getEmail()));
-		if (dataService.getConcreteUserAccoutnRepository().findByEmail(edituserform.getEmail()).isPresent()
+		if (dataService.getConcreteUserAccountRepository().findByEmail(edituserform.getEmail()).isPresent()
 				&& !(acc.getEmail().equals(edituserform.getEmail()))) {
 			ObjectError emailError = new ObjectError("email", "Die E-Mail Adresse wird bereits verwendet.");
 			result.addError(emailError);
 		}
 		if (result.hasErrors()) {
 			Sort sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "dateOrdered", Sort.NullHandling.NATIVE));
-			Creditmanager credit = new Creditmanager(dataService.getConcreteOrderRepository());
+			Creditmanager credit = new Creditmanager(dataService);
 			credit.updateCreditpointsByUser(acc);
 			model.addAttribute("account", acc);
 
-			Iterable<ConcreteOrder> orders = dataService.getConcreteOrderRepository().findByUser(acc.getUserAccount(),
-					sorting);
+			Iterable<ConcreteOrder> orders = dataService.getConcreteOrderRepository().findByUser(acc, sorting);
 			Money turnover = Money.of(0, "EUR");
 			for (ConcreteOrder order : orders) {
 				turnover = turnover.add(order.getOrder().getTotalPrice());
@@ -388,8 +354,9 @@ public class AdminController {
 
 		for (Interval key : intervals.keySet()) {
 			System.out.println(key);
-			Statistic stat = new Statistic(concreteOrderRepo, key, intervals.get(key));
+			Statistic stat = new Statistic(dataService, key, intervals.get(key));
 			stats.add(stat);
+			System.out.println("Bestellungen: "+stat.getOrders()+" Retouren: "+stat.getReturns()+" Umsatz: "+stat.getTurnover()+" Gewinn "+stat.getProfit());
 		}
 
 		model.addAttribute("stats", stats);
@@ -411,7 +378,8 @@ public class AdminController {
 	public String getWinners(ModelMap model) {
 
 		Competition com = new Competition(
-				dataService.getConcreteUserAccoutnRepository().findByRole(Role.of("ROLE_CUSTOMER")), creditmanager);
+				dataService.getConcreteUserAccountRepository().findByRole(Role.of("ROLE_CUSTOMER")),
+				new Creditmanager(dataService));
 
 		model.addAttribute("winners", com.getWinners());
 		com.getWinners().forEach(x -> System.out.println(x.getUserAccount().getUsername() + " " + x.getCredits()));

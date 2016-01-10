@@ -164,7 +164,7 @@
 									</a>
 								</div>
 								<div class="rating">
-									<span class="filled" th:each="i : ${concreteproduct.rating}">☆</span>
+									<span class="filled" th:each="i : ${#numbers.sequence(1, concreteproduct.averageRating)}">☆</span>
 								</div>
 								<a th:text="${concreteproduct.ratings}+' Bewertung(en)'"></a> <a
 									class="price-thumbnail" th:text="${concreteproduct.priceFloat}"></a>

@@ -28,7 +28,7 @@
 				<h3 th:text="@{'Sie wurden geworben von: '}"></h3>
 				<h3>Ihre Werbungen:</h3>
 					<ul>
-						<li th:each="recruited : ${account.recruits}"><a th:text="@{${recruited.username} + ' (' + ${recruited.email} + ')'}"></a>
+						<li th:each="recruited : ${account.recruits}"><a th:text="@{${recruited.userAccount.username} + ' (' + ${recruited.email} + ')'}"></a>
 					</ul>
 				<h3 th:text="@{'Punktestand: ' + ${account.credits}}">Punktestand:</h3>
 				

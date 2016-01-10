@@ -10,21 +10,24 @@ import internetkaufhaus.entities.ConcreteUserAccount;
  *
  * @author Wilhelm Mundt
  * 
- * A CreditComparator for sorting UserAccounts by credits.
+ *         A CreditComparator for sorting UserAccounts by credits.
  */
 public class CreditComparator implements Comparator<ConcreteUserAccount> {
-	
-	
+
 	/**
-	 * The compare method compares the credit amount of two existing user accounts.
+	 * The compare method compares the credit amount of two existing user
+	 * accounts.
 	 *
-	 * @param o1 the o1
-	 * @param o2 the o2
+	 * @param o1
+	 *            the o1
+	 * @param o2
+	 *            the o2
 	 * @return integer, which account has more credits
 	 */
 	@Override
 	public int compare(ConcreteUserAccount o1, ConcreteUserAccount o2) {
-		return Integer.valueOf(o1.getCredits()).compareTo(Integer.valueOf(o2.getCredits()));
+		return Integer.valueOf(o1.getCredits().getNumber().toString())
+				.compareTo(Integer.valueOf(o2.getCredits().getNumber().toString()));
 	}
 
 }
