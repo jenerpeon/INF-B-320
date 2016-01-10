@@ -3,6 +3,7 @@ package internetkaufhaus.controller;
 
 import static org.salespointframework.core.Currencies.EURO;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.Optional;
@@ -108,7 +109,19 @@ class CartController {
 	 * @return the string
 	 */
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
-	public String cartRedirect() {
+	public String cartRedirect(ModelMap model, @ModelAttribute Cart cart, @LoggedIn Optional<UserAccount> userAccount) {
+		DecimalFormat formatter = new DecimalFormat("0.00€");
+		if(userAccount.isPresent()) {
+			long points = usablePoints(cart,
+					dataService.getConcreteUserAccountRepository().findByUserAccount(userAccount.get()).get());
+			model.addAttribute("points", points);
+			model.addAttribute("discount", formatter.format(points/100));
+		}
+		else {
+			model.addAttribute("points", 0);
+			model.addAttribute("discount", formatter.format(0));
+		}
+		
 		return "cart";
 	}
 
@@ -258,17 +271,9 @@ class CartController {
 
 			order.setDateOrdered(LocalDateTime.now());
 			
-			Creditmanager credit = new Creditmanager(dataService);
-			credit.updateCreditpointsByUser(caccount);
+			order.setUsedDiscountPoints(usablePoints(cart, caccount));
 
-			if (order.getTotalPrice().isGreaterThanOrEqualTo(Money.of(caccount.getCredits(),"EUR").divide(10))) {
-				order.setUsedDiscountPoints(caccount.getCredits());
-			}
-			else {
-				order.setUsedDiscountPoints(Math.round(order.getTotalPrice().multiply(10).getNumberStripped().doubleValue()));
-			}
-
-				order.setStatus(OrderStatus.COMPLETED);
+			order.setStatus(OrderStatus.COMPLETED);
 			dataService.getConcreteOrderRepository().save(order);
 
 			String articles = "";
@@ -290,7 +295,18 @@ class CartController {
 					"nobody@nothing.com", "Bestellung eingetroffen!");
 
 			return "redirect:/";
-		}).orElse("redirect:/login");
+		}).orElse("redirect:/#login");
+	}
+
+	private long usablePoints(Cart cart, ConcreteUserAccount caccount) {
+		Creditmanager credit = new Creditmanager(dataService);
+		credit.updateCreditpointsByUser(caccount);
+		
+		if (cart.getPrice().divide(5).isGreaterThanOrEqualTo(Money.of(caccount.getCredits(), "EUR").divide(100))) {
+			return caccount.getCredits();
+		} else {
+			return Math.round(cart.getPrice().multiply(20).getNumberStripped().doubleValue());
+		}
 	}
 
 }

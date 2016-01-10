@@ -58,5 +58,6 @@ public class Creditmanager {
 			credits = credits - order.getUsedDiscountPoints();
 		}
 		recruiter.setCredits(Math.round(credits));
+		dataService.getConcreteUserAccountRepository().save(recruiter);
 	}
 }
