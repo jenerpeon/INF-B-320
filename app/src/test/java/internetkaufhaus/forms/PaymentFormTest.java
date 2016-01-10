@@ -234,6 +234,6 @@ public class PaymentFormTest {
 		test.add("Unter der Treppe");
 		test.add("12345");
 		test.add("London");
-		assertTrue("Konstruktor funktioniert", form.getBillingAddress().containsAll(test) && form.getShippingAddress().contains(test));
+		assertTrue("Konstruktor funktioniert", form.getBillingAddress().containsAll(test) && form.getShippingAddress().containsAll(test));
 	}
 }

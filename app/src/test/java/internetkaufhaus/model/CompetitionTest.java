@@ -27,7 +27,7 @@ import internetkaufhaus.services.DataService;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
-@Transactional
+
 public class CompetitionTest extends AbstractIntegrationTests {
 
 	/** The manager. */

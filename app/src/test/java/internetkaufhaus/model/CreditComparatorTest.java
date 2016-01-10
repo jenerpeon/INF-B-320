@@ -31,7 +31,7 @@ import internetkaufhaus.entities.ConcreteUserAccount;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = Application.class)
-@Transactional
+
 public class CreditComparatorTest extends AbstractIntegrationTests{
 	
 	/** The acc1. */
