@@ -31,14 +31,6 @@ public class HeaderAdvice {
 	private DataService dataService;
 
 	/**
-	 * This is the constructor. It's neither used nor does it contain any
-	 * functionality other than storing function arguments as class attribute,
-	 * what do you expect me to write here? It's copied from CartController.
-	 */
-	public HeaderAdvice() {
-	}
-
-	/**
 	 * This is a Model Attribute. It Models Attributes. Or does it Attribute
 	 * Models? Adds the available categories to the variables used by thymeleaf
 	 * so the category list can be displayed in the navigation header.

@@ -131,25 +131,23 @@ public class AccountingService {
 						regform.getLastname(), regform.getAddress(), regform.getZipCode(), regform.getCity(),
 						regform.getPassword(), Role.of("ROLE_CUSTOMER"), dataService.getUserAccountManager());
 				this.addUser(user);
-	
+
 			} catch (Exception e) {
 				System.out.println("AccountCreation failed: npe: " + e.toString());
 				e.printStackTrace();
 				success = false;
 			}
 			// Check Recrution
-			if (success) {
-				try {
-					if (this.isRecruit(regform.getEmail())) {
-						ConcreteUserAccount invitator = this.dataService.getConcreteUserAccountRepository()
-								.findByEmail(recruit2invite.get(regform.getEmail())).get();
-						invitator.setRecruits(user);
-					}
-				} catch (Exception e) {
-					System.out.println("Recruitiong method failed: " + e.toString());
-					e.printStackTrace();
-					success = false;
+			try {
+				if (this.isRecruit(regform.getEmail())) {
+					ConcreteUserAccount invitator = this.dataService.getConcreteUserAccountRepository()
+							.findByEmail(recruit2invite.get(regform.getEmail())).get();
+					invitator.setRecruits(user);
 				}
+			} catch (Exception e) {
+				System.out.println("Recruitiong method failed: " + e.toString());
+				e.printStackTrace();
+				success = false;
 			}
 		}
 		// Register Customer

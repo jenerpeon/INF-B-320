@@ -75,14 +75,6 @@ public class AdminController {
 	private HumanResourceService humanResourceService;
 
 	/**
-	 * This is the constructor. It's neither used nor does it contain any
-	 * functionality other than storing function arguments as class attribute,
-	 * what do you expect me to write here?
-	 */
-	public AdminController() {
-	}
-
-	/**
 	 * Adds the admin navigation.
 	 *
 	 * @return the list

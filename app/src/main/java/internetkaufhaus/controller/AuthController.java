@@ -48,15 +48,6 @@ public class AuthController extends SalespointSecurityConfiguration {
 	/** The model and view. */
 	private ModelAndView modelAndView = new ModelAndView();
 
-	/**
-	 * This is the constructor. It's neither used nor does it contain any
-	 * functionality other than storing function arguments as class attribute,
-	 * what do you expect me to write here?
-	 */
-	public AuthController() {
-
-	}
-
 	/* (non-Javadoc)
 	 * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(org.springframework.security.config.annotation.web.builders.HttpSecurity)
 	 */

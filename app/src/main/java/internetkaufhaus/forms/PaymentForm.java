@@ -48,12 +48,6 @@ public class PaymentForm {
 
 	/**
 	 * Instantiates a new payment form.
-	 */
-	public PaymentForm() {
-	}
-
-	/**
-	 * Instantiates a new payment form.
 	 *
 	 * @param billingGender the billing gender
 	 * @param billingFirstName the billing first name

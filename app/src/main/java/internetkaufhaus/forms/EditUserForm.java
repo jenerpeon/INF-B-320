@@ -31,7 +31,7 @@ public class EditUserForm {
 	/** The passwordrepeat. */
 	@NotEmpty(message = "Bitte geben Sie ihr Passwort zu Überprüfung ein zweites mal an.")
 	private String passwordrepeat;
-	
+
 	/** The firstname. */
 	@NotEmpty(message = "Bitte geben Sie einen Vornamen an.")
 	@Pattern(regexp = "([A-Za-z])+", message = "Der Vorname enthält ungültige Zeichen.")
@@ -41,44 +41,34 @@ public class EditUserForm {
 	@NotEmpty(message = "Bitte geben Sie einen Nachnamen an.")
 	@Pattern(regexp = "([A-Za-z])+", message = "Der Nachname enthält ungültige Zeichen.")
 	private String lastname;
-	
+
 	/** The address. */
 	@NotEmpty(message = "Bitte geben Sie eine Adresse an.")
 	@Pattern(regexp = "([A-Za-z0-9 ,.-])+", message = "Die Adresse enthält unzulässige Zeichen.")
 	private String address;
-	
+
 	/** The city. */
 	@NotEmpty(message = "Bitte geben Sie eine Stadt an.")
 	@Pattern(regexp = "([A-Za-z0-9,.-])+", message = "Die Stadt enthält ungültige Zeichen.")
 	private String city;
-	
+
 	/** The zip code. */
 	@NotEmpty(message = "Bitte geben Sie eine Postleitzahl an.")
 	@Length(min = 5, max = 5, message = "Die Postleitzahl muss genau fünf Ziffern lang sein.")
 	@Pattern(regexp = "([0-9])+", message = "Die Postleitzahl enthält unzulässige Zeichen.")
 	private String zipCode;
-	
+
 	/** The id. */
 	private Long id;
 
 	public String getEmail() {
 		return this.email;
 	}
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public EditUserForm()
-	{
-		System.out.println("");
-	}
-	
 	public Long getId() {
 		return this.id;
 	}
@@ -130,6 +120,7 @@ public class EditUserForm {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	/**
 	 * Gets the passwordrepeat.
 	 *
@@ -138,6 +129,7 @@ public class EditUserForm {
 	public String getPasswordrepeat() {
 		return passwordrepeat;
 	}
+
 	/**
 	 * Sets the passwordrepeat.
 	 *

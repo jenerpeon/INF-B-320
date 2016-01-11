@@ -169,7 +169,7 @@ public class ManagementController {
 		model.addAttribute("categories", dataService.getConcreteProductRepository().getCategories());
 		return "changecatalognewitem";
 	}
-	
+
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page adds an article as requested by an employee and then redirects
@@ -184,10 +184,11 @@ public class ManagementController {
 	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/changecatalog/addedArticle", method = RequestMethod.POST)
-	public String addedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm,
-			@RequestParam("image") MultipartFile img, BindingResult result) {
+	public String addedArticle(@RequestParam("image") MultipartFile img,
+			@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
-			return "redirect:/employee/changecatalog/addArticle/";
+			model.addAttribute("message", result.getAllErrors());
+			return "changecatalognewitem";
 		}
 
 		if (!img.isEmpty()) {
@@ -207,7 +208,7 @@ public class ManagementController {
 		productManagementService.addProduct(editForm, img);
 		return "redirect:/employee/changecatalog";
 	}
-	
+
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the edit article form for employees.
@@ -226,7 +227,7 @@ public class ManagementController {
 		model.addAttribute("buyingPrice", prod.getBuyingPrice().getNumber());
 		return "changecatalogchangeitem";
 	}
-	
+
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page edits an article as requested by an employee and then redirects
@@ -241,10 +242,12 @@ public class ManagementController {
 	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/changecatalog/editedArticle", method = RequestMethod.POST)
-	public String editedArticle(@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm,
-			@RequestParam("image") MultipartFile img, BindingResult result) {
+	public String editedArticle(@RequestParam("image") MultipartFile img,
+			@ModelAttribute("editArticleForm") @Valid EditArticleForm editForm, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
-			return "redirect:/employee/changecatalog/editArticle/";
+			model.addAttribute("concreteproduct", editForm.getProdId());
+			model.addAttribute("message", result.getAllErrors());
+			return "changecatalogchangeitem";
 		}
 
 		if (!img.isEmpty()) {
@@ -261,12 +264,12 @@ public class ManagementController {
 		} else {
 			System.out.println("no file submitted, nothing to see here.");
 		}
-		
+
 		productManagementService.editProduct(editForm, img);
 
 		return "redirect:/employee/changecatalog";
 	}
-	
+
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the delete article form which the user has to fill to
@@ -299,7 +302,7 @@ public class ManagementController {
 		productManagementService.deleteProduct(prod);
 		return "redirect:/employee/changecatalog";
 	}
-	
+
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the order-article-form where employees choose how many
@@ -365,7 +368,7 @@ public class ManagementController {
 		productManagementService.destroyProduct(stockForm, userAccount);
 		return "redirect:/employee/changecatalog";
 	}
-	
+
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows not (yet) accepted comments, so employees can review and
@@ -434,7 +437,7 @@ public class ManagementController {
 
 		return "redirect:/employee/comments";
 	}
-	
+
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows an overview of all orders.
@@ -446,11 +449,13 @@ public class ManagementController {
 	@RequestMapping(value = "/employee/orders")
 	public String orders(ModelMap model) {
 		model.addAttribute("ordersPaid", dataService.getConcreteOrderRepository().findByStatus(OrderStatus.PAID));
-		model.addAttribute("ordersCancelled", dataService.getConcreteOrderRepository().findByStatus(OrderStatus.CANCELLED));
-		model.addAttribute("ordersCompleted", dataService.getConcreteOrderRepository().findByStatus(OrderStatus.COMPLETED));
+		model.addAttribute("ordersCancelled",
+				dataService.getConcreteOrderRepository().findByStatus(OrderStatus.CANCELLED));
+		model.addAttribute("ordersCompleted",
+				dataService.getConcreteOrderRepository().findByStatus(OrderStatus.COMPLETED));
 		return "orders";
 	}
-	
+
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page marks an order as accepted, sends out the corresponding E-Mail
@@ -481,8 +486,8 @@ public class ManagementController {
 			dataService.getConcreteProductRepository().save(prod);
 		}
 
-		String mail = "Sehr geehrte(r) " + o.getUserAccount().getFirstname() + " "
-				+ o.getUserAccount().getLastname() + "!\n";
+		String mail = "Sehr geehrte(r) " + o.getUserAccount().getFirstname() + " " + o.getUserAccount().getLastname()
+				+ "!\n";
 		mail += "Ihre unten aufgeführte Bestellung vom " + o.getDateCreated().toString()
 				+ " wurde von einem unserer Mitarbeiter bearbeitet und ist nun auf dem Weg zu Ihnen!\n";
 		mail += "Es handelt sich um Ihre Bestellung folgender Artikel:";
@@ -556,8 +561,7 @@ public class ManagementController {
 				orderLines.put(i, i.getPrice().getNumberStripped().doubleValue());
 			}
 			model.addAttribute("orderLines", orderLines);
-			model.addAttribute("totalPrice",
-					dataService.getConcreteOrderRepository().findOne(orderId).getTotalPrice());
+			model.addAttribute("totalPrice", dataService.getConcreteOrderRepository().findOne(orderId).getTotalPrice());
 		}
 		model.addAttribute("order", o);
 		return "orderdetail";

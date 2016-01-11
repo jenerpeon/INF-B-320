@@ -35,14 +35,6 @@ public class ShopController {
 	private DataService dataService;
 
 	/**
-	 * This is the constructor. It's neither used nor does it contain any
-	 * functionality other than storing function arguments as class attribute,
-	 * what do you expect me to write here?
-	 */
-	public ShopController() {
-	}
-
-	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the main page.
 	 *

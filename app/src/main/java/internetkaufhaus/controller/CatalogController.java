@@ -32,7 +32,6 @@ import com.google.common.collect.Iterators;
 
 import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteProduct;
-import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 import internetkaufhaus.services.ConcreteMailService;
 import internetkaufhaus.services.DataService;
 import internetkaufhaus.services.NewsletterService;
@@ -73,8 +72,7 @@ public class CatalogController {
 	 *            the sender
 	 */
 	@Autowired
-	public CatalogController(NewsletterService newsManager, ConcreteMailService sender,
-			ConcreteUserAccountRepository usermanager) {
+	public CatalogController(NewsletterService newsManager, ConcreteMailService sender) {
 		this.newsManager = newsManager;
 		this.sender = sender;
 	}
@@ -129,7 +127,7 @@ public class CatalogController {
 	 * @return the string
 	 */
 	@RequestMapping("/catalog/{type}")
-	public String category(@PathVariable("type") String category, ModelMap model) {
+	public String category(@PathVariable("type") String category) {
 		return "redirect:/catalog/" + category + '/' + "name,asc/1/6/1";
 	}
 
@@ -317,7 +315,7 @@ public class CatalogController {
 	 *             the parse exception
 	 */
 	@RequestMapping(value = "/newsletter", method = RequestMethod.GET)
-	public String newsletter(@RequestParam("email") String sendTo, ModelMap model) throws ParseException {
+	public String newsletter(@RequestParam("email") String sendTo) throws ParseException {
 		String text = "Sie haben sich für den Woods Super Dooper Shop Newsletter angemeldet.";
 		String username;
 

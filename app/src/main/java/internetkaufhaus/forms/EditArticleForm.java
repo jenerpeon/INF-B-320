@@ -1,5 +1,8 @@
 package internetkaufhaus.forms;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Pattern;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 import internetkaufhaus.entities.ConcreteProduct;
@@ -14,21 +17,24 @@ public class EditArticleForm {
 	private ConcreteProduct prodId;
 
 	/** The category. */
-	@NotEmpty(message = "{EditArticleForm.category.NotEmpty}")
+	@NotEmpty(message = "Bitte geben Sie eine Kategorie an.")
+	@Pattern(regexp = "([A-Za-z])+", message = "Die Kategorie enthält unzulässige Zeichen")
 	private String category;
 
 	/** The name. */
-	@NotEmpty(message = "{EditArticleForm.name.NotEmpty}")
+	@NotEmpty(message = "Bitte geben Sie einen Artikelnamen an.")
 	private String name;
 	
 	/** The buying price. */
+	@DecimalMin(message = "Bitte geben Sie einen Einkaufspreis an.", value = "0")
 	private float buyingPrice;
 
 	/** The price. */
+	@DecimalMin(message = "Bitte geben Sie einen Preis an.", value = "0")
 	private float price;
 
 	/** The description. */
-	@NotEmpty(message = "{EditArticleForm.description.NotEmpty}")
+	@NotEmpty(message = "Bitte geben Sie eine Beschreibung an.")
 	private String description;
 
 	/**

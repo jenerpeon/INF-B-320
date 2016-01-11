@@ -607,14 +607,13 @@ public class Initialize implements DataInitializer {
 				int productNumber = rand.nextInt(2) + 1;
 				for (int j = 0; j < productNumber; j++) {
 					ConcreteProduct prod = allProductsList.get(rand.nextInt(allProductsList.size() - 1));
-					Quantity quant = Quantity.of(rand.nextInt(5) + 1);
+					Quantity quant = Quantity.of(new Long(rand.nextInt(5) + 1));
 					orderCart.addOrUpdateItem(prod, quant);
 					while (!dataService.getConcreteInventory().findByProduct(prod).get().hasSufficientQuantity(quant)) {
 						stockCart.addOrUpdateItem(prod, Quantity.of(20));
-						dataService.getConcreteInventory().findByProduct(prod).ifPresent(x -> {
-							x.increaseQuantity(Quantity.of(20));
-							dataService.getConcreteInventory().save(x);
-						});
+						InventoryItem item = dataService.getConcreteInventory().findByProduct(prod).get();
+						item.increaseQuantity(Quantity.of(20));
+						dataService.getConcreteInventory().save(item);
 					}
 					dataService.getConcreteInventory().findByProduct(prod).ifPresent(x -> {
 						x.decreaseQuantity(quant);

@@ -51,6 +51,12 @@
 	text-align: center;
 	padding: 0 0 0 0;
 }
+
+#workframe #error {
+	list-style-type: none;
+	flex-basis: 100%;
+}
+
 #workframe .article .name {
 	max-width: 400px;
 	overflow: hidden;

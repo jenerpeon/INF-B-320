@@ -42,31 +42,6 @@ public class Statistic {
 		calculateStatistics();
 	}
 
-	/*
-	 * private Money getTournover(Iterable<Order> orders) { Money turnover =
-	 * Money.of(0, "EUR"); for (Order o : orders) { if
-	 * (o.getOrderStatus().equals(OrderStatus.COMPLETED))
-	 * turnover.add(o.getTotalPrice()); } return turnover; }
-	 */
-
-	/*
-	 * private Money getTournover(Iterable<Order> orders) { Money turnover =
-	 * Money.of(0, EURO); for (Order o : orders) { if
-	 * (o.getOrderStatus().equals(OrderStatus.COMPLETED))
-	 * turnover.add(o.getTotalPrice()); } return turnover; }
-	 */
-
-	/*
-	 * The getTurnoverByInterval method is used to get all orders with the
-	 * ordervalue and orderstatus each during a given time.
-	 * 
-	 * @param i time interval
-	 * 
-	 * @param unit
-	 * 
-	 * @return a list containing elements with orderstatus and ordervalue
-	 */
-
 	public Interval getInterval() {
 		return this.interval;
 	}
@@ -103,11 +78,13 @@ public class Statistic {
 		this.unit = unit;
 	}
 
-	private void calculateStatistics() {
+	private boolean calculateStatistics() {
 		LocalTime midnight = LocalTime.MIDNIGHT;
 		LocalDate start = interval.getStart().toLocalDate();
 		LocalDate end = interval.getEnd().toLocalDate();
 		switch (unit) {
+		default:
+			return false;
 		case "day":
 			for (LocalDate j = end; j.isAfter(start) || j.isEqual(start); j = j.minusDays(1)) {
 				
@@ -135,7 +112,7 @@ public class Statistic {
 				expenses.put(j, intervalStockMoney);
 				profit.put(j, intervalMoney.subtract(intervalStockMoney));
 			}
-			break;
+			return true;
 		case "week":
 			for (LocalDate j = end; j.isAfter(start) || j.isEqual(start); j = j.minusWeeks(1)) {
 				
@@ -163,7 +140,7 @@ public class Statistic {
 				expenses.put(j, intervalStockMoney);
 				profit.put(j, intervalMoney.subtract(intervalStockMoney));
 			}
-			break;
+			return true;
 		case "month":
 			for (LocalDate j = end; j.isAfter(start) || j.isEqual(start); j = j.minusMonths(1)) {
 				
@@ -191,7 +168,7 @@ public class Statistic {
 				expenses.put(j, intervalStockMoney);
 				profit.put(j, intervalMoney.subtract(intervalStockMoney));
 			}
-			break;
+			return true;
 		case "year":
 			for (LocalDate j = end; j.isAfter(start) || j.isEqual(start); j = j.minusYears(1)) {
 				
@@ -219,67 +196,7 @@ public class Statistic {
 				expenses.put(j, intervalStockMoney);
 				profit.put(j, intervalMoney.subtract(intervalStockMoney));
 			}
-			break;
+			return true;
 		}
-		/*
-		 * List<Money> turnover = new ArrayList<Money>(); long duration =
-		 * i.getDuration().toDays(); int steps = (int) (duration / q);
-		 * LocalDateTime start = i.getStart(); for (int j = 0; j < steps; j +=
-		 * q) { Set<Order> orders = new HashSet<Order>(); LocalDateTime from =
-		 * start.plusDays((long) j * q); LocalDateTime to =
-		 * start.plusDays((long) j * (q + 1)); orders = (Set<Order>)
-		 * orderManager.findBy(Interval.from(from).to(to));
-		 * turnover.add(getTournover(orders)); }
-		 */
-
-		/*
-		 * List<Money> turnover = new ArrayList<Money>(); long duration =
-		 * i.getDuration().toDays(); int steps = (int) (duration / q);
-		 * LocalDateTime start = i.getStart(); for (int j = 0; j < steps; j +=
-		 * Set<Order> orders = new HashSet<Order>(); LocalDateTime from =
-		 * start.plusDays((long) j * q); LocalDateTime to =
-		 * start.plusDays((long) j * (q + 1)); orders = (Set<Order>)
-		 * orderManager.findBy(Interval.from(from).to(to));
-		 * turnover.add(getTournover(orders)); }
-		 */
 	}
-
-	/**
-	 * The getSales method finds out how much completed orders are existing
-	 * inside a given Iterable
-	 * 
-	 * @param orders
-	 *            Iterable with orders
-	 *
-	 * 
-	 * @return an Integer showing how much orders part of the given Iterable are
-	 *         completed
-	 */
-	/*
-	 * private Integer getSales(Iterable<Order> orders) { int sum = 0; for
-	 * (Order o : orders) { if
-	 * (o.getOrderStatus().equals(OrderStatus.COMPLETED)) sum += 1; } return
-	 * sum; }
-	 * 
-	 * public List<Integer> getSalesByInterval(Interval i, int q) {
-	 * List<Integer> sales = new ArrayList<Integer>(); long duration =
-	 * i.getDuration().toDays(); int steps = (int) (duration / q); LocalDateTime
-	 * start = i.getStart(); for (int j = 0; j < steps; j += q) { Set<Order>
-	 * orders = new HashSet<Order>(); LocalDateTime from = start.plusDays((long)
-	 * j * q); LocalDateTime to = start.plusDays((long) j * (q + 1)); orders =
-	 * (Set<Order>) orderManager.findBy(Interval.from(from).to(to));
-	 * sales.add(getSales(orders)); } return sales; }
-	 * 
-	 * /* Purchcases and profit calculation are not yet implemented
-	 */
-	/*
-	 * public List<Integer> getPurchasesByInterval(Interval i, int q) { return
-	 * null; // TODO: implement this }
-	 * 
-	 * public List<Money> getProfitByInterval(Interval i, int q) { return null;
-	 * // TODO: implement this }
-	 * 
-	 * public List<Integer> getRetoursByInterval(Interval i, int q) { return
-	 * null; // TODO: implement this }
-	 */
 }
