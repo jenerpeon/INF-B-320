@@ -9,15 +9,12 @@ import org.junit.Test;
  */
 public class HeaderAdviceTest {
 	
-	/** The advice. */
-	private HeaderAdvice advice;
-
 	/**
 	 * Inits the.
 	 */
 	@Before
 	public void init() {
-		advice = new HeaderAdvice();
+		new HeaderAdvice();
 	}
 
 	/**
