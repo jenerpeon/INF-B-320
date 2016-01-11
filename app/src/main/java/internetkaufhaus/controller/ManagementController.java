@@ -218,7 +218,6 @@ public class ManagementController {
 			for (Comment c : prods.getComments()) {
 				if (c.getId() == comId) {
 					prods.removeComment(c);
-					c.getProduct().updateAverageRating();
 					break_outer = true;
 					// prevents modification while interation
 					break;
@@ -241,9 +240,8 @@ public class ManagementController {
 	@RequestMapping("/employee/comments")
 	public String comments(ModelMap model) {
 		List<Comment> comlist = new ArrayList<Comment>();
-		for (ConcreteProduct prods : catalog.findAll()) {
+		for (ConcreteProduct prods : catalog.findAll()) 
 			comlist.addAll(prods.getUnacceptedComments());
-		}
 		model.addAttribute("Comments", comlist);
 		return "comments";
 	}

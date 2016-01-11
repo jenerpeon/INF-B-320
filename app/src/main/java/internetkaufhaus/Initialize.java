@@ -5,7 +5,9 @@ import static org.salespointframework.core.Currencies.EURO;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.javamoney.moneta.Money;
@@ -19,6 +21,7 @@ import org.salespointframework.order.OrderManager;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.quantity.Quantity;
+import org.salespointframework.time.Interval;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,7 @@ import internetkaufhaus.model.Search;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
+import internetkaufhaus.services.StatisticService;
 
 /**
  * This class initializes default data which is used to test the functionality
@@ -50,6 +54,7 @@ public class Initialize implements DataInitializer {
 	private final ConcreteProductRepository concreteProductRepository;
 	private final ConcreteOrderRepository concreteOrderRepo;
 	private final Search productSearch;
+	private final StatisticService statService;
 
 	/**
 	 * This is the constructor. It's neither used nor does it contain any
@@ -64,8 +69,7 @@ public class Initialize implements DataInitializer {
 	 *            singleton, passed by spring/salespoint
 	 * @param ConcreteUserAccountManager
 	 *            singleton, passed by spring/salespoint
-	 * @param inventory
-	 *            singleton, passed by spring/salespoint
+	 * @param inventory *            singleton, passed by spring/salespoint
 	 * @param orderManager
 	 *            singleton, passed by spring/salespoint
 	 * @param productSearch
@@ -78,7 +82,7 @@ public class Initialize implements DataInitializer {
 	 *            singleton, passed by spring/salespoint
 	 */
 	@Autowired
-	public Initialize(ConcreteOrderRepository concreteOrderRepo, Catalog<ConcreteProduct> productCatalog,
+	public Initialize(StatisticService statService, ConcreteOrderRepository concreteOrderRepo, Catalog<ConcreteProduct> productCatalog,
 			UserAccountManager userAccountManager, ConcreteUserAccountRepository ConcreteUserAccountManager,
 			Inventory<InventoryItem> inventory, OrderManager<Order> orderManager, Search productSearch,
 			ConcreteProductRepository concreteProductRepository) {
@@ -91,6 +95,7 @@ public class Initialize implements DataInitializer {
 		this.orderManager = orderManager;
 		this.concreteProductRepository = concreteProductRepository;
 		this.concreteOrderRepo = concreteOrderRepo;
+		this.statService = statService;
 	}
 
 	/**
@@ -107,6 +112,7 @@ public class Initialize implements DataInitializer {
 		// representing the stock
 		initializeInventory(productCatalog, inventory);
 		initializeOrders(concreteOrderRepo, concreteProductRepository, orderManager, concreteUserAccountManager);
+		statisticsTest();
 
 	}
 
@@ -452,10 +458,15 @@ public class Initialize implements DataInitializer {
 				Money.of(29.95, EURO), Money.of(23.96, EURO), "Schmuck",
 				"Wunderschöner Damenring aus 925er Silber der Marke Celesta. Der Damenring hat Zirkoniasteine und ist rosévergoldet.",
 				"https://eng.wikipedia.org/wiki/Fuzz", "SProdukt_368270033.jpg"));
-		prods.get(20).addComment(new Comment("Kommentar!", 4, new Date(), "Kooomentar!"),
-				concreteUserAccountManager.findAll().iterator().next());
+
+		ConcreteUserAccount commentator = concreteUserAccountManager.findAll().iterator().next();
+		Comment c = new Comment("Kommentar!", 4, new Date(), "Kooomentar!");
+		prods.get(20).addComment(c, commentator);
+		userAccountManager.save(commentator.getUserAccount());
+        concreteUserAccountManager.save(commentator);       
 		productCatalog.save(prods);
 		concreteProductRepository.save(prods);
+
 		productSearch.addProds(productCatalog.findAll());
 	}
 
@@ -549,10 +560,14 @@ public class Initialize implements DataInitializer {
 			order.setShippingHouseNumber("2");
 			order.setShippingTown(u.getCity());
 			order.setShippingZipCode(u.getZipCode());
-			orderManager.payOrder(o);
+//			orderManager.payOrder(o);
 			// only set orderManager.payOrder(o), do not use
 			// orderManager.completeOrder(0), to complete Order look at the next
 			// line!
+			orderManager.completeOrder(o);
+			orderManager.payOrder(o);
+
+			
 			order.setStatus(OrderStatus.COMPLETED);
 			// to complete Order do not use orderManager.completeOrder
 			order.setDateOrdered(LocalDateTime.now().minusDays(31));
@@ -560,5 +575,32 @@ public class Initialize implements DataInitializer {
 			orderManager.save(o);
 		}
 		c.clear();
+	}
+	private void statisticsTest(){
+
+		LocalDateTime to = LocalDateTime.now();
+		LocalDateTime from7Days = to.minusDays(7);
+		LocalDateTime from1Month = to.minusMonths(1);
+		LocalDateTime from3Month = to.minusMonths(3);
+		LocalDateTime from1Year = to.minusYears(1);
+		LocalDateTime from3Year = to.minusYears(3);
+		LocalDateTime from5Year = to.minusYears(5);
+		LocalDateTime from10Year = to.minusYears(10);
+
+		Map<Interval, String> intervals = new HashMap<Interval, String>();
+		intervals.put(Interval.from(from7Days).to(to), "day");
+		intervals.put(Interval.from(from1Month).to(to), "week");
+		intervals.put(Interval.from(from3Month).to(to), "month");
+		intervals.put(Interval.from(from1Year).to(to), "month");
+		intervals.put(Interval.from(from3Year).to(to), "year");
+		intervals.put(Interval.from(from5Year).to(to), "year");
+		intervals.put(Interval.from(from10Year).to(to), "year");
+		
+		System.out.println("statistic initializer ok");
+		
+//		for(Interval i : intervals.keySet()){
+    		System.out.println("recent stats"+statService.getTurnoverByInterval(Interval.from(from1Year).to(to), "week"));
+//		}
+		
 	}
 }

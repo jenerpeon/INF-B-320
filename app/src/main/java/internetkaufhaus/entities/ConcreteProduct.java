@@ -4,6 +4,7 @@ import static org.salespointframework.core.Currencies.EURO;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import java.util.stream.IntStream;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,6 +23,7 @@ import org.salespointframework.catalog.Product;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
+import org.springframework.data.annotation.Id;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -31,6 +34,11 @@ import org.salespointframework.quantity.Quantity;
 public class ConcreteProduct extends Product {
 
 	/** The Constant serialVersionUID. */
+	@Column(name = "CPRODUCT_ID")
+	@Id
+	@GeneratedValue
+	private Long id;
+
 	private static final long serialVersionUID = 1L;
 
 	/** The category. */
@@ -61,6 +69,7 @@ public class ConcreteProduct extends Product {
 	private float averageRating = 0;
 
 	/** The comments. */
+	// @Column (name = "COMMENTS")
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH,
 			CascadeType.REMOVE }, mappedBy = "product", orphanRemoval = true)
 	private List<Comment> comments = new LinkedList<Comment>();
@@ -119,7 +128,7 @@ public class ConcreteProduct extends Product {
 	 */
 	public boolean isCommentator(ConcreteUserAccount user) {
 		for (Comment c : comments) {
-			if (c.getUserAccount().equals(user))
+			if (c.getUser().equals(user))
 				return true;
 		}
 		return false;
@@ -132,13 +141,15 @@ public class ConcreteProduct extends Product {
 	 */
 	public List<Integer> getRating() {
 		double rating = 0;
-		if (comments.isEmpty())
-			return null;
-		for (Comment c : this.getAcceptedComments()) {
-			rating += c.getRating();
+		try {
+			for (Comment c : this.getAcceptedComments()) {
+				rating += c.getRating();
+			}
+			rating = (rating / (this.getAcceptedComments().size()) + (0.5));
+			return IntStream.range(0, (int) rating).boxed().collect(Collectors.toList());
+		} catch (Exception e) {
+			return new ArrayList();
 		}
-		rating = (rating / (this.getAcceptedComments().size()) + (0.5));
-		return IntStream.range(0, (int) rating).boxed().collect(Collectors.toList());
 	}
 
 	/**
@@ -210,12 +221,16 @@ public class ConcreteProduct extends Product {
 	 */
 	public List<Comment> getAcceptedComments() {
 		List<Comment> l = new LinkedList<Comment>();
-		for (Comment c : this.comments) {
-			if (c.isAccepted()) {
-				l.add(c);
+		try {
+			for (Comment c : this.comments) {
+				if (c.isAccepted()) {
+					l.add(c);
+				}
 			}
+			return l;
+		} catch (Exception e) {
+			return l;
 		}
-		return l;
 	}
 
 	/**
@@ -225,12 +240,18 @@ public class ConcreteProduct extends Product {
 	 */
 	public List<Comment> getUnacceptedComments() {
 		List<Comment> l = new LinkedList<Comment>();
-		for (Comment c : this.comments) {
-			if (!c.isAccepted()) {
-				l.add(c);
+		try {
+			for (Comment c : this.comments) {
+				if (!c.isAccepted()) {
+					l.add(c);
+					System.out.println("found comment" + c);
+				}
 			}
+			return l;
+		} catch (Exception e) {
+			// System.out.println("no Comments in commentlist");
+			return l;
 		}
-		return l;
 	}
 
 	/**

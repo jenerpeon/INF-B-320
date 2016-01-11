@@ -1,5 +1,6 @@
 package internetkaufhaus.repositories;
 
+import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.useraccount.UserAccount;
 import org.springframework.data.repository.CrudRepository;
@@ -11,6 +12,7 @@ public interface ConcreteOrderRepository extends CrudRepository<ConcreteOrder, L
 
 	Iterable<ConcreteOrder> findByStatus(OrderStatus state);
 
+    ConcreteOrder findByOrder(Order order);	
 	ConcreteOrder findById(Long id);
 
 	Iterable<ConcreteOrder> findByUser(UserAccount user);

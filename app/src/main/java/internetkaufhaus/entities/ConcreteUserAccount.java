@@ -6,12 +6,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -27,11 +28,13 @@ public class ConcreteUserAccount implements Serializable {
 	private static final long serialVersionUID = 3L;
 
 	/** The comments. */
-	@ManyToMany
-	@JoinColumn(name = "COMMENT", nullable = false)
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH,
+			CascadeType.REMOVE }, mappedBy = "user", orphanRemoval = true)
 	private List<Comment> comments = new ArrayList<Comment>();
+
 	@ManyToMany
 	private List<UserAccount> recruits = new ArrayList<UserAccount>();
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -102,6 +105,7 @@ public class ConcreteUserAccount implements Serializable {
 	}
 
 	public void addComment(Comment c) {
+		c.setUser(this);
 		this.comments.add(c);
 	}
 
