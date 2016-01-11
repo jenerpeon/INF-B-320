@@ -105,10 +105,10 @@ public class HeaderAdvice {
 	 * 
 	 * @param exception
 	 * @return "error500"
-	 */
+	 *//*
 	@ExceptionHandler(value = Exception.class)
 	public String handleExceptions(Exception exception, ModelMap model) {
 		model.addAttribute("exception", exception.toString());
 		return "error500";
-	}
+	}*/
 }
