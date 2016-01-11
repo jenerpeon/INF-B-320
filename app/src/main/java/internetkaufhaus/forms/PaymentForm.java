@@ -15,35 +15,33 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class PaymentForm {
 
 	/** The card name. */
-	@NotEmpty(message = "cardname is mandatory")
-	// @Pattern(regexp = "([A-Za-z])+", message = "cardname contains illegal
-	// characters")
+	@NotEmpty(message = "Bitte geben Sie einen Kartennamen an.")
+	@Pattern(regexp = "([A-Za-z -/])+", message = "Der Kartenname enthält unzulässige Zeichen.")
 	private String cardName;
 
 	/** The card association name. */
-	@NotEmpty(message = "cardAssociationName field is mandatory")
-	@Pattern(regexp = "([A-Za-z ])+", message = "cardAssociationName contains illegal characters")
+	@NotEmpty(message = "Biite geben Sie den Banknamen der Karte an.")
+	@Pattern(regexp = "([A-Za-z ])+", message = "Der Bankname enthält unzulässige Zeichen.")
 	private String cardAssociationName;
 
 	/** The card number. */
-	@NotEmpty(message = "cardNumber field is mandatory")
-	@Pattern(regexp = "([0-9])+", message = "cardNumber contains illegal characters")
+	@NotEmpty(message = "Bitte geben Sie die Kartennummer an.")
+	@Pattern(regexp = "([0-9])+", message = "Die Kartennummer enthält unzulässige Zeichen.")
 	private String cardNumber;
 
 	/** The name on card. */
-	@NotEmpty(message = "nameOnCard field is mandatory")
-	@Pattern(regexp = "([A-Za-z ])+", message = "nameOnCard contains illegal characters")
+	@NotEmpty(message = "Bitte geben Sie den Namen auf der Karte an.")
+	@Pattern(regexp = "([A-Za-z ])+", message = "Der Name auf der Karte erhält unzulässige Zeichen.")
 	private String nameOnCard;
 
 	/** The expiry date. */
-	@NotEmpty(message = "expiryDate field is mandatory")
-	// @Pattern(regexp = "([A-Z0-9.:-])+", message = "expiryDate contains
-	// illegal characters")
+	@NotEmpty(message = "Bitte geben Sie das Ablaufdatum der Karte an.")
+	@Pattern(regexp = "([0-9-])+", message = "Das Ablaufdatum er Karte enthält unzulässige Zeichen.")
 	private String expiryDate;
 
 	/** The card verification code. */
-	@NotEmpty(message = "cardVerificationCode field is mandatory")
-	@Pattern(regexp = "([0-9])+", message = "cardVerificationCode contains illegal characters")
+	@NotEmpty(message = "Bitte geben Sie die Prüfziffern an.")
+	@Pattern(regexp = "([0-9])+", message = "Die Prüfziffern enthalten unzulässige Zeichen.")
 	private String cardVerificationCode;
 
 	/**

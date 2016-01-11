@@ -25,6 +25,9 @@
 			</div>
 		
 			<div id="workframe">
+			<ul id="error" th:if="${message != null}">
+				<li th:each="line : ${message}"><a th:text="${line.getDefaultMessage()}"></a></li>
+			</ul>
 				<form id="data" method="post" th:action="@{/customer/data/changed}">
 					<fieldset>
 						<legend>

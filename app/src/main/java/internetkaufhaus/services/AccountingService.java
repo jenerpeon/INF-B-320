@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import internetkaufhaus.entities.ConcreteUserAccount;
-import internetkaufhaus.forms.RegistrationForm;
+import internetkaufhaus.forms.StandardUserForm;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -114,7 +114,7 @@ public class AccountingService {
 	 *            the regform
 	 * @return true, if successful
 	 */
-	public boolean registerNew(RegistrationForm regform) {
+	public boolean registerNew(StandardUserForm regform) {
 		boolean success = true;
 		ConcreteUserAccount user = null;
 		if (regform == null) {

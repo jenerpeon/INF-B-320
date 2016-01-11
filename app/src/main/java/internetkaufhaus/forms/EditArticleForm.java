@@ -18,7 +18,7 @@ public class EditArticleForm {
 
 	/** The category. */
 	@NotEmpty(message = "Bitte geben Sie eine Kategorie an.")
-	@Pattern(regexp = "([A-Za-z])+", message = "Die Kategorie enthält unzulässige Zeichen")
+	@Pattern(regexp = "([A-Za-zß])+", message = "Die Kategorie enthält unzulässige Zeichen")
 	private String category;
 
 	/** The name. */

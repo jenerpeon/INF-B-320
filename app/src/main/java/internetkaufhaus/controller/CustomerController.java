@@ -14,6 +14,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +24,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteUserAccount;
-import internetkaufhaus.forms.EditCustomerForm;
+import internetkaufhaus.forms.StandardAccountForm;
 import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.model.NavItem;
 import internetkaufhaus.services.DataService;
@@ -89,7 +91,20 @@ public class CustomerController {
 
 	@RequestMapping(value = "/customer/data/changed", method = RequestMethod.POST)
 	public String customerDataChanged(@LoggedIn Optional<UserAccount> userAccount,
-			@ModelAttribute("editCustomerForm") @Valid EditCustomerForm editForm) {
+			@ModelAttribute("editCustomerForm") @Valid StandardAccountForm editForm, BindingResult result,
+			ModelMap model) {
+		if (dataService.getConcreteUserAccountRepository().findByEmail(editForm.getEmail()).isPresent()
+				&& !(dataService.getConcreteUserAccountRepository().findByUserAccount(userAccount.get()).get()
+						.getEmail().equals(editForm.getEmail()))) {
+			ObjectError emailError = new ObjectError("email", "Die E-Mail Adresse wird bereits verwendet.");
+			result.addError(emailError);
+		}
+		if (result.hasErrors()) {
+			model.addAttribute("account",
+					dataService.getConcreteUserAccountRepository().findByUserAccount(userAccount.get()).get());
+			model.addAttribute("message", result.getAllErrors());
+			return "customerdata";
+		}
 		humanResourceService.changeCustomer(editForm, userAccount);
 		return "redirect:/customer/data";
 	}

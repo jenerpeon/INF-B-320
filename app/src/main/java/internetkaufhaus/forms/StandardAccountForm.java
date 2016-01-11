@@ -13,7 +13,7 @@ import cz.jirutka.validator.spring.SpELAssert;
  * The Class EditUserForm.
  */
 @SpELAssert(value = "password.equals(passwordrepeat)", message = "Die Passwörter stimmen nicht überein")
-public class EditCustomerForm {
+public class StandardAccountForm {
 	
 	/** The email. */
 	@NotEmpty(message = "Bitte geben Sie eine E-Mail Adresse an.")
@@ -22,17 +22,17 @@ public class EditCustomerForm {
 	
 	/** The firstname. */
 	@NotEmpty(message = "Bitte geben Sie einen Vornamen an.")
-	@Pattern(regexp = "([A-Za-z])+", message = "Der Vorname enthält ungültige Zeichen.")
+	@Pattern(regexp = "([A-Za-z -äöüß])+", message = "Der Vorname enthält ungültige Zeichen.")
 	private String firstname;
 
 	/** The lastname. */
 	@NotEmpty(message = "Bitte geben Sie einen Nachnamen an.")
-	@Pattern(regexp = "([A-Za-z])+", message = "Der Nachname enthält ungültige Zeichen.")
+	@Pattern(regexp = "([A-Za-z -äöüß])+", message = "Der Nachname enthält ungültige Zeichen.")
 	private String lastname;
 	
 	/** The street. */
 	@NotEmpty(message = "Bitte geben Sie eine Straße an.")
-	@Pattern(regexp = "([A-Za-z ,.-])+", message = "Die Straße enthält unzulässige Zeichen.")
+	@Pattern(regexp = "([A-Za-z ,.-äöüß])+", message = "Die Straße enthält unzulässige Zeichen.")
 	private String street;
 	
 	/** The housenumber. */
@@ -42,7 +42,7 @@ public class EditCustomerForm {
 	
 	/** The city. */
 	@NotEmpty(message = "Bitte geben Sie eine Stadt an.")
-	@Pattern(regexp = "([A-Za-z0-9,.-])+", message = "Die Stadt enthält ungültige Zeichen.")
+	@Pattern(regexp = "([A-Za-z0-9 ,.-äöüß])+", message = "Die Stadt enthält ungültige Zeichen.")
 	private String city;
 	
 	/** The zip code. */

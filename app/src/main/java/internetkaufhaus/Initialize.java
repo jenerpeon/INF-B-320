@@ -1,14 +1,8 @@
 package internetkaufhaus;
 
-import static org.salespointframework.core.Currencies.EURO;
-
-import java.lang.reflect.Type;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -34,9 +28,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Iterators;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import de.svenjacobs.loremipsum.LoremIpsum;
 import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteOrder;
@@ -218,7 +209,7 @@ public class Initialize implements DataInitializer {
 		for (String accountString : accounts) {
 			List<String> data = Arrays.asList(accountString.split(";"));
 			ConcreteUserAccount account = new ConcreteUserAccount(data.get(0), data.get(1), data.get(2), data.get(3),
-					data.get(4), data.get(5) ,data.get(6), data.get(7), data.get(8), customerRole,
+					data.get(4), data.get(5), data.get(6), data.get(7), data.get(8), customerRole,
 					dataService.getUserAccountManager());
 			userAccounts.add(account);
 		}
@@ -334,21 +325,18 @@ public class Initialize implements DataInitializer {
 						Cash.CASH);
 				stockCart.addItemsTo(stock);
 
-				order.setBillingGender("Herr");
-				order.setBillingFirstName(u.getUserAccount().getFirstname());
-				order.setBillingLastName(u.getUserAccount().getLastname());
-				order.setBillingStreet(u.getStreet());
-				order.setBillingHouseNumber(u.getHouseNumber());
-				order.setBillingTown(u.getCity());
-				order.setBillingZipCode(u.getZipCode());
+				List<String> address = new ArrayList<String>();
+				address.add("Herr");
+				address.add(u.getUserAccount().getFirstname());
+				address.add(u.getUserAccount().getLastname());
+				address.add(u.getStreet());
+				address.add(u.getHouseNumber());
+				address.add("");
+				address.add(u.getCity());
+				address.add(u.getZipCode());
 
-				order.setShippingGender("Herr");
-				order.setShippingFirstName(u.getUserAccount().getFirstname());
-				order.setShippingLastName(u.getUserAccount().getLastname());
-				order.setShippingStreet(u.getStreet());
-				order.setShippingHouseNumber(u.getHouseNumber());
-				order.setShippingTown(u.getCity());
-				order.setShippingZipCode(u.getZipCode());
+				order.setBillingAddress(address);
+				order.setShippingAddress(address);
 
 				long epochNow = LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(1));
 				long epochBegin = 1403215200;

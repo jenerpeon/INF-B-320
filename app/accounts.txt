@@ -1,4 +1,4 @@
-KarolinKastner@cuvox.de;Therfaid;Karolin;Kastner;Prenzlauer Allee;35;4259;Leipzig;Aengai7oh
+KarolinKastner@cuvox.de;Therfaid;Karolin;Kastner;Prenzlauer Allee;35;04259;Leipzig;Aengai7oh
 JorgAachen@jourrapide.com;Truin1969;Jörg;Aachen;Sonnenallee;46;86301;Friedberg;fe5AhNaing6
 NadineTheiss@cuvox.de;Antor1982;Nadine;Theiss;Landhausstraße;23;16291;Schwedt;thaech6Zi9e
 BrigitteHoch@gustr.com;Ancesse;Brigitte;Hoch;Lützowplatz;35;54441;Kastel-Staadt;xi0Veigh
@@ -17,7 +17,7 @@ DominikSchneider@jourrapide.com;Equitiardead;Dominik;Schneider;Kastanienallee;29
 PeterBauer@jourrapide.com;Makicheme;Peter;Bauer;Fischerinsel;53;41747;Viersen Beberich;hengoo6I
 JurgenFiedler@armyspy.com;Mottly;Jürgen;Fiedler;Hardenbergstraße;41;66919;Schauerberg;wee8ieSoh
 SteffenBach@gustr.com;Bareur;Steffen;Bach;Feldstrasse;93;39439;Amesdorf;beir0Iej
-RalfOsterhagen@gustr.com;Morects;Ralf;Osterhagen;Amsinckstrasse;53;1901;Bretnig-Hauswalde;yohphu7Cho
+RalfOsterhagen@gustr.com;Morects;Ralf;Osterhagen;Amsinckstrasse;53;01901;Bretnig-Hauswalde;yohphu7Cho
 AndreasHerman@teleworm.us;Hansorneve;Andreas;Herman;Motzstr.;73;67596;Frettenheim;fe7geuKah
 SophieBosch@cuvox.de;Cotioll;Sophie;Bosch;Hollander Strasse;79;65558;Lohrheim;siw3Sheij
 SvenOsterhagen@superrito.com;Tardwilis;Sven;Osterhagen;Hochstrasse;11;25920;Risum-Lindholm;Aeth5ahx8po
@@ -36,9 +36,9 @@ AnjaKappel@superrito.com;Wingivese;Anja;Kappel;Mollstrasse;63;65439;Flörsheim a
 DanielaSeiler@fleckens.hu;Tholdrect;Daniela;Seiler;Sonnenallee;28;86031;Augsburg;ucaepha3aSh
 ChristianSchmitt@jourrapide.com;Bedeencion1940;Christian;Schmitt;Ellmenreichstrasse;24;96259;Weismain;ThooChai0
 RalphGottschalk@armyspy.com;Evichad;Ralph;Gottschalk;Grosse Praesidenten Str.;2;74847;Obrigheim;ohngu8WaiD
-MarinaWirth@teleworm.us;Curpose;Marina;Wirth;Feldstrasse;21;6466;Gatersleben;me9keS4ai
+MarinaWirth@teleworm.us;Curpose;Marina;Wirth;Feldstrasse;21;06466;Gatersleben;me9keS4ai
 SebastianSchuster@fleckens.hu;Loper1938;Sebastian;Schuster;Fugger Strasse;21;56073;Koblenz Moselweiß;AiChe3eich
-JenniferJung@fleckens.hu;Feweake;Jennifer;Jung;Messedamm;53;6039;Halle;ei5Ahp1io
+JenniferJung@fleckens.hu;Feweake;Jennifer;Jung;Messedamm;53;06039;Halle;ei5Ahp1io
 SebastianKruger@cuvox.de;Forga1993;Sebastian;Krüger;Ellmenreichstrasse;9;91358;Kunreuth;ri7Eege2phah
 JulianeWerner@einrot.com;Bours1989;Juliane;Werner;Mohrenstrasse;8;88525;Dürmentingen;Chei1yie
 GabrieleWannemaker@teleworm.us;Scou1988;Gabriele;Wannemaker;Kurfürstendamm;92;17477;Greifswald;iey8levoD
@@ -51,7 +51,7 @@ SandraBeich@fleckens.hu;Wayinander1961;Sandra;Beich;Marseiller Strasse;48;86744;
 DennisEbersbach@teleworm.us;Durnity;Dennis;Ebersbach;Guentzelstrasse;46;36399;Freiensteinau;chae4Jah
 UtaSchafer@armyspy.com;Eltains1983;Uta;Schäfer;Budapester Strasse;61;27412;Breddorf;aehe7eeP1pai
 UlrikeFrankfurter@einrot.com;Duess1954;Ulrike;Frankfurter;Schoenebergerstrasse;85;23931;Grevesmühlen;iem3chuBae5y
-MandyHerman@armyspy.com;Tithe1975;Mandy;Herman;Amsinckstrasse;33;4924;Bad Liebenwerda;eeheeSho9Aish
+MandyHerman@armyspy.com;Tithe1975;Mandy;Herman;Amsinckstrasse;33;04924;Bad Liebenwerda;eeheeSho9Aish
 RalfFleischer@teleworm.us;Hatenjus;Ralf;Fleischer;Bissingzeile;30;21755;Hechthausen;Phi9quae2
 KarolinFenstermacher@fleckens.hu;Oleemanded77;Karolin;Fenstermacher;Güntzelstrasse;99;54673;Herbstmühle;Xae0wu1oi
 JulianeEberhart@armyspy.com;Thoter;Juliane;Eberhart;Sonnenallee;68;79108;Freiburg Stadt;AeXeb9AiXoo
@@ -74,7 +74,7 @@ FrankSchafer@teleworm.us;Offermse;Frank;Schäfer;Unter den Linden;31;39106;Magde
 DianaLange@gustr.com;Thaverefull;Diana;Lange;Neuer Jungfernstieg;10;84164;Dreifaltigkeitsbg G Weng;Po8okie1ch
 YvonneNeustadt@cuvox.de;Muccalto;Yvonne;Neustadt;Gotzkowskystraße;20;59557;Lippstadt;rayaixaeT1
 LeonieHoover@teleworm.us;Ened1967;Leonie;Hoover;Albrechtstrasse;53;83269;Traunstein;eeShahpha4
-SwenSchulze@dayrep.com;Bess1967;Swen;Schulze;Prenzlauer Allee;90;6002;Halle;Xai4ieW5aFo
+SwenSchulze@dayrep.com;Bess1967;Swen;Schulze;Prenzlauer Allee;90;06002;Halle;Xai4ieW5aFo
 AndreasZimmermann@einrot.com;Fliket;Andreas;Zimmermann;Hallesches Ufer;25;74372;Sersheim;aewae0Die3
 DanielSchroeder@cuvox.de;Shour1978;Daniel;Schroeder;Neuer Jungfernstieg;30;84011;Landshut;ik1bai4Thae
 JurgenGartner@cuvox.de;Bely1967;Jürgen;Gärtner;Pappelallee;94;55743;Fischbach;XuuL6the

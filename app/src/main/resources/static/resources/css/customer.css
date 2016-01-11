@@ -53,6 +53,11 @@
 	text-align: center;
 }
 
+#workframe #error {
+	list-style-type: none;
+	flex-basis: 100%;
+}
+
 #workframe #data fieldset{
 	border: none;
 }

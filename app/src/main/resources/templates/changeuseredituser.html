@@ -37,8 +37,8 @@
 						</legend>
 						<ol>
 							<li><label for="name">Benutzername:</label> <input
-								type="text" id="name" name="name" th:value="${account.userAccount.username}" disabled/></li>
-							<li th:if="${account.role.name}=='ROLE_CUSTOMER'"><label for="login-name">E-Mail Adresse:</label> <input
+								type="text" id="name" name="name" th:value="${account.userAccount.username}" readonly="readonly"/></li>
+							<li th:if="${account.role.name}=='ROLE_CUSTOMER'"><label for="email">E-Mail Adresse:</label> <input
 								type="text" id="email" name="email" th:value="${account.email}" /></li>
 							<li><label for="login-password">Passwort:</label> <input
 								type="password" id="password" name="password" value=""  />

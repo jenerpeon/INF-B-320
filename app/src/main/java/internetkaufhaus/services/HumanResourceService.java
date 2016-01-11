@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.forms.CreateUserForm;
-import internetkaufhaus.forms.EditCustomerForm;
+import internetkaufhaus.forms.StandardAccountForm;
 import internetkaufhaus.forms.EditUserForm;
 
 /**
@@ -120,7 +120,7 @@ public class HumanResourceService {
 		return true;
 	}
 
-	public boolean changeCustomer(EditCustomerForm form, Optional<UserAccount> customer) {
+	public boolean changeCustomer(StandardAccountForm form, Optional<UserAccount> customer) {
 		if (!(form.getPassword().equals(form.getPasswordrepeat()))) {
 			return false;
 		}

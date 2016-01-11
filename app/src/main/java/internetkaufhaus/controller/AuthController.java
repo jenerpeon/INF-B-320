@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import internetkaufhaus.forms.RegistrationForm;
+import internetkaufhaus.forms.StandardUserForm;
 import internetkaufhaus.services.AccountingService;
 
 // TODO: Auto-generated Javadoc
@@ -137,7 +137,7 @@ public class AuthController extends SalespointSecurityConfiguration {
 	 * @return the string
 	 */
 	@RequestMapping("/registerNew")
-	public String registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm,
+	public String registerNew(@ModelAttribute("registrationForm") @Valid StandardUserForm registrationForm,
 			BindingResult result, RedirectAttributes redir) {
 		if (result.hasErrors()) {
 			modelAndView.setViewName("redirect:/#registration-modal");

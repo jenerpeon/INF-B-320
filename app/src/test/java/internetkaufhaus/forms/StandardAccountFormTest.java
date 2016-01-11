@@ -8,10 +8,10 @@ import org.junit.Test;
 /**
  * The Class RegistrationFormTest.
  */
-public class RegistrationFormTest {
+public class StandardAccountFormTest {
 	
 	/** The model. */
-	private RegistrationForm model = new RegistrationForm();
+	private StandardAccountForm model = new StandardAccountForm();
 	
 	/**
 	 * Firs name test.
@@ -29,15 +29,6 @@ public class RegistrationFormTest {
 	public void lastNameTest() {
 		model.setLastname("Bens");
 		assertTrue("Nachname erhalten", model.getLastname().equals("Bens"));
-	}
-	
-	/**
-	 * Name test.
-	 */
-	@Test
-	public void nameTest() {
-		model.setName("spigo");
-		assertTrue("Benutzername erhalten", model.getName().equals("spigo"));
 	}
 	
 	/**
@@ -64,7 +55,7 @@ public class RegistrationFormTest {
 	@Test
 	public void emailTest() {
 		model.setEmail("spigo@gmail.com");
-		assertTrue("EMail-Adresse erhalten", model.getEmail().equals("spigo@gmail.com"));
+		assertTrue("E-Mail Adresse erhalten", model.getEmail().equals("spigo@gmail.com"));
 	}
 	
 	/**
@@ -72,8 +63,8 @@ public class RegistrationFormTest {
 	 */
 	@Test
 	public void streetTest() {
-		model.setStreet("Meine Adresse");
-		assertTrue("Adresse erhalten", model.getStreet().equals("Meine Adresse"));
+		model.setStreet("Meine Straße");
+		assertTrue("Straße erhalten", model.getStreet().equals("Meine Straße"));
 	}
 	
 	@Test

@@ -231,7 +231,6 @@ public class AdminController {
 	public String editedUserUser(@ModelAttribute("EditUserForm") @Valid EditUserForm edituserform, BindingResult result,
 			@LoggedIn Optional<UserAccount> admin, ModelMap model) {
 		ConcreteUserAccount acc = dataService.getConcreteUserAccountRepository().findOne(edituserform.getId());
-		System.out.println(acc.getEmail().equals(edituserform.getEmail()));
 		if (dataService.getConcreteUserAccountRepository().findByEmail(edituserform.getEmail()).isPresent()
 				&& !(acc.getEmail().equals(edituserform.getEmail()))) {
 			ObjectError emailError = new ObjectError("email", "Die E-Mail Adresse wird bereits verwendet.");
