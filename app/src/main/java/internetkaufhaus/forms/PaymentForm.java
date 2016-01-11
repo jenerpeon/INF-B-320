@@ -47,48 +47,6 @@ public class PaymentForm {
 	private String cardVerificationCode;
 
 	/**
-	 * Instantiates a new payment form.
-	 *
-	 * @param billingGender the billing gender
-	 * @param billingFirstName the billing first name
-	 * @param billingLastName the billing last name
-	 * @param billingStreet the billing street
-	 * @param billingHouseNumber the billing house number
-	 * @param billingAddressLine2 the billing address line2
-	 * @param billingZipCode the billing zip code
-	 * @param billingTown the billing town
-	 * @param shippingGender the shipping gender
-	 * @param shippingFirstName the shipping first name
-	 * @param shippingLastName the shipping last name
-	 * @param shippingStreet the shipping street
-	 * @param shippingHouseNumber the shipping house number
-	 * @param shippingAddressLine2 the shipping address line2
-	 * @param shippingZipCode the shipping zip code
-	 * @param shippingTown the shipping town
-	 */
-	public PaymentForm(String billingGender, String billingFirstName, String billingLastName, String billingStreet,
-			String billingHouseNumber, String billingAddressLine2, String billingZipCode, String billingTown,
-			String shippingGender, String shippingFirstName, String shippingLastName, String shippingStreet,
-			String shippingHouseNumber, String shippingAddressLine2, String shippingZipCode, String shippingTown) {
-		this.billingGender = billingGender;
-		this.billingFirstName = billingFirstName;
-		this.billingLastName = billingLastName;
-		this.billingStreet = billingStreet;
-		this.billingHouseNumber = billingHouseNumber;
-		this.billingAddressLine2 = billingAddressLine2;
-		this.billingZipCode = billingZipCode;
-		this.billingTown = billingTown;
-		this.shippingGender = shippingGender;
-		this.shippingFirstName = shippingFirstName;
-		this.shippingLastName = shippingLastName;
-		this.shippingStreet = shippingStreet;
-		this.shippingHouseNumber = shippingHouseNumber;
-		this.shippingAddressLine2 = shippingAddressLine2;
-		this.shippingZipCode = shippingZipCode;
-		this.shippingTown = shippingTown;
-	}
-
-	/**
 	 * Gets the card name.
 	 *
 	 * @return the card name

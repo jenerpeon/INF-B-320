@@ -220,20 +220,4 @@ public class PaymentFormTest {
 		test.add("London");
 		assertTrue("Versand erhalten", model.getShippingAddress().containsAll(test));
 	}
-
-	@Test
-	public void constructorTest() {
-		PaymentForm form = new PaymentForm("Herr", "Harry", "Potter", "Ligusterweg", "4", "Unter der Treppe", "12345",
-				"London", "Herr", "Harry", "Potter", "Ligusterweg", "4", "Unter der Treppe", "12345", "London");
-		List<String> test = new ArrayList<String>();
-		test.add("Herr");
-		test.add("Harry");
-		test.add("Potter");
-		test.add("Ligusterweg");
-		test.add("4");
-		test.add("Unter der Treppe");
-		test.add("12345");
-		test.add("London");
-		assertTrue("Konstruktor funktioniert", form.getBillingAddress().containsAll(test) && form.getShippingAddress().containsAll(test));
-	}
 }
