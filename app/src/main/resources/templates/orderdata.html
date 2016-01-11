@@ -11,6 +11,9 @@
   <link href="/resources/css/paymethod.css" rel="stylesheet" type=text/css>
   <script src="http://use.edgefonts.net/clara:n4:default.js" type="text/javascript"></script>
   <script type="text/javascript">
+  
+  window.onload = function() {fillForm();}
+  
   function copy() {
 	  if (!document.getElementById('same').checked) {
 		  document.getElementsByName("billingFirstName")[0].value = "";
@@ -42,6 +45,59 @@
 		  document.getElementsByName("billingTown")[0].value = document.getElementsByName("shippingTown")[0].value;
 	  }
   }
+  
+  function storeForm(){
+  	window.sessionStorage.setItem("shippingFirstName",document.getElementsByName("shippingFirstName")[0].value);
+  	window.sessionStorage.setItem("shippingLastName",document.getElementsByName("shippingLastName")[0].value);
+  	window.sessionStorage.setItem("shippingStreet",document.getElementsByName("shippingStreet")[0].value);
+  	window.sessionStorage.setItem("shippingHouseNumber",document.getElementsByName("shippingHouseNumber")[0].value);
+  	window.sessionStorage.setItem("shippingAddressLine2",document.getElementsByName("shippingAddressLine2")[0].value);
+  	window.sessionStorage.setItem("shippingZipCode",document.getElementsByName("shippingZipCode")[0].value);
+  	window.sessionStorage.setItem("shippingTown",document.getElementsByName("shippingTown")[0].value);
+  	window.sessionStorage.setItem("shippingHouseNumber",document.getElementsByName("shippingHouseNumber")[0].value);
+  	
+  	window.sessionStorage.setItem("billingFirstName",document.getElementsByName("billingFirstName")[0].value);
+  	window.sessionStorage.setItem("billingLastName",document.getElementsByName("billingLastName")[0].value);
+  	window.sessionStorage.setItem("billingStreet",document.getElementsByName("billingStreet")[0].value);
+  	window.sessionStorage.setItem("billingHouseNumber",document.getElementsByName("billingHouseNumber")[0].value);
+  	window.sessionStorage.setItem("billingAddressLine2",document.getElementsByName("billingAddressLine2")[0].value);
+  	window.sessionStorage.setItem("billingZipCode",document.getElementsByName("billingZipCode")[0].value);
+  	window.sessionStorage.setItem("billingTown",document.getElementsByName("billingTown")[0].value);
+  
+  	window.sessionStorage.setItem("cardAssociationName",document.getElementsByName("cardAssociationName")[0].value);
+  	window.sessionStorage.setItem("cardNumber",document.getElementsByName("cardNumber")[0].value);
+  	window.sessionStorage.setItem("nameOnCard",document.getElementsByName("nameOnCard")[0].value);
+  	window.sessionStorage.setItem("expiryDate",document.getElementsByName("expiryDate")[0].value);
+  	window.sessionStorage.setItem("cardVerificationCode",document.getElementsByName("cardVerificationCode")[0].value);
+  }
+  
+  function fillForm(){
+	  document.getElementsByName("shippingFirstName")[0].value = window.sessionStorage.getItem("shippingFirstName");
+	  document.getElementsByName("shippingLastName")[0].value = window.sessionStorage.getItem("shippingLastName");
+	  document.getElementsByName("shippingStreet")[0].value = window.sessionStorage.getItem("shippingStreet");
+	  document.getElementsByName("shippingHouseNumber")[0].value = window.sessionStorage.getItem("shippingHouseNumber");
+	  document.getElementsByName("shippingAddressLine2")[0].value = window.sessionStorage.getItem("shippingAddressLine2");
+	  document.getElementsByName("shippingZipCode")[0].value = window.sessionStorage.getItem("shippingZipCode");
+	  document.getElementsByName("shippingTown")[0].value = window.sessionStorage.getItem("shippingTown");
+	  document.getElementsByName("shippingHouseNumber")[0].value = window.sessionStorage.getItem("shippingHouseNumber");
+	  
+
+	  document.getElementsByName("billingFirstName")[0].value = window.sessionStorage.getItem("billingFirstName");
+	  document.getElementsByName("billingLastName")[0].value = window.sessionStorage.getItem("billingLastName");
+	  document.getElementsByName("billingStreet")[0].value = window.sessionStorage.getItem("billingStreet");
+	  document.getElementsByName("billingHouseNumber")[0].value = window.sessionStorage.getItem("billingHouseNumber");
+	  document.getElementsByName("billingAddressLine2")[0].value = window.sessionStorage.getItem("billingAddressLine2");
+	  document.getElementsByName("billingZipCode")[0].value = window.sessionStorage.getItem("billingZipCode");
+	  document.getElementsByName("billingTown")[0].value = window.sessionStorage.getItem("billingTown");
+	  
+	  document.getElementsByName("cardAssociationName")[0].value = window.sessionStorage.getItem("cardAssociationName");
+	  document.getElementsByName("cardNumber")[0].value = window.sessionStorage.getItem("cardNumber");
+	  document.getElementsByName("nameOnCard")[0].value = window.sessionStorage.getItem("nameOnCard");
+	  document.getElementsByName("expiryDate")[0].value = window.sessionStorage.getItem("expiryDate");
+	  document.getElementsByName("cardVerificationCode")[0].value = window.sessionStorage.getItem("cardVerificationCode");
+	  
+	  }
+  
   </script>
 
 </head>
@@ -67,7 +123,7 @@
 						</ol>
 					</fieldset>
 				<!-- </form> -->
-				<form id="orderData" method="post" action="/payed" th:switch="${option}">
+				<form id="orderData" method="post" action="/payed" th:switch="${option}" onsubmit="storeForm()">
 					<div>
 					<fieldset class="orderDataGroup">
 						<h2>Versandadresse:</h2>

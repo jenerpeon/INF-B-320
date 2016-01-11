@@ -64,12 +64,12 @@
 				<p th:if="${cart.empty}">Leer</p>
 				
 				<div>
-					<form class="form" method="post" action="orderdata/1">
+					<form class="form" method="post" action="orderdata/1" th:if="! ${cart.empty}">
 						<input type="submit" th:value="Bezahlen" value="kaufen" />
 					</form>
 				</div>
 				<div>
-					<form class="form" action="clearCart" method="post">
+					<form class="form" action="clearCart" method="post" th:if="! ${cart.empty}">
 						<input type="submit" value="Warenkorb leeren" />
 					</form>
 				</div>

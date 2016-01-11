@@ -160,7 +160,7 @@ public class AuthController extends SalespointSecurityConfiguration {
 	@RequestMapping(value = { "/recruit" })
 	public String recruitUser(ModelMap modelmap, @RequestParam(value = "email") String recruit,
 			@LoggedIn Optional<UserAccount> userAccount) {
-		modelmap.addAttribute("info", this.accountingService.RecruitCustomer(userAccount, recruit));
+		modelmap.addAttribute("info", this.accountingService.recruitCustomer(userAccount, recruit));
 		return "redirect:/";
 	}
 }

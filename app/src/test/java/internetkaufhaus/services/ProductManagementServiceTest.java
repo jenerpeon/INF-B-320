@@ -11,7 +11,6 @@ import org.salespointframework.order.OrderLine;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.Role;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -31,12 +30,10 @@ public class ProductManagementServiceTest {
 
 	/** The service. */
 	private ProductManagementService service;
-	
-	/** The user acc. */
+
+	/** The user account. */
 	private ConcreteUserAccount userAcc;
 
-	/** The u. */
-	@Autowired
 	private DataService data;
 
 	/**
@@ -45,7 +42,8 @@ public class ProductManagementServiceTest {
 	@Before
 	public void init() {
 		service = new ProductManagementService();
-		this.userAcc = new ConcreteUserAccount("Username1", "Username1", Role.of("ROLE_CUSTOMER"), data.getUserAccountManager());
+		this.userAcc = new ConcreteUserAccount("Username1", "Username1", Role.of("ROLE_CUSTOMER"),
+				data.getUserAccountManager());
 	}
 
 	/**
@@ -58,8 +56,8 @@ public class ProductManagementServiceTest {
 
 		order.add(new OrderLine(new ConcreteProduct("Name", Money.of(5, EURO), Money.of(4, EURO), "Grillen",
 				"Beschreeeibung", "WAPlink", "IMAETSCHFEIL"), Quantity.of(3)));
-		order.add(new OrderLine(new ConcreteProduct("NAAME", Money.of(20, EURO), Money.of(10, EURO),
-				"KATEGORIE", "BESCHREIBUNG", "NETZVERKNUEPFUNG", "BILDDATEI"), Quantity.of(2)));
+		order.add(new OrderLine(new ConcreteProduct("NAAME", Money.of(20, EURO), Money.of(10, EURO), "KATEGORIE",
+				"BESCHREIBUNG", "NETZVERKNUEPFUNG", "BILDDATEI"), Quantity.of(2)));
 		// assertEquals("getBuyingPrice1", Money.of(22, EURO),
 		// service.getBuyingPrice(order));
 		// TODO: fix this error.

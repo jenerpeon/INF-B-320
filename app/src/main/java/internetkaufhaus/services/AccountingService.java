@@ -121,15 +121,17 @@ public class AccountingService {
 			success = false;
 		}
 		// Catch if Mail already registered
-		if (success && dataService.getConcreteUserAccountRepository().findByEmail(regform.getEmail()) != null) {
+		if (success && dataService != null && dataService.getConcreteUserAccountRepository() != null
+				&& dataService.getConcreteUserAccountRepository().findByEmail(regform.getEmail()) != null) {
 			System.out.println("debug: Mail already registered");
 			success = false;
 		}
 		if (success) {
 			try {
 				user = new ConcreteUserAccount(regform.getEmail(), regform.getName(), regform.getFirstname(),
-						regform.getLastname(), regform.getStreet(), regform.getHouseNumber(), regform.getZipCode(), regform.getCity(),
-						regform.getPassword(), Role.of("ROLE_CUSTOMER"), dataService.getUserAccountManager());
+						regform.getLastname(), regform.getStreet(), regform.getHouseNumber(), regform.getZipCode(),
+						regform.getCity(), regform.getPassword(), Role.of("ROLE_CUSTOMER"),
+						dataService.getUserAccountManager());
 				this.addUser(user);
 
 			} catch (Exception e) {
@@ -151,7 +153,7 @@ public class AccountingService {
 			}
 		}
 		// Register Customer
-		if (success && !RegisterCustomer(regform.getEmail()))
+		if (success && !registerCustomer(regform.getEmail()))
 			success = false;
 
 		return success;
@@ -164,19 +166,20 @@ public class AccountingService {
 	 *            the email
 	 * @return true, if successful
 	 */
-	public boolean RegisterCustomer(String email) {
-		if (dataService.getConcreteUserAccountRepository().findByEmail(email) == null) {
+	public boolean registerCustomer(String email) {
+		if (dataService != null && dataService.getConcreteUserAccountRepository().findByEmail(email) == null) {
 			System.out.println("Customer Allready registered with this mail");
 			return false;
 		}
 		String invitation = "http://localhost:8080/login";
-		this.mailsender.sendMail(email, "You have been sucessful registered. Click here" + invitation + " to login.",
-				"unnecessaryfield", "Shop Now!");
-		return true;
+		return this.mailsender.sendMail(email,
+				"You have been sucessful registered. Click here" + invitation + " to login.", "unnecessaryfield",
+				"Shop Now!");
 	}
 
 	/**
-	 * Recruit customer.
+	 * Recruit customer. TODO: returning text should not be done, needs to be
+	 * changed.
 	 *
 	 * @param invitator
 	 *            the invitator
@@ -184,7 +187,7 @@ public class AccountingService {
 	 *            the recruit
 	 * @return the string
 	 */
-	public String RecruitCustomer(Optional<UserAccount> invitator, String recruit) {
+	public String recruitCustomer(Optional<UserAccount> invitator, String recruit) {
 		if (invitator.get() == null) {
 			return "invalid invitator";
 		}

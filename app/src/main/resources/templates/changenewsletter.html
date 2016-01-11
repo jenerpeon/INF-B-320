@@ -15,19 +15,27 @@
 		<main>
 		<br/>
 		<div id="mainframe">
-			<div id="employeenavigaton" th:include="employeenavigation :: employeenavigation"></div>
+			<div id="topLine">
+				<div id="path">
+					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/employee" >Mitarbeiterportal</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/employee/changecatalog" >Katalog/Lager</a>
+				</div>
+			</div>
 			
 			<div id="workframe">		
 				<form id="newsAbo" class="itemform" th:action="@{'/employee/newsletter/changeNewsletter/sendNewsletter'}" method="get" >
 					<ol>
 						<li>
-								<label for="Betreff" >Betreff:</label>
-								<input type="text" id="newslettersubject" name="subject" placeholder="Betreff" size="12" onFocus="value=''" required/>
+							<label for="Betreff" >Betreff:</label>
+							<input type="text" id="newslettersubject" name="subject" placeholder="Betreff" size="12" onFocus="value=''" required/>
 						</li>
 					
 						<li>
-								<label for="EmailText">Inhalt:</label>
-								<textarea style="width: 370px; height: 400px" name="mailBody" type="text" id="emailBodyfield" placeholder="Newsletterinhalt" required></textarea>
+							<label for="EmailText">Inhalt:</label>
+							<textarea style="width: 370px; height: 400px" name="mailBody" type="text" id="emailBodyfield" placeholder="Newsletterinhalt" required></textarea>
 						</li>
 					</ol>
 					<input type="submit" id="submitfield" value="Newsletter senden" />	

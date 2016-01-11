@@ -1,16 +1,18 @@
 package internetkaufhaus.services;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
-
+import org.thymeleaf.context.Context;
 
 // TODO: Auto-generated Javadoc
 /**
- * This is the ConcreteMailService class. It is responsible for sending mails via
- * a connected mail provider.
+ * This is the ConcreteMailService class. It is responsible for sending mails
+ * via a connected mail provider.
  * 
  * @author heiner
  *
@@ -24,7 +26,8 @@ public class ConcreteMailService {
 	/**
 	 * Instantiates a new concrete mail service.
 	 *
-	 * @param mailSender the mail sender
+	 * @param mailSender
+	 *            the mail sender
 	 */
 	@Autowired
 	public ConcreteMailService(MailSender mailSender) {
@@ -36,18 +39,21 @@ public class ConcreteMailService {
 	 * the destination address or content.
 	 *
 	 * @author heiner
-	 * @param sendTo            email destination address
-	 * @param text            email text content
-	 * @param from            sender name
-	 * @param subject            email subject
+	 * @param sendTo
+	 *            email destination address
+	 * @param text
+	 *            email text content
+	 * @param from
+	 *            sender name
+	 * @param subject
+	 *            email subject
 	 * @return <tt>true</tt> if mail sending was successful
-	 * @exception MailException the mail exception
+	 * @exception MailException
+	 *                the mail exception
 	 */
 
 	public boolean sendMail(String sendTo, String text, String from, String subject) {
-
 		SimpleMailMessage msg = new SimpleMailMessage();
-
 		msg.setTo(sendTo);
 		msg.setFrom(from);
 		msg.setSubject(subject);
@@ -60,7 +66,6 @@ public class ConcreteMailService {
 			System.err.println(ex.getMessage());
 			return false;
 		}
-
 	}
 
 	/**

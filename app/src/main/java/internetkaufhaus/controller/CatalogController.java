@@ -320,13 +320,29 @@ public class CatalogController {
 		String username;
 
 		if (dataService.getConcreteUserAccountRepository().findByEmail(sendTo) == null) {
-			username = "Nicht registierter Abonnet";
+			username = "Nicht registierter Abonnent";
 		} else {
 			username = dataService.getConcreteUserAccountRepository().findByEmail(sendTo).get().getUserAccount().getUsername();
 		}
 		newsManager.getMap().put(username, sendTo);
 		sender.sendMail(sendTo, text, "zu@googlemail.com", "NewsletterAbonnement");
 		return "redirect:/";
-
+	}
+	
+	@RequestMapping(value = "/newsletter/unsubscribe", method = RequestMethod.GET)
+	public String newsletterUnsubscribe(@RequestParam("email") String email) {
+		if (email == "") {
+			return "unsubscribe";
+		}
+		String username;
+		if (dataService.getConcreteUserAccountRepository().findByEmail(email) != null) {
+			username = dataService.getConcreteUserAccountRepository().findByEmail(email).get().getUserAccount().getUsername();
+		} else {
+			return "redirect:/";
+		}
+		if (newsManager.getMap().containsKey(username)) {
+			newsManager.getMap().remove(username);
+		}
+		return "redirect:/";
 	}
 }
