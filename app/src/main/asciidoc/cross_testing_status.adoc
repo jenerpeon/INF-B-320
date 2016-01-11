@@ -31,19 +31,19 @@ Onlineshop "Woods Super Dooper Shop"
 | marginal | home | ... | angemeldet als Mitarbeiter, klick auf "Mein Konto"|erneutes anmelden ohne vorheriges abmelden möglich
 | urgent | home | ... | falsche Eingabe bei der Anmeldung | es passiert nichts, keine Fehlermeldung, stattdessen wird der aktuell angemeldete Kunde abgemeldet
 | marginal | /#registration-modal | irgendwas | ich will mich anmelden | alle Felder werden annulliert, egal was man falsch eingibt; Eingabe, von wem man geworben wurde?
-| urgent | /NewPass | Email und Passwort | auf Button drücken zum bestätigen | Whitelabel Error Page: Error resolving template "redirect/#login-modal"
-| urgent | /recruit | Email | Button "Rekrutieren" drücken | Whitelabel Error Page: Error resolving template "/index"
+| fixed | /NewPass | Email und Passwort | auf Button drücken zum bestätigen | Whitelabel Error Page: Error resolving template "redirect/#login-modal"
+| fixed | /recruit | Email | Button "Rekrutieren" drücken | Whitelabel Error Page: Error resolving template "/index"
 | wontfix | /detail/dde777ad-43ac-4b32-80ca-add9ada5d984 | Kommentar und Bewertung | Kommentar abschicken und bestätigen durch Mitarbeiter | Artikel kann bewertet werden, ohne ihn gekauft zu haben, das macht keinen Sinn
 | fixed | /payed | überall "aa" | ich möchte bezahlen | Whitelabel Error Page: Validation failed for object='shippingAdressForm'
 | fixed | /payed | richtige Adresse, fast richtige Kreditkarte | bezahlen drücken | Whitelabel Error Page: Validation failed for object='billingAdressForm'. Error count: 13
 | fixed | /payed | theoretisch formkorrekte Eingabe | es kommen immer Fehler | Whitelabel Error Page: Validation failed for object='billingAdressForm'. Error count: 13
 | could not reproduce | /payed | Adresse eingegeben | bestellen drücken, um Einkaufswagen zu kaufen | Whitelabel Error Page: Zugriff verweigert
 | fixed | /?cartsize=0&cartprice=EUR+0#login-modal | ... | Klick auf "Mein Konto" : Wo ist die Übersicht über mein Konto? Ich kann mich immer nur anmelden; wo kann ich mein Rabattguthaben einsehen? Warum wird kein Rabatt bei der Bestellung verrechnet?| ...
-| marginal | /cart | nothing | ich kann leere Bestellungen machen|...
+| fixed | /cart | nothing | ich kann leere Bestellungen machen|...
 | fixed | /admin/changeuser/editUser/3 | unterschiedliche Passwörter | Passwörter müssen nicht gleich sein, werden nicht verglichen | Userstatus geändert
 | could not reproduce | /employee/orders/accept/1 | ... | Admin hat die Bestellung angenommen, versuche sie mit dem Mitarbeiter nochmal anzunehmen | Whitelabel Error Page: No value present
 | urgent | /#registration-modal | asd@asd | asd@asd.irgendwas sollte erst gehen|
-| urgent | redirect/#login-modal | | | Error resolving template "redirect/#login-modal", template might not exist
+| fixed | redirect/#login-modal | | | Error resolving template "redirect/#login-modal", template might not exist
 | fixed | "Mein Konto" | | Kein Zugriff auf Schaltfläche |
 | urgent | employee/newsletter/changeNewsletter | | Neuer Newsletter | Error resolving template "employeenavigation", template might not exist
 | urgent | /employee/newsletter/oldAbos | | Alter Newsletter | Error resolving template "employeenavigation", template might not exist
