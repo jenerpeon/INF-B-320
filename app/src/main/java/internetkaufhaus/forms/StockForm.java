@@ -12,8 +12,8 @@ import org.salespointframework.catalog.ProductIdentifier;
 public class StockForm {
 
 	/** The quantity. */
-	@NotNull(message = "leer")
-	@Min(1)
+	@NotNull(message = "Bitte geben Sie eine Bestellmenge an.")
+	@Min(message = "Die Mindestbestellmenge beträgt 1 Stück.", value = 1)
 	private int quantity;
 
 	/** The prod id. */

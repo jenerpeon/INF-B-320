@@ -1,8 +1,8 @@
 package internetkaufhaus.entities;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 import javax.persistence.Column;
@@ -31,9 +31,13 @@ public class Comment implements Serializable {
 	@Column(name = "ID")
 	private Long commentid;
 
+	/** The title. */
+	@Column(name = "TITLE",length = 100000)
+	private String title;
+	
 	/** The text. */
 	// @NotEmpty(message="{Comment.text.NotEmpty}")
-	@Column(name = "TEXT")
+	@Column(name = "TEXT",length = 100000)
 	private String text;
 
 	/** The rating. */
@@ -42,7 +46,7 @@ public class Comment implements Serializable {
 
 	/** The date. */
 	@Column(name = "DATE")
-	private Date date;
+	private LocalDateTime date;
 
 	/** The accepted. */
 	@Column(name = "REVIEWED")
@@ -80,7 +84,8 @@ public class Comment implements Serializable {
 	 * @param t
 	 *            the t
 	 */
-	public Comment(String text, int rating, Date dateTime, String t) {
+	public Comment(String title, String text, int rating, LocalDateTime dateTime, String t) {
+		this.title = title;
 		this.text = text;
 		this.rating = rating;
 		this.date = dateTime;
@@ -144,6 +149,10 @@ public class Comment implements Serializable {
 	public void setProduct(ConcreteProduct product) {
 		this.product = product;
 	}
+	
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 	/**
 	 * Sets the text.
@@ -171,7 +180,7 @@ public class Comment implements Serializable {
 	 * @param date
 	 *            the new date
 	 */
-	public void setDate(Date date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 
@@ -217,8 +226,8 @@ public class Comment implements Serializable {
 	 * @param date
 	 *            the new formated date
 	 */
-	public void setFormatedDate(Date date) {
-		SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy HH:mm", Locale.GERMANY);
+	public void setFormatedDate(LocalDateTime date) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, d MMM yyyy HH:mm", Locale.GERMANY);
 		String formatedDate = formatter.format(date);
 		this.formatedDate = formatedDate;
 
@@ -241,6 +250,10 @@ public class Comment implements Serializable {
 	public long getId() {
 		return commentid;
 	}
+	
+	public String getTitle() {
+		return title;
+	}
 
 	/**
 	 * Gets the text.
@@ -256,7 +269,7 @@ public class Comment implements Serializable {
 	 *
 	 * @return the date
 	 */
-	public Date getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 

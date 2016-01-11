@@ -28,27 +28,27 @@
 			</div>
 
 			<div id="workframe">
+			<ul id="error" th:if="${message != null}">
+				<li th:each="line : ${message}"><a th:text="${line.getDefaultMessage()}"></a></li>
+			</ul>
 				<form id="changeitem" class="itemform"
 					th:action="@{'/employee/changecatalog/editedArticle'}"
 					method="POST" enctype="multipart/form-data">
 					<ol>
 						<li><input type="hidden"
 							th:value="${concreteproduct.identifier}" name="prodId" /></li>
-						<li><label for="category">Kategorie: </label> <select
-							name="category" id="categoriefield" size="1">
-								<option th:each="category : ${categories}"
-									th:value="${category}" th:text="${category}"></option>
-						</select></li>
+						<li><label for="category">Kategorie: </label> <input type="text"
+							name="category" id="categoryfield" placeholder="Kategorie"
+							th:value="${concreteproduct.category}" /></li>
 						<li><label for="name">Name: </label> <input type="text"
 							name="name" id="namefield" placeholder="Name"
 							th:value="${concreteproduct.name}" /></li>
 						<li><label for="price">Preis: </label> <input type="number"
 							name="price" id="pricefield" placeholder="Preis in &euro;"
-							th:value="${price}" min="0.01" step="0.01" /><a>&euro;</a></li>
+							th:value="${concreteproduct.price.getNumber()}" min="0.01" step="0.01" /><a>&euro;</a></li>
 						<li><label for="buyingPrice">Einkaufspreis: </label> <input
 							type="number" name="buyingPrice" id="buyingPricefield"
-							placeholder="Preis in &euro;" min="0.01" step="0.01" th:value="${buyingPrice}" /><a>&euro;</a>
-						</li>
+							min="0.01" step="0.01"	th:value="${concreteproduct.buyingPrice.getNumber()}" /><a>&euro;</a></li>
 						<li><label for="image">Bild:</label> <input type="file"
 							name="image" id="imagefield" placeholder="Pfad zum Bild" /></li>
 						<li><label for="description">Beschreibung:</label> <textarea

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import internetkaufhaus.forms.RegistrationForm;
+import internetkaufhaus.forms.StandardUserForm;
 import internetkaufhaus.services.AccountingService;
 
 // TODO: Auto-generated Javadoc
@@ -42,24 +42,11 @@ public class AuthController extends SalespointSecurityConfiguration {
 	private static final String LOGIN_ROUTE = "/login";
 	
 	/** The accounting service. */
-	private final AccountingService accountingService;
+	@Autowired
+	private AccountingService accountingService;
 	
 	/** The model and view. */
 	private ModelAndView modelAndView = new ModelAndView();
-
-	/**
-	 * This is the constructor. It's neither used nor does it contain any
-	 * functionality other than storing function arguments as class attribute,
-	 * what do you expect me to write here?
-	 * 
-	 * @param accountingService
-	 *            singleton, passed by spring/salespoint
-	 */
-	@Autowired
-	public AuthController(AccountingService accountingService) {
-		this.accountingService = accountingService;
-
-	}
 
 	/* (non-Javadoc)
 	 * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(org.springframework.security.config.annotation.web.builders.HttpSecurity)
@@ -150,7 +137,7 @@ public class AuthController extends SalespointSecurityConfiguration {
 	 * @return the string
 	 */
 	@RequestMapping("/registerNew")
-	public String registerNew(@ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm,
+	public String registerNew(@ModelAttribute("registrationForm") @Valid StandardUserForm registrationForm,
 			BindingResult result, RedirectAttributes redir) {
 		if (result.hasErrors()) {
 			modelAndView.setViewName("redirect:/#registration-modal");

@@ -8,16 +8,16 @@ import org.junit.Test;
 /**
  * The Class RegistrationFormTest.
  */
-public class RegistrationFormTest {
+public class StandardAccountFormTest {
 	
 	/** The model. */
-	private RegistrationForm model = new RegistrationForm();
+	private StandardAccountForm model = new StandardAccountForm();
 	
 	/**
 	 * Firs name test.
 	 */
 	@Test
-	public void firsNameTest() {
+	public void firstNameTest() {
 		model.setFirstname("Martin");
 		assertTrue("Vorname erhalten", model.getFirstname().equals("Martin"));
 	}
@@ -29,15 +29,6 @@ public class RegistrationFormTest {
 	public void lastNameTest() {
 		model.setLastname("Bens");
 		assertTrue("Nachname erhalten", model.getLastname().equals("Bens"));
-	}
-	
-	/**
-	 * Name test.
-	 */
-	@Test
-	public void nameTest() {
-		model.setName("spigo");
-		assertTrue("Benutzername erhalten", model.getName().equals("spigo"));
 	}
 	
 	/**
@@ -64,16 +55,22 @@ public class RegistrationFormTest {
 	@Test
 	public void emailTest() {
 		model.setEmail("spigo@gmail.com");
-		assertTrue("EMail-Adresse erhalten", model.getEmail().equals("spigo@gmail.com"));
+		assertTrue("E-Mail Adresse erhalten", model.getEmail().equals("spigo@gmail.com"));
 	}
 	
 	/**
 	 * Address test.
 	 */
 	@Test
-	public void addressTest() {
-		model.setAddress("Meine Adresse");
-		assertTrue("Adresse erhalten", model.getAddress().equals("Meine Adresse"));
+	public void streetTest() {
+		model.setStreet("Meine Straße");
+		assertTrue("Straße erhalten", model.getStreet().equals("Meine Straße"));
+	}
+	
+	@Test
+	public void houseNumberTest() {
+		model.setHouseNumber("3");
+		assertTrue("Hausnummer erhalten", model.getHouseNumber().equals("3"));
 	}
 	
 	/**

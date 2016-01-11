@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Meine Bestellungen</title>
+<link href="/resources/css/main.css" rel="stylesheet" type="text/css">
+<link href="/resources/css/customer.css" rel="stylesheet" type="text/css">
+<!--The following script tag downloads a font from the Adobe Edge Web Fonts server for use within the web page. We recommend that you do not modify it.--><script>var __adobewebfontsappname__="dreamweaver"</script><script src="http://use.edgefonts.net/clara:n4:default.js" type="text/javascript"></script>
+</head>
+
+<body>
+<div id="wrapper">
+	<div id="header" th:include="navigation :: navigation"></div>
+	
+	<main>
+		<div id="mainframe">
+			<div id="topLine">
+				<div id="path">
+					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/customer" >Mein Kundenkonto</a>
+					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+					<a href="/customer/orders" >Meine Bestellungen</a>
+				</div>
+			</div>
+		
+			<div id="workframe">
+				<div class="order" th:each="order : ${orders}">
+					<div class="firstrow">
+						<div class="informationBlock">
+							<p>Bestellung aufgegeben</p>
+							<p th:text="${order.dateOrderedFormatted}"></p>
+						</div>
+						<div class="informationBlock">
+							<p>Summe</p>
+							<p th:text="${order.getTotalPrice()}"></p>
+						</div>
+						<div class="informationBlock">
+							<p>Versandadresse</p>
+							<div class="dropdown">
+								<p th:text="@{${order.shippingFirstName} + ' ' + ${order.shippingLastName}+' &#9660;'}"></p>
+								<div class="dropdown-content">
+									<p th:text="@{${order.shippingFirstName} + ' ' + ${order.shippingLastName}}"></p>
+									<p th:text="@{${order.shippingStreet} + ' ' + ${order.shippingHouseNumber}}"></p>
+									<p th:text="@{${order.shippingZipCode} + ' ' + ${order.shippingTown}}"></p>
+								</div>
+							</div>
+						</div>
+						<div class="informationBlock">
+							<p>Rechnungsadresse</p>
+							<div class="dropdown">
+								<p th:text="@{${order.billingFirstName} + ' ' + ${order.billingLastName+' &#9660;'}}"></p>
+								<div class="dropdown-content">
+									<p th:text="@{${order.billingFirstName} + ' ' + ${order.billingLastName}}"></p>
+									<p th:text="@{${order.billingStreet} + ' ' + ${order.billingHouseNumber}}"></p>
+									<p th:text="@{${order.billingZipCode} + ' ' + ${order.billingTown}}"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="secondrow">
+						<div class="orderLine" th:each="orderLine : ${order.orderLines}">
+							<div class="image">
+								<img alt="" th:src="@{'/resources/Bilder/Produkte/'+${repo.findOne(orderLine.getProductIdentifier()).imagefile}}" />
+							</div>
+							<div class="informationBlock product">
+								<p th:text="@{${orderLine.quantity}+' von '+${orderLine.productName}}"></p>
+								<p th:text="@{'Einzelpreis: '+${repo.findOne(orderLine.getProductIdentifier()).price}}"></p>
+								<p th:text="@{'Gesamtpreis: '+${orderLine.price}}"></p>
+							</div>
+							<div class="informationBlock process">
+								<ul class="status">
+									<li>
+										<a th:if="${order.paymentMethod.getClass().getName()} == org.salespointframework.payment.Cash" >Bezahlt mit Bargeld</a>
+										<a th:if="${order.paymentMethod.getClass().getName()} == org.salespointframework.payment.CreditCard">Bezahlt mit Kreditkarte</a>
+									</li>
+									<li>
+										<img th:if="${order.status.toString()  == 'PAID' or order.status.toString()  == 'COMPLETED'}" src="/resources/Bilder/paid.png" alt="" title="bezahlt"/>
+										<img th:if="${order.status.toString()  == 'COMPLETED'}" src="/resources/Bilder/accept.png" alt="" title="akzeptiert"/>
+										<img th:if="${order.status.toString()  == 'CANCELED'}" src="/resources/Bilder/cancel.png" alt="" title="abgelehnt"/>
+										<img th:if="${order.returned}" src="/resources/Bilder/return.png" alt="" title="zurückgegeben"/>
+									</li>
+									<li><a th:text="@{'Eingesetzte Rabattpunkte: '+ ${order.usedDiscountPoints}}"></a></li>
+								</ul>
+								<div class="return" th:if="${order.isRetournable()}">
+									<form method="post" th:action="@{/customer/orders/return}">
+										<ol>
+											<li><input type="hidden" name="orderId" th:value="${order.id}"/></li>
+											<li>
+												<select name="reason" size="1">
+													<option>Bestellung irrtümlich aufgegeben</option>
+													<option>Günstigeren Preis entdeckt</option>
+													<option selected="selected">Keinen Grund angeben</option>
+													<option>Leistung oder Qualität ungenügend</option>
+													<option>Inkompatibel oder ungeeignet</option>
+													<option>Verpackung unbeschädigt, Artikel beschädigt</option>
+													<option>Lieferung kam nicht rechtzeitig an</option>
+													<option>Teile fehlen/Zubehör fehlt</option>
+													<option>Versandverpackung und Artikel beschädigt</option>
+													<option>Anderer Artikel geliefert als bestellt</option>
+													<option>Defekt/funktioniert nicht einwandfrei</option>
+													<option>Wurde über die bestellte Ware hinaus geliefert</option>
+													<option>Gefällt mir nicht mehr</option>
+													<option>Nicht autorisierter Kauf</option>
+													<option>Entspricht nicht der Beschreibung auf der Website</option>
+												</select>
+											</li>
+											<li>
+												<input type="submit" value="Bestellung reklamieren" title="Sendung zurückschicken"/>
+											</li>
+										</ol>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<div id="footer" th:include="footer :: footer"></div>
+</div>
+</body>
+</html>

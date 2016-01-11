@@ -15,85 +15,34 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class PaymentForm {
 
 	/** The card name. */
-	@NotEmpty(message = "cardname is mandatory")
-	// @Pattern(regexp = "([A-Za-z])+", message = "cardname contains illegal
-	// characters")
+	@NotEmpty(message = "Bitte geben Sie einen Kartennamen an.")
+	@Pattern(regexp = "([A-Za-z -/])+", message = "Der Kartenname enthält unzulässige Zeichen.")
 	private String cardName;
 
 	/** The card association name. */
-	@NotEmpty(message = "cardAssociationName field is mandatory")
-	@Pattern(regexp = "([A-Za-z ])+", message = "cardAssociationName contains illegal characters")
+	@NotEmpty(message = "Biite geben Sie den Banknamen der Karte an.")
+	@Pattern(regexp = "([A-Za-z ])+", message = "Der Bankname enthält unzulässige Zeichen.")
 	private String cardAssociationName;
 
 	/** The card number. */
-	@NotEmpty(message = "cardNumber field is mandatory")
-	@Pattern(regexp = "([0-9])+", message = "cardNumber contains illegal characters")
+	@NotEmpty(message = "Bitte geben Sie die Kartennummer an.")
+	@Pattern(regexp = "([0-9])+", message = "Die Kartennummer enthält unzulässige Zeichen.")
 	private String cardNumber;
 
 	/** The name on card. */
-	@NotEmpty(message = "nameOnCard field is mandatory")
-	@Pattern(regexp = "([A-Za-z ])+", message = "nameOnCard contains illegal characters")
+	@NotEmpty(message = "Bitte geben Sie den Namen auf der Karte an.")
+	@Pattern(regexp = "([A-Za-z ])+", message = "Der Name auf der Karte erhält unzulässige Zeichen.")
 	private String nameOnCard;
 
 	/** The expiry date. */
-	@NotEmpty(message = "expiryDate field is mandatory")
-	// @Pattern(regexp = "([A-Z0-9.:-])+", message = "expiryDate contains
-	// illegal characters")
+	@NotEmpty(message = "Bitte geben Sie das Ablaufdatum der Karte an.")
+	@Pattern(regexp = "([0-9-])+", message = "Das Ablaufdatum er Karte enthält unzulässige Zeichen.")
 	private String expiryDate;
 
 	/** The card verification code. */
-	@NotEmpty(message = "cardVerificationCode field is mandatory")
-	@Pattern(regexp = "([0-9])+", message = "cardVerificationCode contains illegal characters")
+	@NotEmpty(message = "Bitte geben Sie die Prüfziffern an.")
+	@Pattern(regexp = "([0-9])+", message = "Die Prüfziffern enthalten unzulässige Zeichen.")
 	private String cardVerificationCode;
-
-	/**
-	 * Instantiates a new payment form.
-	 */
-	public PaymentForm() {
-		System.out.print("");
-	}
-
-	/**
-	 * Instantiates a new payment form.
-	 *
-	 * @param billingGender the billing gender
-	 * @param billingFirstName the billing first name
-	 * @param billingLastName the billing last name
-	 * @param billingStreet the billing street
-	 * @param billingHouseNumber the billing house number
-	 * @param billingAddressLine2 the billing address line2
-	 * @param billingZipCode the billing zip code
-	 * @param billingTown the billing town
-	 * @param shippingGender the shipping gender
-	 * @param shippingFirstName the shipping first name
-	 * @param shippingLastName the shipping last name
-	 * @param shippingStreet the shipping street
-	 * @param shippingHouseNumber the shipping house number
-	 * @param shippingAddressLine2 the shipping address line2
-	 * @param shippingZipCode the shipping zip code
-	 * @param shippingTown the shipping town
-	 */
-	public PaymentForm(String billingGender, String billingFirstName, String billingLastName, String billingStreet,
-			String billingHouseNumber, String billingAddressLine2, String billingZipCode, String billingTown,
-			String shippingGender, String shippingFirstName, String shippingLastName, String shippingStreet,
-			String shippingHouseNumber, String shippingAddressLine2, String shippingZipCode, String shippingTown) {
-		this.billingGender = billingGender;
-		this.billingFirstName = billingFirstName;
-		this.billingLastName = billingLastName;
-		this.billingStreet = billingStreet;
-		this.billingHouseNumber = billingHouseNumber;
-		this.billingAddressLine2 = billingAddressLine2;
-		this.billingZipCode = billingZipCode;
-		this.billingTown = billingTown;
-		this.shippingGender = shippingGender;
-		this.shippingFirstName = shippingFirstName;
-		this.shippingLastName = shippingLastName;
-		this.shippingStreet = shippingStreet;
-		this.shippingHouseNumber = shippingHouseNumber;
-		this.shippingAddressLine2 = shippingAddressLine2;
-		this.shippingZipCode = shippingZipCode;
-		this.shippingTown = shippingTown;
-	}
 
 	/**
 	 * Gets the card name.

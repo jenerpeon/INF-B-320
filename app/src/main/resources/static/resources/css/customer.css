@@ -1,0 +1,482 @@
+@charset "utf-8";
+
+#mainframe {
+	width: 915px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 50px;
+}
+
+#workframe {
+	display: flex;
+	flex-direction: column;
+}
+#workframe h2{
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	margin: 0 0 0 0;
+}
+#workframe h3{
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	margin: 10px 0 0 0;
+	font-style: italic;
+}
+#workframe label {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+}
+#workframe table {
+	table-layout: fixed;
+	width: 100%;
+	border-collapse: collapse;
+}
+#workframe td + td,
+#workframe th + th { border-left: 1px solid; }
+#workframe tr + tr { border-top: 1px solid; }
+#workframe th {
+	text-align: center;
+	padding: 10px 20px 10px 20px;
+	white-space: nowrap;
+}
+#workframe td {
+	text-align: center;
+	padding: 20px;
+	white-space: nowrap;
+}
+#workframe thead > tr, #workframe thead{
+    display:block;
+}
+#workframe thead > tr, #workframe tbody{
+    display:block;
+}
+#workframe #welcome {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 40px;
+	text-align: center;
+}
+
+#workframe #error {
+	list-style-type: none;
+	flex-basis: 100%;
+}
+
+#workframe #data fieldset{
+	border: none;
+}
+
+#workframe #data fieldset legend{
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-weight: bold;
+}
+
+#workframe #data fieldset ol {
+	list-style-type: none;
+	padding-left: 0.5em;
+}
+
+#workframe #data fieldset ol li {
+	padding-bottom: 0.5em;
+}
+
+#workframe #data fieldset ol label {
+	float: left;
+	width: 20%;
+	margin-right:0.5em;
+    padding-top:0.2em;
+  	text-align:left;
+}
+
+#workframe .order {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid #d3d7cf;
+	border-radius: 20px;
+	margin-bottom: 20px;
+}
+#workframe .order .firstrow {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px;
+	background-color: #eeeeec;
+	border-radius: 20px 20px 0 0;
+}
+#workframe .order .firstrow .informationBlock p{
+	padding: 5px 0;
+	margin: 0;
+}
+#workframe .order .firstrow .dropdown {
+	position: relative;
+    display: inline-block;
+}
+#workframe .order .firstrow .dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    background: #ffffff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+#workframe .order .firstrow .dropdown .dropdown-content:after,.dropdown-content:before {
+	bottom: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+#workframe .order .firstrow .dropdown .dropdown-content:before {
+	border-color: rgba(255, 255, 255, 0);
+	border-bottom-color: #ffffff;
+	border-width: 10px;
+	margin-left: -10px;
+}
+#workframe .order .firstrow .dropdown .dropdown-content:after {
+	border-color: rgba(199, 191, 195, 0);
+	border-bottom-color: #ffffff;
+	border-width: 16px;
+	margin-left: -16px;
+}
+#workframe .order .firstrow .dropdown:hover .dropdown-content {
+    display: block;
+}
+#workframe .order .secondrow .orderLine {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+#workframe .order .secondrow .orderLine .image {
+	min-width: 200px;
+	min-height: 200px;
+	padding: 20px;
+	flex-basis: 200px;
+}
+#workframe .order .secondrow .orderLine .image img {
+	max-width: 200px;
+	max-height: 200px;
+	display: block;
+	margin: auto;
+}
+#workframe .order .secondrow .orderLine .informationBlock {
+	padding: 20px;
+}
+#workframe .order .secondrow .orderLine .product{
+	flex-basis: 50%;
+}
+#workframe .order .secondrow .orderLine .process{
+	width: 250px;
+}
+#workframe .order .secondrow .orderLine .status {
+	padding: 0;
+	margin: 0;
+}
+#workframe .order .secondrow .orderLine .status img {
+	width: 40px;
+}
+
+#workframe .order .secondrow .orderLine  .return form {
+}
+
+#workframe .order .secondrow .orderLine  .return form ol {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#workframe .order .secondrow .orderLine  .return select {
+	width: 200px;
+}
+
+#workframe .order .secondrow .orderLine  .return input[type='image'] {
+	width: 80px;
+	margin-left: 20px;
+	padding: 5px;
+	border: 2px solid #eeeeec;
+	border-radius: 15px;
+	background-color: #babdb6;
+}
+
+#workframe .order .secondrow .orderLine  input[type='image']:hover {
+	background-color: #eeeeec;
+}
+
+
+
+#workframe .order ul {
+	list-style-type: none;
+}
+
+#workframe .order ul li {
+	padding: 5px 0;
+}
+
+#workframe .order .shipping-billing {
+	display: flex;
+	flex-direction: row;
+}
+
+#workframe .order .shipping-billing div{
+	margin-right: 100px;
+}
+
+#workframe .order .processing {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+
+
+#workframe .article .name {
+	max-width: 400px;
+	overflow: hidden;
+	white-space: nowrap; 
+	text-overflow: ellipsis;
+	text-align: left;
+}
+#workframe .article .picture img{
+	width: 50px;
+}
+
+#workframe .comment .text {
+	max-width: 400px;
+	white-space:normal;
+}
+
+#workframe .comment .product {
+	max-width: 150px;
+	white-space: normal; 
+}
+#workframe .comment .buttons {
+	max-width: 100px;
+}
+#workframe .edit-button {
+	width: 35px;
+	height: 35px;
+	background-image: url(/resources/Bilder/edit.png);
+	background-size: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 8px;
+	moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+#workframe .trash-button {
+	width: 35px;
+	height: 35px;
+	background-image: url(/resources/Bilder/trash.png);
+	background-size: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 8px;
+	moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+#workframe .order-button {
+	width: 35px;
+	height: 35px;
+	background-image: url(/resources/Bilder/order.png);
+	background-size: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 8px;
+	moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+#workframe .accept-button {
+	width: 35px;
+	height: 35px;
+	background-image: url(/resources/Bilder/accept.png);
+	background-size: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 8px;
+	moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+#workframe .cancel-button {
+	width: 35px;
+	height: 35px;
+	background-image: url(/resources/Bilder/cancel.png);
+	background-size: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 8px;
+	moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+#workframe .content {
+	padding-left: 20px;
+}
+#workframe .content tbody {
+	height: auto;
+}
+#workframe .content td {
+	text-align: left;
+	white-space: normal;
+}
+
+#workframe #newarticle {
+	margin: 10px 0px 0px 30px;
+}
+.itemform {
+	padding: 10px 0;
+}
+.itemform fieldset {
+	float: left;      
+	clear: both;      
+	width: 100%;      
+	margin: 0 0 -1em 0;      
+	padding: 0 0 1em 0;      
+	border-style: none;         
+	/*background-color: #F2EFE9;*/
+}
+
+.itemform label {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	float: left;
+	width: 20%;
+	margin-right:0.5em;
+    padding-top:0.2em;
+  	text-align:left;
+}
+
+.itemform ol {   
+	padding: 0 1em 0 1em;   
+	list-style: none;  
+}  
+.itemform li {   
+	padding-bottom: 0.5em;  
+}
+
+.itemform input[type='submit'] {   
+     
+	width: auto;      
+	margin-top: 0.5em;      
+	margin-left: 11.5em;       
+}
+#firstcolumn img {
+	width: 300px;
+}
+#secondcolumn h1 {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	font-size: 24px;
+	text-align: left;
+	font-weight: bold;
+}
+#secondcolumn .description {
+	text-align: justify;
+}
+#secondcolumn .rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: left;
+}
+#secondcolumn .rating span {
+    display: inline-block;
+    position: relative;
+    width:1.1em;
+    font-size:1.4em;
+    color: gold;
+}
+#secondcolumn .rating .filled:before {
+    content: "\2605";
+    position: absolute;
+    color: gold;
+    text-shadow:0 0 1px #666;
+}
+#deleteitem input {
+	margin: 10px 0 0 20px;
+	background-color: red;
+	border-radius: 8px;
+	moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+} 
+
+#orderitem label {
+	float: none;
+}
+
+#orderitem input {
+	margin: 0 0 0 0;
+}
+
+#orderitem input[type='submit'] {
+	margin: 0 0 0 0;
+}
+
+.changeStartPageForm fieldset {
+	border: none;
+	padding: 10px 0;;
+}
+
+.changeStartPageForm ol {
+	padding: 0 1em 0 1em;  
+	list-style: none;  
+}
+
+.changeStartPageForm li {
+	
+	padding-bottom: 0.5em;
+	
+}
+
+.changeStartPageForm label {
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+	float: left;
+	width: 40%;
+	margin-right:0.5em;
+    padding-top:0.2em;
+  	text-align:left;
+}
+
+.changeStartPageForm input {
+	width: 50px;
+}
+
+.changeStartPageForm input[type='submit'] {
+	width: auto;
+	margin: 0 0 0 0;
+}
+
+#changeStartPage label {
+	width: 25%;
+}
+#changeStartPage li {
+	float: left;
+	width: 50%;
+}
+
+#orderData {
+	display: flex;
+}
+
+#orderData label {
+	float: left;
+	width: 34%;
+	margin-right:0.5em;
+    padding-top:0.2em;
+  	text-align:left;
+}
+#orderData fieldset {   
+	border: none; 
+} 
+#orderData fieldset ol {   
+	padding: 0.5em 1em 0 1em;   
+	list-style: none;  
+}  
+#orderData fieldset li {   
+	padding-bottom: 0.5em;  
+}
+
+#changeStartPage select {
+	width: 900px;
+}
+

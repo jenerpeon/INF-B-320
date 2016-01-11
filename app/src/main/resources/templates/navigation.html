@@ -134,8 +134,10 @@
 								<span>Adresse</span>
 							</legend>
 							<ol>
-								<li><label for="address">Adresszeile 1:</label> <input
-									type="text" id="address" name="address" value="" required /></li>
+								<li><label for="street">Straße:</label> <input
+									type="text" id="street" name="street" value="" required /></li>
+								<li><label for="houseNumber">Hausnummer:</label> <input
+									type="text" id="houseNumber" name="houseNumber" value="" required /></li>
 								<li><label for="city">Stadt:</label> <input type="text"
 									id="city" name="city" value="" required /></li>
 								<li><label for="zipCode">Postleitzahl:</label> <input
@@ -158,14 +160,10 @@
 							Willkommen</a></li>
 					<li sec:authorize="isAuthenticated()"><a
 						th:text="${#authentication.name}">Name</a></li>
-					<li sec:authorize="isAuthenticated()"><a th:href="@{'/login'}">Mein
+					<li sec:authorize="isAuthenticated()"><a th:href="@{'/customer'}">Mein
 							Konto</a></li>
 					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a
-						th:href="@{/customer}">Punktestand</a></li>
-					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a
 						href="#recruit-modal">Rekrutieren</a></li>
-					<li sec:authorize="hasRole('ROLE_CUSTOMER')"><a
-						th:href="@{'/returOrders'}">Rückgabe</a></li>
 					<li sec:authorize="!isAuthenticated()"><a href="#login-modal">Anmelden</a></li>
 					<li sec:authorize="!isAuthenticated()"><a
 						href="#registration-modal">Registrieren</a></li>
@@ -202,58 +200,12 @@
 					<li><a th:text="'Summe: '+${cartprice}"></a></li>
 					<li><a th:href="@{'/cart'}">Zum Warenkorb</a></li>
 				</ul>
-			
-			
-				<!-- <table id="header-row2-table">
-					<tbody>
-						<tr>
-							<td align="left"><a th:href="@{'/'}" id="logo">Woods
-									Super Dooper Shop</a></td>
-							<td>
-								<div id="searchfield">
-									<form id="search" method="post" th:action="@{'/sufu'}">
-										<table>
-											<tbody>
-												<tr id="searchcolumn">
-													<td><input type="search" id="search" name="search"
-														placeholder="Suchbegriff" th:if="${search != null}" th:value="${search}" /><input
-														type="search" id="search" name="search"
-														placeholder="Suchbegriff" th:if="${search == null}" /></td>
-													<td><input type="image"
-														src="/resources/Bilder/search.png" alt="Suche_Icon" /></td>
-												</tr>
-											</tbody>
-										</table>
-									</form>
-								</div>
-							</td>
-							<td align="right">
-								<table>
-									<tbody>
-										<tr>
-											<td><a th:href="@{'/cart'}"><img
-													src="/resources/Bilder/warenkorb_icon_dark.png" height="50"
-													alt="" /></a></td>
-											<td>
-												<ul id="cart-text-list">
-													<li><a th:text="${cartsize}+' Artikel'"></a></li>
-													<li><a th:text="'Summe: '+${cartprice}"></a></li>
-													<li><a th:href="@{'/cart'}">Zum Warenkorb</a></li>
-												</ul>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</td>
-						</tr>
-					</tbody>
-				</table>-->
 			</div>
 		</header>
 	</div>
 	<div id="navigation">
 		<ul class="nav">
-			<li th:if="${employeeNaviagtion == null and adminNaviagtion == null}"
+			<li th:if="${employeeNaviagtion == null and adminNaviagtion == null and customerNaviagtion == null}"
 				th:each="c : ${categories}"><a
 				th:href="@{'/catalog/'+${c.link}+'/name'+'/1'+'/6'+'/1'}"
 				th:text="${c.name}" th:id="${c.name}"></a></li>
@@ -262,6 +214,9 @@
 				th:text="${c.name}" th:id="${c.name}"></a></li>
 			<li th:if="${employeeNaviagtion != null}"
 				th:each="c : ${employeeNaviagtion}"><a th:href="${c.link}"
+				th:text="${c.name}" th:id="${c.name}"></a></li>
+			<li th:if="${customerNaviagtion != null}"
+				th:each="c : ${customerNaviagtion}"><a th:href="${c.link}"
 				th:text="${c.name}" th:id="${c.name}"></a></li>
 		</ul>
 	</div>

@@ -1,0 +1,82 @@
+:imagesdir: ./Bilder/nutzer_doku
+
+= Nutzer-Doku
+
+__Version:__    *1.0.0*
+
+__Status:__     *Fertig*
+
+
+== Gast
+
+=== Startseite
+image::startseite.png[startseite]
+1: Mit existierendem Nutzeraccount einloggen +
+2: Neuen Nutzeraccount registrieren +
+3: Produktsuche +
+4: Kategorien +
+5: Warenkarussell +
+
+=== Produktkategorie
+image::detail_catalog.png[detail_catalog]
+1: Gewählte Kategorie +
+2: Sortierfunktion +
+3: Darstellungsoptionen +
+4: Produkttitel +
+5: Produktbeschreibung +
+6: Preis +
+7: Bewertung +
+
+=== Produktdetail
+image::detail_product.png[detail_catalog]
+1: Produktdetails +
+2: Kunden-Kommentare/-Bewertungen zum Produkt +
+
+== Kunde
+
+=== Produktdetail & Kommentar
+image::comment.png[comment]
+1: Produkt zum Warenkorb hinzufügen +
+2: Rezension abgeben +
+
+=== Warenkorb
+image::cart.png[cart]
+1: Produktdetails, Produktzahl ändern, Produkt aus Warenkorb entfernen +
+2: Summe aller Produkte aus Warenkorb +
+3: Anzahl Werbe-Punkte eingesetzt, Rabatt in Euro +
+
+=== Bezahlvorgang
+image::pay.png[pay]
+1: Versandadresse mit Lieferadresse gleich setzen +
+2: Eingabefelder für persönliche Daten +
+
+=== Getätigte Einkäufe
+image::orders.png[order]
+1: Liste mit getätigten Einkäufen +
+2: Bestellungsoptionen +
+3: Produkte der Bestellung +
+4: Ware Reklamieren +
+
+== Mitarbeiter
+
+=== Produktdetails ändern
+image::changeProduct.png[changeProduct]
+1: Produktdetails bearbeiten +
+2: Produkt aud Katalog löschen +
+3: Produktbestand erhöhen/ vermindern +
+
+=== Kunden-Bestellungen
+image::customer_orders.png[customer_orders]
+1: Kunden-Bestellung akzeptieren +
+
+=== Startseite anpassen
+image::changePage.png[changePage]
+1: Produkte für Warenkarussel auf Startseite auswählen +
+2: Produkte für "Im Angebot"-Anzeige auf Startseite auswählen +
+
+== Admin
+=== Personal-Verwaltung
+image::personellManagement.png[personellManagement]
+1: Account bearbeiten +
+2: Account löschen +
+3: Account hinzufügen +

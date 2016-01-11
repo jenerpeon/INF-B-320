@@ -64,13 +64,13 @@ public class NewsletterService {
 	 * The sendNewsletters method sends the given text as newsletter to all
 	 * costumers which have subscribed the newsletter.
 	 * 
-	 * @param text
+	 * @param content
 	 *            the newsletter content as String
 	 *
 	 */
-	public void sendNewsletters(String text) {
+	public void sendNewsletter(String subject, String content) {
 		for (String email : this.getMap().values()) {
-			mailsender.sendMail(email, text, "zu@googlemail.com", "Newsletter Woods Super Dooper Shop");
+			mailsender.sendMail(email, content, "zu@googlemail.com", subject);
 		}
 
 	}

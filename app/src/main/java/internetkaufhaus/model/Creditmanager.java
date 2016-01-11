@@ -1,20 +1,17 @@
 package internetkaufhaus.model;
 
-import static org.salespointframework.core.Currencies.EURO;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.javamoney.moneta.Money;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.time.Interval;
-import org.salespointframework.useraccount.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteUserAccount;
-import internetkaufhaus.repositories.ConcreteOrderRepository;
+import internetkaufhaus.services.DataService;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -27,18 +24,14 @@ public class Creditmanager {
 	 * The Creditmanager class is responsible for increasing the credits of the invitator everytime the recruiter buy products.
 	 *
 	 */
-	
-	private ConcreteOrderRepository concreteOrderRepo;
+	private final DataService dataService;
 
 	/**
 	 * Instantiates a new creditmanager.
-	 *
-	 * @param concreteOrderRepo the concrete order repo
 	 */
 	@Autowired
-	public Creditmanager(ConcreteOrderRepository concreteOrderRepo) {
-
-		this.concreteOrderRepo = concreteOrderRepo;
+	public Creditmanager(DataService dataService) {
+		this.dataService = dataService;
 	}
 
 	// Method to update the credit amount of the given ConcreteUserAccount
@@ -48,21 +41,23 @@ public class Creditmanager {
 	 * The updateCreditpointsByUser is responsible for increasing the credit amount by 20% of the sales value for completed orders after one month.
 	 * 
 	 * @param recruiter ConcreteUserAccount which get the credits and recruited the buyer.
-
-	 *
+	 * 
 	 */
 	public void updateCreditpointsByUser(ConcreteUserAccount recruiter) {
-		List<UserAccount> recruits = recruiter.getRecruits();
-
-		Money credits = Money.of(0, EURO);
-		for (UserAccount user : recruits) {
-
-			for (ConcreteOrder order : concreteOrderRepo.findByUser(user)) {
+		List<ConcreteUserAccount> recruits = recruiter.getRecruits();
+		double credits = 0;
+		Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "dateOrdered", Sort.NullHandling.NATIVE));
+		for (ConcreteUserAccount user : recruits) {
+			for (ConcreteOrder order : dataService.getConcreteOrderRepository().findByUser(user, sorting)) {
 				if (Interval.from(order.getDateOrdered()).to(LocalDateTime.now()).getDuration().toDays() >= 30 && order.getStatus().equals(OrderStatus.COMPLETED)) {
-					credits = credits.add(order.getOrder().getTotalPrice().multiply(20).divide(100));
+					credits = credits + order.getTotalPrice().getNumber().doubleValue();
 				}
 			}
-			recruiter.setCredits(credits);
 		}
+		for (ConcreteOrder order : dataService.getConcreteOrderRepository().findByUserAndReturned(recruiter, false)) {
+			credits = credits - order.getUsedDiscountPoints();
+		}
+		recruiter.setCredits(Math.round(credits));
+		dataService.getConcreteUserAccountRepository().save(recruiter);
 	}
 }

@@ -3,21 +3,15 @@ package internetkaufhaus.entities;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.salespointframework.core.Currencies.EURO;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Random;
 
 import org.javamoney.moneta.Money;
 import org.junit.Before;
 import org.junit.Test;
-import org.salespointframework.useraccount.UserAccount;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -246,7 +240,7 @@ public class ConcreteProductTest {
 	@Test
 	public void testGetComments()
 	{
-		Comment c = new Comment("Text",5,new Date(),"");
+		Comment c = new Comment("Das hier ist ein Titel", "Text",5,LocalDateTime.now(),"");
 		ConcreteUserAccount acc = mock(ConcreteUserAccount.class);
 		model.addComment(c, acc);
 		assertTrue("GetComments defekt", model.getComments().iterator().next().equals(c));
@@ -258,7 +252,7 @@ public class ConcreteProductTest {
 	@Test
 	public void testAddComment()
 	{
-		Comment c = new Comment("Text", 5, new Date(), "");
+		Comment c = new Comment("Das hier ist ein Titel", "Text", 5, LocalDateTime.now(), "");
 		ConcreteUserAccount acc = mock(ConcreteUserAccount.class);
 		model.addComment(c, acc);
 		assertTrue("AddComment defekt", model.getComments().iterator().next().equals(c));
@@ -270,7 +264,7 @@ public class ConcreteProductTest {
 	@Test
 	public void testIsCommentator()
 	{
-		Comment c = new Comment("Text", 5, new Date(), "");
+		Comment c = new Comment("Das hier ist ein Titel", "Text", 5, LocalDateTime.now(), "");
 		ConcreteUserAccount acc1 = mock(ConcreteUserAccount.class);
 		ConcreteUserAccount acc2 = mock(ConcreteUserAccount.class);
 		model.addComment(c, acc1);
@@ -279,45 +273,13 @@ public class ConcreteProductTest {
 	}
 	
 	/**
-	 * Test get rating.
-	 */
-	@Test
-	public void testGetRating()
-	{
-		assertTrue("GetRating defekt", model.getRating()==null);
-		Comment a = new Comment("Text", 5, new Date(), "");
-		a.setAccepted(true);
-		ConcreteUserAccount acc1 = mock(ConcreteUserAccount.class);
-		model.addComment(a, acc1);
-		assertTrue("GetRating defekt", model.getRating().iterator().hasNext()==true);
-	}
-	
-	/**
-	 * Testupdate average rating.
-	 */
-	@Test
-	public void testupdateAverageRating()
-	{
-		Comment a = new Comment("Text", 5, new Date(), "");
-		Comment b = new Comment("Text", 3, new Date(), "");
-		a.setAccepted(true);
-		b.setAccepted(true);
-		ConcreteUserAccount acc1 = mock(ConcreteUserAccount.class);
-		ConcreteUserAccount acc2 = mock(ConcreteUserAccount.class);
-		model.addComment(a, acc1);
-		model.addComment(b, acc2);
-		model.updateAverageRating();
-		assertTrue("updateAverageRating defekt", model.getAverageRating()==4);
-	}
-	
-	/**
 	 * Testget average rating.
 	 */
 	@Test
 	public void testgetAverageRating()
 	{
-		Comment a = new Comment("Text", 5, new Date(), "");
-		Comment b = new Comment("Text", 3, new Date(), "");
+		Comment a = new Comment("Das hier ist ein Titel", "Text", 5, LocalDateTime.now(), "");
+		Comment b = new Comment("Das hier ist ein Titel", "Text", 3, LocalDateTime.now(), "");
 		a.setAccepted(true);
 		b.setAccepted(true);
 		ConcreteUserAccount acc1 = mock(ConcreteUserAccount.class);
@@ -334,7 +296,7 @@ public class ConcreteProductTest {
 	@Test
 	public void testremoveComment()
 	{
-		Comment a = new Comment("Text", 5, new Date(), "");
+		Comment a = new Comment("Das hier ist ein Titel", "Text", 5, LocalDateTime.now(), "");
 		ConcreteUserAccount acc = mock(ConcreteUserAccount.class);
 		model.addComment(a, acc);
 		model.removeComment(a);
@@ -347,8 +309,8 @@ public class ConcreteProductTest {
 	@Test
 	public void testgetAcceptedComments()
 	{
-		Comment a = new Comment("Text", 5, new Date(), "");
-		Comment b = new Comment("Text", 3, new Date(), "");
+		Comment a = new Comment("Das hier ist ein Titel", "Text", 5, LocalDateTime.now(), "");
+		Comment b = new Comment("Das hier ist ein Titel", "Text", 3, LocalDateTime.now(), "");
 		a.setAccepted(true);
 		b.setAccepted(true);
 		ConcreteUserAccount acc1 = mock(ConcreteUserAccount.class);
@@ -366,8 +328,8 @@ public class ConcreteProductTest {
 	@Test
 	public void testgetUnacceptedComments()
 	{
-		Comment a = new Comment("Text", 5, new Date(), "");
-		Comment b = new Comment("Text", 3, new Date(), "");
+		Comment a = new Comment("Das hier ist ein Titel", "Text", 5, LocalDateTime.now(), "");
+		Comment b = new Comment("Das hier ist ein Titel", "Text", 3, LocalDateTime.now(), "");
 		ConcreteUserAccount acc1 = mock(ConcreteUserAccount.class);
 		ConcreteUserAccount acc2 = mock(ConcreteUserAccount.class);
 		model.addComment(a, acc1);

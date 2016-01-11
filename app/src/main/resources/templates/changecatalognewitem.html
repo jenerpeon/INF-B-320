@@ -27,14 +27,15 @@
 				</div>
 			</div>
 			
-			<div id="workframe">		
+			<div id="workframe">
+			<ul id="error" th:if="${message != null}">
+				<li th:each="line : ${message}"><a th:text="${line.getDefaultMessage()}"></a></li>
+			</ul>		
 				<form id="newitem" class="itemform" th:action="@{'/employee/changecatalog/addedArticle'}" method="POST" enctype="multipart/form-data" onsubmit='return checkForm();'>
 					<ol>
 						<li>
 								<label for="category">Kategorie: </label>
-								<select name="category" id="categoriefield" size="1">
-									<option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
-								</select>
+								<input type="text" name="category" id="namefield" placeholder="Name" required/>
 						</li>
 						<li>		
 								<label for="name">Name: </label>

@@ -1,6 +1,5 @@
 package internetkaufhaus.advices;
 
-import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -8,13 +7,14 @@ import java.util.List;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.CartItem;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import internetkaufhaus.model.NavItem;
-import internetkaufhaus.model.Search;
+import internetkaufhaus.services.DataService;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -27,20 +27,8 @@ import internetkaufhaus.model.Search;
 @SessionAttributes("cart")
 public class HeaderAdvice {
 
-	/** The prod search. */
-	private final Search prodSearch;
-
-	/**
-	 * This is the constructor. It's neither used nor does it contain any
-	 * functionality other than storing function arguments as class attribute,
-	 * what do you expect me to write here? It's copied from CartController.
-	 *
-	 * @param prodSearch            singleton, passed by spring/salespoint
-	 */
 	@Autowired
-	public HeaderAdvice(Search prodSearch) {
-		this.prodSearch = prodSearch;
-	}
+	private DataService dataService;
 
 	/**
 	 * This is a Model Attribute. It Models Attributes. Or does it Attribute
@@ -51,7 +39,7 @@ public class HeaderAdvice {
 	 */
 	@ModelAttribute("categories")
 	public List<NavItem> addCatalog() {
-		Iterable<String> categories = prodSearch.getCategories();
+		Iterable<String> categories = dataService.getConcreteProductRepository().getCategories();
 		List<NavItem> navigation = new ArrayList<NavItem>();
 		for (String category : categories) {
 			NavItem nav = new NavItem(category, category, "category");
@@ -63,7 +51,8 @@ public class HeaderAdvice {
 	/**
 	 * Gets the cart.
 	 *
-	 * @param cart the cart
+	 * @param cart
+	 *            the cart
 	 * @return the cart
 	 */
 	@ModelAttribute("cart")
@@ -76,7 +65,8 @@ public class HeaderAdvice {
 	 * Models? Adds the current cart price to the variables used by thymeleaf so
 	 * an overview about the cart can be displayed in the navigation header.
 	 *
-	 * @param cart the cart
+	 * @param cart
+	 *            the cart
 	 * @return cartPrice
 	 */
 	@ModelAttribute("cartprice")
@@ -90,7 +80,8 @@ public class HeaderAdvice {
 	 * used by thymeleaf so an overview about the cart can be displayed in the
 	 * navigation header.
 	 *
-	 * @param cart the cart
+	 * @param cart
+	 *            the cart
 	 * @return cartSize
 	 */
 	@ModelAttribute("cartsize")
@@ -108,7 +99,8 @@ public class HeaderAdvice {
 	 * This is an Exception Hander. It handles Exceptions. Or does it Except
 	 * Handles?
 	 *
-	 * @param exception the exception
+	 * @param exception
+	 *            the exception
 	 * @return "error500"
 	 */
 	@ExceptionHandler(value = Exception.class)

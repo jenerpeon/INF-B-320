@@ -10,13 +10,6 @@ public class CreateUserForm extends StandardUserForm {
 	private String rolename;
 
 	/**
-	 * Instantiates a new creates the user form.
-	 */
-	public CreateUserForm() {
-		System.out.print("");
-	}
-
-	/**
 	 * Gets the rolename.
 	 *
 	 * @return the rolename
@@ -28,7 +21,8 @@ public class CreateUserForm extends StandardUserForm {
 	/**
 	 * Sets the rolename.
 	 *
-	 * @param rolename the new rolename
+	 * @param rolename
+	 *            the new rolename
 	 */
 	public void setRolename(String rolename) {
 		this.rolename = rolename;

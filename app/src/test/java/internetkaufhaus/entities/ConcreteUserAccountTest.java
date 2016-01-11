@@ -1,24 +1,20 @@
 package internetkaufhaus.entities;
 
 import static org.junit.Assert.assertTrue;
-import static org.salespointframework.core.Currencies.EURO;
-
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import org.javamoney.moneta.Money;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.salespointframework.useraccount.Role;
-import org.salespointframework.useraccount.UserAccount;
-import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import internetkaufhaus.Application;
+import internetkaufhaus.services.DataService;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -31,25 +27,26 @@ public class ConcreteUserAccountTest {
 
 	/** The model1. */
 	private ConcreteUserAccount model1;
-	
+
 	/** The model2. */
 	private ConcreteUserAccount model2;
 
 	/** The u. */
 	@Autowired
-	UserAccountManager u;
+	DataService data;
 
 	/**
 	 * Inits the.
 	 */
 	@Before
 	public void init() {
-		List<UserAccount> recruits = new ArrayList<UserAccount>();
+		List<ConcreteUserAccount> recruits = new ArrayList<ConcreteUserAccount>();
 
-		model1 = new ConcreteUserAccount("Username1", "Username1", Role.of("ROLE_CUSTOMER"), u);
-		model2 = new ConcreteUserAccount("test@mail.com", "Username2", "Firstname", "Lastname", "Adress", "ZipCode",
-				"City", "Password", Role.of("ROLE_EMPLOYEE"), u, 2, recruits);
-		recruits.add(model1.getUserAccount());
+		model1 = new ConcreteUserAccount("Username1", "Username1", Role.of("ROLE_CUSTOMER"),
+				data.getUserAccountManager());
+		model2 = new ConcreteUserAccount("test@mail.com", "Username2", "Firstname", "Lastname", "Straße", "3", "ZipCode",
+				"City", "Password", Role.of("ROLE_EMPLOYEE"), data.getUserAccountManager(), 2, recruits);
+		recruits.add(model1);
 
 	}
 
@@ -58,7 +55,7 @@ public class ConcreteUserAccountTest {
 	 */
 	@Test
 	public void testGetterSetter() {
-		Comment com = new Comment("Das hier ist ein Kommentar", 4, new Date(), "12");
+		Comment com = new Comment("Das hier ist ein Titel", "Das hier ist ein Kommentar", 4, LocalDateTime.now(), "12");
 		model1.addComment(com);
 		assertTrue("Com hinzugefügt", model1.getComments().size() == 1);
 		assertTrue("Com get", model1.getComments().contains(com));
@@ -78,15 +75,19 @@ public class ConcreteUserAccountTest {
 		model1.setEmail("test@mail.com");
 		assertTrue("Email geändert", model1.getEmail().equals("test@mail.com"));
 
-		assertTrue("Adress get", model2.getAddress().equals("Adress"));
-		model1.setAddress("Adress1");
-		assertTrue("Adresse geänder", model1.getAddress().equals("Adress1"));
+		assertTrue("Adress get", model2.getStreet().equals("Straße"));
+		model1.setStreet("Straße2");
+		assertTrue("Adresse geänder", model1.getStreet().equals("Straße2"));
+		
+		assertTrue("Adress get", model2.getHouseNumber().equals("3"));
+		model1.setHouseNumber("4");
+		assertTrue("Adresse geänder", model1.getHouseNumber().equals("4"));
 
 		assertTrue("Credit get", model2.getCredits() == 2);
-		model2.setCredits(Money.of(4, EURO));
+		model2.setCredits(4);
 		assertTrue("Credit geändert", model2.getCredits() == 4);
 
-		assertTrue("Recruits get", model2.getRecruits().get(0) == model1.getUserAccount());
+		assertTrue("Recruits get", model2.getRecruits().get(0) == model1);
 
 	}
 }

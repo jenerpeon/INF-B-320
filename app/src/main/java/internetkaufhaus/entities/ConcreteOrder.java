@@ -1,27 +1,21 @@
 package internetkaufhaus.entities;
 
-import static org.salespointframework.core.Currencies.EURO;
-
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Collection;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.apache.commons.collections.IteratorUtils;
 import org.javamoney.moneta.Money;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.payment.Cash;
-import org.salespointframework.useraccount.UserAccount;
-
-import internetkaufhaus.repositories.ConcreteProductRepository;
+import org.salespointframework.payment.PaymentCard;
+import com.google.common.collect.Iterators;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -29,23 +23,20 @@ import internetkaufhaus.repositories.ConcreteProductRepository;
  */
 @Entity
 @Table(name = "CORDER")
-public class ConcreteOrder implements Serializable {
+public class ConcreteOrder extends Order {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The status. */
-	// private OrderManager<Order> orderManager;
-	private OrderStatus status;
-
 	/** The user. */
-	@OneToOne
-	private UserAccount user;
-
-	/** The id. */
-	@Id
-	@GeneratedValue
-	private Long id;
+	@OneToOne(cascade = {CascadeType.ALL})
+	private ConcreteUserAccount user;
+	
+	private LocalDateTime dateOrdered;
+	
+	private OrderStatus status;
+	
+	private long usedDiscountPoints = 0;
 
 	/** The billing gender. */
 	private String billingGender;
@@ -95,13 +86,6 @@ public class ConcreteOrder implements Serializable {
 	/** The shipping town. */
 	private String shippingTown;
 
-	/** The date ordered. */
-	private LocalDateTime dateOrdered;
-
-	/** The order. */
-	@OneToOne
-	private Order order;
-
 	/** The returned. */
 	private boolean returned = false;
 
@@ -111,7 +95,7 @@ public class ConcreteOrder implements Serializable {
 	/**
 	 * Instantiates a new concrete order.
 	 */
-	@SuppressWarnings({ "unused" })
+	@SuppressWarnings({ "unused", "deprecation" })
 	private ConcreteOrder() {
 
 	}
@@ -124,79 +108,61 @@ public class ConcreteOrder implements Serializable {
 	 * @param cash
 	 *            the cash
 	 */
-	public ConcreteOrder(UserAccount account, Cash cash) {
-		this.order = new Order(account, cash);
-		this.status = this.order.getOrderStatus();
+	public ConcreteOrder(ConcreteUserAccount account, Cash pay) {
+		super(account.getUserAccount(), pay);
 		this.user = account;
+		this.dateOrdered = LocalDateTime.now();
+		this.status = super.getOrderStatus();
 	}
-
+	
+	public ConcreteOrder(ConcreteUserAccount account, PaymentCard pay) {
+		super(account.getUserAccount(), pay);
+		this.user = account;
+		this.dateOrdered = LocalDateTime.now();
+		this.status = super.getOrderStatus();
+	}
+	
 	/**
-	 * Instantiates a new concrete order.
+	 * Sets the user account.
 	 *
-	 * @param billingGender
-	 *            the billing gender
-	 * @param billingFirstName
-	 *            the billing first name
-	 * @param billingLastName
-	 *            the billing last name
-	 * @param billingStreet
-	 *            the billing street
-	 * @param billingHouseNumber
-	 *            the billing house number
-	 * @param billingAddressLine2
-	 *            the billing address line2
-	 * @param billingZipCode
-	 *            the billing zip code
-	 * @param billingTown
-	 *            the billing town
-	 * @param shippingGender
-	 *            the shipping gender
-	 * @param shippingFirstName
-	 *            the shipping first name
-	 * @param shippingLastName
-	 *            the shipping last name
-	 * @param shippingStreet
-	 *            the shipping street
-	 * @param shippingHouseNumber
-	 *            the shipping house number
-	 * @param shippingAddressLine2
-	 *            the shipping address line2
-	 * @param shippingZipCode
-	 *            the shipping zip code
-	 * @param shippingTown
-	 *            the shipping town
-	 * @param dateOrdered
-	 *            the date ordered
-	 * @param order
-	 *            the order
+	 * @param account
+	 *            the new user account
 	 */
-	public ConcreteOrder(String billingGender, String billingFirstName, String billingLastName, String billingStreet,
-			String billingHouseNumber, String billingAddressLine2, String billingZipCode, String billingTown,
-			String shippingGender, String shippingFirstName, String shippingLastName, String shippingStreet,
-			String shippingHouseNumber, String shippingAddressLine2, String shippingZipCode, String shippingTown,
-			LocalDateTime dateOrdered, Order order) {
-		this.billingGender = billingGender;
-		this.billingFirstName = billingFirstName;
-		this.billingLastName = billingLastName;
-		this.billingStreet = billingStreet;
-		this.billingHouseNumber = billingHouseNumber;
-		this.billingAddressLine2 = billingAddressLine2;
-		this.billingZipCode = billingZipCode;
-		this.billingTown = billingTown;
-
-		this.shippingGender = shippingGender;
-		this.shippingFirstName = shippingFirstName;
-		this.shippingLastName = shippingLastName;
-		this.shippingStreet = shippingStreet;
-		this.shippingHouseNumber = shippingHouseNumber;
-		this.shippingAddressLine2 = shippingAddressLine2;
-		this.shippingZipCode = shippingZipCode;
-		this.shippingTown = shippingTown;
-
+	public void setUser(ConcreteUserAccount user) {
+		this.user = user;
+	}
+	
+	/**
+	 * Gets the user.
+	 *
+	 * @return the user
+	 */
+	public ConcreteUserAccount getUser() {
+		return this.user;
+	}
+	
+	public void setDateOrdered(LocalDateTime dateOrdered) {
 		this.dateOrdered = dateOrdered;
-		this.order = order;
-		this.status = order.getOrderStatus();
-
+	}
+	
+	public LocalDateTime getDateOrdered() {
+		return this.dateOrdered;
+	}
+	
+	public void setStatus(OrderStatus status) {
+		this.status = status;
+	}
+	
+	public OrderStatus getStatus() {
+		return this.status;
+	}
+	
+	public void setUsedDiscountPoints(long usedDiscountPoints) {
+		this.usedDiscountPoints = usedDiscountPoints;
+	}
+	
+	public long getUsedDiscountPoints() {
+		return this.usedDiscountPoints;
 	}
 
 	/**
@@ -206,15 +172,6 @@ public class ConcreteOrder implements Serializable {
 	 */
 	public String getBillingGender() {
 		return billingGender;
-	}
-
-	/**
-	 * Gets the order.
-	 *
-	 * @return the order
-	 */
-	public Order getOrder() {
-		return this.order;
 	}
 
 	/**
@@ -353,23 +310,12 @@ public class ConcreteOrder implements Serializable {
 	}
 
 	/**
-	 * Sets the date ordered.
-	 *
-	 * @param dateOrdered
-	 *            the new date ordered
-	 */
-	public void setDateOrdered(LocalDateTime dateOrdered) {
-		this.dateOrdered = dateOrdered;
-	}
-
-	/**
 	 * Gets the order lines size.
 	 *
 	 * @return the order lines size
 	 */
 	public int getOrderLinesSize() {
-		Collection<OrderLine> orderLines = IteratorUtils.toList(this.order.getOrderLines().iterator());
-		return orderLines.size();
+		return Iterators.size(this.getOrderLines().iterator());
 	}
 
 	/**
@@ -379,22 +325,22 @@ public class ConcreteOrder implements Serializable {
 	 */
 	public int getTotalProductNumber() {
 		int total = 0;
-		Iterable<OrderLine> orderLines = this.order.getOrderLines();
-		for (OrderLine orderLine : orderLines) {
+		for (OrderLine orderLine : super.getOrderLines()) {
 			total += Integer.parseInt(orderLine.getQuantity().toString());
 		}
 		return total;
 	}
-
-	/**
-	 * Gets the date ordered.
-	 *
-	 * @return the date ordered
-	 */
-	public LocalDateTime getDateOrdered() {
-		return this.dateOrdered;
+	
+	@Override
+	public Money getTotalPrice() {
+		return super.getTotalPrice().subtract(Money.of(this.getUsedDiscountPoints(), "EUR").divide(100));
 	}
-
+	
+	public String getDateOrderedFormatted() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+		return this.dateOrdered.format(formatter);
+	}
+		
 	/**
 	 * Gets the returned.
 	 *
@@ -565,35 +511,6 @@ public class ConcreteOrder implements Serializable {
 	}
 
 	/**
-	 * Sets the user account.
-	 *
-	 * @param account
-	 *            the new user account
-	 */
-	public void setUserAccount(UserAccount account) {
-		this.setUserAccount(account);
-	}
-
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * Sets the id.
-	 *
-	 * @param id
-	 *            the new id
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	/**
 	 * Sets the billing address.
 	 *
 	 * @param billingAddress
@@ -626,6 +543,10 @@ public class ConcreteOrder implements Serializable {
 		this.shippingZipCode = shippingAddress.get(6);
 		this.shippingTown = shippingAddress.get(7);
 	}
+	
+	public boolean isRetournable() {
+		return (this.dateOrdered.isAfter(LocalDateTime.now().minusDays(30)) && !this.returned);
+	}
 
 	/**
 	 * Sets the returned.
@@ -635,39 +556,6 @@ public class ConcreteOrder implements Serializable {
 	 */
 	public void setReturned(boolean returned) {
 		this.returned = returned;
-	}
-
-	/**
-	 * Gets the user.
-	 *
-	 * @return the user
-	 */
-	public UserAccount getUser() {
-		return user;
-	}
-
-	/**
-	 * Gets the status.
-	 *
-	 * @return the status
-	 */
-	/*
-	 * public void setOrderManager(OrderManager<Order> orderManager){
-	 * this.orderManager = orderManager; } public OrderManager<Order>
-	 * getOrderManager(){ return this.orderManager; }
-	 */
-	public OrderStatus getStatus() {
-		return this.status;
-	}
-
-	/**
-	 * Sets the status.
-	 *
-	 * @param state
-	 *            the new status
-	 */
-	public void setStatus(OrderStatus state) {
-		this.status = state;
 	}
 
 	/**

@@ -7,9 +7,6 @@ import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,6 +52,9 @@ public class ConcreteProduct extends Product {
 	/** The buying price. */
 	@Column(name = "BUYING_PRICE")
 	private BigDecimal buyingPrice;
+	
+	@Column(name = "PRICE_DECIMAL")
+	private BigDecimal priceDecimal;
 
 	/** The average rating. */
 	@Column
@@ -95,6 +95,7 @@ public class ConcreteProduct extends Product {
 		super(name, price);
 		this.addCategory(category);
 		this.buyingPrice = buyingPrice.getNumberStripped();
+		this.priceDecimal = price.getNumberStripped();
 		this.description = description;
 		this.webLink = webLink;
 		this.imagefile = imagefile;
@@ -126,22 +127,6 @@ public class ConcreteProduct extends Product {
 	}
 
 	/**
-	 * Gets the rating.
-	 *
-	 * @return the rating
-	 */
-	public List<Integer> getRating() {
-		double rating = 0;
-		if (comments.isEmpty())
-			return null;
-		for (Comment c : this.getAcceptedComments()) {
-			rating += c.getRating();
-		}
-		rating = (rating / (this.getAcceptedComments().size()) + (0.5));
-		return IntStream.range(0, (int) rating).boxed().collect(Collectors.toList());
-	}
-
-	/**
 	 * Update average rating.
 	 */
 	public void updateAverageRating() {
@@ -158,7 +143,8 @@ public class ConcreteProduct extends Product {
 	 * @return the average rating
 	 */
 	public float getAverageRating() {
-		return this.averageRating;
+		updateAverageRating();
+		return Math.round(this.averageRating);
 	}
 
 	/**
@@ -381,6 +367,12 @@ public class ConcreteProduct extends Product {
 	 */
 	public void setBuyingPrice(Money buyingPrice) {
 		this.buyingPrice = buyingPrice.getNumberStripped();
+	}
+	
+	@Override
+	public void setPrice(Money price) {
+		super.setPrice(price);
+		this.priceDecimal = price.getNumberStripped();
 	}
 
 }

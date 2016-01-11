@@ -1,7 +1,11 @@
 package internetkaufhaus.repositories;
 
+import java.util.Optional;
+
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
 import internetkaufhaus.entities.ConcreteUserAccount;
@@ -18,7 +22,7 @@ public interface ConcreteUserAccountRepository extends CrudRepository<ConcreteUs
 	 * @param email the email
 	 * @return the concrete user account
 	 */
-	ConcreteUserAccount findByEmail(String email);
+	Optional<ConcreteUserAccount> findByEmail(String email);
 
 	/**
 	 * Find by role.
@@ -34,6 +38,8 @@ public interface ConcreteUserAccountRepository extends CrudRepository<ConcreteUs
 	 * @param acc the acc
 	 * @return the concrete user account
 	 */
-	ConcreteUserAccount findByUserAccount(UserAccount acc);
+	Optional<ConcreteUserAccount> findByUserAccount(UserAccount acc);
+	
+	Page<ConcreteUserAccount> findByRole(Role role, Pageable pageable);
 
 }

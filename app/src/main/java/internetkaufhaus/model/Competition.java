@@ -1,13 +1,19 @@
 package internetkaufhaus.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
+import java.util.List;
+
+import org.salespointframework.useraccount.Role;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+
+import com.google.common.collect.Iterators;
 
 import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.services.ConcreteMailService;
+import internetkaufhaus.services.DataService;
 
-// TODO: Auto-generated Javadoc
 /**
  * Competition in which the Customers who gained the most CreditPoints are
  * rewarded with a prize.
@@ -22,11 +28,10 @@ public class Competition {
 	 * all invitators. The the best invitators are the winners.
 	 *
 	 */
-
-	private ArrayList<ConcreteUserAccount> accs = new ArrayList<ConcreteUserAccount>();
+	private DataService data;
 
 	/** The winners. */
-	private ArrayList<ConcreteUserAccount> winners = new ArrayList<ConcreteUserAccount>();
+	private List<ConcreteUserAccount> winners;
 
 	/** The creditmanager. */
 	private Creditmanager creditmanager;
@@ -39,11 +44,10 @@ public class Competition {
 	 * @param creditmanager
 	 *            the creditmanager
 	 */
-	public Competition(Iterable<ConcreteUserAccount> accs, Creditmanager creditmanager) {
-		for (ConcreteUserAccount acc : accs) {
-			this.accs.add(acc);
-		}
-		this.creditmanager = creditmanager;
+	@Autowired
+	public Competition(DataService data) {
+		this.data = data;
+		this.creditmanager = new Creditmanager(data);
 	}
 
 	/**
@@ -52,27 +56,22 @@ public class Competition {
 	 * @author heiner
 	 * @return ArrayList with
 	 */
-	public ArrayList<ConcreteUserAccount> getWinners() {
-		winners.clear();
-		for (ConcreteUserAccount acc : accs) {
+	public List<ConcreteUserAccount> getWinners() {
+
+		for (ConcreteUserAccount acc : data.getConcreteUserAccountRepository().findAll()) {
 			creditmanager.updateCreditpointsByUser(acc);
+			System.out.println(acc.getEmail());
+
 		}
-		int accsize = this.accs.size();
-		int numberofwinners = accsize / 10;
-		int i = 0;
-		Collections.sort(accs, new CreditComparator());
-		Collections.reverse(accs);
-		Iterator<ConcreteUserAccount> iter = this.accs.iterator();
-		if (this.accs.size() == 0)
-			return winners;
-		if (this.accs.size() < 10 && iter.hasNext()) {
-			winners.add(iter.next());
-			return winners;
-		}
-		while (iter.hasNext() && i < numberofwinners) {
-			winners.add(iter.next());
-			i++;
-		}
+
+		Page<ConcreteUserAccount> page = data.getConcreteUserAccountRepository()
+				.findByRole(Role.of("ROLE_CUSTOMER"),
+						new PageRequest(0,
+								Iterators.size(data.getConcreteUserAccountRepository()
+										.findByRole(Role.of("ROLE_CUSTOMER")).iterator()) / 10,
+						new Sort(new Sort.Order(Sort.Direction.DESC, "credits", Sort.NullHandling.NATIVE))));
+		
+		winners = page.getContent();
 
 		return winners;
 	}
@@ -90,22 +89,4 @@ public class Competition {
 		}
 	}
 
-	/**
-	 * Returns list of participants.
-	 *
-	 * @return the accs
-	 */
-	public ArrayList<ConcreteUserAccount> getAccs() {
-		return accs;
-	}
-
-	/**
-	 * Sets list of participants.
-	 *
-	 * @param accs
-	 *            the new accs
-	 */
-	public void setAccs(ArrayList<ConcreteUserAccount> accs) {
-		this.accs = accs;
-	}
 }

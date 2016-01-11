@@ -12,8 +12,6 @@ import org.salespointframework.payment.Cash;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
-import org.salespointframework.useraccount.UserAccountManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -35,11 +33,9 @@ public class ProductManagementServiceTest {
 	private ProductManagementService service;
 
 	/** The user account. */
-	private UserAccount userAcc;
+	private ConcreteUserAccount userAcc;
 
-	/** The user account manager. */
-	@Autowired
-	private UserAccountManager userAccountManager;
+	private DataService data;
 
 	/**
 	 * Inits the.
@@ -47,8 +43,8 @@ public class ProductManagementServiceTest {
 	@Before
 	public void init() {
 		service = new ProductManagementService();
-		this.userAcc = new ConcreteUserAccount("Username1", "Username1", Role.of("ROLE_CUSTOMER"), userAccountManager)
-				.getUserAccount();
+		this.userAcc = new ConcreteUserAccount("Username1", "Username1", Role.of("ROLE_CUSTOMER"),
+				data.getUserAccountManager());
 	}
 
 	/**
@@ -59,10 +55,10 @@ public class ProductManagementServiceTest {
 		ConcreteOrder order = new ConcreteOrder(this.userAcc, Cash.CASH);
 		assertEquals("getBuyingPrice0", Money.of(0, EURO), service.getBuyingPrice(order));
 
-		order.getOrder().add(new OrderLine(new ConcreteProduct("Name", Money.of(5, EURO), Money.of(4, EURO), "Grillen",
+		order.add(new OrderLine(new ConcreteProduct("Name", Money.of(5, EURO), Money.of(4, EURO), "Grillen",
 				"Beschreeeibung", "WAPlink", "IMAETSCHFEIL"), Quantity.of(3)));
-		order.getOrder().add(new OrderLine(new ConcreteProduct("NAAME", Money.of(20, EURO), Money.of(10, EURO),
-				"KATEGORIE", "BESCHREIBUNG", "NETZVERKNUEPFUNG", "BILDDATEI"), Quantity.of(2)));
+		order.add(new OrderLine(new ConcreteProduct("NAAME", Money.of(20, EURO), Money.of(10, EURO), "KATEGORIE",
+				"BESCHREIBUNG", "NETZVERKNUEPFUNG", "BILDDATEI"), Quantity.of(2)));
 		// assertEquals("getBuyingPrice1", Money.of(22, EURO),
 		// service.getBuyingPrice(order));
 		// TODO: fix this error.

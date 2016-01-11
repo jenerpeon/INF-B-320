@@ -60,10 +60,9 @@
 				</table>
 
 				<p th:text="'Summe: ' + ${cart.price}">Summe</p>
-				<p th:text="'eingelöste Punkte:' +${credits}"></p>
-				<p th:text="'Preis nach Punktabzug: ' + ${points}"></p>
+				<p th:text="'Für die Bestellung werden ' + ${points} + ' Punkte eingesetzt. Dies entspricht '+${discount}">Summe</p>
 				<p th:if="${cart.empty}">Leer</p>
-	
+				
 				<div>
 					<form class="form" method="post" action="orderdata/1">
 						<input type="submit" th:value="Bezahlen" value="kaufen" />
