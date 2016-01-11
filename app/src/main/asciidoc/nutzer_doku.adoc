@@ -1,8 +1,6 @@
 :imagesdir: ./Bilder/nutzer_doku
 
-= Pflichtenheft
-
-== Nutzer-Doku
+= Nutzer-Doku
 
 __Version:__    *1.0.0*
 
