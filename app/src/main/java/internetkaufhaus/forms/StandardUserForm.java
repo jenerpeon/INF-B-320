@@ -34,10 +34,15 @@ public class StandardUserForm {
 	@Email(message = "Die E-Mail Adresse is ungültig.")
 	private String email;
 
-	/** The address. */
-	@NotEmpty(message = "Bitte geben Sie eine Adresse an.")
-	@Pattern(regexp = "([A-Za-z0-9 ,.-])+", message = "Die Adresse enthält unzulässige Zeichen.")
-	private String address;
+	/** The street. */
+	@NotEmpty(message = "Bitte geben Sie eine Straße an.")
+	@Pattern(regexp = "([A-Za-z ,.-])+", message = "Die Straße enthält unzulässige Zeichen.")
+	private String street;
+	
+	/** The housenumber. */
+	@NotEmpty(message = "Bitte geben Sie eine Hausnummer an.")
+	@Pattern(regexp = "([0-9])+", message = "Die Hausnummer enthält unzulässige Zeichen.")
+	private String houseNumber;
 
 	/** The zip code. */
 	@NotEmpty(message = "Bitte geben Sie eine Postleitzahl an.")
@@ -173,8 +178,8 @@ public class StandardUserForm {
 	 *
 	 * @return the address
 	 */
-	public String getAddress() {
-		return this.address;
+	public String getStreet() {
+		return this.street;
 	}
 
 	/**
@@ -182,8 +187,16 @@ public class StandardUserForm {
 	 *
 	 * @param address the new address
 	 */
-	public void setAddress(String address) {
-		this.address = address;
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	
+	public String getHouseNumber() {
+		return this.houseNumber;
+	}
+	
+	public void setHouseNumber(String houseNumber) {
+		this.houseNumber = houseNumber;
 	}
 
 	/**

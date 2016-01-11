@@ -44,7 +44,7 @@ public class ConcreteUserAccountTest {
 
 		model1 = new ConcreteUserAccount("Username1", "Username1", Role.of("ROLE_CUSTOMER"),
 				data.getUserAccountManager());
-		model2 = new ConcreteUserAccount("test@mail.com", "Username2", "Firstname", "Lastname", "Adress", "ZipCode",
+		model2 = new ConcreteUserAccount("test@mail.com", "Username2", "Firstname", "Lastname", "Straße", "3", "ZipCode",
 				"City", "Password", Role.of("ROLE_EMPLOYEE"), data.getUserAccountManager(), 2, recruits);
 		recruits.add(model1);
 
@@ -75,9 +75,13 @@ public class ConcreteUserAccountTest {
 		model1.setEmail("test@mail.com");
 		assertTrue("Email geändert", model1.getEmail().equals("test@mail.com"));
 
-		assertTrue("Adress get", model2.getAddress().equals("Adress"));
-		model1.setAddress("Adress1");
-		assertTrue("Adresse geänder", model1.getAddress().equals("Adress1"));
+		assertTrue("Adress get", model2.getStreet().equals("Straße"));
+		model1.setStreet("Straße2");
+		assertTrue("Adresse geänder", model1.getStreet().equals("Straße2"));
+		
+		assertTrue("Adress get", model2.getHouseNumber().equals("3"));
+		model1.setHouseNumber("4");
+		assertTrue("Adresse geänder", model1.getHouseNumber().equals("4"));
 
 		assertTrue("Credit get", model2.getCredits() == 2);
 		model2.setCredits(4);

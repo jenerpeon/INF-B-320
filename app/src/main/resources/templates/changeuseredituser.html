@@ -67,8 +67,10 @@
 							<span>Adresse</span>
 						</legend>
 						<ol>
-							<li><label for="address">Adresszeile 1:</label> <input
-								type="text" id="address" name="address" th:value="${account.address}" /></li>
+							<li><label for="street">Straße:</label> <input
+								type="text" id="street" name="street" th:value="${account.street}" /></li>
+							<li><label for="address">Hausnummer:</label> <input
+								type="text" id="houseNumber" name="houseNumber" th:value="${account.houseNumber}" />
 							<li><label for="city">Stadt:</label> <input type="text"
 								id="city" name="city" th:value="${account.city}" /></li>
 							<li><label for="zipCode">Postleitzahl:</label> <input

@@ -83,8 +83,6 @@ public class Statistic {
 		LocalDate start = interval.getStart().toLocalDate();
 		LocalDate end = interval.getEnd().toLocalDate();
 		switch (unit) {
-		default:
-			return false;
 		case "day":
 			for (LocalDate j = end; j.isAfter(start) || j.isEqual(start); j = j.minusDays(1)) {
 				
@@ -112,7 +110,7 @@ public class Statistic {
 				expenses.put(j, intervalStockMoney);
 				profit.put(j, intervalMoney.subtract(intervalStockMoney));
 			}
-			return true;
+			break;
 		case "week":
 			for (LocalDate j = end; j.isAfter(start) || j.isEqual(start); j = j.minusWeeks(1)) {
 				
@@ -140,7 +138,7 @@ public class Statistic {
 				expenses.put(j, intervalStockMoney);
 				profit.put(j, intervalMoney.subtract(intervalStockMoney));
 			}
-			return true;
+			break;
 		case "month":
 			for (LocalDate j = end; j.isAfter(start) || j.isEqual(start); j = j.minusMonths(1)) {
 				
@@ -168,7 +166,7 @@ public class Statistic {
 				expenses.put(j, intervalStockMoney);
 				profit.put(j, intervalMoney.subtract(intervalStockMoney));
 			}
-			return true;
+			break;
 		case "year":
 			for (LocalDate j = end; j.isAfter(start) || j.isEqual(start); j = j.minusYears(1)) {
 				
@@ -196,7 +194,10 @@ public class Statistic {
 				expenses.put(j, intervalStockMoney);
 				profit.put(j, intervalMoney.subtract(intervalStockMoney));
 			}
-			return true;
+			break;
+		default:
+			return false;
 		}
+		return true;
 	}
 }

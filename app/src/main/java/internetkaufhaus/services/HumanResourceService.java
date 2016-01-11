@@ -45,7 +45,7 @@ public class HumanResourceService {
 		ConcreteUserAccount acc = null;
 		try {
 			acc = new ConcreteUserAccount(form.getEmail(), form.getName(), form.getFirstname(), form.getLastname(),
-					form.getAddress(), form.getZipCode(), form.getCity(), form.getPassword(),
+					form.getStreet(), form.getHouseNumber(), form.getZipCode(), form.getCity(), form.getPassword(),
 					Role.of(form.getRolename()), dataService.getUserAccountManager());
 			accService.addUser(acc);
 		} catch (Exception e) {
@@ -107,7 +107,8 @@ public class HumanResourceService {
 		acc.getUserAccount().remove(Role.of("ROLE_CUSTOMER"));
 		acc.getUserAccount().add(Role.of(form.getRolename()));
 		acc.setEmail(form.getEmail());
-		acc.setAddress(form.getAddress());
+		acc.setStreet(form.getStreet());
+		acc.setHouseNumber(form.getHouseNumber());
 		acc.setCity(form.getCity());
 		acc.setZipCode(form.getZipCode());
 		acc.getUserAccount().setFirstname(form.getFirstname());
@@ -126,7 +127,8 @@ public class HumanResourceService {
 		ConcreteUserAccount caccount = dataService.getConcreteUserAccountRepository().findByUserAccount(customer.get())
 				.get();
 		caccount.setEmail(form.getEmail());
-		caccount.setAddress(form.getAddress());
+		caccount.setStreet(form.getStreet());
+		caccount.setHouseNumber(form.getHouseNumber());
 		caccount.setCity(form.getCity());
 		caccount.setZipCode(form.getZipCode());
 		caccount.getUserAccount().setFirstname(form.getFirstname());

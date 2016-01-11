@@ -62,7 +62,7 @@ public class CompetitionTest extends AbstractIntegrationTests {
 		for (int i = 1; i < 31; i++) {
 
 			ConcreteUserAccount acc = new ConcreteUserAccount("kunde" + i + "@todesstern.ru", "mockup" + i, "Kunde" + i,
-					"Kundenname" + i, "Kundenstraße" + i, "12345", "Definitiv nicht Dresden", "kunde" + i, customerRole,
+					"Kundenname" + i, "Kundenstraße" + i, "3", "12345", "Definitiv nicht Dresden", "kunde" + i, customerRole,
 					data.getUserAccountManager());
 			if (i > 1) {
 				acc.setRecruits(data.getConcreteUserAccountRepository()

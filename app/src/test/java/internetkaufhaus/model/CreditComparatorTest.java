@@ -43,7 +43,7 @@ public class CreditComparatorTest extends AbstractIntegrationTests{
 	public void init() {
 		acc1 = new ConcreteUserAccount("Username1", "Username1", Role.of("ROLE_CUSTOMER"), u);
 		acc1.setCredits(6);
-		acc2 = new ConcreteUserAccount("test@mail.com", "Username2", "Firstname", "Lastname", "Adress", "ZipCode",
+		acc2 = new ConcreteUserAccount("test@mail.com", "Username2", "Firstname", "Lastname", "Straße", "3", "ZipCode",
 				"City", "Password", Role.of("ROLE_EMPLOYEE"), u);
 		acc2.setCredits(3);
 	}

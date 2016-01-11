@@ -128,7 +128,7 @@ public class AccountingService {
 		if (success) {
 			try {
 				user = new ConcreteUserAccount(regform.getEmail(), regform.getName(), regform.getFirstname(),
-						regform.getLastname(), regform.getAddress(), regform.getZipCode(), regform.getCity(),
+						regform.getLastname(), regform.getStreet(), regform.getHouseNumber(), regform.getZipCode(), regform.getCity(),
 						regform.getPassword(), Role.of("ROLE_CUSTOMER"), dataService.getUserAccountManager());
 				this.addUser(user);
 

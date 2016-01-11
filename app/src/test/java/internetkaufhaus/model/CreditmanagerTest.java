@@ -48,9 +48,9 @@ public class CreditmanagerTest extends AbstractIntegrationTests {
 	public void init() {
 		this.manager = new Creditmanager(data);
 		ConcreteUserAccount user = new ConcreteUserAccount("test2@mail.com", "Username1", "Firstname", "Lastname",
-				"Adress", "ZipCode", "City", "Password", Role.of("ROLE_CUSTOMER"), data.getUserAccountManager());
+				"Straße", "3", "ZipCode", "City", "Password", Role.of("ROLE_CUSTOMER"), data.getUserAccountManager());
 		ConcreteUserAccount acc = new ConcreteUserAccount("test@mail.com", "Username2", "Firstname", "Lastname",
-				"Adress", "ZipCode", "City", "Password", Role.of("ROLE_EMPLOYEE"), data.getUserAccountManager());
+				"Straße", "3", "ZipCode", "City", "Password", Role.of("ROLE_EMPLOYEE"), data.getUserAccountManager());
 		user.setRecruits(acc);
 		data.getConcreteUserAccountRepository().save(user);
 		data.getUserAccountManager().save(user.getUserAccount());

@@ -30,10 +30,15 @@ public class EditCustomerForm {
 	@Pattern(regexp = "([A-Za-z])+", message = "Der Nachname enthält ungültige Zeichen.")
 	private String lastname;
 	
-	/** The address. */
-	@NotEmpty(message = "Bitte geben Sie eine Adresse an.")
-	@Pattern(regexp = "([A-Za-z0-9 ,.-])+", message = "Die Adresse enthält unzulässige Zeichen.")
-	private String address;
+	/** The street. */
+	@NotEmpty(message = "Bitte geben Sie eine Straße an.")
+	@Pattern(regexp = "([A-Za-z ,.-])+", message = "Die Straße enthält unzulässige Zeichen.")
+	private String street;
+	
+	/** The housenumber. */
+	@NotEmpty(message = "Bitte geben Sie eine Hausnummer an.")
+	@Pattern(regexp = "([0-9])+", message = "Die Hausnummer enthält unzulässige Zeichen.")
+	private String houseNumber;
 	
 	/** The city. */
 	@NotEmpty(message = "Bitte geben Sie eine Stadt an.")
@@ -80,12 +85,30 @@ public class EditCustomerForm {
 		this.lastname = lastname;
 	}
 	
-	public String getAddress() {
-		return this.address;
+	/**
+	 * Gets the address.
+	 *
+	 * @return the address
+	 */
+	public String getStreet() {
+		return this.street;
+	}
+
+	/**
+	 * Sets the address.
+	 *
+	 * @param address the new address
+	 */
+	public void setStreet(String street) {
+		this.street = street;
 	}
 	
-	public void setAddress(String address) {
-		this.address = address;
+	public String getHouseNumber() {
+		return this.houseNumber;
+	}
+	
+	public void setHouseNumber(String houseNumber) {
+		this.houseNumber = houseNumber;
 	}
 	
 	public String getCity() {

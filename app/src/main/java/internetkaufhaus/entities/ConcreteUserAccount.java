@@ -48,8 +48,10 @@ public class ConcreteUserAccount implements Serializable {
 	/** The email. */
 	private String email;
 	
-	/** The address. */
-	private String address;
+	/** The street. */
+	private String street;
+	
+	private String houseNumber;
 	
 	/** The zip code. */
 	private String zipCode;
@@ -103,14 +105,15 @@ public class ConcreteUserAccount implements Serializable {
 	 * @param credits the credits
 	 * @param recruits the recruits
 	 */
-	public ConcreteUserAccount(String email, String username, String firstname, String lastname, String address,
+	public ConcreteUserAccount(String email, String username, String firstname, String lastname, String street, String houseNumber,
 			String zipCode, String city, String password, Role role, UserAccountManager u, long credits,
 			List<ConcreteUserAccount> recruits) {
 		this.userAccount = u.create(username, password, role);
 		this.recruits = recruits;
 		this.userAccount.setFirstname(firstname);
 		this.userAccount.setLastname(lastname);
-		this.address = address;
+		this.street = street;
+		this.houseNumber = houseNumber;
 		this.zipCode = zipCode;
 		this.city = city;
 		this.userAccount.setEmail(email);
@@ -133,12 +136,13 @@ public class ConcreteUserAccount implements Serializable {
 	 * @param role the role
 	 * @param u the u
 	 */
-	public ConcreteUserAccount(String email, String username, String firstname, String lastname, String address,
+	public ConcreteUserAccount(String email, String username, String firstname, String lastname, String street, String houseNumber,
 			String zipCode, String city, String password, Role role, UserAccountManager u) {
 		this.userAccount = u.create(username, password, role);
 		this.userAccount.setFirstname(firstname);
 		this.userAccount.setLastname(lastname);
-		this.address = address;
+		this.street = street;
+		this.houseNumber = houseNumber;
 		this.zipCode = zipCode;
 		this.city = city;
 		this.userAccount.setEmail(email);
@@ -274,21 +278,29 @@ public class ConcreteUserAccount implements Serializable {
 	}
 
 	/**
-	 * Gets the address.
+	 * Gets the street.
 	 *
-	 * @return the address
+	 * @return the street
 	 */
-	public String getAddress() {
-		return address;
+	public String getStreet() {
+		return this.street;
 	}
 
 	/**
-	 * Sets the address.
+	 * Sets the street.
 	 *
-	 * @param address the new address
+	 * @param street the new street
 	 */
-	public void setAddress(String address) {
-		this.address = address;
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	
+	public String getHouseNumber() {
+		return this.houseNumber;
+	}
+	
+	public void setHouseNumber(String houseNumber) {
+		this.houseNumber = houseNumber;
 	}
 
 	/**

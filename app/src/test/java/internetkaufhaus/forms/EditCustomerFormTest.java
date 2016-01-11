@@ -54,9 +54,15 @@ public class EditCustomerFormTest {
 	 * Address test.
 	 */
 	@Test
-	public void addressTest() {
-		model.setAddress("Meine Adresse");
-		assertTrue("Adresse erhalten", model.getAddress().equals("Meine Adresse"));
+	public void streetTest() {
+		model.setStreet("Meine Adresse");
+		assertTrue("Adresse erhalten", model.getStreet().equals("Meine Adresse"));
+	}
+	
+	@Test
+	public void houseNumberTest() {
+		model.setHouseNumber("3");
+		assertTrue("Hausnummer erhalten", model.getHouseNumber().equals("3"));
 	}
 	
 	/**

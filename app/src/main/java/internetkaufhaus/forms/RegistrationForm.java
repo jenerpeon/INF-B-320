@@ -34,10 +34,15 @@ public class RegistrationForm {
 	@Email(message = "email is not a valid email")
 	private String email;
 
-	/** The address. */
-	@NotEmpty(message = "address field is mandatory")
-	@Pattern(regexp = "([A-Za-z0-9 ,.-])+", message = "address contains illegal characters")
-	private String address;
+	/** The street. */
+	@NotEmpty(message = "Bitte geben Sie eine Straße an.")
+	@Pattern(regexp = "([A-Za-z ,.-])+", message = "Die Straße enthält unzulässige Zeichen.")
+	private String street;
+	
+	/** The housenumber. */
+	@NotEmpty(message = "Bitte geben Sie eine Hausnummer an.")
+	@Pattern(regexp = "([0-9])+", message = "Die Hausnummer enthält unzulässige Zeichen.")
+	private String houseNumber;
 
 	/** The zip code. */
 	@NotEmpty(message = "zipCode field is mandatory")
@@ -182,8 +187,8 @@ public class RegistrationForm {
 	 *
 	 * @return the address
 	 */
-	public String getAddress() {
-		return this.address;
+	public String getStreet() {
+		return this.street;
 	}
 
 	/**
@@ -191,8 +196,16 @@ public class RegistrationForm {
 	 *
 	 * @param address the new address
 	 */
-	public void setAddress(String address) {
-		this.address = address;
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	
+	public String getHouseNumber() {
+		return this.houseNumber;
+	}
+	
+	public void setHouseNumber(String houseNumber) {
+		this.houseNumber = houseNumber;
 	}
 
 	/**
