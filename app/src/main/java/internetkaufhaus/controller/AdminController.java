@@ -38,6 +38,7 @@ import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.model.NavItem;
 import internetkaufhaus.services.ConcreteMailService;
 import internetkaufhaus.services.DataService;
+import internetkaufhaus.services.StatisticService;
 
 /**
  * This is the admin controller. It controls the admin. Or maybe it admins the
@@ -56,6 +57,8 @@ public class AdminController {
 	private DataService dataService;
 	@Autowired
 	private ConcreteMailService mailService;
+	@Autowired 
+	private StatisticService statService;
 
 	private final NewUserAccountForm form;
 	private final Creditmanager creditmanager;
@@ -267,7 +270,7 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value = "/admin/statistics")
-	public String getStatistics() {
+	public String getStatistics(ModelMap model, @ModelAttribute("StatisticParams") @Valid EditUserForm edituserform) {
 		// Statistic stat = new Statistic(orderManager);
 		LocalDateTime to = LocalDateTime.now();
 		LocalDateTime from7Days = to.minusDays(7);
@@ -287,7 +290,13 @@ public class AdminController {
 		intervals.put(Interval.from(from3Year).to(to), "year");
 		intervals.put(Interval.from(from5Year).to(to), "year");
 		intervals.put(Interval.from(from10Year).to(to), "year");
-
+		
+		model.addAttribute("turnover", statService.getTurnoverByInterval(Interval.from(from7Days).to(to), "week"));
+		for(Interval i : intervals.keySet()){
+    		System.out.println(statService.getTurnoverByInterval(i, "Week"));
+		}
+		
+		
 		return "statistics";
 	}
 

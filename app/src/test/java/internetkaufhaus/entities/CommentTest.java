@@ -40,7 +40,7 @@ public class CommentTest {
 	public void testUser() {
 		ConcreteUserAccount account = new ConcreteUserAccount();
 		model.setUser(account);
-		assertTrue("Account gesetzt", model.getUserAccount() == account);
+		assertTrue("Account gesetzt", model.getUser() == account);
 	}
 
 	@Test
