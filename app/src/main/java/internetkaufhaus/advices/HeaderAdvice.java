@@ -1,6 +1,5 @@
 package internetkaufhaus.advices;
 
-import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -8,6 +7,7 @@ import java.util.List;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.CartItem;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -51,7 +51,8 @@ public class HeaderAdvice {
 	/**
 	 * Gets the cart.
 	 *
-	 * @param cart the cart
+	 * @param cart
+	 *            the cart
 	 * @return the cart
 	 */
 	@ModelAttribute("cart")
@@ -64,7 +65,8 @@ public class HeaderAdvice {
 	 * Models? Adds the current cart price to the variables used by thymeleaf so
 	 * an overview about the cart can be displayed in the navigation header.
 	 *
-	 * @param cart the cart
+	 * @param cart
+	 *            the cart
 	 * @return cartPrice
 	 */
 	@ModelAttribute("cartprice")
@@ -78,7 +80,8 @@ public class HeaderAdvice {
 	 * used by thymeleaf so an overview about the cart can be displayed in the
 	 * navigation header.
 	 *
-	 * @param cart the cart
+	 * @param cart
+	 *            the cart
 	 * @return cartSize
 	 */
 	@ModelAttribute("cartsize")
@@ -96,7 +99,8 @@ public class HeaderAdvice {
 	 * This is an Exception Hander. It handles Exceptions. Or does it Except
 	 * Handles?
 	 *
-	 * @param exception the exception
+	 * @param exception
+	 *            the exception
 	 * @return "error500"
 	 */
 	@ExceptionHandler(value = Exception.class)

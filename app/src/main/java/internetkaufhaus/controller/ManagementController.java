@@ -16,6 +16,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.salespointframework.catalog.ProductIdentifier;
+import org.salespointframework.core.SalespointIdentifier;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.order.OrderIdentifier;
 import org.salespointframework.order.OrderLine;
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -667,6 +669,43 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
+	 * This page shows the newsletter to the employee editing it.
+	 *
+	 * @param subject
+	 *            the subject
+	 * @param mailBody
+	 *            the mail body
+	 * @return the string
+	 */
+	@RequestMapping(value = "/employee/newsletter/changeNewsletter/showNewsletter", method = RequestMethod.GET)
+	public @ResponseBody String showNewsletter(@RequestParam("subject") String subject,
+			@RequestParam("mailBody") String mailBody, ModelMap model) {
+		if (!(mailBody.equals(""))) {
+			while (mailBody.contains("[[")) {
+				int startIndex = mailBody.indexOf("[[");
+				int endIndex = mailBody.indexOf("]]", startIndex);
+				String productID = mailBody.substring(startIndex + 2, endIndex);
+				if (productID == "top5rated") {
+					mailBody = mailBody.substring(0, startIndex) + "<div class=\"product\"><h2>"
+							+ "Hier sollten die Top 5 bestbewerteten Produkte stehen." + "</h2></div>"
+							+ mailBody.substring(endIndex + 2);
+				} else if (productID == "top5bought") {
+					mailBody = mailBody.substring(0, startIndex) + "<div class=\"product\"><h2>"
+							+ "Hier sollten die Top 5 meistgekauften Produkte stehen." + "</h2></div>"
+							+ mailBody.substring(endIndex + 2);
+				}
+				ConcreteProduct product = this.dataService.getConcreteProductRepository()
+						.findOne((ProductIdentifier) new SalespointIdentifier(productID));
+				mailBody = mailBody.substring(0, startIndex) + "<div class=\"product\"><h2>" + product.getName()
+						+ "</h2><p>" + product.getDescription() + "</p></div>" + mailBody.substring(endIndex + 2);
+			}
+			model.addAttribute("content", mailBody);
+		}
+		return "emailtemplate";
+	}
+
+	/**
+	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page sends out the newsletter.
 	 *
 	 * @param subject
@@ -677,13 +716,16 @@ public class ManagementController {
 	 */
 	@RequestMapping(value = "/employee/newsletter/changeNewsletter/sendNewsletter", method = RequestMethod.GET)
 	public String sendNewsletter(@RequestParam("subject") String subject, @RequestParam("mailBody") String mailBody) {
-		Map<Date, String> maildetails = new HashMap<Date, String>();
 		if (!(mailBody.equals(""))) {
-			for (String mail : this.newsManager.getMap().values()) {
-				sender.sendMail(mail, mailBody, "zu@googlemail.com", subject);
+			this.newsManager.sendNewsletter(subject, mailBody);
+			Map<String, Map<Date, String>> oldAbos = newsManager.getOldAbos();
+			if (oldAbos.get(subject) != null) {
+				oldAbos.get(subject).put(new Date(), mailBody);
+			} else {
+				Map<Date, String> maildetails = new HashMap<Date, String>();
+				maildetails.put(new Date(), mailBody);
+				oldAbos.put(subject, maildetails);
 			}
-			maildetails.put(new Date(), mailBody);
-			newsManager.getOldAbos().put(subject, maildetails);
 		}
 		return "redirect:/employee/newsletter";
 	}
