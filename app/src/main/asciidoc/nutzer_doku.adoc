@@ -1,0 +1,95 @@
+:imagesdir: ./Bilder/nutzer_doku
+
+= Pflichtenheft
+
+== Nutzer-Doku
+
+__Version:__    *1.0.0*
+
+__Status:__     *Fertig*
+
+
+== Gast
+image::startseite.png[startseite]
+1: Mit existierendem Nutzeraccount einloggen
+2: Neuen Nutzeraccount registrieren
+3: Produktsuche
+4: Kategorien
+5: Warenkarussell
+
+image::detail_catalog.png[detail_catalog]
+1: Gewählte Kategorie
+2: Sortierfunktion
+3: Darstellungsoptionen
+4: Produkttitel
+5: Produktbeschreibung
+6: Preis
+7: Bewertung
+
+image::detail_product.png[detail_catalog]
+1: Produktdetails
+2: Kunden-Kommentare/-Bewertungen zum Produkt
+
+image::cart.png[cart]
+1: Produktdetails, Produktzahl ändern, Produkt aus Warenkorb entfernen
+2: Summe aller Produkte aus Warenkorb
+3: Anzahl Werbe-Punkte eingesetzt, Rabatt in Euro
+
+image::pay.png[pay]
+1: Versandadresse mit Lieferadresse gleich setzen
+2: Eingabefelder für persönliche Daten
+
+image::orders.png[order]
+1: Liste mit getätigten Einkäufen
+2: Bestellungsoptionen
+3: Produkte der Bestellung
+4: Ware Reklamieren
+
+image::changeProduct.png[changeProduct]
+1: Produktdetails bearbeiten
+2: Produkt aud Katalog löschen
+3: Produktbestand erhöhen/ vermindern
+
+image::customer_orders.png[customer_orders]
+1: Kunden-Bestellung akzeptieren
+
+image::changePage.png[changePage]
+1: Produkte für Warenkarussel auf Startseite auswählen
+2: Produkte für "Im Angebot"-Anzeige auf Startseite auswählen
+
+image::personellManagement.png[personellManagement]
+1: Account bearbeiten
+2: Account löschen
+3: Account hinzufügen
+
+== Inhaltsverzeichnis
+
+== Aufgabenstellung und Zielsetzung
+Software für Onlineshop erstellen, mitunter Kundenlogin, Katalogverwaltung, Personalverwaltung, Lagerbestandsübersicht, Rabattsystem, Retourensystem, Gewinnspiel, Bilanzübersicht und Newsletter einfügen. Die Benutzer sind aufgeteilt in Gäste, Kunden, Mitarbeiter und Administratoren.
+Emma ist unzufrieden  mit der bisherigen Softwareunterstützung und erwartet einen aussagefähigen Protottyp einer neuen Lösung. 
+Neben oben genannten, bindenden Funktionalitäten steht Emma weiteren Anregungen aufgeschlossen gegenüber.
+
+== Fachlicher Überblick
+Im folgenden Kapitel werden Arbeitsabläufe und Attribute von Programm-Modulen erläutert. Die verschiedenen Nutzerrollen werden erklärt.
+Im Pflichtenheft befinden sich die vertraglich Vereinbarten Funktionalitäten.
+Zur Realisierung des Online-Kaufhauses werden hauptsächlich zwei Frameworks benutzt. 
+Das Spring-Framework vereinfacht die Entwicklung mit Java, indem es auf den Prinzipien "Dependency Injection" und aspektorientierte Programmierung aufbaut. 
+Das SalesPoint-Framework stellt verschiedene Funktionen Bereit, die zur Umsetzung eines Online-Shops notwendig sind.
+
+== Systemgrenze und Top-Level-Architektur
+
+=== Kontextdiagramm
+image::Component_Diagram__Kontextdiagramm.png[Kontextdiagramm]
+
+=== Top-level architecture
+image::Top-Level-Architecture_Diagramm.png[Top Level Architecture Diagramm]
+
+== Anwendungsfälle
+
+=== Überblick Anwendungsfalldiagramm
+
+image::Use-Case-Diagramm.png[Use Case Diagramm]
+
+== Aktzeptanztestfälle
+Mithilfe von Akzeptanztests wird geprüft, ob die Software die funktionalen Erwartungen und Anforderungen im Gebrauch erfüllt. Diese sollen und können aus den Anwendungsfallbeschreibungen und den UML-Sequenzdiagrammen abgeleitet werden. D.h., pro (komplexen) Anwendungsfall gibt es typischerweise mindestens ein Sequenzdiagramm (welches ein Szenarium beschreibt). Für jedes Szenarium sollte es einen Akzeptanztestfall geben. Listen Sie alle Akzeptanztestfälle in tabellarischer Form auf.
+Jeder Testfall soll mit einer ID versehen werde, um später zwischen den Dokumenten (z.B. im Test-Plan) referenzieren zu können.
