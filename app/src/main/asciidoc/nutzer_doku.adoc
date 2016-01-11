@@ -26,6 +26,7 @@ image::detail_catalog.png[detail_catalog]
 6: Preis
 7: Bewertung
 
+== Kunde
 image::detail_product.png[detail_catalog]
 1: Produktdetails
 2: Kunden-Kommentare/-Bewertungen zum Produkt
@@ -45,6 +46,7 @@ image::orders.png[order]
 3: Produkte der Bestellung
 4: Ware Reklamieren
 
+== Mitarbeiter
 image::changeProduct.png[changeProduct]
 1: Produktdetails bearbeiten
 2: Produkt aud Katalog löschen
@@ -57,6 +59,7 @@ image::changePage.png[changePage]
 1: Produkte für Warenkarussel auf Startseite auswählen
 2: Produkte für "Im Angebot"-Anzeige auf Startseite auswählen
 
+== Admin
 image::personellManagement.png[personellManagement]
 1: Account bearbeiten
 2: Account löschen
