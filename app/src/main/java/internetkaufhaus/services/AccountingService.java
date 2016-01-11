@@ -167,8 +167,9 @@ public class AccountingService {
 	 * @return true, if successful
 	 */
 	public boolean registerCustomer(String email) {
-		if (dataService != null && dataService.getConcreteUserAccountRepository().findByEmail(email) == null) {
-			System.out.println("Customer Allready registered with this mail");
+		if (this.mailsender == null
+				|| dataService != null && dataService.getConcreteUserAccountRepository().findByEmail(email) == null) {
+			System.out.println("Customer Already registered with this mail or error with mailsender");
 			return false;
 		}
 		String invitation = "http://localhost:8080/login";
@@ -188,7 +189,7 @@ public class AccountingService {
 	 * @return the string
 	 */
 	public String recruitCustomer(Optional<UserAccount> invitator, String recruit) {
-		if (invitator.get() == null) {
+		if (invitator == null || invitator.get() == null) {
 			return "invalid invitator";
 		}
 		String invitatorEmail = invitator.get().getEmail();

@@ -11,7 +11,7 @@ import org.salespointframework.order.OrderLine;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.Role;
-import org.salespointframework.useraccount.UserAccount;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -35,6 +35,7 @@ public class ProductManagementServiceTest {
 	/** The user account. */
 	private ConcreteUserAccount userAcc;
 
+	@Autowired
 	private DataService data;
 
 	/**
