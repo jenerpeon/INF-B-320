@@ -34,7 +34,7 @@ public interface ConcreteUserAccountRepository extends CrudRepository<ConcreteUs
 	 */
 	Iterable<ConcreteUserAccount> findByRole(Role role);
 	
-	@Query("COUNT u FROM ConcreteUserAccount u WHERE u.role = :role")
+	@Query("SELECT COUNT(*) FROM ConcreteUserAccount u WHERE u.role = :role")
 	int numberOfFindByRole(@Param("role") Role role);
 
 	/**

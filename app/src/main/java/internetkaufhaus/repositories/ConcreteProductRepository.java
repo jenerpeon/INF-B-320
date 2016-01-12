@@ -28,7 +28,7 @@ public interface ConcreteProductRepository extends PagingAndSortingRepository<Co
 	 */
 	Iterable<ConcreteProduct> findByCategory(String category, Sort sort);
 	
-	@Query("COUNT c FROM ConcreteProduct c WHERE c.category = :category")
+	@Query("SELECT COUNT(*) FROM ConcreteProduct c WHERE c.category = :category")
 	int numberOfFindByCategory(@Param("category") String category);
 
 	/**
@@ -51,7 +51,7 @@ public interface ConcreteProductRepository extends PagingAndSortingRepository<Co
 	 */
 	Iterable<ConcreteProduct> findAll(Sort sort);
 	
-	@Query("COUNT p FROM ConcreteProduct p")
+	@Query("SELECT COUNT(*) FROM ConcreteProduct")
 	Long numberOfFindAll();
 
 	/**
