@@ -6,7 +6,9 @@ import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import internetkaufhaus.entities.ConcreteUserAccount;
 
@@ -31,6 +33,9 @@ public interface ConcreteUserAccountRepository extends CrudRepository<ConcreteUs
 	 * @return the iterable
 	 */
 	Iterable<ConcreteUserAccount> findByRole(Role role);
+	
+	@Query("COUNT u FROM ConcreteUserAccount u WHERE u.role = :role")
+	int numberOfFindByRole(@Param("role") Role role);
 
 	/**
 	 * Find by user account.

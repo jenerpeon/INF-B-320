@@ -51,8 +51,14 @@ public interface ConcreteOrderRepository extends PagingAndSortingRepository<Conc
 	@Query("SELECT c FROM ConcreteOrder c WHERE c.status = :status AND c.returned = false AND c.dateOrdered >= :begin AND c.dateOrdered <= :end")
 	Iterable<ConcreteOrder> findByIntervalAndStatusAndNotReturned(@Param("begin") LocalDateTime begin, @Param("end") LocalDateTime end, @Param("status") OrderStatus status);
 	
+	@Query("COUNT c FROM ConcreteOrder c WHERE c.status = :status AND c.returned = false AND c.dateOrdered >= :begin AND c.dateOrdered <= :end")
+	Long numberOfFindByIntervalAndStatusAndNotReturned(@Param("begin") LocalDateTime begin, @Param("end") LocalDateTime end, @Param("status") OrderStatus status);
+	
 	@Query("SELECT c FROM ConcreteOrder c WHERE c.status = :status AND c.returned = true AND c.dateOrdered >= :begin AND c.dateOrdered <= :end")
 	Iterable<ConcreteOrder> findByIntervalAndStatusAndReturned(@Param("begin") LocalDateTime begin, @Param("end") LocalDateTime end, @Param("status") OrderStatus status);
+	
+	@Query("COUNT c FROM ConcreteOrder c WHERE c.status = :status AND c.returned = true AND c.dateOrdered >= :begin AND c.dateOrdered <= :end")
+	Long numberOfFindByIntervalAndStatusAndReturned(@Param("begin") LocalDateTime begin, @Param("end") LocalDateTime end, @Param("status") OrderStatus status);
 	
 	Iterable<ConcreteOrder> findByReturnedTrue();
 	

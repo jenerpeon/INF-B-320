@@ -121,7 +121,7 @@ public class Initialize implements DataInitializer {
 	 */
 	private void initializeCatalog() throws IOException {
 
-		if (Iterators.size(dataService.getConcreteProductRepository().findAll().iterator()) > 0) {
+		if (dataService.getConcreteProductRepository().numberOfFindAll() > 0) {
 			return;
 		}
 

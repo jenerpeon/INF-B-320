@@ -27,6 +27,9 @@ public interface ConcreteProductRepository extends PagingAndSortingRepository<Co
 	 * @return the iterable
 	 */
 	Iterable<ConcreteProduct> findByCategory(String category, Sort sort);
+	
+	@Query("COUNT c FROM ConcreteProduct c WHERE c.category = :category")
+	int numberOfFindByCategory(@Param("category") String category);
 
 	/**
 	 * Find by category.
@@ -47,6 +50,9 @@ public interface ConcreteProductRepository extends PagingAndSortingRepository<Co
 	 * org.springframework.data.domain.Sort)
 	 */
 	Iterable<ConcreteProduct> findAll(Sort sort);
+	
+	@Query("COUNT p FROM ConcreteProduct p")
+	Long numberOfFindAll();
 
 	/**
 	 * Find all by order by name.
