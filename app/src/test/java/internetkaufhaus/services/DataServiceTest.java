@@ -17,6 +17,7 @@ import internetkaufhaus.repositories.ConcreteInventory;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
+import internetkaufhaus.repositories.NewsletterRepository;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -57,6 +58,9 @@ public class DataServiceTest {
 	/** The order manager. */
 	@Autowired
 	private OrderManager<Order> orderManager;
+	
+	@Autowired
+	private NewsletterRepository newsletterRepo;
 
 	/**
 	 * Inits the.
@@ -64,7 +68,7 @@ public class DataServiceTest {
 	@Before
 	public void init() {
 		this.dataService = new DataService(this.catalog, this.inventory, this.concreteInventory, this.concreteProductRepo,
-				this.concreteAccountRepo, this.userAccountManager, this.concreteOrderRepo, this.orderManager);
+				this.concreteAccountRepo, this.userAccountManager, this.concreteOrderRepo, this.orderManager, this.newsletterRepo);
 	}
 
 	/**
@@ -123,5 +127,10 @@ public class DataServiceTest {
 	@Test
 	public void testGetOrderManager() {
 		assertEquals("testGetOrderManager", this.orderManager, this.dataService.getOrderManager());
+	}
+	
+	@Test
+	public void testGetNewsletterRepository() {
+		assertEquals("testGetNewsletterRepository", this.newsletterRepo, this.dataService.getNewsletterRepository());
 	}
 }

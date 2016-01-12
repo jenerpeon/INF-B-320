@@ -32,8 +32,11 @@
 					<fieldset>
 						<h2>Artikelauswahl</h2>
 						<select multiple="multiple" th:name="@{'selectionArticles'}" size="20">
-							<option th:selected="${concreteproduct.value == true ? 'selected' : 'false'}" th:value="${concreteproduct.key.getId()}" th:each="concreteproduct : ${selectionProducts}" th:text="${concreteproduct.key.name}">Name
-							</option>
+							<option
+								th:selected="${concreteproduct.value == true ? 'selected' : 'false'}"
+								th:value="${concreteproduct.key.getId()}"
+								th:each="concreteproduct : ${selectionProducts}"
+								th:text="${concreteproduct.key.name}">Name</option>
 						</select>
 					</fieldset>
 					<fieldset class="changeStartPageForm">

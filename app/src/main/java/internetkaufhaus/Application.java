@@ -27,14 +27,4 @@ public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
-
-	/*
-	 * @Configuration static class InterceptorConfiguration extends
-	 * WebMvcConfigurerAdapter {
-	 * 
-	 * @Autowired private Search search;
-	 * 
-	 * @Override public void addInterceptors(InterceptorRegistry registry) {
-	 * registry.addInterceptor(new GeneralInterceptor(search)); } }
-	 */
 }

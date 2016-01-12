@@ -2,11 +2,12 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Newsletter</title>
+<title>Neuen Newsletter erstellen</title>
 <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
 <link href="/resources/css/employee.css" rel="stylesheet"
 	type="text/css">
 <script src="/resources/script/jquery.min.js" type="text/javascript"></script>
+<script></script>
 </head>
 
 <body>
@@ -20,21 +21,24 @@
 					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
 					<img id="breadcrumb" src="/resources/Bilder/forward.png" /> <a
 						href="/employee">Mitarbeiterportal</a> <img id="breadcrumb"
-						src="/resources/Bilder/forward.png" /> <a
-						href="/employee/newsletter">Newsletter</a>
+						src="/resources/Bilder/forward.png" /> 
+						<a	href="/employee/newsletter">Newsletter</a>
+						<img id="breadcrumb" src="/resources/Bilder/forward.png" />
+						<a	href="/employee/newsletter/newNewsletter">Neuen Newsletter erstellen</a>
 				</div>
 			</div>
 
 			<div id="workframe" style="flex-direction: row; flex-wrap: wrap">
-				<form id="sendNewsletter"action="/employee/newsletter/sendNewsletter">
-					<select size="1">
-						<option th:value="${newsletter.getId()}"
-							th:each="newsletter : ${newsletters}"
-							th:text="${newsletter.dateCreated}"></option>
-					</select> <input type="submit" value="Newsletter versenden" />
+				<form id="newNewsletter"
+					action="/employee/newsletter/newNewsletter/created" method="post">
+					<select name="prods" multiple="multiple" size="10">
+						<option th:value="${prod.getId()}"
+							th:each="prod : ${prods}"
+							th:text="${prod.name}"></option>
+					</select> <input type="submit" value="Newsletter erstellen" />
 
 				</form>
-				<button id="newNewsletter" onclick="window.location.href='/employee/newsletter/newNewsletter'"> Neuen Newsletter erstellen</button>
+				
 				<iFrame id="newsletter"></iFrame>
 
 

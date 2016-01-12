@@ -14,6 +14,7 @@ import internetkaufhaus.repositories.ConcreteInventory;
 import internetkaufhaus.repositories.ConcreteOrderRepository;
 import internetkaufhaus.repositories.ConcreteProductRepository;
 import internetkaufhaus.repositories.ConcreteUserAccountRepository;
+import internetkaufhaus.repositories.NewsletterRepository;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -31,19 +32,21 @@ public class DataService {
 	private final ConcreteInventory<InventoryItem> concreteInventory;
 
 	/** The concrete product repo. */
-	private final ConcreteProductRepository concreteProductRepo;
+	private final ConcreteProductRepository concreteProductRepository;
 
 	/** The concrete account repo. */
-	private final ConcreteUserAccountRepository concreteAccountRepo;
+	private final ConcreteUserAccountRepository concreteUserAccountRepository;
 
 	/** The user account manager. */
 	private final UserAccountManager userAccountManager;
 
 	/** The concrete order repo. */
-	private final ConcreteOrderRepository concreteOrderRepo;
+	private final ConcreteOrderRepository concreteOrderRepository;
 
 	/** The order manager. */
 	private final OrderManager<Order> orderManager;
+
+	private final NewsletterRepository newsletterRepository;
 
 	/**
 	 * Instantiates a new data service.
@@ -65,17 +68,19 @@ public class DataService {
 	 */
 	@Autowired
 	public DataService(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory,
-			ConcreteInventory<InventoryItem> concreteInventory, ConcreteProductRepository concreteProductRepo,
-			ConcreteUserAccountRepository concreteAccountRepo, UserAccountManager userAccountManager,
-			ConcreteOrderRepository concreteOrderRepo, OrderManager<Order> orderManager) {
+			ConcreteInventory<InventoryItem> concreteInventory, ConcreteProductRepository concreteProductRepositroy,
+			ConcreteUserAccountRepository concreteAccountRepository, UserAccountManager userAccountManager,
+			ConcreteOrderRepository concreteOrderRepository, OrderManager<Order> orderManager,
+			NewsletterRepository newsletterRepository) {
 		this.catalog = catalog;
 		this.inventory = inventory;
 		this.concreteInventory = concreteInventory;
-		this.concreteProductRepo = concreteProductRepo;
-		this.concreteAccountRepo = concreteAccountRepo;
+		this.concreteProductRepository = concreteProductRepositroy;
+		this.concreteUserAccountRepository = concreteAccountRepository;
 		this.userAccountManager = userAccountManager;
-		this.concreteOrderRepo = concreteOrderRepo;
+		this.concreteOrderRepository = concreteOrderRepository;
 		this.orderManager = orderManager;
+		this.newsletterRepository = newsletterRepository;
 	}
 
 	/**
@@ -104,27 +109,13 @@ public class DataService {
 	public Inventory<InventoryItem> getInventory() {
 		return this.inventory;
 	}
-	
+
 	public ConcreteInventory<InventoryItem> getConcreteInventory() {
 		return this.concreteInventory;
 	}
 
-	/**
-	 * Gets the concrete product repository.
-	 *
-	 * @return the concrete product repository
-	 */
-	public ConcreteProductRepository getConcreteProductRepository() {
-		return this.concreteProductRepo;
-	}
-
-	/**
-	 * Gets the concrete user accoutn repository.
-	 *
-	 * @return the concrete user accoutn repository
-	 */
-	public ConcreteUserAccountRepository getConcreteUserAccountRepository() {
-		return this.concreteAccountRepo;
+	public ConcreteOrderRepository getConcreteOrderRepository() {
+		return concreteOrderRepository;
 	}
 
 	/**
@@ -136,12 +127,16 @@ public class DataService {
 		return this.userAccountManager;
 	}
 
-	/**
-	 * Gets the concrete order repository.
-	 *
-	 * @return the concrete order repository
-	 */
-	public ConcreteOrderRepository getConcreteOrderRepository() {
-		return this.concreteOrderRepo;
+	public ConcreteProductRepository getConcreteProductRepository() {
+		return concreteProductRepository;
+	}
+
+
+	public NewsletterRepository getNewsletterRepository() {
+		return this.newsletterRepository;
+	}
+	
+	public ConcreteUserAccountRepository getConcreteUserAccountRepository() {
+		return concreteUserAccountRepository;
 	}
 }

@@ -36,7 +36,6 @@ import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.model.StartPage;
 import internetkaufhaus.services.DataService;
 
-// TODO: Auto-generated Javadoc
 /**
  * This class initializes default data which is used to test the functionality
  * of the whole project.
@@ -94,14 +93,12 @@ public class Initialize implements DataInitializer {
 		try {
 			initializeUsers();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// fill the Catalog with Items
 		try {
 			initializeCatalog();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// fill inventory with Inventory items
