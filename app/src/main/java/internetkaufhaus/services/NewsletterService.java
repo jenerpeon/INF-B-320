@@ -187,7 +187,6 @@ public class NewsletterService {
 					prod.getImagefile(), prod.getImagefile());
 			final InputStreamSource prodImageSource = new ByteArrayResource(prodImage.getBytes());
 			message.addInline(prodImage.getName(), prodImageSource, prodImage.getContentType());
-			System.out.println("Test4");
 		}
 
 		this.mailSender.send(mimeMessage);
