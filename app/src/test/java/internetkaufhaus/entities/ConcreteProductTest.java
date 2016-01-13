@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.salespointframework.core.Currencies.EURO;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Random;
 
@@ -102,7 +103,8 @@ public class ConcreteProductTest {
 	/**
 	 * Test empty image file.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testEmptyImageFile() throws Exception {
@@ -134,7 +136,8 @@ public class ConcreteProductTest {
 	/**
 	 * Test empty description.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testEmptyDescription() throws Exception {
@@ -166,7 +169,8 @@ public class ConcreteProductTest {
 	/**
 	 * Test empty web link.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testEmptyWebLink() throws Exception {
@@ -198,7 +202,8 @@ public class ConcreteProductTest {
 	/**
 	 * Test empty category.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testEmptyCategory() throws Exception {
@@ -217,7 +222,8 @@ public class ConcreteProductTest {
 	/**
 	 * Test set name error.
 	 *
-	 * @throws IllegalArgumentException the illegal argument exception
+	 * @throws IllegalArgumentException
+	 *             the illegal argument exception
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetNameError() throws IllegalArgumentException {
@@ -233,37 +239,34 @@ public class ConcreteProductTest {
 		model.setBuyingPrice(Money.of(200.35, EURO));
 		assertEquals("buyingPrice getter/setter don't seem to work.", model.getBuyingPrice(), Money.of(200.35, EURO));
 	}
-	
+
 	/**
 	 * Test get comments.
 	 */
 	@Test
-	public void testGetComments()
-	{
-		Comment c = new Comment("Das hier ist ein Titel", "Text",5,LocalDateTime.now(),"");
+	public void testGetComments() {
+		Comment c = new Comment("Das hier ist ein Titel", "Text", 5, LocalDateTime.now(), "");
 		ConcreteUserAccount acc = mock(ConcreteUserAccount.class);
 		model.addComment(c, acc);
 		assertTrue("GetComments defekt", model.getComments().iterator().next().equals(c));
 	}
-	
+
 	/**
 	 * Test add comment.
 	 */
 	@Test
-	public void testAddComment()
-	{
+	public void testAddComment() {
 		Comment c = new Comment("Das hier ist ein Titel", "Text", 5, LocalDateTime.now(), "");
 		ConcreteUserAccount acc = mock(ConcreteUserAccount.class);
 		model.addComment(c, acc);
 		assertTrue("AddComment defekt", model.getComments().iterator().next().equals(c));
 	}
-	
+
 	/**
 	 * Test is commentator.
 	 */
 	@Test
-	public void testIsCommentator()
-	{
+	public void testIsCommentator() {
 		Comment c = new Comment("Das hier ist ein Titel", "Text", 5, LocalDateTime.now(), "");
 		ConcreteUserAccount acc1 = mock(ConcreteUserAccount.class);
 		ConcreteUserAccount acc2 = mock(ConcreteUserAccount.class);
@@ -271,13 +274,12 @@ public class ConcreteProductTest {
 		assertTrue("IsCommentator defekt", model.isCommentator(acc1));
 		assertFalse("IsCommentator defekt", model.isCommentator(acc2));
 	}
-	
+
 	/**
 	 * Testget average rating.
 	 */
 	@Test
-	public void testgetAverageRating()
-	{
+	public void testgetAverageRating() {
 		Comment a = new Comment("Das hier ist ein Titel", "Text", 5, LocalDateTime.now(), "");
 		Comment b = new Comment("Das hier ist ein Titel", "Text", 3, LocalDateTime.now(), "");
 		a.setAccepted(true);
@@ -287,28 +289,26 @@ public class ConcreteProductTest {
 		model.addComment(a, acc1);
 		model.addComment(b, acc2);
 		model.updateAverageRating();
-		assertTrue("getAverageRating defekt", model.getAverageRating()==4);
+		assertTrue("getAverageRating defekt", model.getAverageRating() == 4);
 	}
-	
+
 	/**
 	 * Testremove comment.
 	 */
 	@Test
-	public void testremoveComment()
-	{
+	public void testremoveComment() {
 		Comment a = new Comment("Das hier ist ein Titel", "Text", 5, LocalDateTime.now(), "");
 		ConcreteUserAccount acc = mock(ConcreteUserAccount.class);
 		model.addComment(a, acc);
 		model.removeComment(a);
-		assertTrue("removeComment defekt", model.getComments().iterator().hasNext()==false);
+		assertTrue("removeComment defekt", model.getComments().iterator().hasNext() == false);
 	}
-	
+
 	/**
 	 * Testget accepted comments.
 	 */
 	@Test
-	public void testgetAcceptedComments()
-	{
+	public void testgetAcceptedComments() {
 		Comment a = new Comment("Das hier ist ein Titel", "Text", 5, LocalDateTime.now(), "");
 		Comment b = new Comment("Das hier ist ein Titel", "Text", 3, LocalDateTime.now(), "");
 		a.setAccepted(true);
@@ -317,62 +317,64 @@ public class ConcreteProductTest {
 		ConcreteUserAccount acc2 = mock(ConcreteUserAccount.class);
 		model.addComment(a, acc1);
 		model.addComment(b, acc2);
-		assertTrue("getAcceptedComments defekt", model.getAcceptedComments().size()==2);
+		assertTrue("getAcceptedComments defekt", model.getAcceptedComments().size() == 2);
 		assertTrue("getAcceptedComments defekt", model.getAcceptedComments().contains(a));
 		assertTrue("getAcceptedComments defekt", model.getAcceptedComments().contains(b));
 	}
-	
+
 	/**
 	 * Testget unaccepted comments.
 	 */
 	@Test
-	public void testgetUnacceptedComments()
-	{
+	public void testgetUnacceptedComments() {
 		Comment a = new Comment("Das hier ist ein Titel", "Text", 5, LocalDateTime.now(), "");
 		Comment b = new Comment("Das hier ist ein Titel", "Text", 3, LocalDateTime.now(), "");
 		ConcreteUserAccount acc1 = mock(ConcreteUserAccount.class);
 		ConcreteUserAccount acc2 = mock(ConcreteUserAccount.class);
 		model.addComment(a, acc1);
 		model.addComment(b, acc2);
-		assertTrue("getUnacceptedComments defekt", model.getUnacceptedComments().size()==2);
+		assertTrue("getUnacceptedComments defekt", model.getUnacceptedComments().size() == 2);
 		assertTrue("getUnacceptedComments defekt", model.getUnacceptedComments().contains(a));
 		assertTrue("getUnacceptedComments defekt", model.getUnacceptedComments().contains(b));
 	}
-	
+
 	/**
 	 * Testget buying price.
 	 */
 	@Test
-	public void testgetBuyingPrice()
-	{
+	public void testgetBuyingPrice() {
 		assertTrue("getBuyingPrice defekt", model.getBuyingPrice().isEqualTo(Money.of(1.49, EURO)));
 	}
-	
+
 	/**
 	 * Testget price float.
 	 */
 	@Test
-	public void testgetPriceFloat()
-	{
+	public void testgetPriceFloat() {
 		assertTrue("getPriceFloat defekt ", model.getPriceFloat().equals("1,99€"));
 	}
-	
+
 	/**
 	 * Testincrease sold.
 	 */
 	@Test
-	public void testincreaseSold()
-	{
+	public void testincreaseSold() {
 		model.increaseSold(10);
-		assertTrue("increaseSold defekt", model.getSold()==10);
+		assertTrue("increaseSold defekt", model.getSold() == 10);
 	}
-	
+
 	/**
 	 * Testget sold.
 	 */
 	@Test
-	public void testgetSold()
-	{
-		assertTrue("getSold defekt", model.getSold()==0);
+	public void testgetSold() {
+		assertTrue("getSold defekt", model.getSold() == 0);
+	}
+
+	@Test
+	public void testSetPrice() {
+		model.setPrice(Money.of(5, "EUR"));
+		assertEquals(model.getPrice(), Money.of(5, "EUR"));
+		assertEquals(model.getPriceDecimal(), new BigDecimal(5));
 	}
 }

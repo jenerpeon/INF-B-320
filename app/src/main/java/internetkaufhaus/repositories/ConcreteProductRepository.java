@@ -85,7 +85,7 @@ public interface ConcreteProductRepository extends PagingAndSortingRepository<Co
 	@Query("SELECT DISTINCT c.category FROM ConcreteProduct c")
 	Iterable<String> getCategories();
 	
-	@Query("SELECT c FROM ConcreteProduct c WHERE c.id = (:ids)")
-	Iterable<ConcreteProduct> findByIds(@Param("ids") Collection<ProductIdentifier> ids);
+	@Query("SELECT c FROM ConcreteProduct c WHERE c.id IN (:ids)")
+	Page<ConcreteProduct> findByIds(@Param("ids") Collection<ProductIdentifier> ids, Pageable pageable);
 
 }

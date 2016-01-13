@@ -9,7 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 
 @Entity
 @Table(name = "NEWSLETTER")
@@ -21,16 +23,18 @@ public class Newsletter {
 	
 	private LocalDate dateCreated;
 	
-	@OneToOne(targetEntity=ConcreteProduct.class, fetch=FetchType.EAGER)
-	private List<ConcreteProduct> productSelection;
+	@Transient
+	private List<List<ConcreteProduct>> productSelection;
+	
+	private String htmlContent;
 	
 	private String template;
-	
+
 	protected Newsletter() {
 		
 	}
 	
-	public Newsletter(String template, List<ConcreteProduct> productSelection, LocalDate dateCreated) {
+	public Newsletter(String template, List<List<ConcreteProduct>> productSelection, LocalDate dateCreated) {
 		this.template = template;
 		this.productSelection = productSelection;
 		this.dateCreated = dateCreated;
@@ -44,11 +48,11 @@ public class Newsletter {
 		return this.template;
 	}
 	
-	public void setProductSelection(List<ConcreteProduct> productSelection) {
+	public void setProductSelection(List<List<ConcreteProduct>> productSelection) {
 		this.productSelection = productSelection;
 	}
 	
-	public List<ConcreteProduct> getProductSelection() {
+	public List<List<ConcreteProduct>> getProductSelection() {
 		return this.productSelection;
 	}
 	
@@ -58,6 +62,14 @@ public class Newsletter {
 
 	public LocalDate getDateCreated() {
 		return dateCreated;
+	}
+	
+	public String getHtmlContent() {
+		return htmlContent;
+	}
+
+	public void setHtmlContent(String htmlContent) {
+		this.htmlContent = htmlContent;
 	}
 	
 }

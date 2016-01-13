@@ -258,8 +258,7 @@ public class CatalogController {
 	 */
 	@RequestMapping("/detail/{prodId}")
 	public String detail(@PathVariable("prodId") ConcreteProduct prod, Model model) {
-		Optional<InventoryItem> item = dataService.getInventory().findByProductIdentifier(prod.getIdentifier());
-		Quantity quantity = item.map(InventoryItem::getQuantity).orElse(NONE);
+		Quantity quantity = dataService.getConcreteInventory().findByProduct(prod).get().getQuantity();
 		model.addAttribute("concreteproduct", prod);
 		model.addAttribute("quantity", quantity);
 		model.addAttribute("orderable", quantity.isGreaterThan(NONE));

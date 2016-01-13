@@ -25,7 +25,7 @@
 			</div>
 		
 			<div id="workframe">
-				<h3 th:text="@{'Sie wurden geworben von: '}"></h3>
+				<h3 th:if="${recruiter.isPresent()}" th:text="@{'Sie wurden geworben von: '+${recruiter.get().userAccount.username}}"></h3>
 				<h3>Ihre Werbungen:</h3>
 					<ul>
 						<li th:each="recruited : ${account.recruits}"><a th:text="@{${recruited.userAccount.username} + ' (' + ${recruited.email} + ')'}"></a>

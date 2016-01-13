@@ -46,5 +46,8 @@ public interface ConcreteUserAccountRepository extends CrudRepository<ConcreteUs
 	Optional<ConcreteUserAccount> findByUserAccount(UserAccount acc);
 	
 	Page<ConcreteUserAccount> findByRole(Role role, Pageable pageable);
+	
+	@Query("SELECT u FROM ConcreteUserAccount u WHERE :user IN ELEMENTS(u.recruits)")
+	Optional<ConcreteUserAccount> findRecruiter(@Param("user") ConcreteUserAccount user);
 
 }

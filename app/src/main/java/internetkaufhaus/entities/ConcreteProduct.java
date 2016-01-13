@@ -320,18 +320,6 @@ public class ConcreteProduct extends Product {
 	}
 
 	/**
-	 * Gets the quantity.
-	 *
-	 * @param inventory
-	 *            the inventory
-	 * @return the quantity
-	 */
-	public Quantity getQuantity(Inventory<InventoryItem> inventory) {
-		Optional<InventoryItem> item = inventory.findByProductIdentifier(this.getIdentifier());
-		return item.map(InventoryItem::getQuantity).orElse(Quantity.of(0));
-	}
-
-	/**
 	 * Increase sold.
 	 *
 	 * @param sell
@@ -373,6 +361,10 @@ public class ConcreteProduct extends Product {
 	public void setPrice(Money price) {
 		super.setPrice(price);
 		this.priceDecimal = price.getNumberStripped();
+	}
+	
+	public BigDecimal getPriceDecimal() {
+		return priceDecimal;
 	}
 
 }
