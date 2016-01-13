@@ -60,11 +60,5 @@ public class Application {
 		properties.load(new ClassPathResource("javamail.properties").getInputStream());
 		return properties;
 	}
-	 
-	/**
-	 * THYMELEAF: Template Engine (Spring4-specific version).
-	 */
-	
-
 
 }

@@ -9,7 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 
 @Entity
 @Table(name = "NEWSLETTER")
@@ -21,7 +23,7 @@ public class Newsletter {
 	
 	private LocalDate dateCreated;
 	
-	
+	@Transient
 	private List<List<ConcreteProduct>> productSelection;
 	
 	private String htmlContent;
@@ -33,7 +35,7 @@ public class Newsletter {
 	}
 	
 	public Newsletter(String template, List<List<ConcreteProduct>> productSelection, LocalDate dateCreated) {
-		this.htmlContent = template;
+		this.template = template;
 		this.productSelection = productSelection;
 		this.dateCreated = dateCreated;
 	}

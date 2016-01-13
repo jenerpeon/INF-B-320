@@ -724,7 +724,7 @@ public class ManagementController {
 
 		Newsletter newsletter = new Newsletter("mail/newsletter-template.html", prods, LocalDate.now());
 		dataService.getNewsletterRepository().save(newsletter);
-		
+	
 		newsManager.sendNewsletter(newsletter, "Martin Bens", "martin.bens@live.de", locale, request, response);
 
 		/*TemplateResolver templateResolver = new ClassLoaderTemplateResolver();

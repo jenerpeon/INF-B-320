@@ -35,6 +35,7 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
 import internetkaufhaus.entities.ConcreteProduct;
@@ -72,6 +73,7 @@ public class NewsletterService {
 	private SpringTemplateEngine templateEngine() {
 	    SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 	    templateEngine.addTemplateResolver(emailTemplateResolver());
+	    templateEngine.addTemplateResolver(webTemplateResolver());
 	    return templateEngine;
 	}
 	 
@@ -85,10 +87,11 @@ public class NewsletterService {
 	    return templateResolver;
 	}
 	
-	public ViewResolver viewResolver() {
-	    ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-	    viewResolver.setTemplateEngine(templateEngine());
-	    return viewResolver;
+	private TemplateResolver webTemplateResolver() {
+	    TemplateResolver templateResolver = new ServletContextTemplateResolver();
+	    templateResolver.setTemplateMode("HTML5");
+	    templateResolver.setOrder(2);
+	    return templateResolver;
 	}
 
 	/**
@@ -151,13 +154,12 @@ public class NewsletterService {
 
 		List<List<ConcreteProduct>> prods = newsletter.getProductSelection();
 
-		// Prepare the evaluation context
 		final WebContext ctx = new WebContext(request, response, request.getServletContext(), locale);
-		ctx.setVariable("prods1", prods.get(1));
-		ctx.setVariable("prods2", prods.get(2));
-		final String htmlContent = templateEngine().process(newsletter.getTemplate(), ctx);
+		ctx.setVariable("prods1", prods.get(0));
+		ctx.setVariable("prods2", prods.get(1));
 
-		// Prepare message using a Spring helper
+		final String htmlContent = templateEngine().process(newsletter.getTemplate(), ctx);
+		
 		final MimeMessage mimeMessage = mailSender.createMimeMessage();
 		final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 		message.setSubject("Newsletter");
@@ -165,26 +167,27 @@ public class NewsletterService {
 		message.setTo(recipientEmail);
 		message.setText(htmlContent, true);
 
-		MultipartFile logo = getMultipartFile("src/main/resources/static/resources/Bilder", "Logo.png", "Logo");
+		MultipartFile logo = getMultipartFile("src/main/resources/static/resources/Bilder", "Logo.png", "Logo.png");
 		final InputStreamSource logoImageSource = new ByteArrayResource(logo.getBytes());
 		message.addInline(logo.getName(), logoImageSource, logo.getContentType());
 
 		MultipartFile header = getMultipartFile("src/main/resources/static/resources/Bilder", "Newsletter.png",
-				"Newsletter");
+				"Newsletter.png");
 		final InputStreamSource headerImageSource = new ByteArrayResource(header.getBytes());
 		message.addInline(header.getName(), headerImageSource, header.getContentType());
 
 		MultipartFile footer = getMultipartFile("src/main/resources/static/resources/Bilder", "SocialMedia.png",
-				"SocialMedia");
+				"SocialMedia.png");
 		final InputStreamSource footerImageSource = new ByteArrayResource(footer.getBytes());
 		message.addInline(footer.getName(), footerImageSource, footer.getContentType());
 
 		for (ConcreteProduct prod : Stream.concat(prods.get(0).stream(), prods.get(1).stream())
 				.collect(Collectors.toList())) {
-			MultipartFile prodImage = getMultipartFile("src/main/resources/static/resources/Bilder/Produkte",
+			MultipartFile prodImage = getMultipartFile("src/main/resources/static/resources/Bilder/Proukte",
 					prod.getImagefile(), prod.getImagefile());
 			final InputStreamSource prodImageSource = new ByteArrayResource(prodImage.getBytes());
 			message.addInline(prodImage.getName(), prodImageSource, prodImage.getContentType());
+			System.out.println("Test4");
 		}
 
 		this.mailSender.send(mimeMessage);
@@ -192,12 +195,13 @@ public class NewsletterService {
 	}
 
 	private MultipartFile getMultipartFile(String sourcePath, String fileName, String imageName) throws IOException {
+		
 		Path path = FileSystems.getDefault().getPath(sourcePath, fileName);
-
+		
 		File file = new File(path.toUri());
 		FileInputStream input = new FileInputStream(file);
 
-		MultipartFile img = new MockMultipartFile(imageName, imageName, "text/plain", IOUtils.toByteArray(input));
+		MultipartFile img = new MockMultipartFile(imageName.substring(0, imageName.length()-4), imageName, "text/plain", IOUtils.toByteArray(input));
 
 		return img;
 	}
