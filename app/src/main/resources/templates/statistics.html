@@ -7,22 +7,171 @@
 <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
 <link href="/resources/css/admin.css" rel="stylesheet" type="text/css">
 <script src="/resources/script/jquery.min.js" type="text/javascript"></script>
-</head>
-
-<body>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <script th:inline="javascript">
 /*<![CDATA[*/
 
+    var storeTime = 0;
+           
     var message = [[${message}]];
-    var json = JSON.stringify(eval("(" + message + ")"));
     
-    console.log(json);
+    var json = JSON.parse(message);
     
+    function updatestoreTime(newTime){
+    	
+    	if (newTime > 6 || newTime < 0){
+    		console.log("ERROR: NO VALID storeTime-VALUE, SET TO 0");
+    		storeTime = 0;
+    	} else
+    	storeTime = newTime;
+    }
+    
+    function changeTime(){
+    	var selectBox = document.getElementById("timeSelector");
+        var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+        
+        updatestoreTime( parseInt(selectedValue) );
+        
+    }
+    
+    
+    function createstoreTimeChartOrders(){
+    	
+    	if (storeTime > 6 || storeTime < 0){
+    		console.log("ERROR: NO VALID storeTime-VALUE");
+    	}
+    	
+    	var attributeArray = Object.keys(json[storeTime].orders).sort();
+    	var valueArray = [];
+    	
+    	for (i=0; i<attributeArray.length; i++ ){
+    		valueArray.push(json[storeTime].orders[ attributeArray[i] ]);
+    	}
+    	
+    	 var data = [
+    	                {
+    	                  x: attributeArray,
+    	                  y: valueArray,
+    	                  type: 'scatter'
+    	                }
+    	              ];
+
+    	              Plotly.newPlot('chart', data);
+    	
+    } 
+    
+	function createstoreTimeChartReturns(){
+    	
+    	if (storeTime > 6 || storeTime < 0){
+    		console.log("ERROR: NO VALID storeTime-VALUE");
+    	}
+    	
+    	var attributeArray = Object.keys(json[storeTime].returns).sort();
+    	var valueArray = [];
+    	
+    	for (i=0; i<attributeArray.length; i++ ){
+    		valueArray.push(json[storeTime].returns[ attributeArray[i] ]);
+    	}
+    	
+    	 var data = [
+    	                {
+    	                  x: attributeArray,
+    	                  y: valueArray,
+    	                  type: 'scatter'
+    	                }
+    	              ];
+
+    	              Plotly.newPlot('chart', data);
+    	
+    } 
+	
+	
+function createstoreTimeChartTurnover(){
+    	
+	console.log(storeTime)
+	
+    	if (storeTime > 6 || storeTime < 0){
+    		console.log("ERROR: NO VALID storeTime-VALUE");
+    	}
+    	
+    	var attributeArray = Object.keys(json[storeTime].turnover).sort();
+    	var valueArray = [];
+    	
+    	for (i=0; i<attributeArray.length; i++ ){
+    		valueArray.push(json[storeTime].turnover[ attributeArray[i] ].number);
+    	}
+    	
+    	 var data = [
+    	                {
+    	                  x: attributeArray.sort(),
+    	                  y: valueArray,
+    	                  type: 'scatter'
+    	                }
+    	              ];
+
+    	              Plotly.newPlot('chart', data);
+    	
+    }
+    
+function createstoreTimeChartProfit(){
+	
+	if (storeTime > 6 || storeTime < 0){
+		console.log("ERROR: NO VALID storeTime-VALUE");
+	}
+	
+	var attributeArray = Object.keys(json[storeTime].profit).sort();
+	var valueArray = [];
+	
+	for (i=0; i<attributeArray.length; i++ ){
+		valueArray.push(json[storeTime].profit[ attributeArray[i] ].number);
+	}
+	
+	 var data = [
+	                {
+	                  x: attributeArray.sort(),
+	                  y: valueArray,
+	                  type: 'scatter'
+	                }
+	              ];
+
+	              Plotly.newPlot('chart', data);
+	
+}  
+
+function createstoreTimeChartExpenses(){
+	
+	if (storeTime > 6 || storeTime < 0){
+		console.log("ERROR: NO VALID storeTime-VALUE");
+	}
+	
+	var attributeArray = Object.keys(json[storeTime].expenses).sort();
+	var valueArray = [];
+	
+	for (i=0; i<attributeArray.length; i++ ){
+		valueArray.push(json[storeTime].expenses[ attributeArray[i] ].number);
+	}
+	
+	 var data = [
+	                {
+	                  x: attributeArray.sort(),
+	                  y: valueArray,
+	                  type: 'scatter'
+	                }
+	              ];
+
+	              Plotly.newPlot('chart', data);
+	
+} 
+	
+window.onload = function () {createstoreTimeChartProfit();	}
 
 /*]]>*/
 </script>
 
+</head>
+
+<body>
 
 <div id="wrapper">
 		<!--  <div id="header" th:include="navigation :: navigation"></div> -->
@@ -39,21 +188,33 @@
 				</div>
 			</div>
 			
-			
+			<div id="workframe" style="height: 600px;" >
+				<div id="navigationButton" style="height: 100px;">
+					<button onclick="createstoreTimeChartTurnover()">turnover</button>
+					<button onclick="createstoreTimeChartOrders()">orders</button>
+					<button onclick="createstoreTimeChartReturns()">returns</button>
+					<button onclick="createstoreTimeChartExpenses()">expenses</button>
+					<button onclick="createstoreTimeChartProfit()">profit</button>
+					
+					<select id="timeSelector" onchange="changeTime();">
+	  					<option value="0">1 Woche</option>
+	  					<option value="1">1 Monat</option>
+	 					<option value="2">2 Monate</option>
+	  					<option value="3">1 Jahr</option>	
+						<option value="4">3 Jahre</option>	
+						<option value="5">5 Jahre</option>	
+						<option value="6">10 Jahre</option>	
+					</select>
+				</div>
+				<div id="chart" style="height: 500px;"></div>
+				
+			</div>
 
 		</div>
 		</main>
 
 		<div id="footer" th:include="footer :: footer"></div>
 	</div>
-
-<!-- 
-<a href="javascript:void(0)" id="sales" class="dataset">Verkäufe</a>
-        				<a href="javascript:void(0)" id="refunds" class="dataset">Rückgaben</a>
-        				<a href="javascript:void(0)" id="purchases" class="dataset">Einkäufe</a>
-        				<a href="javascript:void(0)" id="turnover" class="dataset">Umsatz</a>
-        				<a href="javascript:void(0)" id="profit" class="dataset">Gewinn</a>
- -->
 
 </body>
 </html>
