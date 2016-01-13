@@ -5,14 +5,22 @@ import static org.salespointframework.order.OrderStatus.OPEN;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Properties;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.salespointframework.catalog.ProductIdentifier;
@@ -25,7 +33,11 @@ import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -37,7 +49,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartFile;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+import org.thymeleaf.templateresolver.TemplateResolver;
 
 import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteOrder;
@@ -624,14 +643,15 @@ public class ManagementController {
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows the users, which have subscribed to the newsletter.
-	 *
+	 *.
 	 * @param model
 	 *            the model
 	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/newsletter")
 	public String newsletter(ModelMap model) {
-		model.addAttribute("newsUser", newsManager.getMap());
+		Sort sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "dateCreated", Sort.NullHandling.NATIVE));
+		model.addAttribute("newsletters", dataService.getNewsletterRepository().findAll(sorting));
 		return "newsletter";
 	}
 
@@ -643,10 +663,40 @@ public class ManagementController {
 	 *            the model
 	 * @return the string
 	 */
-	@RequestMapping("/employee/newsletter/changeNewsletter")
-	public String changeNewsletter(ModelMap model) {
-		model.addAttribute("categories", dataService.getConcreteProductRepository().getCategories());
-		return "changenewsletter";
+	@RequestMapping("/employee/newsletter/newNewsletter")
+	public String newNewsletter(ModelMap model) {
+		Sort sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "name", Sort.NullHandling.NATIVE));
+		model.addAttribute("prods", dataService.getConcreteProductRepository().findAll(sorting));
+		return "newnewsletter";
+	}
+	
+	@RequestMapping(value = "/employee/newsletter/newNewsletter/created", method = RequestMethod.POST)
+	public String newNewsletterCreated(@RequestParam("prods") ProductIdentifier[] prodsArray, final Locale locale, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		List<ProductIdentifier> prodIds = Arrays.asList(prodsArray);
+		Iterable<ConcreteProduct> prods = dataService.getConcreteProductRepository().findByIds(prodIds);
+	
+	    TemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+	    //templateResolver.setPrefix("/mail/");
+	    templateResolver.setTemplateMode("HTML5");
+	    templateResolver.setOrder(1);
+	    
+	    TemplateResolver templateResolver2 = new ServletContextTemplateResolver();
+	    //templateResolver2.setPrefix("/WEB-INF/templates/");
+	    templateResolver2.setTemplateMode("HTML5");
+	    templateResolver2.setOrder(2);
+		
+	    SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+	    templateEngine.addTemplateResolver(templateResolver);
+	    templateEngine.addTemplateResolver(templateResolver2);
+	    
+	    final WebContext ctx = new WebContext(request, response, request.getServletContext(), locale);
+		ctx.setVariable("prods", prods);
+		final String htmlContent = templateEngine.process("newsletter-template.html", ctx);
+		
+		PrintWriter out = new PrintWriter("newsletter2.html");
+		out.println(htmlContent);
+		
+		return "redirect:/employee/newsletter/newNewsletter";
 	}
 
 	/**

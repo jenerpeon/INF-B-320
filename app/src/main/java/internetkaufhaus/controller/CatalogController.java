@@ -28,8 +28,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.google.common.collect.Iterators;
-
 import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.services.ConcreteMailService;
@@ -209,7 +207,7 @@ public class CatalogController {
 		model.addAttribute("category", category);
 		model.addAttribute("number", number);
 		
-		int maxQuantity = Iterators.size(dataService.getConcreteProductRepository().findByCategory(category,  sorting).iterator());
+		int maxQuantity = dataService.getConcreteProductRepository().numberOfFindByCategory(category); 
 		Set<Integer> quantities = Sets.newSet(split, 2, 3, 4, 5, 10, 15, 25, 50, 100, 150, 250, 500, maxQuantity);
 		quantities.removeIf(i -> i > maxQuantity);
 		model.addAttribute("maximum", maxQuantity);

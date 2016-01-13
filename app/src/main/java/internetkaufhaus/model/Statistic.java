@@ -10,8 +10,6 @@ import org.salespointframework.order.OrderStatus;
 import org.salespointframework.time.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.google.common.collect.Iterators;
-
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.services.DataService;
 
@@ -90,12 +88,12 @@ public class Statistic {
 						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
 				Iterable<ConcreteOrder> openOrders = dataService.getConcreteOrderRepository().findByIntervalAndStatusAndNotReturned(
 						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.OPEN);
-				Iterable<ConcreteOrder> returnedOrders = dataService.getConcreteOrderRepository().findByIntervalAndStatusAndReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
 				
 				Money intervalMoney = Money.of(0, "EUR");
-				Long intervalOrders = (long) Iterators.size(completedOrders.iterator());
-				Long intervalReturns = (long) Iterators.size(returnedOrders.iterator());
+				Long intervalOrders = dataService.getConcreteOrderRepository().numberOfFindByIntervalAndStatusAndNotReturned(
+						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
+				Long intervalReturns = dataService.getConcreteOrderRepository().numberOfFindByIntervalAndStatusAndReturned(
+						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
 				Money intervalStockMoney = Money.of(0, "EUR");
 				for (ConcreteOrder order : completedOrders) {
 					intervalMoney = intervalMoney.add(order.getTotalPrice());
@@ -118,12 +116,12 @@ public class Statistic {
 						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
 				Iterable<ConcreteOrder> openOrders = dataService.getConcreteOrderRepository().findByIntervalAndStatusAndNotReturned(
 						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.OPEN);
-				Iterable<ConcreteOrder> returnedOrders = dataService.getConcreteOrderRepository().findByIntervalAndStatusAndReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
 				
 				Money intervalMoney = Money.of(0, "EUR");
-				Long intervalOrders = (long) Iterators.size(completedOrders.iterator());
-				Long intervalReturns = (long) Iterators.size(returnedOrders.iterator());
+				Long intervalOrders = dataService.getConcreteOrderRepository().numberOfFindByIntervalAndStatusAndNotReturned(
+						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
+				Long intervalReturns = dataService.getConcreteOrderRepository().numberOfFindByIntervalAndStatusAndReturned(
+						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
 				Money intervalStockMoney = Money.of(0, "EUR");
 				for (ConcreteOrder order : completedOrders) {
 					intervalMoney = intervalMoney.add(order.getTotalPrice());
@@ -146,12 +144,12 @@ public class Statistic {
 						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
 				Iterable<ConcreteOrder> openOrders = dataService.getConcreteOrderRepository().findByIntervalAndStatusAndNotReturned(
 						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.OPEN);
-				Iterable<ConcreteOrder> returnedOrders = dataService.getConcreteOrderRepository().findByIntervalAndStatusAndReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
 				
 				Money intervalMoney = Money.of(0, "EUR");
-				Long intervalOrders = (long) Iterators.size(completedOrders.iterator());
-				Long intervalReturns = (long) Iterators.size(returnedOrders.iterator());
+				Long intervalOrders = dataService.getConcreteOrderRepository().numberOfFindByIntervalAndStatusAndNotReturned(
+						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
+				Long intervalReturns = dataService.getConcreteOrderRepository().numberOfFindByIntervalAndStatusAndReturned(
+						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
 				Money intervalStockMoney = Money.of(0, "EUR");
 				for (ConcreteOrder order : completedOrders) {
 					intervalMoney = intervalMoney.add(order.getTotalPrice());
@@ -174,12 +172,12 @@ public class Statistic {
 						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
 				Iterable<ConcreteOrder> openOrders = dataService.getConcreteOrderRepository().findByIntervalAndStatusAndNotReturned(
 						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.OPEN);
-				Iterable<ConcreteOrder> returnedOrders = dataService.getConcreteOrderRepository().findByIntervalAndStatusAndReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
 				
 				Money intervalMoney = Money.of(0, "EUR");
-				Long intervalOrders = (long) Iterators.size(completedOrders.iterator());
-				Long intervalReturns = (long) Iterators.size(returnedOrders.iterator());
+				Long intervalOrders = dataService.getConcreteOrderRepository().numberOfFindByIntervalAndStatusAndNotReturned(
+						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
+				Long intervalReturns = dataService.getConcreteOrderRepository().numberOfFindByIntervalAndStatusAndReturned(
+						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
 				Money intervalStockMoney = Money.of(0, "EUR");
 				for (ConcreteOrder order : completedOrders) {
 					intervalMoney = intervalMoney.add(order.getTotalPrice());

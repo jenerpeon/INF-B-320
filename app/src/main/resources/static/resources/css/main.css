@@ -54,12 +54,20 @@ select {
   	background-size: 15px;
   	width: 20%;*/
 }
+button {
+	border:1px solid #eeeeec;
+	border-radius: 2px;
+	background-color: #eeeeec;
+	padding: 2px 20px;
+	height: 25px;
+}
 
 input[type=submit] {
 	border:1px solid #eeeeec;
 	border-radius: 2px;
 	background-color: #eeeeec;
 	padding: 2px 20px;
+	height: 25px;
 }
 
 input[type=submit]:hover {

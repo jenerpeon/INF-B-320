@@ -1,5 +1,7 @@
 package internetkaufhaus.repositories;
 
+import java.util.Collection;
+
 import org.salespointframework.catalog.ProductIdentifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +27,9 @@ public interface ConcreteProductRepository extends PagingAndSortingRepository<Co
 	 * @return the iterable
 	 */
 	Iterable<ConcreteProduct> findByCategory(String category, Sort sort);
+	
+	@Query("SELECT COUNT(*) FROM ConcreteProduct c WHERE c.category = :category")
+	int numberOfFindByCategory(@Param("category") String category);
 
 	/**
 	 * Find by category.
@@ -45,6 +50,9 @@ public interface ConcreteProductRepository extends PagingAndSortingRepository<Co
 	 * org.springframework.data.domain.Sort)
 	 */
 	Iterable<ConcreteProduct> findAll(Sort sort);
+	
+	@Query("SELECT COUNT(*) FROM ConcreteProduct")
+	Long numberOfFindAll();
 
 	/**
 	 * Find all by order by name.
@@ -76,5 +84,8 @@ public interface ConcreteProductRepository extends PagingAndSortingRepository<Co
 	
 	@Query("SELECT DISTINCT c.category FROM ConcreteProduct c")
 	Iterable<String> getCategories();
+	
+	@Query("SELECT c FROM ConcreteProduct c WHERE c.id = (:ids)")
+	Iterable<ConcreteProduct> findByIds(@Param("ids") Collection<ProductIdentifier> ids);
 
 }

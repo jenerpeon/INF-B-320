@@ -1,15 +1,11 @@
 package internetkaufhaus.services;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.context.Context;
 
-// TODO: Auto-generated Javadoc
 /**
  * This is the ConcreteMailService class. It is responsible for sending mails
  * via a connected mail provider.
@@ -51,7 +47,6 @@ public class ConcreteMailService {
 	 * @exception MailException
 	 *                the mail exception
 	 */
-
 	public boolean sendMail(String sendTo, String text, String from, String subject) {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setTo(sendTo);
@@ -66,6 +61,8 @@ public class ConcreteMailService {
 			System.err.println(ex.getMessage());
 			return false;
 		}
+		
+		
 	}
 
 	/**

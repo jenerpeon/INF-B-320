@@ -64,13 +64,11 @@ public class Competition {
 
 		}
 
-		Page<ConcreteUserAccount> page = data.getConcreteUserAccountRepository()
-				.findByRole(Role.of("ROLE_CUSTOMER"),
-						new PageRequest(0,
-								Iterators.size(data.getConcreteUserAccountRepository()
-										.findByRole(Role.of("ROLE_CUSTOMER")).iterator()) / 10,
+		Page<ConcreteUserAccount> page = data.getConcreteUserAccountRepository().findByRole(Role.of("ROLE_CUSTOMER"),
+				new PageRequest(0,
+						data.getConcreteUserAccountRepository().numberOfFindByRole(Role.of("ROLE_CUSTOMER")) / 10,
 						new Sort(new Sort.Order(Sort.Direction.DESC, "credits", Sort.NullHandling.NATIVE))));
-		
+
 		winners = page.getContent();
 
 		return winners;
