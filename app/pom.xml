@@ -94,47 +94,6 @@
 			<artifactId>gson</artifactId>
 			<version>2.5</version>
 		</dependency>
-<<<<<<< d9cd1b118739e4af56ceb62de9ad1b5dcdf15dd3
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>2.5</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
-		</dependency>
-
-		
-		
-	    
-    </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-    <repositories>
-        <repository>
-            <id>spring-libs-milestone</id>
-            <url>https://repo.spring.io/libs-milestone</url>
-        </repository>
-        <repository>
-            <id>salespointframework</id>
-            <url>http://www.st.inf.tu-dresden.de/SalesPoint/repository</url>
-        </repository>
-        <repository>
-		    <id>sonatype-snapshots</id>
-		    <name>Sonatype repository for deploying snapshots</name>
-		    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		    <snapshots>
-		        <enabled>true</enabled>
-		    </snapshots>
-=======
 
 	</dependencies>
 	<build>
@@ -161,7 +120,6 @@
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
->>>>>>> Json Generator for graph implementation of statistics. Get Request
 		</repository>
 	</repositories>
 	<pluginRepositories>
