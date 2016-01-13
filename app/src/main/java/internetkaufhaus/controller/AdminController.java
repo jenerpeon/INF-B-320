@@ -20,6 +20,9 @@ import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,7 +32,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteUserAccount;
@@ -311,6 +318,12 @@ public class AdminController {
 		return "balance";
 	}
 
+	@RequestMapping(value = "/admin/statisticsJson", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String getStatisticsJson(ModelMap model) {
+
+		return "";
+	}
+
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 *
@@ -318,8 +331,11 @@ public class AdminController {
 	 *            the model
 	 * @return the winners
 	 */
-	@RequestMapping(value = "/admin/statistics")
+	@RequestMapping(value = "/admin/statistics", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
 	public String getStatistics(ModelMap model) {
+		ObjectMapper mapper = new ObjectMapper();
 
 		LocalDateTime to = LocalDateTime.now();
 		LocalDateTime from7Days = to.minusDays(7);
@@ -346,11 +362,20 @@ public class AdminController {
 			System.out.println(key);
 			Statistic stat = new Statistic(dataService, key, intervals.get(key));
 			stats.add(stat);
-			System.out.println("Bestellungen: "+stat.getOrders()+" Retouren: "+stat.getReturns()+" Umsatz: "+stat.getTurnover()+" Gewinn "+stat.getProfit());
+/*			System.out.println("Bestellungen: " + stat.getOrders() + " Retouren: " + stat.getReturns() + " Umsatz: "
+					+ stat.getTurnover() + " Gewinn " + stat.getProfit());*/
 		}
 
 		model.addAttribute("stats", stats);
-		return "statistics";
+		model.addAttribute(stats);
+		try {
+			System.out.println(mapper.writeValueAsString(stats));
+			return mapper.writeValueAsString(stats);
+
+		} catch (Exception e) {
+			System.out.println("Mapping to Json failed"+e.getMessage());
+			return "statistics";
+		}
 	}
 
 	@RequestMapping(value = "/admin/lottery")
