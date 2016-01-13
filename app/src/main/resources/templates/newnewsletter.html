@@ -21,25 +21,25 @@
 					<a href="/"><img id="home" src="/resources/Bilder/home.png" /></a>
 					<img id="breadcrumb" src="/resources/Bilder/forward.png" /> <a
 						href="/employee">Mitarbeiterportal</a> <img id="breadcrumb"
-						src="/resources/Bilder/forward.png" /> 
-						<a	href="/employee/newsletter">Newsletter</a>
-						<img id="breadcrumb" src="/resources/Bilder/forward.png" />
-						<a	href="/employee/newsletter/newNewsletter">Neuen Newsletter erstellen</a>
+						src="/resources/Bilder/forward.png" /> <a
+						href="/employee/newsletter">Newsletter</a> <img id="breadcrumb"
+						src="/resources/Bilder/forward.png" /> <a
+						href="/employee/newsletter/newNewsletter">Neuen Newsletter
+						erstellen</a>
 				</div>
 			</div>
 
 			<div id="workframe" style="flex-direction: row; flex-wrap: wrap">
-				<form id="newNewsletter"
-					action="/employee/newsletter/newNewsletter/created" method="post">
+				<form id="newNewsletter" action="" method="post">
 					<select name="prods" multiple="multiple" size="10">
-						<option th:value="${prod.getId()}"
-							th:each="prod : ${prods}"
+						<option th:value="${prod.getId()}" th:each="prod : ${prods}"
 							th:text="${prod.name}"></option>
-					</select> <input type="submit" value="Newsletter erstellen" />
+					</select> <input type="submit" value="Vorschau" formaction="/employee/newsletter/newNewsletter/preview" /><input
+						type="submit" value="Newsletter erstellen" formaction="/employee/newsletter/newNewsletter/created" />
 
 				</form>
-				
-				<iFrame id="newsletter"></iFrame>
+
+				<iFrame id="newsletter" th:attr="srcdoc=${htmlContent}"></iFrame>
 
 
 				<!--  

@@ -5,20 +5,17 @@ import static org.salespointframework.order.OrderStatus.OPEN;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Properties;
-
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -33,11 +30,9 @@ import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -49,18 +44,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartFile;
-import org.thymeleaf.context.Context;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
 import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
+import internetkaufhaus.entities.Newsletter;
 import internetkaufhaus.forms.EditArticleForm;
 import internetkaufhaus.forms.StockForm;
 import internetkaufhaus.model.NavItem;
@@ -642,8 +635,8 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * This page shows the users, which have subscribed to the newsletter.
-	 *.
+	 * This page shows the users, which have subscribed to the newsletter. .
+	 * 
 	 * @param model
 	 *            the model
 	 * @return the string
@@ -667,35 +660,145 @@ public class ManagementController {
 	public String newNewsletter(ModelMap model) {
 		Sort sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "name", Sort.NullHandling.NATIVE));
 		model.addAttribute("prods", dataService.getConcreteProductRepository().findAll(sorting));
+		model.addAttribute("htmlContent", "");
 		return "newnewsletter";
 	}
-	
-	@RequestMapping(value = "/employee/newsletter/newNewsletter/created", method = RequestMethod.POST)
-	public String newNewsletterCreated(@RequestParam("prods") ProductIdentifier[] prodsArray, final Locale locale, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+	@RequestMapping(value = "/employee/newsletter/newNewsletter/preview", method = RequestMethod.POST)
+	public String newNewsletterPrevie(@RequestParam("prods") ProductIdentifier[] prodsArray, final Locale locale,
+			HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		List<ProductIdentifier> prodIds = Arrays.asList(prodsArray);
-		Iterable<ConcreteProduct> prods = dataService.getConcreteProductRepository().findByIds(prodIds);
-	
-	    TemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-	    //templateResolver.setPrefix("/mail/");
-	    templateResolver.setTemplateMode("HTML5");
-	    templateResolver.setOrder(1);
-	    
-	    TemplateResolver templateResolver2 = new ServletContextTemplateResolver();
-	    //templateResolver2.setPrefix("/WEB-INF/templates/");
-	    templateResolver2.setTemplateMode("HTML5");
-	    templateResolver2.setOrder(2);
+		Page<ConcreteProduct> page1 = dataService.getConcreteProductRepository().findByIds(prodIds, new PageRequest(0,
+				3, new Sort(new Sort.Order(Sort.Direction.ASC, "webLink", Sort.NullHandling.NATIVE))));
+		List<ConcreteProduct> prods1 = page1.getContent();
+		Page<ConcreteProduct> page2 = dataService.getConcreteProductRepository().findByIds(prodIds, new PageRequest(1,
+				3, new Sort(new Sort.Order(Sort.Direction.ASC, "webLink", Sort.NullHandling.NATIVE))));
+		List<ConcreteProduct> prods2 = page2.getContent();
+
+		TemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+		templateResolver.setTemplateMode("HTML5");
+		templateResolver.setOrder(1);
+
+		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		templateEngine.addTemplateResolver(templateResolver);
+
+		final WebContext ctx = new WebContext(request, response, request.getServletContext(), locale);
+		ctx.setVariable("prods1", prods1);
+		ctx.setVariable("prods1", prods2);
+		String htmlContent = templateEngine.process("mail/newsletter-template.html", ctx);
+
+		htmlContent = htmlContent.replace("cid:Logo", "/resources/Bilder/Logo.png");
+		htmlContent = htmlContent.replace("cid:Newsletter", "/resources/Bilder/Newsletter.png");
+		htmlContent = htmlContent.replace("cid:SocialMedia", "/resources/Bilder/SocialMedia.png");
+
+		for (ConcreteProduct prod : prods1) {
+			htmlContent = htmlContent.replace("cid:" + prod.getImagefile(),
+					"/resources/Bilder/Produkte/" + prod.getImagefile());
+		}
+
+		for (ConcreteProduct prod : prods2) {
+			htmlContent = htmlContent.replace("cid:" + prod.getImagefile(),
+					"/resources/Bilder/Produkte/" + prod.getImagefile());
+		}
+
+		model.addAttribute("htmlContent", htmlContent);
+
+		return "newnewsletter";
+
+	}
+
+	@RequestMapping(value = "/employee/newsletter/newNewsletter/created", method = RequestMethod.POST)
+	public String newNewsletterCreated(@RequestParam("prods") ProductIdentifier[] prodsArray, final Locale locale,
+			HttpServletRequest request, HttpServletResponse response) throws IOException, MessagingException {
 		
-	    SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-	    templateEngine.addTemplateResolver(templateResolver);
-	    templateEngine.addTemplateResolver(templateResolver2);
-	    
-	    final WebContext ctx = new WebContext(request, response, request.getServletContext(), locale);
+		List<ProductIdentifier> prodIds = Arrays.asList(prodsArray);
+		Page<ConcreteProduct> page1 = dataService.getConcreteProductRepository().findByIds(prodIds, new PageRequest(0,
+				3, new Sort(new Sort.Order(Sort.Direction.ASC, "webLink", Sort.NullHandling.NATIVE))));
+		List<ConcreteProduct> prods1 = page1.getContent();
+		Page<ConcreteProduct> page2 = dataService.getConcreteProductRepository().findByIds(prodIds, new PageRequest(1,
+				3, new Sort(new Sort.Order(Sort.Direction.ASC, "webLink", Sort.NullHandling.NATIVE))));
+		List<ConcreteProduct> prods2 = page2.getContent();
+		List<List<ConcreteProduct>> prods = new ArrayList<List<ConcreteProduct>>();
+		prods.add(prods1);
+		prods.add(prods2);
+
+		Newsletter newsletter = new Newsletter("mail/newsletter-template.html", prods, LocalDate.now());
+		dataService.getNewsletterRepository().save(newsletter);
+		
+		newsManager.sendNewsletter(newsletter, "Martin Bens", "martin.bens@live.de", locale, request, response);
+
+		/*TemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+		templateResolver.setTemplateMode("HTML5");
+		templateResolver.setOrder(1);
+
+		TemplateResolver templateResolver2 = new ServletContextTemplateResolver();
+		templateResolver2.setTemplateMode("HTML5");
+		templateResolver2.setOrder(2);
+
+		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		templateEngine.addTemplateResolver(templateResolver);
+		templateEngine.addTemplateResolver(templateResolver2);
+
+		final WebContext ctx = new WebContext(request, response, request.getServletContext(), locale);
 		ctx.setVariable("prods", prods);
-		final String htmlContent = templateEngine.process("newsletter-template.html", ctx);
-		
-		PrintWriter out = new PrintWriter("newsletter2.html");
-		out.println(htmlContent);
-		
+		final String htmlContent = templateEngine.process("mail/newsletter-template.html", ctx);
+
+		final MimeMessage mimeMessage = mailSender().createMimeMessage();
+		final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+		message.setSubject("Example HTML email with inline image");
+		message.setFrom("thymeleaf@example.com");
+		message.setTo("martin.bens@live.de");
+		message.setText(htmlContent, true);
+
+		Path path = FileSystems.getDefault().getPath("src/main/resources/static/resources/Bilder", "Newsletter.png");
+
+		File file = new File(path.toUri());
+		FileInputStream input = new FileInputStream(file);
+
+		MultipartFile img = new MockMultipartFile("Newsletter", "Newsletter.png", "text/plain",
+				IOUtils.toByteArray(input));
+
+		final InputStreamSource imageSource = new ByteArrayResource(img.getBytes());
+		message.addInline(img.getName(), imageSource, img.getContentType());
+
+		Path path3 = FileSystems.getDefault().getPath("src/main/resources/static/resources/Bilder", "Logo.png");
+
+		File file3 = new File(path3.toUri());
+		FileInputStream input3 = new FileInputStream(file3);
+
+		MultipartFile img3 = new MockMultipartFile("Logo", "Logo.png", "text/plain", IOUtils.toByteArray(input3));
+
+		final InputStreamSource imageSource3 = new ByteArrayResource(img3.getBytes());
+		message.addInline(img3.getName(), imageSource3, img3.getContentType());
+
+		Path path4 = FileSystems.getDefault().getPath("src/main/resources/static/resources/Bilder", "SocialMedia.png");
+
+		File file4 = new File(path4.toUri());
+		FileInputStream input4 = new FileInputStream(file4);
+
+		MultipartFile img4 = new MockMultipartFile("SocialMedia", "SocialMedia.png", "text/plain",
+				IOUtils.toByteArray(input4));
+
+		final InputStreamSource imageSource4 = new ByteArrayResource(img4.getBytes());
+		message.addInline(img4.getName(), imageSource4, img4.getContentType());
+
+		for (ConcreteProduct prod : prods) {
+			Path path2 = FileSystems.getDefault().getPath("src/main/resources/static/resources/Bilder/Proukte",
+					prod.getImagefile());
+
+			File file2 = new File(path2.toUri());
+			FileInputStream input2 = new FileInputStream(file2);
+
+			MultipartFile img2 = new MockMultipartFile(prod.getImagefile(), prod.getImagefile(), "text/plain",
+					IOUtils.toByteArray(input2));
+
+			final InputStreamSource imageSource2 = new ByteArrayResource(img2.getBytes());
+			message.addInline(img2.getName(), imageSource2, img2.getContentType());
+		}
+
+		mailSender().send(mimeMessage);*/
+
 		return "redirect:/employee/newsletter/newNewsletter";
 	}
 
@@ -764,7 +867,7 @@ public class ManagementController {
 	 *            the mail body
 	 * @return the string
 	 */
-	@RequestMapping(value = "/employee/newsletter/changeNewsletter/sendNewsletter", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/employee/newsletter/changeNewsletter/sendNewsletter", method = RequestMethod.GET)
 	public String sendNewsletter(@RequestParam("subject") String subject, @RequestParam("mailBody") String mailBody) {
 		if (!(mailBody.equals(""))) {
 			this.newsManager.sendNewsletter(subject, mailBody);
@@ -778,7 +881,7 @@ public class ManagementController {
 			}
 		}
 		return "redirect:/employee/newsletter";
-	}
+	}*/
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?

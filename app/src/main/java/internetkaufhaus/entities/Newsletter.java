@@ -21,17 +21,19 @@ public class Newsletter {
 	
 	private LocalDate dateCreated;
 	
-	@OneToOne(targetEntity=ConcreteProduct.class, fetch=FetchType.EAGER)
-	private List<ConcreteProduct> productSelection;
+	
+	private List<List<ConcreteProduct>> productSelection;
+	
+	private String htmlContent;
 	
 	private String template;
-	
+
 	protected Newsletter() {
 		
 	}
 	
-	public Newsletter(String template, List<ConcreteProduct> productSelection, LocalDate dateCreated) {
-		this.template = template;
+	public Newsletter(String template, List<List<ConcreteProduct>> productSelection, LocalDate dateCreated) {
+		this.htmlContent = template;
 		this.productSelection = productSelection;
 		this.dateCreated = dateCreated;
 	}
@@ -44,11 +46,11 @@ public class Newsletter {
 		return this.template;
 	}
 	
-	public void setProductSelection(List<ConcreteProduct> productSelection) {
+	public void setProductSelection(List<List<ConcreteProduct>> productSelection) {
 		this.productSelection = productSelection;
 	}
 	
-	public List<ConcreteProduct> getProductSelection() {
+	public List<List<ConcreteProduct>> getProductSelection() {
 		return this.productSelection;
 	}
 	
@@ -58,6 +60,14 @@ public class Newsletter {
 
 	public LocalDate getDateCreated() {
 		return dateCreated;
+	}
+	
+	public String getHtmlContent() {
+		return htmlContent;
+	}
+
+	public void setHtmlContent(String htmlContent) {
+		this.htmlContent = htmlContent;
 	}
 	
 }

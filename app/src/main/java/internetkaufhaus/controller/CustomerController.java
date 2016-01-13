@@ -138,8 +138,7 @@ public class CustomerController {
 		credit.updateCreditpointsByUser(caccount);
 		model.addAttribute("account", caccount);
 		model.addAttribute("discountOrders", dataService.getConcreteOrderRepository().findByUserAndDiscount(caccount));
-		// model.addAttribute("recruiter",
-		// userRepo.findByRecruits(accountList));
+		model.addAttribute("recruiter",dataService.getConcreteUserAccountRepository().findRecruiter(caccount));
 		return "customerpoints";
 	}
 }
