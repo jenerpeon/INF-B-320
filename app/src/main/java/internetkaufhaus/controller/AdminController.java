@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import internetkaufhaus.entities.ConcreteOrder;
@@ -318,11 +319,11 @@ public class AdminController {
 		return "balance";
 	}
 
-	@RequestMapping(value = "/admin/statisticsJson", produces = MediaType.APPLICATION_JSON_VALUE)
+/*	@RequestMapping(value = "/admin/statisticsJson", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String getStatisticsJson(ModelMap model) {
 
 		return "";
-	}
+	}*/
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
@@ -330,11 +331,12 @@ public class AdminController {
 	 * @param model
 	 *            the model
 	 * @return the winners
+	 * @throws JsonProcessingException 
 	 */
-	@RequestMapping(value = "/admin/statistics", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.OK)
-	@ResponseBody
-	public String getStatistics(ModelMap model) {
+	@RequestMapping(value = "/admin/statistics", method=RequestMethod.GET)
+
+	public String getStatistics(ModelMap model) throws JsonProcessingException {
+		
 		ObjectMapper mapper = new ObjectMapper();
 
 		LocalDateTime to = LocalDateTime.now();
@@ -365,18 +367,19 @@ public class AdminController {
 /*			System.out.println("Bestellungen: " + stat.getOrders() + " Retouren: " + stat.getReturns() + " Umsatz: "
 					+ stat.getTurnover() + " Gewinn " + stat.getProfit());*/
 		}
+		
+		
+		model.addAttribute("message", mapper.writeValueAsString(stats));
 
-		model.addAttribute("stats", stats);
-		model.addAttribute(stats);
 		try {
 			System.out.println(mapper.writeValueAsString(stats));
-			return mapper.writeValueAsString(stats);
+			return "statistics";
 
 		} catch (Exception e) {
 			System.out.println("Mapping to Json failed"+e.getMessage());
 			return "statistics";
 		}
-	}
+	} 
 
 	@RequestMapping(value = "/admin/lottery")
 	public String competition() {
