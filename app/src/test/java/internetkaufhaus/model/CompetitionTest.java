@@ -103,7 +103,7 @@ public class CompetitionTest extends AbstractIntegrationTests {
 	@Test
 	public void testNotifyWinners() {
 		comp.getWinners();
-		comp.notifyWinners(mailServer);
+		//comp.notifyWinners(mailServer);
 		// verify(mailServer, times(2)).sendMail(anyString(), eq("Herzlichen
 		// Glückwunsch"), eq("wood@shop.de"),
 		// eq("Gewonnen"));

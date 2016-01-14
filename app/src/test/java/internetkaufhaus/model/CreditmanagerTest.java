@@ -48,10 +48,10 @@ public class CreditmanagerTest extends AbstractIntegrationTests {
 	@Before
 	public void init() {
 		this.manager = new Creditmanager(data);
-		ConcreteUserAccount user = new ConcreteUserAccount("test2@mail.com", "Username1", "Firstname", "Lastname",
+		ConcreteUserAccount user = new ConcreteUserAccount("martin.bens@live.de", "Username1", "Firstname", "Lastname",
 				"Straße", "3", "ZipCode", "City", "Password", Role.of("ROLE_CUSTOMER"), data.getUserAccountManager());
-		ConcreteUserAccount acc = new ConcreteUserAccount("test@mail.com", "Username2", "Firstname", "Lastname",
-				"Straße", "3", "ZipCode", "City", "Password", Role.of("ROLE_EMPLOYEE"), data.getUserAccountManager());
+		ConcreteUserAccount acc = new ConcreteUserAccount("spigandromeda@gmail.com", "Username2", "Firstname", "Lastname",
+				"Straße", "3", "ZipCode", "City", "Password", Role.of("ROLE_CUSTOMER"), data.getUserAccountManager());
 		user.setRecruits(acc);
 		
 		data.getUserAccountManager().save(user.getUserAccount());
@@ -74,8 +74,8 @@ public class CreditmanagerTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testupdateCreditpointsByUser() {
-		manager.updateCreditpointsByUser(data.getConcreteUserAccountRepository().findByEmail("test2@mail.com").get());
+		manager.updateCreditpointsByUser(data.getConcreteUserAccountRepository().findByEmail("martin.bens@live.de").get());
 		assertEquals("UpdatePoints",
-				data.getConcreteUserAccountRepository().findByEmail("test2@mail.com").get().getCredits(), 25);
+				data.getConcreteUserAccountRepository().findByEmail("martin.bens@live.de").get().getCredits(), 25);
 	}
 }
