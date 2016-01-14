@@ -53,8 +53,8 @@ public class AccountingServiceTest {
 		assertFalse("testRegisterCustomer", service.registerCustomer("peon@peon.cave"));
 	}*/
 
-	@Test
+	/*@Test
 	public void testRecruitCustomer() {
 		assertEquals("testRecruitCustomer", service.recruitCustomer(null, "peon@peon.cave"), "invalid invitator");
-	}
+	}*/
 }
