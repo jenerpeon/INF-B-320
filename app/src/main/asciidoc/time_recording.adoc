@@ -5,7 +5,7 @@ Die verwendete Zeit beinhaltet auch das Lesen von Dokumentationen, Besprechungen
 
 // See http://asciidoctor.org/docs/user-manual/#tables
 [option="headers"]
-
+|===
 |Von |Bis |Heiner |Max |Linda |Martin |Lars |Wilhelm
 |13.10.2015|19.10.2015|3h|8h|4:30h |6h|6h|7h
 |20.10.2015|26.10.2015|15h|12h|13h|8h| 16h |12:30h
@@ -14,6 +14,9 @@ Die verwendete Zeit beinhaltet auch das Lesen von Dokumentationen, Besprechungen
 |10.11.2015|16.11.2015|10h|18h|15h|22h|12h|14h
 |17.11.2015|23.11.2015|10h|17h|16h|41h|14h|14:30h
 |24.11.2015|30.11.2015|12h|12h|13h|26h|13h|15h
-|1.12.2015|07.12.2015||16h|12:30h|||
-|8.12.2015|14.12.2015||8h|10h:30|||
-
+|1.12.2015|07.12.2015||16h|12:30h||15h|
+|8.12.2015|14.12.2015||8h|10:30h||14h|
+|15.12.2015|04.01.2016||38h|||24h|
+|05.01.2016|11.01.2016||20h|||11h|
+|12.01.2016|15.01.2016||12h|||10h|
+|===
