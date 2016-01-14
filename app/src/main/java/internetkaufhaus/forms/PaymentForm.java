@@ -362,8 +362,6 @@ public class PaymentForm {
 		billingAddress.add(this.billingZipCode);
 		billingAddress.add(this.billingTown);
 
-		System.out.println(this.billingGender);
-
 		return billingAddress;
 	}
 

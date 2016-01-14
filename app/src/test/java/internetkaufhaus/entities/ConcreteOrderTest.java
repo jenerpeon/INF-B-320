@@ -233,7 +233,6 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testOrderLinesSize() {
-		System.out.println("orderLinesSize:"+model.getOrderLinesSize());
 		assertTrue("getOrderlineSize defekt", model.getOrderLinesSize() == 2);
 	}
 

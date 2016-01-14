@@ -58,7 +58,6 @@ public class Competition {
 
 		for (ConcreteUserAccount acc : data.getConcreteUserAccountRepository().findAll()) {
 			creditmanager.updateCreditpointsByUser(acc);
-			System.out.println(acc.getEmail());
 
 		}
 

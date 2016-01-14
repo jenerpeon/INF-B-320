@@ -38,6 +38,7 @@ import internetkaufhaus.services.DataService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 
+@Transactional
 public class CompetitionTest extends AbstractIntegrationTests {
 
 	/** The manager. */
@@ -68,10 +69,10 @@ public class CompetitionTest extends AbstractIntegrationTests {
 				acc.setRecruits(data.getConcreteUserAccountRepository()
 						.findByEmail("kunde" + (i - 1) + "@todesstern.ru").get());
 			}
-
-			data.getConcreteUserAccountRepository().save(acc);
+			
 			data.getUserAccountManager().save(acc.getUserAccount());
-
+			data.getConcreteUserAccountRepository().save(acc);
+			
 			Random random = new Random();
 			for (int j = 0; j < random.nextInt(5); j++) {
 				ConcreteProduct prod = new ConcreteProduct("Test", Money.of(5, "EUR"), Money.of(5, "EUR"), "Test",

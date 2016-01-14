@@ -546,7 +546,7 @@ public class ConcreteOrder extends Order {
 	}
 	
 	public boolean isRetournable() {
-		return (this.dateOrdered - 2592000 > LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(1)) && !this.returned);
+		return ((this.dateOrdered > LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(1)) - 2592000) && !this.returned);
 	}
 
 	/**

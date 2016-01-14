@@ -53,16 +53,18 @@ public class CreditmanagerTest extends AbstractIntegrationTests {
 		ConcreteUserAccount acc = new ConcreteUserAccount("test@mail.com", "Username2", "Firstname", "Lastname",
 				"Straße", "3", "ZipCode", "City", "Password", Role.of("ROLE_EMPLOYEE"), data.getUserAccountManager());
 		user.setRecruits(acc);
-		data.getConcreteUserAccountRepository().save(user);
+		
 		data.getUserAccountManager().save(user.getUserAccount());
-		data.getConcreteUserAccountRepository().save(acc);
+		data.getConcreteUserAccountRepository().save(user);
+		
 		data.getUserAccountManager().save(acc.getUserAccount());
+		data.getConcreteUserAccountRepository().save(acc);
 
 		ConcreteProduct prod = new ConcreteProduct("Test", Money.of(5, "EUR"), Money.of(5, "EUR"), "Test", "Test",
 				"Test", "Test");
 		ConcreteOrder order = new ConcreteOrder(acc, Cash.CASH);
 		order.add(new OrderLine(prod, Quantity.of(5)));
-		order.setDateOrdered(LocalDateTime.now().minusDays(31).toEpochSecond(ZoneOffset.ofHours(1)));
+		order.setDateOrdered(LocalDateTime.now().minusDays(29).toEpochSecond(ZoneOffset.ofHours(1)));
 		order.setStatus(OrderStatus.COMPLETED);
 		data.getConcreteOrderRepository().save(order);
 	}
