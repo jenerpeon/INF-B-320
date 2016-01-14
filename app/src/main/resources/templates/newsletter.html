@@ -26,16 +26,21 @@
 			</div>
 
 			<div id="workframe" style="flex-direction: row; flex-wrap: wrap">
-				<form id="sendNewsletter"action="/employee/newsletter/sendNewsletter">
-					<select size="1">
+				<form id="sendNewsletter"
+					action="/employee/newsletter/sendNewsletter" method="post">
+					<select size="1" name="newsletter">
 						<option th:value="${newsletter.getId()}"
 							th:each="newsletter : ${newsletters}"
-							th:text="${newsletter.dateCreated}"></option>
-					</select> <input type="submit" value="Newsletter versenden" />
+							th:text="@{'Newsletter erstellt am: '+${newsletter.dateCreated}}"></option>
+					</select> <input type="submit" value="Newsletter anzeigen"
+						formaction="/employee/newsletter/newsletter/view" /> <input
+						type="submit" value="Newsletter versenden"
+						formaction="/employee/newsletter/newsletter/send" />
 
 				</form>
-				<button id="newNewsletter" onclick="window.location.href='/employee/newsletter/newNewsletter'"> Neuen Newsletter erstellen</button>
-				<iFrame id="newsletter"></iFrame>
+				<button id="newNewsletter"
+					onclick="window.location.href='/employee/newsletter/newNewsletter'">Neuen
+					Newsletter erstellen</button>
 
 
 				<!--  

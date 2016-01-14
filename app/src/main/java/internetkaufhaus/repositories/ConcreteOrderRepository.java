@@ -1,6 +1,5 @@
 package internetkaufhaus.repositories;
 
-import java.time.LocalDateTime;
 import org.salespointframework.order.OrderIdentifier;
 import org.salespointframework.order.OrderStatus;
 import org.springframework.data.domain.Sort;
@@ -45,20 +44,18 @@ public interface ConcreteOrderRepository extends PagingAndSortingRepository<Conc
 	 * @return the iterable
 	 */
 	Iterable<ConcreteOrder> findByUser(ConcreteUserAccount user, Sort sort);
-
-	Iterable<ConcreteOrder> findByDateOrdered(LocalDateTime time);
 	
 	@Query("SELECT c FROM ConcreteOrder c WHERE c.status = :status AND c.returned = false AND c.dateOrdered >= :begin AND c.dateOrdered <= :end")
-	Iterable<ConcreteOrder> findByIntervalAndStatusAndNotReturned(@Param("begin") LocalDateTime begin, @Param("end") LocalDateTime end, @Param("status") OrderStatus status);
+	Iterable<ConcreteOrder> findByIntervalAndStatusAndNotReturned(@Param("begin") Long begin, @Param("end") Long end, @Param("status") OrderStatus status);
 	
 	@Query("SELECT COUNT(*) FROM ConcreteOrder c WHERE c.status = :status AND c.returned = false AND c.dateOrdered >= :begin AND c.dateOrdered <= :end")
-	Long numberOfFindByIntervalAndStatusAndNotReturned(@Param("begin") LocalDateTime begin, @Param("end") LocalDateTime end, @Param("status") OrderStatus status);
+	Long numberOfFindByIntervalAndStatusAndNotReturned(@Param("begin") Long begin, @Param("end") Long end, @Param("status") OrderStatus status);
 	
 	@Query("SELECT c FROM ConcreteOrder c WHERE c.status = :status AND c.returned = true AND c.dateOrdered >= :begin AND c.dateOrdered <= :end")
-	Iterable<ConcreteOrder> findByIntervalAndStatusAndReturned(@Param("begin") LocalDateTime begin, @Param("end") LocalDateTime end, @Param("status") OrderStatus status);
+	Iterable<ConcreteOrder> findByIntervalAndStatusAndReturned(@Param("begin") Long begin, @Param("end") Long end, @Param("status") OrderStatus status);
 	
 	@Query("SELECT COUNT(*) FROM ConcreteOrder c WHERE c.status = :status AND c.returned = true AND c.dateOrdered >= :begin AND c.dateOrdered <= :end")
-	Long numberOfFindByIntervalAndStatusAndReturned(@Param("begin") LocalDateTime begin, @Param("end") LocalDateTime end, @Param("status") OrderStatus status);
+	Long numberOfFindByIntervalAndStatusAndReturned(@Param("begin") Long begin, @Param("end") Long end, @Param("status") OrderStatus status);
 	
 	Iterable<ConcreteOrder> findByReturnedTrue();
 	

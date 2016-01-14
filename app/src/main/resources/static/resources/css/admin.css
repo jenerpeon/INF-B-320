@@ -382,3 +382,7 @@
 	display: block;
 	clear: both;
 }
+
+#workframe #chart {
+	height: 500px;
+}

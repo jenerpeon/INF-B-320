@@ -1,6 +1,7 @@
 package internetkaufhaus.entities;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class ConcreteOrder extends Order {
 	@OneToOne(cascade = {CascadeType.ALL})
 	private ConcreteUserAccount user;
 	
-	private LocalDateTime dateOrdered;
+	private Long dateOrdered;
 	
 	private OrderStatus status;
 	
@@ -111,14 +112,14 @@ public class ConcreteOrder extends Order {
 	public ConcreteOrder(ConcreteUserAccount account, Cash pay) {
 		super(account.getUserAccount(), pay);
 		this.user = account;
-		this.dateOrdered = LocalDateTime.now();
+		this.dateOrdered = LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(1));
 		this.status = super.getOrderStatus();
 	}
 	
 	public ConcreteOrder(ConcreteUserAccount account, PaymentCard pay) {
 		super(account.getUserAccount(), pay);
 		this.user = account;
-		this.dateOrdered = LocalDateTime.now();
+		this.dateOrdered = LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(1));
 		this.status = super.getOrderStatus();
 	}
 	
@@ -141,11 +142,11 @@ public class ConcreteOrder extends Order {
 		return this.user;
 	}
 	
-	public void setDateOrdered(LocalDateTime dateOrdered) {
+	public void setDateOrdered(Long dateOrdered) {
 		this.dateOrdered = dateOrdered;
 	}
 	
-	public LocalDateTime getDateOrdered() {
+	public Long getDateOrdered() {
 		return this.dateOrdered;
 	}
 	
@@ -338,7 +339,7 @@ public class ConcreteOrder extends Order {
 	
 	public String getDateOrderedFormatted() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-		return this.dateOrdered.format(formatter);
+		return LocalDateTime.ofEpochSecond(this.dateOrdered, 0, ZoneOffset.ofHours(1)).format(formatter);
 	}
 		
 	/**
@@ -545,7 +546,7 @@ public class ConcreteOrder extends Order {
 	}
 	
 	public boolean isRetournable() {
-		return (this.dateOrdered.isAfter(LocalDateTime.now().minusDays(30)) && !this.returned);
+		return (this.dateOrdered - 2592000 > LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(1)) && !this.returned);
 	}
 
 	/**

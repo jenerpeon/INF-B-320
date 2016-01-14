@@ -8,8 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
-import com.google.common.collect.Iterators;
-
 import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.services.ConcreteMailService;
 import internetkaufhaus.services.DataService;

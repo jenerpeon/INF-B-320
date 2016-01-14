@@ -3,6 +3,7 @@ package internetkaufhaus.model;
 import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 import org.javamoney.moneta.Money;
 import org.junit.Before;
@@ -61,7 +62,7 @@ public class CreditmanagerTest extends AbstractIntegrationTests {
 				"Test", "Test");
 		ConcreteOrder order = new ConcreteOrder(acc, Cash.CASH);
 		order.add(new OrderLine(prod, Quantity.of(5)));
-		order.setDateOrdered(LocalDateTime.now().minusDays(31));
+		order.setDateOrdered(LocalDateTime.now().minusDays(31).toEpochSecond(ZoneOffset.ofHours(1)));
 		order.setStatus(OrderStatus.COMPLETED);
 		data.getConcreteOrderRepository().save(order);
 	}

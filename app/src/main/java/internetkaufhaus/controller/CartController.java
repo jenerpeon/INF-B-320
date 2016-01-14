@@ -5,6 +5,7 @@ import static org.salespointframework.core.Currencies.EURO;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Iterator;
 import java.util.Optional;
 
@@ -268,7 +269,7 @@ class CartController {
 
 			order.setShippingAddress(paymentForm.getShippingAddress());
 
-			order.setDateOrdered(LocalDateTime.now());
+			order.setDateOrdered(LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(1)));
 			
 			order.setUsedDiscountPoints(usablePoints(cart, caccount));
 

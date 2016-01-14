@@ -6,12 +6,9 @@ import java.util.List;
 import javax.persistence.AttributeOverride;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 
 @Entity
 @Table(name = "NEWSLETTER")
@@ -26,7 +23,11 @@ public class Newsletter {
 	@Transient
 	private List<List<ConcreteProduct>> productSelection;
 	
+	@Column(name = "HTMLCONTENT", length = 1000000)
 	private String htmlContent;
+	
+	@Column(name = "HTMLPREVIEWCONTENT", length = 1000000)
+	private String htmlPreviewContent;
 	
 	private String template;
 
@@ -34,12 +35,38 @@ public class Newsletter {
 		
 	}
 	
-	public Newsletter(String template, List<List<ConcreteProduct>> productSelection, LocalDate dateCreated) {
+	public Newsletter(String template, String htmlContent, String htmlPreviewContent, List<List<ConcreteProduct>> productSelection, LocalDate dateCreated) {
 		this.template = template;
+		this.htmlContent = htmlContent;
+		this.htmlPreviewContent = htmlPreviewContent;
 		this.productSelection = productSelection;
 		this.dateCreated = dateCreated;
 	}
 	
+	public NewsletterIdentifier getNewsletterIdentifier() {
+		return newsletterIdentifier;
+	}
+
+	public void setNewsletterIdentifier(NewsletterIdentifier newsletterIdentifier) {
+		this.newsletterIdentifier = newsletterIdentifier;
+	}
+
+	public String getHtmlPreviewContent() {
+		return htmlPreviewContent;
+	}
+
+	public void setHtmlPreviewContent(String htmlPreviewContent) {
+		this.htmlPreviewContent = htmlPreviewContent;
+	}
+
+	public NewsletterIdentifier getId() {
+		return newsletterIdentifier;
+	}
+
+	public void setId(NewsletterIdentifier newsletterIdentifier) {
+		this.newsletterIdentifier = newsletterIdentifier;
+	}
+
 	public void setTemplate(String template) {
 		this.template = template;
 	}

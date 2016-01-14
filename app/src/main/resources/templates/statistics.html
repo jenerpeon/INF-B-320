@@ -14,14 +14,14 @@
 
     var storeTime = 0;
            
-    var message = [[${message}]];
+    var message = [[${message1}]];
     
     var json = JSON.parse(message);
     
     function updatestoreTime(newTime){
     	
     	if (newTime > 6 || newTime < 0){
-    		console.log("ERROR: NO VALID storeTime-VALUE, SET TO 0");
+    		//console.log("ERROR: NO VALID storeTime-VALUE, SET TO 0");
     		storeTime = 0;
     	} else
     	storeTime = newTime;
@@ -39,7 +39,7 @@
     function createstoreTimeChartOrders(){
     	
     	if (storeTime > 6 || storeTime < 0){
-    		console.log("ERROR: NO VALID storeTime-VALUE");
+    		//console.log("ERROR: NO VALID storeTime-VALUE");
     	}
     	
     	var attributeArray = Object.keys(json[storeTime].orders).sort();
@@ -64,7 +64,7 @@
 	function createstoreTimeChartReturns(){
     	
     	if (storeTime > 6 || storeTime < 0){
-    		console.log("ERROR: NO VALID storeTime-VALUE");
+    		//console.log("ERROR: NO VALID storeTime-VALUE");
     	}
     	
     	var attributeArray = Object.keys(json[storeTime].returns).sort();
@@ -89,10 +89,10 @@
 	
 function createstoreTimeChartTurnover(){
     	
-	console.log(storeTime)
+	//console.log(storeTime)
 	
     	if (storeTime > 6 || storeTime < 0){
-    		console.log("ERROR: NO VALID storeTime-VALUE");
+    		//console.log("ERROR: NO VALID storeTime-VALUE");
     	}
     	
     	var attributeArray = Object.keys(json[storeTime].turnover).sort();
@@ -117,7 +117,7 @@ function createstoreTimeChartTurnover(){
 function createstoreTimeChartProfit(){
 	
 	if (storeTime > 6 || storeTime < 0){
-		console.log("ERROR: NO VALID storeTime-VALUE");
+		//console.log("ERROR: NO VALID storeTime-VALUE");
 	}
 	
 	var attributeArray = Object.keys(json[storeTime].profit).sort();
@@ -142,7 +142,7 @@ function createstoreTimeChartProfit(){
 function createstoreTimeChartExpenses(){
 	
 	if (storeTime > 6 || storeTime < 0){
-		console.log("ERROR: NO VALID storeTime-VALUE");
+		//console.log("ERROR: NO VALID storeTime-VALUE");
 	}
 	
 	var attributeArray = Object.keys(json[storeTime].expenses).sort();
@@ -184,29 +184,29 @@ window.onload = function () {createstoreTimeChartProfit();	}
 					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
 					<a href="/admin" >Adminportal</a>
 					<img id="breadcrumb" src="/resources/Bilder/forward.png" />
-					<a href="/admin/changeuser" >Userverwaltung</a>
+					<a href="/admin/statsitics" >Statistiken</a>
 				</div>
 			</div>
 			
-			<div id="workframe" style="height: 600px;" >
-				<div id="navigationButton" style="height: 100px;">
-					<button onclick="createstoreTimeChartTurnover()">turnover</button>
-					<button onclick="createstoreTimeChartOrders()">orders</button>
-					<button onclick="createstoreTimeChartReturns()">returns</button>
-					<button onclick="createstoreTimeChartExpenses()">expenses</button>
-					<button onclick="createstoreTimeChartProfit()">profit</button>
+			<div id="workframe" >
+				<div id="navigationButton">
+					<button onclick="createstoreTimeChartOrders()">Bestellungen</button>
+					<button onclick="createstoreTimeChartReturns()">Rückgaben</button>
+					<button onclick="createstoreTimeChartTurnover()">Umsatz</button>
+					<button onclick="createstoreTimeChartExpenses()">Ausgaben</button>
+					<button onclick="createstoreTimeChartProfit()">Gewinn</button>
 					
 					<select id="timeSelector" onchange="changeTime();">
 	  					<option value="0">1 Woche</option>
 	  					<option value="1">1 Monat</option>
-	 					<option value="2">2 Monate</option>
+	 					<option value="2">3 Monate</option>
 	  					<option value="3">1 Jahr</option>	
 						<option value="4">3 Jahre</option>	
 						<option value="5">5 Jahre</option>	
 						<option value="6">10 Jahre</option>	
 					</select>
 				</div>
-				<div id="chart" style="height: 500px;"></div>
+				<div id="chart"></div>
 				
 			</div>
 

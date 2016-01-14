@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.salespointframework.core.Currencies.EURO;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 import org.javamoney.moneta.Money;
 import org.junit.Before;
@@ -241,7 +242,7 @@ public class ConcreteOrderTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testDateOrdered() {
-		LocalDateTime time = LocalDateTime.now();
+		Long time = LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(1));
 		model.setDateOrdered(time);
 		assertEquals(time, model.getDateOrdered());
 	}

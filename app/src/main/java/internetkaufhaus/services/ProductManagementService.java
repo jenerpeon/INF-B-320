@@ -3,6 +3,7 @@ package internetkaufhaus.services;
 import static org.salespointframework.core.Currencies.EURO;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Optional;
 
 import org.javamoney.moneta.Money;
@@ -103,7 +104,7 @@ public class ProductManagementService {
 		OrderLine orderLine = new OrderLine(dataService.getConcreteProductRepository().findOne(form.getProdId()),
 				Quantity.of(form.getQuantity()));
 		order.add(orderLine);
-		order.setDateOrdered(LocalDateTime.now());
+		order.setDateOrdered(LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(1)));
 		order.setStatus(OrderStatus.OPEN);
 		dataService.getConcreteOrderRepository().save(order);
 		dataService.getConcreteInventory().findByProductIdentifier(form.getProdId()).ifPresent(x -> {

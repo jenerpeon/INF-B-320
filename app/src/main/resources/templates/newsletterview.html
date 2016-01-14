@@ -30,16 +30,11 @@
 			</div>
 
 			<div id="workframe" style="flex-direction: row; flex-wrap: wrap">
-				<form id="newNewsletter" action="" method="post">
-					<select name="prods" multiple="multiple" size="10">
-						<option th:value="${prod.getId()}" th:each="prod : ${prods}"
-							th:text="${prod.name}"></option>
-					</select> <input type="submit" value="Vorschau" formaction="/employee/newsletter/newNewsletter/preview" /><input
-						type="submit" value="Newsletter erstellen" formaction="/employee/newsletter/newNewsletter/created" />
 
-				</form>
+				<iFrame id="newsletter" th:attr="srcdoc=${html}"></iFrame>
 
-				<iFrame id="newsletter" th:attr="srcdoc=${htmlContent}"></iFrame>
+
+			</div>
 
 		</div>
 		</main>

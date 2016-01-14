@@ -27,7 +27,6 @@ import org.salespointframework.useraccount.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.common.collect.Iterators;
 import de.svenjacobs.loremipsum.LoremIpsum;
 import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteOrder;
@@ -301,8 +300,9 @@ public class Initialize implements DataInitializer {
 					orderCart.addOrUpdateItem(prod, quant);
 					while (!dataService.getConcreteInventory().findByProduct(prod).get().hasSufficientQuantity(quant)) {
 						dataService.getConcreteInventory().findByProduct(prod).ifPresent(x -> {
-							x.increaseQuantity(quant);
+							x.increaseQuantity(Quantity.of(20));
 							dataService.getConcreteInventory().save(x);
+							stockCart.addOrUpdateItem(prod, Quantity.of(20));
 						});
 					}
 					dataService.getConcreteInventory().findByProduct(prod).ifPresent(x -> {
@@ -339,8 +339,7 @@ public class Initialize implements DataInitializer {
 				long epochBegin = 1403215200;
 				// long epochBegin =
 				// LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.ofHours(1));
-				LocalDateTime orderDate = LocalDateTime.ofEpochSecond(
-						epochBegin + ((long) (rand.nextDouble() * (epochNow - epochBegin))), 0, ZoneOffset.ofHours(1));
+				Long orderDate = (long) (rand.nextDouble() * (epochNow - epochBegin) + epochBegin);
 				order.setDateOrdered(orderDate);
 
 				stock.setDateOrdered(orderDate);

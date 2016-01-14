@@ -2,7 +2,6 @@ package internetkaufhaus.services;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -28,12 +27,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ViewResolver;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
@@ -51,10 +46,6 @@ public class NewsletterService {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	/** The mailsender. */
-	@Autowired
-	private ConcreteMailService mailsender;
-
 	/** The map. */
 	private Map<String, String> map = new HashMap<String, String>();
 
@@ -69,29 +60,29 @@ public class NewsletterService {
 	public NewsletterService() {
 		System.out.print("");
 	}
-	
+
 	private SpringTemplateEngine templateEngine() {
-	    SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-	    templateEngine.addTemplateResolver(emailTemplateResolver());
-	    templateEngine.addTemplateResolver(webTemplateResolver());
-	    return templateEngine;
+		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		templateEngine.addTemplateResolver(emailTemplateResolver());
+		templateEngine.addTemplateResolver(webTemplateResolver());
+		return templateEngine;
 	}
-	 
+
 	/**
 	 * THYMELEAF: Template Resolver for email templates.
 	 */
 	private TemplateResolver emailTemplateResolver() {
-	    TemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-	    templateResolver.setTemplateMode("HTML5");
-	    templateResolver.setOrder(1);
-	    return templateResolver;
+		TemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+		templateResolver.setTemplateMode("HTML5");
+		templateResolver.setOrder(1);
+		return templateResolver;
 	}
-	
+
 	private TemplateResolver webTemplateResolver() {
-	    TemplateResolver templateResolver = new ServletContextTemplateResolver();
-	    templateResolver.setTemplateMode("HTML5");
-	    templateResolver.setOrder(2);
-	    return templateResolver;
+		TemplateResolver templateResolver = new ServletContextTemplateResolver();
+		templateResolver.setTemplateMode("HTML5");
+		templateResolver.setOrder(2);
+		return templateResolver;
 	}
 
 	/**
@@ -131,12 +122,13 @@ public class NewsletterService {
 	 *            the newsletter content as String
 	 *
 	 */
-	/*public void sendNewsletter(String subject, String content) {
-		for (String email : this.getMap().values()) {
-			mailsender.sendMail(email, content, "zu@googlemail.com", subject);
-		}
-
-	}*/
+	/*
+	 * public void sendNewsletter(String subject, String content) { for (String
+	 * email : this.getMap().values()) { mailsender.sendMail(email, content,
+	 * "zu@googlemail.com", subject); }
+	 * 
+	 * }
+	 */
 
 	/**
 	 * Gets the map.
@@ -148,18 +140,13 @@ public class NewsletterService {
 		return map;
 	}
 
-	public void sendNewsletter(Newsletter newsletter, final String recipientName, final String recipientEmail,
-			final Locale locale, HttpServletRequest request, HttpServletResponse response)
-					throws MessagingException, IOException {
+	public void sendNewsletter(Newsletter newsletter, final String recipientName, final String recipientEmail)
+			throws MessagingException, IOException {
 
 		List<List<ConcreteProduct>> prods = newsletter.getProductSelection();
 
-		final WebContext ctx = new WebContext(request, response, request.getServletContext(), locale);
-		ctx.setVariable("prods1", prods.get(0));
-		ctx.setVariable("prods2", prods.get(1));
+		String htmlContent = newsletter.getHtmlContent();
 
-		final String htmlContent = templateEngine().process(newsletter.getTemplate(), ctx);
-		
 		final MimeMessage mimeMessage = mailSender.createMimeMessage();
 		final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 		message.setSubject("Newsletter");
@@ -193,14 +180,42 @@ public class NewsletterService {
 
 	}
 
+	public String processTemplate(List<List<ConcreteProduct>> prods, String template, final Locale locale,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		final WebContext ctx = new WebContext(request, response, request.getServletContext(), locale);
+		ctx.setVariable("prods1", prods.get(0));
+		ctx.setVariable("prods2", prods.get(1));
+
+		final String htmlContent = templateEngine().process(template, ctx);
+		return htmlContent;
+	}
+
+	public String getPreviewHTML(String htmlContent, List<List<ConcreteProduct>> prods) {
+
+		htmlContent = htmlContent.replace("cid:Logo", "/resources/Bilder/Logo.png");
+		htmlContent = htmlContent.replace("cid:Newsletter", "/resources/Bilder/Newsletter.png");
+		htmlContent = htmlContent.replace("cid:SocialMedia", "/resources/Bilder/SocialMedia.png");
+
+		for (List<ConcreteProduct> prodList : prods) {
+			for (ConcreteProduct prod : prodList) {
+				htmlContent = htmlContent.replace("cid:" + prod.getImagefile(),
+						"/resources/Bilder/Produkte/" + prod.getImagefile());
+			}
+		}
+
+		return htmlContent;
+	}
+
 	private MultipartFile getMultipartFile(String sourcePath, String fileName, String imageName) throws IOException {
-		
+
 		Path path = FileSystems.getDefault().getPath(sourcePath, fileName);
-		
+
 		File file = new File(path.toUri());
 		FileInputStream input = new FileInputStream(file);
 
-		MultipartFile img = new MockMultipartFile(imageName.substring(0, imageName.length()-4), imageName, "text/plain", IOUtils.toByteArray(input));
+		MultipartFile img = new MockMultipartFile(imageName.substring(0, imageName.length() - 4), imageName,
+				"text/plain", IOUtils.toByteArray(input));
 
 		return img;
 	}

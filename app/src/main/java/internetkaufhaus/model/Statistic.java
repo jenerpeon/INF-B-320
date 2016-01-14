@@ -3,6 +3,7 @@ package internetkaufhaus.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
 import org.javamoney.moneta.Money;
@@ -31,7 +32,7 @@ public class Statistic {
 	private Map<LocalDate, Long> returns = new HashMap<LocalDate, Long>();
 	private Map<LocalDate, Money> expenses = new HashMap<LocalDate, Money>();
 	private Map<LocalDate, Money> profit = new HashMap<LocalDate, Money>();
-	
+
 	@Autowired
 	public Statistic(DataService dataService, Interval interval, String unit) {
 		this.dataService = dataService;
@@ -83,17 +84,29 @@ public class Statistic {
 		switch (unit) {
 		case "day":
 			for (LocalDate j = end; j.isAfter(start) || j.isEqual(start); j = j.minusDays(1)) {
-				
-				Iterable<ConcreteOrder> completedOrders = dataService.getConcreteOrderRepository().findByIntervalAndStatusAndNotReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
-				Iterable<ConcreteOrder> openOrders = dataService.getConcreteOrderRepository().findByIntervalAndStatusAndNotReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.OPEN);
-				
+
+				Iterable<ConcreteOrder> completedOrders = dataService.getConcreteOrderRepository()
+						.findByIntervalAndStatusAndNotReturned(
+								LocalDateTime.of(j, midnight).minusDays(1).toEpochSecond(ZoneOffset.ofHours(1)),
+								LocalDateTime.of(j, midnight.minusSeconds(1)).toEpochSecond(ZoneOffset.ofHours(1)),
+								OrderStatus.COMPLETED);
+				Iterable<ConcreteOrder> openOrders = dataService.getConcreteOrderRepository()
+						.findByIntervalAndStatusAndNotReturned(
+								LocalDateTime.of(j, midnight).minusDays(1).toEpochSecond(ZoneOffset.ofHours(1)),
+								LocalDateTime.of(j, midnight.minusSeconds(1)).toEpochSecond(ZoneOffset.ofHours(1)),
+								OrderStatus.OPEN);
+
 				Money intervalMoney = Money.of(0, "EUR");
-				Long intervalOrders = dataService.getConcreteOrderRepository().numberOfFindByIntervalAndStatusAndNotReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
-				Long intervalReturns = dataService.getConcreteOrderRepository().numberOfFindByIntervalAndStatusAndReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
+				Long intervalOrders = dataService.getConcreteOrderRepository()
+						.numberOfFindByIntervalAndStatusAndNotReturned(
+								LocalDateTime.of(j, midnight).minusDays(1).toEpochSecond(ZoneOffset.ofHours(1)),
+								LocalDateTime.of(j, midnight.minusSeconds(1)).toEpochSecond(ZoneOffset.ofHours(1)),
+								OrderStatus.COMPLETED);
+				Long intervalReturns = dataService.getConcreteOrderRepository()
+						.numberOfFindByIntervalAndStatusAndReturned(
+								LocalDateTime.of(j, midnight).minusDays(1).toEpochSecond(ZoneOffset.ofHours(1)),
+								LocalDateTime.of(j, midnight.minusSeconds(1)).toEpochSecond(ZoneOffset.ofHours(1)),
+								OrderStatus.COMPLETED);
 				Money intervalStockMoney = Money.of(0, "EUR");
 				for (ConcreteOrder order : completedOrders) {
 					intervalMoney = intervalMoney.add(order.getTotalPrice());
@@ -101,7 +114,7 @@ public class Statistic {
 				for (ConcreteOrder order : openOrders) {
 					intervalStockMoney = intervalStockMoney.add(order.getTotalPrice());
 				}
-				
+
 				orders.put(j, intervalOrders);
 				returns.put(j, intervalReturns);
 				turnover.put(j, intervalMoney);
@@ -111,17 +124,29 @@ public class Statistic {
 			break;
 		case "week":
 			for (LocalDate j = end; j.isAfter(start) || j.isEqual(start); j = j.minusWeeks(1)) {
-				
-				Iterable<ConcreteOrder> completedOrders = dataService.getConcreteOrderRepository().findByIntervalAndStatusAndNotReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
-				Iterable<ConcreteOrder> openOrders = dataService.getConcreteOrderRepository().findByIntervalAndStatusAndNotReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.OPEN);
-				
+
+				Iterable<ConcreteOrder> completedOrders = dataService.getConcreteOrderRepository()
+						.findByIntervalAndStatusAndNotReturned(
+								LocalDateTime.of(j, midnight).minusWeeks(1).toEpochSecond(ZoneOffset.ofHours(1)),
+								LocalDateTime.of(j, midnight.minusSeconds(1)).toEpochSecond(ZoneOffset.ofHours(1)),
+								OrderStatus.COMPLETED);
+				Iterable<ConcreteOrder> openOrders = dataService.getConcreteOrderRepository()
+						.findByIntervalAndStatusAndNotReturned(
+								LocalDateTime.of(j, midnight).minusWeeks(1).toEpochSecond(ZoneOffset.ofHours(1)),
+								LocalDateTime.of(j, midnight.minusSeconds(1)).toEpochSecond(ZoneOffset.ofHours(1)),
+								OrderStatus.OPEN);
+
 				Money intervalMoney = Money.of(0, "EUR");
-				Long intervalOrders = dataService.getConcreteOrderRepository().numberOfFindByIntervalAndStatusAndNotReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
-				Long intervalReturns = dataService.getConcreteOrderRepository().numberOfFindByIntervalAndStatusAndReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
+				Long intervalOrders = dataService.getConcreteOrderRepository()
+						.numberOfFindByIntervalAndStatusAndNotReturned(
+								LocalDateTime.of(j, midnight).minusWeeks(1).toEpochSecond(ZoneOffset.ofHours(1)),
+								LocalDateTime.of(j, midnight.minusSeconds(1)).toEpochSecond(ZoneOffset.ofHours(1)),
+								OrderStatus.COMPLETED);
+				Long intervalReturns = dataService.getConcreteOrderRepository()
+						.numberOfFindByIntervalAndStatusAndReturned(
+								LocalDateTime.of(j, midnight).minusWeeks(1).toEpochSecond(ZoneOffset.ofHours(1)),
+								LocalDateTime.of(j, midnight.minusSeconds(1)).toEpochSecond(ZoneOffset.ofHours(1)),
+								OrderStatus.COMPLETED);
 				Money intervalStockMoney = Money.of(0, "EUR");
 				for (ConcreteOrder order : completedOrders) {
 					intervalMoney = intervalMoney.add(order.getTotalPrice());
@@ -129,7 +154,7 @@ public class Statistic {
 				for (ConcreteOrder order : openOrders) {
 					intervalStockMoney = intervalStockMoney.add(order.getTotalPrice());
 				}
-				
+
 				orders.put(j, intervalOrders);
 				returns.put(j, intervalReturns);
 				turnover.put(j, intervalMoney);
@@ -139,17 +164,29 @@ public class Statistic {
 			break;
 		case "month":
 			for (LocalDate j = end; j.isAfter(start) || j.isEqual(start); j = j.minusMonths(1)) {
-				
-				Iterable<ConcreteOrder> completedOrders = dataService.getConcreteOrderRepository().findByIntervalAndStatusAndNotReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
-				Iterable<ConcreteOrder> openOrders = dataService.getConcreteOrderRepository().findByIntervalAndStatusAndNotReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.OPEN);
-				
+
+				Iterable<ConcreteOrder> completedOrders = dataService.getConcreteOrderRepository()
+						.findByIntervalAndStatusAndNotReturned(
+								LocalDateTime.of(j, midnight).minusMonths(1).toEpochSecond(ZoneOffset.ofHours(1)),
+								LocalDateTime.of(j, midnight.minusSeconds(1)).toEpochSecond(ZoneOffset.ofHours(1)),
+								OrderStatus.COMPLETED);
+				Iterable<ConcreteOrder> openOrders = dataService.getConcreteOrderRepository()
+						.findByIntervalAndStatusAndNotReturned(
+								LocalDateTime.of(j, midnight).minusMonths(1).toEpochSecond(ZoneOffset.ofHours(1)),
+								LocalDateTime.of(j, midnight.minusSeconds(1)).toEpochSecond(ZoneOffset.ofHours(1)),
+								OrderStatus.OPEN);
+
 				Money intervalMoney = Money.of(0, "EUR");
-				Long intervalOrders = dataService.getConcreteOrderRepository().numberOfFindByIntervalAndStatusAndNotReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
-				Long intervalReturns = dataService.getConcreteOrderRepository().numberOfFindByIntervalAndStatusAndReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
+				Long intervalOrders = dataService.getConcreteOrderRepository()
+						.numberOfFindByIntervalAndStatusAndNotReturned(
+								LocalDateTime.of(j, midnight).minusMonths(1).toEpochSecond(ZoneOffset.ofHours(1)),
+								LocalDateTime.of(j, midnight.minusSeconds(1)).toEpochSecond(ZoneOffset.ofHours(1)),
+								OrderStatus.COMPLETED);
+				Long intervalReturns = dataService.getConcreteOrderRepository()
+						.numberOfFindByIntervalAndStatusAndReturned(
+								LocalDateTime.of(j, midnight).minusMonths(1).toEpochSecond(ZoneOffset.ofHours(1)),
+								LocalDateTime.of(j, midnight.minusSeconds(1)).toEpochSecond(ZoneOffset.ofHours(1)),
+								OrderStatus.COMPLETED);
 				Money intervalStockMoney = Money.of(0, "EUR");
 				for (ConcreteOrder order : completedOrders) {
 					intervalMoney = intervalMoney.add(order.getTotalPrice());
@@ -157,7 +194,7 @@ public class Statistic {
 				for (ConcreteOrder order : openOrders) {
 					intervalStockMoney = intervalStockMoney.add(order.getTotalPrice());
 				}
-				
+
 				orders.put(j, intervalOrders);
 				returns.put(j, intervalReturns);
 				turnover.put(j, intervalMoney);
@@ -167,17 +204,29 @@ public class Statistic {
 			break;
 		case "year":
 			for (LocalDate j = end; j.isAfter(start) || j.isEqual(start); j = j.minusYears(1)) {
-				
-				Iterable<ConcreteOrder> completedOrders = dataService.getConcreteOrderRepository().findByIntervalAndStatusAndNotReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
-				Iterable<ConcreteOrder> openOrders = dataService.getConcreteOrderRepository().findByIntervalAndStatusAndNotReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.OPEN);
-				
+
+				Iterable<ConcreteOrder> completedOrders = dataService.getConcreteOrderRepository()
+						.findByIntervalAndStatusAndNotReturned(
+								LocalDateTime.of(j, midnight).minusYears(1).toEpochSecond(ZoneOffset.ofHours(1)),
+								LocalDateTime.of(j, midnight.minusSeconds(1)).toEpochSecond(ZoneOffset.ofHours(1)),
+								OrderStatus.COMPLETED);
+				Iterable<ConcreteOrder> openOrders = dataService.getConcreteOrderRepository()
+						.findByIntervalAndStatusAndNotReturned(
+								LocalDateTime.of(j, midnight).minusYears(1).toEpochSecond(ZoneOffset.ofHours(1)),
+								LocalDateTime.of(j, midnight.minusSeconds(1)).toEpochSecond(ZoneOffset.ofHours(1)),
+								OrderStatus.OPEN);
+
 				Money intervalMoney = Money.of(0, "EUR");
-				Long intervalOrders = dataService.getConcreteOrderRepository().numberOfFindByIntervalAndStatusAndNotReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
-				Long intervalReturns = dataService.getConcreteOrderRepository().numberOfFindByIntervalAndStatusAndReturned(
-						LocalDateTime.of(j, midnight), LocalDateTime.of(j, midnight.minusSeconds(1)), OrderStatus.COMPLETED);
+				Long intervalOrders = dataService.getConcreteOrderRepository()
+						.numberOfFindByIntervalAndStatusAndNotReturned(
+								LocalDateTime.of(j, midnight).minusYears(1).toEpochSecond(ZoneOffset.ofHours(1)),
+								LocalDateTime.of(j, midnight.minusSeconds(1)).toEpochSecond(ZoneOffset.ofHours(1)),
+								OrderStatus.COMPLETED);
+				Long intervalReturns = dataService.getConcreteOrderRepository()
+						.numberOfFindByIntervalAndStatusAndReturned(
+								LocalDateTime.of(j, midnight).minusYears(1).toEpochSecond(ZoneOffset.ofHours(1)),
+								LocalDateTime.of(j, midnight.minusSeconds(1)).toEpochSecond(ZoneOffset.ofHours(1)),
+								OrderStatus.COMPLETED);
 				Money intervalStockMoney = Money.of(0, "EUR");
 				for (ConcreteOrder order : completedOrders) {
 					intervalMoney = intervalMoney.add(order.getTotalPrice());
@@ -185,7 +234,7 @@ public class Statistic {
 				for (ConcreteOrder order : openOrders) {
 					intervalStockMoney = intervalStockMoney.add(order.getTotalPrice());
 				}
-				
+
 				orders.put(j, intervalOrders);
 				returns.put(j, intervalReturns);
 				turnover.put(j, intervalMoney);

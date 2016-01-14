@@ -3,6 +3,7 @@ package internetkaufhaus.model;
 import static org.junit.Assert.*;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Random;
 
 import javax.transaction.Transactional;
@@ -37,7 +38,6 @@ import internetkaufhaus.services.DataService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 
-@Transactional
 public class CompetitionTest extends AbstractIntegrationTests {
 
 	/** The manager. */
@@ -78,7 +78,7 @@ public class CompetitionTest extends AbstractIntegrationTests {
 						"Test", "Test", "Test");
 				ConcreteOrder order = new ConcreteOrder(acc, Cash.CASH);
 				order.add(new OrderLine(prod, Quantity.of(random.nextInt(20) + 2)));
-				order.setDateOrdered(LocalDateTime.now().minusDays(31));
+				order.setDateOrdered(LocalDateTime.now().minusDays(31).toEpochSecond(ZoneOffset.ofHours(1)));
 				order.setStatus(OrderStatus.COMPLETED);
 				data.getConcreteOrderRepository().save(order);
 			}

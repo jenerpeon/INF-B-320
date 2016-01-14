@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,9 +14,6 @@ import javax.persistence.Table;
 
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Product;
-import org.salespointframework.inventory.Inventory;
-import org.salespointframework.inventory.InventoryItem;
-import org.salespointframework.quantity.Quantity;
 
 // TODO: Auto-generated Javadoc
 /**
