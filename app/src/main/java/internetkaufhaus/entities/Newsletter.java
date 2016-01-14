@@ -2,13 +2,17 @@ package internetkaufhaus.entities;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 
 @Entity
 @Table(name = "NEWSLETTER")
@@ -20,8 +24,8 @@ public class Newsletter {
 	
 	private LocalDate dateCreated;
 	
-	@Transient
-	private List<List<ConcreteProduct>> productSelection;
+	@ElementCollection
+	private List<ConcreteProduct> productSelection;
 	
 	@Column(name = "HTMLCONTENT", length = 1000000)
 	private String htmlContent;
@@ -35,7 +39,7 @@ public class Newsletter {
 		
 	}
 	
-	public Newsletter(String template, String htmlContent, String htmlPreviewContent, List<List<ConcreteProduct>> productSelection, LocalDate dateCreated) {
+	public Newsletter(String template, String htmlContent, String htmlPreviewContent, List<ConcreteProduct> productSelection, LocalDate dateCreated) {
 		this.template = template;
 		this.htmlContent = htmlContent;
 		this.htmlPreviewContent = htmlPreviewContent;
@@ -75,11 +79,11 @@ public class Newsletter {
 		return this.template;
 	}
 	
-	public void setProductSelection(List<List<ConcreteProduct>> productSelection) {
+	public void setProductSelection(List<ConcreteProduct> productSelection) {
 		this.productSelection = productSelection;
 	}
 	
-	public List<List<ConcreteProduct>> getProductSelection() {
+	public List<ConcreteProduct> getProductSelection() {
 		return this.productSelection;
 	}
 	

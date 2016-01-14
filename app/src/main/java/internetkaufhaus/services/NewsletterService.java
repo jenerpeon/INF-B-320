@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,8 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
+
+import com.google.common.collect.Lists;
 
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.entities.Newsletter;
@@ -143,7 +146,7 @@ public class NewsletterService {
 	public void sendNewsletter(Newsletter newsletter, final String recipientName, final String recipientEmail)
 			throws MessagingException, IOException {
 
-		List<List<ConcreteProduct>> prods = newsletter.getProductSelection();
+		List<ConcreteProduct> prods = newsletter.getProductSelection();
 
 		String htmlContent = newsletter.getHtmlContent();
 
@@ -167,41 +170,42 @@ public class NewsletterService {
 				"SocialMedia.png");
 		final InputStreamSource footerImageSource = new ByteArrayResource(footer.getBytes());
 		message.addInline(footer.getName(), footerImageSource, footer.getContentType());
-
-		for (ConcreteProduct prod : Stream.concat(prods.get(0).stream(), prods.get(1).stream())
-				.collect(Collectors.toList())) {
-			MultipartFile prodImage = getMultipartFile("src/main/resources/static/resources/Bilder/Proukte",
+		
+		for (ConcreteProduct prod : prods) {
+			MultipartFile prodImage = getMultipartFile("src/main/resources/static/resources/Bilder/Produkte",
 					prod.getImagefile(), prod.getImagefile());
 			final InputStreamSource prodImageSource = new ByteArrayResource(prodImage.getBytes());
-			message.addInline(prodImage.getName(), prodImageSource, prodImage.getContentType());
+			message.addInline(prodImage.getName()+".jpg", prodImageSource, prodImage.getContentType());
 		}
 
 		this.mailSender.send(mimeMessage);
 
 	}
 
-	public String processTemplate(List<List<ConcreteProduct>> prods, String template, final Locale locale,
+	public String processTemplate(List<ConcreteProduct> prods, String template, final Locale locale,
 			HttpServletRequest request, HttpServletResponse response) {
-
+		
 		final WebContext ctx = new WebContext(request, response, request.getServletContext(), locale);
-		ctx.setVariable("prods1", prods.get(0));
-		ctx.setVariable("prods2", prods.get(1));
+		List<List<ConcreteProduct>> prodLists = Lists.partition(prods, 3);
+		int i = 1;
+		for (List<ConcreteProduct> prodList : prodLists) {
+			ctx.setVariable("prods"+i, prodList);
+			i++;
+		}
 
 		final String htmlContent = templateEngine().process(template, ctx);
 		return htmlContent;
 	}
 
-	public String getPreviewHTML(String htmlContent, List<List<ConcreteProduct>> prods) {
+	public String getPreviewHTML(String htmlContent, List<ConcreteProduct> prods) {
 
 		htmlContent = htmlContent.replace("cid:Logo", "/resources/Bilder/Logo.png");
 		htmlContent = htmlContent.replace("cid:Newsletter", "/resources/Bilder/Newsletter.png");
 		htmlContent = htmlContent.replace("cid:SocialMedia", "/resources/Bilder/SocialMedia.png");
-
-		for (List<ConcreteProduct> prodList : prods) {
-			for (ConcreteProduct prod : prodList) {
-				htmlContent = htmlContent.replace("cid:" + prod.getImagefile(),
-						"/resources/Bilder/Produkte/" + prod.getImagefile());
-			}
+		
+		for (ConcreteProduct prod : prods) {
+			htmlContent = htmlContent.replace("cid:" + prod.getImagefile(),
+					"/resources/Bilder/Produkte/" + prod.getImagefile());
 		}
 
 		return htmlContent;

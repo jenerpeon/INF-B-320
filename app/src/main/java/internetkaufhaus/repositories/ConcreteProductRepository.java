@@ -1,6 +1,7 @@
 package internetkaufhaus.repositories;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.salespointframework.catalog.ProductIdentifier;
 import org.springframework.data.domain.Page;
@@ -86,6 +87,6 @@ public interface ConcreteProductRepository extends PagingAndSortingRepository<Co
 	Iterable<String> getCategories();
 	
 	@Query("SELECT c FROM ConcreteProduct c WHERE c.id IN (:ids)")
-	Page<ConcreteProduct> findByIds(@Param("ids") Collection<ProductIdentifier> ids, Pageable pageable);
+	List<ConcreteProduct> findByIds(@Param("ids") Collection<ProductIdentifier> ids);
 
 }

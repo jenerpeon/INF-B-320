@@ -680,16 +680,14 @@ public class ManagementController {
 	public String newNewsletterPrevie(@RequestParam("prods") ProductIdentifier[] prodsArray, final Locale locale,
 			HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		List<ProductIdentifier> prodIds = Arrays.asList(prodsArray);
-		Page<ConcreteProduct> page1 = dataService.getConcreteProductRepository().findByIds(prodIds, new PageRequest(0,
-				3, new Sort(new Sort.Order(Sort.Direction.ASC, "webLink", Sort.NullHandling.NATIVE))));
-		List<ConcreteProduct> prods1 = page1.getContent();
-		Page<ConcreteProduct> page2 = dataService.getConcreteProductRepository().findByIds(prodIds, new PageRequest(1,
-				3, new Sort(new Sort.Order(Sort.Direction.ASC, "webLink", Sort.NullHandling.NATIVE))));
-		List<ConcreteProduct> prods2 = page2.getContent();
+		List<ConcreteProduct> prods = dataService.getConcreteProductRepository().findByIds(prodIds);
 		
-		List<List<ConcreteProduct>> prods = new ArrayList<List<ConcreteProduct>>();
-		prods.add(prods1);
-		prods.add(prods2);
+		if (prodIds.size() % 3 != 0 || prodIds.size() == 0) {
+			Sort sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "name", Sort.NullHandling.NATIVE));
+			model.addAttribute("prods", dataService.getConcreteProductRepository().findAll(sorting));
+			model.addAttribute("error", "Geben Sie mehr als 0 eine durch 3 teilbare Anzahl an Produkten an.");
+			return "newnewsletter";
+		}
 		
 		String htmlContent = newsManager.processTemplate(prods, "mail/newsletter-template.html", locale, request, response);
 
@@ -697,17 +695,9 @@ public class ManagementController {
 		htmlContent = htmlContent.replace("cid:Newsletter", "/resources/Bilder/Newsletter.png");
 		htmlContent = htmlContent.replace("cid:SocialMedia", "/resources/Bilder/SocialMedia.png");
 		
-		List<ConcreteProduct> allProducts = new ArrayList<ConcreteProduct>();
+		htmlContent = newsManager.getPreviewHTML(htmlContent, prods);
 		
-		for (List<ConcreteProduct> prodList : prods) {
-			for (ConcreteProduct prod : prodList) {
-				htmlContent = htmlContent.replace("cid:" + prod.getImagefile(),
-						"/resources/Bilder/Produkte/" + prod.getImagefile());
-				allProducts.add(prod);
-			}
-		}
-		
-		model.addAttribute("prods", allProducts);
+		model.addAttribute("prods", prods);
 		model.addAttribute("htmlContent", htmlContent);
 
 		return "newnewsletter";
@@ -716,24 +706,27 @@ public class ManagementController {
 
 	@RequestMapping(value = "/employee/newsletter/newNewsletter/created", method = RequestMethod.POST)
 	public String newNewsletterCreated(@RequestParam("prods") ProductIdentifier[] prodsArray, final Locale locale,
-			HttpServletRequest request, HttpServletResponse response) throws IOException, MessagingException {
+			HttpServletRequest request, HttpServletResponse response, ModelMap model) throws IOException, MessagingException {
 
 		List<ProductIdentifier> prodIds = Arrays.asList(prodsArray);
-		Page<ConcreteProduct> page1 = dataService.getConcreteProductRepository().findByIds(prodIds, new PageRequest(0,
-				3, new Sort(new Sort.Order(Sort.Direction.ASC, "webLink", Sort.NullHandling.NATIVE))));
-		List<ConcreteProduct> prods1 = page1.getContent();
-		Page<ConcreteProduct> page2 = dataService.getConcreteProductRepository().findByIds(prodIds, new PageRequest(1,
-				3, new Sort(new Sort.Order(Sort.Direction.ASC, "webLink", Sort.NullHandling.NATIVE))));
-		List<ConcreteProduct> prods2 = page2.getContent();
-		List<List<ConcreteProduct>> prods = new ArrayList<List<ConcreteProduct>>();
-		prods.add(prods1);
-		prods.add(prods2);
+		
+		if (prodIds.size() % 3 != 0 || prodIds.size() == 0) {
+			Sort sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "name", Sort.NullHandling.NATIVE));
+			model.addAttribute("prods", dataService.getConcreteProductRepository().findAll(sorting));
+			model.addAttribute("error", "Geben Sie mehr als 0 eine durch 3 teilbare Anzahl an Produkten an.");
+			return "newnewsletter";
+		}
+		
+		List<ConcreteProduct> prods = dataService.getConcreteProductRepository().findByIds(prodIds);
 		
 		String htmlContent = newsManager.processTemplate(prods, "mail/newsletter-template.html", locale, request, response);
 		String htmlPreviewContent = newsManager.getPreviewHTML(htmlContent, prods);
 
 		Newsletter newsletter = new Newsletter("mail/newsletter-template.html", htmlContent, htmlPreviewContent, prods, LocalDate.now());
+		NewsletterIdentifier newsletterId = newsletter.getId();
 		dataService.getNewsletterRepository().save(newsletter);
+		
+		System.out.println(dataService.getNewsletterRepository().findOne(newsletterId).getProductSelection());
 
 		// newsManager.sendNewsletter(newsletter, "Martin Bens",
 		// "martin.bens@live.de", locale, request, response);
