@@ -64,7 +64,7 @@ public class CreditmanagerTest extends AbstractIntegrationTests {
 				"Test", "Test");
 		ConcreteOrder order = new ConcreteOrder(acc, Cash.CASH);
 		order.add(new OrderLine(prod, Quantity.of(5)));
-		order.setDateOrdered(LocalDateTime.now().minusDays(29).toEpochSecond(ZoneOffset.ofHours(1)));
+		order.setDateOrdered(LocalDateTime.now().minusDays(31).toEpochSecond(ZoneOffset.ofHours(1)));
 		order.setStatus(OrderStatus.COMPLETED);
 		data.getConcreteOrderRepository().save(order);
 	}
