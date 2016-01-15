@@ -66,8 +66,9 @@ public class HumanResourceService {
 	 * @return
 	 */
 	public boolean fireEmployee(Long id, Optional<UserAccount> admin) {
-		if (!(admin.isPresent()))
+		if (!(admin.isPresent())) {
 			return false;
+		}
 		if (dataService.getConcreteUserAccountRepository().findOne(id).getUserAccount().getIdentifier()
 				.equals(admin.get().getIdentifier())) {
 			return false;

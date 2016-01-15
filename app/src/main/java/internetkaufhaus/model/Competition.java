@@ -37,10 +37,8 @@ public class Competition {
 	/**
 	 * Instantiates a new competition.
 	 *
-	 * @param accs
-	 *            the accs
-	 * @param creditmanager
-	 *            the creditmanager
+	 * @param data
+	 *            the DataService
 	 */
 	@Autowired
 	public Competition(DataService data) {
