@@ -12,34 +12,38 @@ import internetkaufhaus.forms.CreateUserForm;
 import internetkaufhaus.forms.EditUserForm;
 import internetkaufhaus.forms.StandardAccountForm;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
+ * The Class HumanResourceService.
+ *
  * @author Wilhelm Mundt
- *
+ * 
  *         A service class for Human Resource
- *
  */
 @Service
 public class HumanResourceService {
 
+	/** The data service. */
 	@Autowired
 	private DataService dataService;
+
+	/** The acc service. */
 	@Autowired
 	private AccountingService accService;
 
 	/**
-	 * 
+	 * Instantiates a new human resource service.
 	 */
 	public HumanResourceService() {
 		// Empty constructor
 	}
 
 	/**
-	 * Hires an employee
-	 * 
+	 * Hires an employee.
+	 *
 	 * @param form
 	 *            The CreateUserForm
-	 * @return
+	 * @return true, if successful
 	 */
 	public boolean hireEmployee(CreateUserForm form) {
 		ConcreteUserAccount acc = null;
@@ -57,13 +61,13 @@ public class HumanResourceService {
 	}
 
 	/**
-	 * Fires an employee
-	 * 
+	 * Fires an employee.
+	 *
 	 * @param id
 	 *            The employee's id
 	 * @param admin
 	 *            The admin responsible for the action
-	 * @return
+	 * @return true, if successful
 	 */
 	public boolean fireEmployee(Long id, Optional<UserAccount> admin) {
 		if (!(admin.isPresent())) {
@@ -86,13 +90,13 @@ public class HumanResourceService {
 	}
 
 	/**
-	 * Changes an employee
-	 * 
+	 * Changes an employee.
+	 *
 	 * @param form
 	 *            The EditUserForm
 	 * @param admin
 	 *            The admin responsible for the action
-	 * @return
+	 * @return true, if successful
 	 */
 	public boolean changeEmployee(EditUserForm form, Optional<UserAccount> admin) {
 		ConcreteUserAccount acc = dataService.getConcreteUserAccountRepository().findOne(form.getId());
@@ -121,6 +125,15 @@ public class HumanResourceService {
 		return true;
 	}
 
+	/**
+	 * Change customer.
+	 *
+	 * @param form
+	 *            the form
+	 * @param customer
+	 *            the customer
+	 * @return true, if successful
+	 */
 	public boolean changeCustomer(StandardAccountForm form, Optional<UserAccount> customer) {
 		if (!(form.getPassword().equals(form.getPasswordrepeat()))) {
 			return false;
