@@ -5,14 +5,14 @@
 **Gruppe:22**
 
 == Was habe ich gelernt?
-*Verwendung von Themeleaf
-*Spring mit Model view controller
-*Arbeiten mit Datenbank (Jquery)
+* Verwendung von Themeleaf
+* Spring mit Model view controller
+* Arbeiten mit Datenbank (Jquery)
 
 = Welche Erfahrungen habe ich mit der Zusammenarbeit im Team gemacht?
 * Regelmäßiges Absprechen erforderlich.
 * Termineinhaltung ( Dein Kode ist Voraussetzung für Weiterarbeit eines anderen Teammitglieds)
-*Kompromissfähigkeit
+* Kompromissfähigkeit
 
 == Welche Erfahrungen habe ich bei der Wiederverwendung von Bibliotheken/FrameworksV (insbesondere SalesPoint) gemacht?
 * Bibs/Frameworks sind einfach einzubinden, erleichert bzw. reduzieren Code und sind zuverlässig.
