@@ -48,6 +48,7 @@ import internetkaufhaus.services.NewsletterService;
 @SessionAttributes("cart")
 public class CatalogController {
 
+	/** The data service. */
 	@Autowired
 	private DataService dataService;
 
@@ -121,8 +122,6 @@ public class CatalogController {
 	 *
 	 * @param category
 	 *            the category which the user wants to see.
-	 * @param model
-	 *            the model
 	 * @return the string
 	 */
 	@RequestMapping("/catalog/{type}")
@@ -181,12 +180,14 @@ public class CatalogController {
 			sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "name", Sort.NullHandling.NATIVE));
 			break;
 		case "price,asc":
-			sorting = new Sort(Arrays.asList(new Sort.Order(Sort.Direction.ASC, "priceDecimal", Sort.NullHandling.NATIVE),
-					new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE)));
+			sorting = new Sort(
+					Arrays.asList(new Sort.Order(Sort.Direction.ASC, "priceDecimal", Sort.NullHandling.NATIVE),
+							new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE)));
 			break;
 		case "price,desc":
-			sorting = new Sort(Arrays.asList(new Sort.Order(Sort.Direction.DESC, "priceDecimal", Sort.NullHandling.NATIVE),
-					new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE)));
+			sorting = new Sort(
+					Arrays.asList(new Sort.Order(Sort.Direction.DESC, "priceDecimal", Sort.NullHandling.NATIVE),
+							new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE)));
 			break;
 		default:
 			sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE));
@@ -207,8 +208,8 @@ public class CatalogController {
 		}
 		model.addAttribute("category", category);
 		model.addAttribute("number", number);
-		
-		int maxQuantity = dataService.getConcreteProductRepository().numberOfFindByCategory(category); 
+
+		int maxQuantity = dataService.getConcreteProductRepository().numberOfFindByCategory(category);
 		Set<Integer> quantities = Sets.newSet(split, 2, 3, 4, 5, 10, 15, 25, 50, 100, 150, 250, 500, maxQuantity);
 		quantities.removeIf(i -> i > maxQuantity);
 		model.addAttribute("maximum", maxQuantity);
@@ -274,6 +275,8 @@ public class CatalogController {
 	 *
 	 * @param prod
 	 *            the article ID of the article to comment on
+	 * @param title
+	 *            the title
 	 * @param comment
 	 *            the actual comment text
 	 * @param rating
@@ -293,7 +296,7 @@ public class CatalogController {
 			c.setFormatedDate(c.getDate());
 			prod.addComment(c, dataService.getConcreteUserAccountRepository().findByUserAccount(user.get()).get());
 			dataService.getConcreteProductRepository().save(prod);
-			//catalog.save(prod);
+			// catalog.save(prod);
 			model.addAttribute("time", c.getFormatedDate());
 		}
 		return "redirect:detail/" + prod.getIdentifier();
@@ -306,8 +309,6 @@ public class CatalogController {
 	 *
 	 * @param sendTo
 	 *            the E-Mail-Address to send the newsletter to.
-	 * @param model
-	 *            the model
 	 * @return the string
 	 * @throws ParseException
 	 *             the parse exception
@@ -315,14 +316,21 @@ public class CatalogController {
 	@RequestMapping(value = "/newsletter/register", method = RequestMethod.GET)
 	public String newsletter(@RequestParam("email") String sendTo) throws ParseException {
 		String text = "Sie haben sich für den Woods Super Dooper Shop Newsletter angemeldet.";
-		
+
 		BidiMap newsMap = newsManager.getMap();
 		newsMap.put(sendTo, UUID.randomUUID());
 		newsManager.setMap(newsMap);
 		sender.sendMail(sendTo, text, "zu@googlemail.com", "NewsletterAbonnement");
 		return "redirect:/";
 	}
-	
+
+	/**
+	 * Newsletter unsubscribe.
+	 *
+	 * @param unsubscribeId
+	 *            the unsubscribe id
+	 * @return the string
+	 */
 	@RequestMapping(value = "/newsletter/unsubscribe/{identifier}", method = RequestMethod.GET)
 	public String newsletterUnsubscribe(@PathVariable("identifier") UUID unsubscribeId) {
 		BidiMap newsMap = newsManager.getMap();
@@ -335,6 +343,6 @@ public class CatalogController {
 		} else {
 			return "redirect:/";
 		}
-		
+
 	}
 }

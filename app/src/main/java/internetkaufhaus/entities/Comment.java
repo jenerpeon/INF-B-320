@@ -32,12 +32,12 @@ public class Comment implements Serializable {
 	private Long commentid;
 
 	/** The title. */
-	@Column(name = "TITLE",length = 100000)
+	@Column(name = "TITLE", length = 100000)
 	private String title;
-	
+
 	/** The text. */
 	// @NotEmpty(message="{Comment.text.NotEmpty}")
-	@Column(name = "TEXT",length = 100000)
+	@Column(name = "TEXT", length = 100000)
 	private String text;
 
 	/** The rating. */
@@ -75,6 +75,8 @@ public class Comment implements Serializable {
 	/**
 	 * Instantiates a new comment.
 	 *
+	 * @param title
+	 *            the title
 	 * @param text
 	 *            the text
 	 * @param rating
@@ -149,7 +151,13 @@ public class Comment implements Serializable {
 	public void setProduct(ConcreteProduct product) {
 		this.product = product;
 	}
-	
+
+	/**
+	 * Sets the title.
+	 *
+	 * @param title
+	 *            the new title
+	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -250,7 +258,12 @@ public class Comment implements Serializable {
 	public long getId() {
 		return commentid;
 	}
-	
+
+	/**
+	 * Gets the title.
+	 *
+	 * @return the title
+	 */
 	public String getTitle() {
 		return title;
 	}
