@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title>Main Page</title>
+  <script src="/resources/script/jquery.min.js" type="text/javascript"></script>
+  <script src="/resources/script/bootstrap.min.js" type="text/javascript"></script>
+  <link href="/resources/css/main.css" rel="stylesheet" type=text/css>
+  <link href="/resources/css/index.css" rel="stylesheet" type=text/css>
+
+</head>
+
+<body>
+	<div id="wrapper">
+		<div id="header" th:include="navigation :: navigation"></div>
+		<br/>
+		<main>
+			<div id="mainframe">
+				<h1>Impressum</h1>
+				<p>Und hier k&ouml;nnten die AGB stehen.<br />Wenn wir welche h&auml;tten!</p>
+			</div>
+		</main>
+		<div id="footer" th:include="footer :: footer"></div>
+	</div>
+</body>
+</html>
+
