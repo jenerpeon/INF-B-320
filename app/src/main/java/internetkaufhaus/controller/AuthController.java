@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import internetkaufhaus.forms.StandardUserForm;
 import internetkaufhaus.services.AccountingService;
+import internetkaufhaus.services.DataService;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -44,6 +46,9 @@ public class AuthController extends SalespointSecurityConfiguration {
 	/** The accounting service. */
 	@Autowired
 	private AccountingService accountingService;
+	
+	@Autowired
+	private DataService data;
 	
 	/** The model and view. */
 	private ModelAndView modelAndView = new ModelAndView();
@@ -139,6 +144,14 @@ public class AuthController extends SalespointSecurityConfiguration {
 	@RequestMapping("/registerNew")
 	public String registerNew(@ModelAttribute("registrationForm") @Valid StandardUserForm registrationForm,
 			BindingResult result, RedirectAttributes redir) {
+		if (data.getUserAccountManager().findByUsername(registrationForm.getName()).isPresent()) {
+			ObjectError usernameError = new ObjectError("name", "Der Benutzername existiert bereits.");
+			result.addError(usernameError);
+		}
+		if (data.getConcreteUserAccountRepository().findByEmail(registrationForm.getEmail()).isPresent()) {
+			ObjectError emailError = new ObjectError("email", "Die E-Mail Adresse wird bereits verwendet.");
+			result.addError(emailError);
+		}
 		if (result.hasErrors()) {
 			modelAndView.setViewName("redirect:/#registration-modal");
 			redir.addFlashAttribute("message", result.getAllErrors());

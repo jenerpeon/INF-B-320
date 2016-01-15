@@ -106,7 +106,7 @@ public class HeaderAdvice {
 	@ExceptionHandler(value = Exception.class)
 	public String handleExceptions(Exception exception) {
 		if (exception instanceof AccessDeniedException) {
-			return "redirect:/#login";
+			return "redirect:/#login-modal";
 		}
 		System.out.println(exception.toString());
 		System.out.println(exception.getMessage());

@@ -41,8 +41,15 @@
 				<button id="newNewsletter"
 					onclick="window.location.href='/employee/newsletter/newNewsletter'">Neuen
 					Newsletter erstellen</button>
-
-
+				
+				<div id="mailingList">
+					<p>Mailingliste für den Newsletter:</p>
+					<ul >
+						<li th:each="entry : ${mailingList}" >
+							<a th:text="${entry.key}"></a>
+						</li>
+					</ul>
+				</div>
 				<!--  
 				<table>
 					<tbody>

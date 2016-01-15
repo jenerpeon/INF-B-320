@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.apache.commons.collections.BidiMap;
 import org.mockito.internal.util.collections.Sets;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount;
@@ -310,35 +312,29 @@ public class CatalogController {
 	 * @throws ParseException
 	 *             the parse exception
 	 */
-	@RequestMapping(value = "/newsletter", method = RequestMethod.GET)
+	@RequestMapping(value = "/newsletter/register", method = RequestMethod.GET)
 	public String newsletter(@RequestParam("email") String sendTo) throws ParseException {
 		String text = "Sie haben sich für den Woods Super Dooper Shop Newsletter angemeldet.";
-		String username;
-
-		if (dataService.getConcreteUserAccountRepository().findByEmail(sendTo) == null) {
-			username = "Nicht registierter Abonnent";
-		} else {
-			username = dataService.getConcreteUserAccountRepository().findByEmail(sendTo).get().getUserAccount().getUsername();
-		}
-		newsManager.getMap().put(username, sendTo);
+		
+		BidiMap newsMap = newsManager.getMap();
+		newsMap.put(sendTo, UUID.randomUUID());
+		newsManager.setMap(newsMap);
 		sender.sendMail(sendTo, text, "zu@googlemail.com", "NewsletterAbonnement");
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value = "/newsletter/unsubscribe", method = RequestMethod.GET)
-	public String newsletterUnsubscribe(@RequestParam("email") String email) {
-		if (email == "") {
-			return "unsubscribe";
-		}
-		String username;
-		if (dataService.getConcreteUserAccountRepository().findByEmail(email) != null) {
-			username = dataService.getConcreteUserAccountRepository().findByEmail(email).get().getUserAccount().getUsername();
+	@RequestMapping(value = "/newsletter/unsubscribe/{identifier}", method = RequestMethod.GET)
+	public String newsletterUnsubscribe(@PathVariable("identifier") UUID unsubscribeId) {
+		BidiMap newsMap = newsManager.getMap();
+		String sendTo = (String) newsMap.removeValue(unsubscribeId);
+		if (sendTo != null) {
+			newsManager.setMap(newsMap);
+			String text = "Sie haben sich von Woods Super Dooper Shop Newsletter abgemeldet.";
+			sender.sendMail(sendTo, text, "zu@googlemail.com", "NewsletterAbonnement");
+			return "redirect:/";
 		} else {
 			return "redirect:/";
 		}
-		if (newsManager.getMap().containsKey(username)) {
-			newsManager.getMap().remove(username);
-		}
-		return "redirect:/";
+		
 	}
 }
