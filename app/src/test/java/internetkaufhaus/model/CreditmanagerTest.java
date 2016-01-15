@@ -26,7 +26,6 @@ import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.services.DataService;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CreditmanagerTest.
  */
@@ -50,13 +49,14 @@ public class CreditmanagerTest extends AbstractIntegrationTests {
 		this.manager = new Creditmanager(data);
 		ConcreteUserAccount user = new ConcreteUserAccount("martin.bens@live.de", "Username1", "Firstname", "Lastname",
 				"Straße", "3", "ZipCode", "City", "Password", Role.of("ROLE_CUSTOMER"), data.getUserAccountManager());
-		ConcreteUserAccount acc = new ConcreteUserAccount("spigandromeda@gmail.com", "Username2", "Firstname", "Lastname",
-				"Straße", "3", "ZipCode", "City", "Password", Role.of("ROLE_CUSTOMER"), data.getUserAccountManager());
+		ConcreteUserAccount acc = new ConcreteUserAccount("spigandromeda@gmail.com", "Username2", "Firstname",
+				"Lastname", "Straße", "3", "ZipCode", "City", "Password", Role.of("ROLE_CUSTOMER"),
+				data.getUserAccountManager());
 		user.setRecruits(acc);
-		
+
 		data.getUserAccountManager().save(user.getUserAccount());
 		data.getConcreteUserAccountRepository().save(user);
-		
+
 		data.getUserAccountManager().save(acc.getUserAccount());
 		data.getConcreteUserAccountRepository().save(acc);
 
@@ -74,7 +74,8 @@ public class CreditmanagerTest extends AbstractIntegrationTests {
 	 */
 	@Test
 	public void testupdateCreditpointsByUser() {
-		manager.updateCreditpointsByUser(data.getConcreteUserAccountRepository().findByEmail("martin.bens@live.de").get());
+		manager.updateCreditpointsByUser(
+				data.getConcreteUserAccountRepository().findByEmail("martin.bens@live.de").get());
 		assertEquals("UpdatePoints",
 				data.getConcreteUserAccountRepository().findByEmail("martin.bens@live.de").get().getCredits(), 25);
 	}
