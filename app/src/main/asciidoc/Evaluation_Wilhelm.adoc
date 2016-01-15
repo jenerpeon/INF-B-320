@@ -1,0 +1,24 @@
+= Persönliches Feedback eines Teammitgliedes des Softwarepraktikums 2015/16
+
+**Von:** Wilhelm Mundt
+
+**Gruppe:** 22
+
+== Was habe ich gelernt?
+- Selbstständige Recherche in fremdsprachigen Quellen (Spring-Referenz etc., StackOverflow)
+- Verwendung eines Frameworks
+- Anwendung von Design-Pattern (MVC)
+
+= Welche Erfahrungen habe ich mit der Zusammenarbeit im Team gemacht?
+- Kommunikation ist sehr wichtig
+- Aufgabenteilung
+- Einhaltung von Terminen
+
+== Welche Erfahrungen habe ich bei der Wiederverwendung von Bibliotheken/Frameworks (insbesondere SalesPoint) gemacht?
+- Erleichterung bei Standardaufgaben, aber teilweise aufwendig anzupassen
+- Man ist auf eine gute Dokumentation/API angewiesen
+
+== Welche Vorschläge zur weiteren Verbesserung des Softwarepraktikums gibt es?
+- Mehr Rechte in Sonarqube
+
+== Sonstiges und Anmerkungen
