@@ -788,68 +788,6 @@ public class ManagementController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * This page sends out the newsletter.
-	 *
-	 * @param subject
-	 *            the subject
-	 * @param mailBody
-	 *            the mail body
-	 * @return the string
-	 */
-	/*
-	 * @RequestMapping(value =
-	 * "/employee/newsletter/changeNewsletter/sendNewsletter", method =
-	 * RequestMethod.GET) public String sendNewsletter(@RequestParam("subject")
-	 * String subject, @RequestParam("mailBody") String mailBody) { if
-	 * (!(mailBody.equals(""))) { this.newsManager.sendNewsletter(subject,
-	 * mailBody); Map<String, Map<Date, String>> oldAbos =
-	 * newsManager.getOldAbos(); if (oldAbos.get(subject) != null) {
-	 * oldAbos.get(subject).put(new Date(), mailBody); } else { Map<Date,
-	 * String> maildetails = new HashMap<Date, String>(); maildetails.put(new
-	 * Date(), mailBody); oldAbos.put(subject, maildetails); } } return
-	 * "redirect:/employee/newsletter"; }
-	 */
-
-	/**
-	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * TODO: Javadoc
-	 *
-	 * @param model
-	 *            the model
-	 * @return the string
-	 */
-	@RequestMapping(value = "/employee/newsletter/oldAbos")
-	public String oldAbos(ModelMap model) {
-
-		model.addAttribute("mailComponents", newsManager.getOldAbos());
-
-		return "oldnewsletterstable";
-	}
-
-	/**
-	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * TODO: Javadoc
-	 *
-	 * @param date
-	 *            the date
-	 * @param subject
-	 *            the subject
-	 * @param model
-	 *            the model
-	 * @return the string
-	 */
-	@RequestMapping(value = "/employee/newsletter/oldAbos/{date}/{subject}")
-	public String oldAbosdetails(@PathVariable("date") String date, @PathVariable("subject") String subject,
-			ModelMap model) {
-		model.addAttribute("date", date);
-		model.addAttribute("mailsubject", subject);
-		model.addAttribute("mailtext", newsManager.getOldAbos().get(subject));
-
-		return "oldnewsletterdetail";
-	}
-
-	/**
-	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
 	 * This page shows a list of returned orders.
 	 *
 	 * @param model

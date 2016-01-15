@@ -335,15 +335,6 @@ public class CatalogController {
 		} else {
 			return "redirect:/";
 		}
-		/*String username;
-		if (dataService.getConcreteUserAccountRepository().findByEmail(email) != null) {
-			username = dataService.getConcreteUserAccountRepository().findByEmail(email).get().getUserAccount().getUsername();
-		} else {
-			return "redirect:/";
-		}
-		if (newsManager.getMap().containsKey(username)) {
-			newsManager.getMap().remove(username);
-		}*/
 		
 	}
 }
