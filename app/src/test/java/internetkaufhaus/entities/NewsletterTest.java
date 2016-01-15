@@ -14,6 +14,15 @@ public class NewsletterTest {
 
 	Newsletter model;
 	
+	@Before
+	public void init() {
+		ConcreteProduct prod = new ConcreteProduct("Zigarre", Money.of(1.99, EURO), Money.of(1.49, EURO), "Tabakwaren",
+				"Eine gute alte Zigarre", "www.tabak.ru", "zigarre.png");
+		List<ConcreteProduct> selection = new ArrayList<ConcreteProduct>();
+		selection.add(prod);
+		model = new Newsletter("/ich/bin/ein/Pfad", "ich bin kein HTML", "ich bin kein HTML", selection, LocalDate.now());
+	}
+	
 	@Test
 	public void newsLetterIdenfifierTest() {
 		NewsletterIdentifier id = new NewsletterIdentifier();
