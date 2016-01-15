@@ -5,20 +5,18 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.BidiMap;
+import org.apache.commons.collections.bidimap.DualHashBidiMap;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -50,7 +48,7 @@ public class NewsletterService {
 	private JavaMailSender mailSender;
 
 	/** The map. */
-	private Map<String, String> map = new HashMap<String, String>();
+	private BidiMap map = new DualHashBidiMap();
 
 	/** The old abos. */
 	// Map with User and Email
@@ -94,7 +92,7 @@ public class NewsletterService {
 	 * @param map
 	 *            the map
 	 */
-	public void setMap(Map<String, String> map) {
+	public void setMap(BidiMap map) {
 		this.map = map;
 	}
 
@@ -138,17 +136,19 @@ public class NewsletterService {
 	 *
 	 * @return the map
 	 */
-	public Map<String, String> getMap() {
+	public BidiMap getMap() {
 
 		return map;
 	}
 
-	public void sendNewsletter(Newsletter newsletter, final String recipientName, final String recipientEmail)
+	public void sendNewsletter(Newsletter newsletter, final String recipientEmail)
 			throws MessagingException, IOException {
 
 		List<ConcreteProduct> prods = newsletter.getProductSelection();
 
 		String htmlContent = newsletter.getHtmlContent();
+		
+		htmlContent = htmlContent.replace("unsubscribe", "unsubscribe/"+map.get(recipientEmail));
 
 		final MimeMessage mimeMessage = mailSender.createMimeMessage();
 		final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -177,7 +177,7 @@ public class NewsletterService {
 			final InputStreamSource prodImageSource = new ByteArrayResource(prodImage.getBytes());
 			message.addInline(prodImage.getName()+".jpg", prodImageSource, prodImage.getContentType());
 		}
-
+		
 		this.mailSender.send(mimeMessage);
 
 	}

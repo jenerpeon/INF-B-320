@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.collections.BidiMap;
 import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.core.SalespointIdentifier;
 import org.salespointframework.inventory.InventoryItem;
@@ -30,8 +31,6 @@ import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -641,6 +640,7 @@ public class ManagementController {
 	public String newsletter(ModelMap model) {
 		Sort sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "dateCreated", Sort.NullHandling.NATIVE));
 		model.addAttribute("newsletters", dataService.getNewsletterRepository().findAll(sorting));
+		model.addAttribute("mailingList", newsManager.getMap());
 		return "newsletter";
 	}
 	
@@ -648,7 +648,10 @@ public class ManagementController {
 	public String sendNewsletter(@RequestParam("newsletter") NewsletterIdentifier newsId)
 			throws MessagingException, IOException {
 		Newsletter newsletter = dataService.getNewsletterRepository().findOne(newsId);
-		newsManager.sendNewsletter(newsletter, "Martin Bens","martin.bens@live.de");
+		BidiMap newsMap = newsManager.getMap();
+		for (Object mail : newsMap.keySet()) {
+			newsManager.sendNewsletter(newsletter, mail.toString());
+		}
 		return "redirect:/employee/newsletter";
 	}
 	
@@ -713,7 +716,7 @@ public class ManagementController {
 		if (prodIds.size() % 3 != 0 || prodIds.size() == 0) {
 			Sort sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "name", Sort.NullHandling.NATIVE));
 			model.addAttribute("prods", dataService.getConcreteProductRepository().findAll(sorting));
-			model.addAttribute("error", "Geben Sie mehr als 0 eine durch 3 teilbare Anzahl an Produkten an.");
+			model.addAttribute("error", "Geben Sie mehr als 0 und eine durch 3 teilbare Anzahl an Produkten an.");
 			return "newnewsletter";
 		}
 		
@@ -723,13 +726,7 @@ public class ManagementController {
 		String htmlPreviewContent = newsManager.getPreviewHTML(htmlContent, prods);
 
 		Newsletter newsletter = new Newsletter("mail/newsletter-template.html", htmlContent, htmlPreviewContent, prods, LocalDate.now());
-		NewsletterIdentifier newsletterId = newsletter.getId();
 		dataService.getNewsletterRepository().save(newsletter);
-		
-		System.out.println(dataService.getNewsletterRepository().findOne(newsletterId).getProductSelection());
-
-		// newsManager.sendNewsletter(newsletter, "Martin Bens",
-		// "martin.bens@live.de", locale, request, response);
 
 		return "redirect:/employee/newsletter";
 	}
