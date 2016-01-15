@@ -1,0 +1,44 @@
+= Protokoll Gruppe 22
+
+__Treffen am 12.01.2016__
+
+__Schriftführer:__ Max Staff
+
+__Nächstes Treffen: 19.01.2016__
+
+__Teilnehmer:__ 
+
+Christoph Biering
+
+Heiner Ludwig, Max Staff, Linda Doan, Lars Behrens, Wilhelm Mundt, Martin Bens 
+
+== Besprechung
+Max erklärt/zeigt diese Woche eingebaute Features, zeigt TODO-Liste.
+
+== TODO:
+
+=== Whitelabel Error-Pages:
+Löschen von Kommentaren
+Startseite ändern
+Newsletter-Buttons
+Rekrutieren-Button
+User mehrfach hinzufügen
+
+=== Wichtig:
+Kategorie wird nicht vorgeladen (Mitarbeiter -> Produkt bearbeiten)
+Bild-URL wird weder richtig in der Datenbank gespeichert, noch wird das Bild unter einem geeigneten Pfad gespeichert (Mitarbeiter -> Produkt hinzufügen)
+Artikel hinzufügen scheint nicht zu funktionieren
+Kommentare können nicht gelöscht werden
+Statistiken müssen fertig implementiert werden
+Newsletter muss verbessert werden
+Admin kann Mitarbeiter in der Benutzerübersicht nicht einsehen
+AccessDeniedExceptions werden als Error 500 gehandhabt (statt 403)
+Passwörter werden nicht verglichen (Admin->Benutzer bearbeiten)
+
+=== Unwichtig:
+Alle Eingabefelder werden zurückgesetzt, wenn die Formularvalidierung fehlschlägt
+Link zur "Mein Konto"-Übersicht mehr hervorheben
+Leere Bestellungen "verbieten"
+
+=== Nicht reproduzierbar:
+Doppeltes Akzeptieren von Bestellungen
