@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.forms.CreateUserForm;
-import internetkaufhaus.forms.StandardAccountForm;
 import internetkaufhaus.forms.EditUserForm;
+import internetkaufhaus.forms.StandardAccountForm;
 
 /**
  * 
@@ -66,8 +66,9 @@ public class HumanResourceService {
 	 * @return
 	 */
 	public boolean fireEmployee(Long id, Optional<UserAccount> admin) {
-		if (!(admin.isPresent()))
+		if (!(admin.isPresent())) {
 			return false;
+		}
 		if (dataService.getConcreteUserAccountRepository().findOne(id).getUserAccount().getIdentifier()
 				.equals(admin.get().getIdentifier())) {
 			return false;

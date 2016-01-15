@@ -1,0 +1,24 @@
+= Persönliches Feedback eines Teammitgliedes des Softwarepraktikums 2015/16
+
+**Von:Linda**
+
+**Gruppe:22**
+
+== Was habe ich gelernt?
+* Verwendung von Themeleaf
+* Spring mit Model view controller
+* Arbeiten mit Datenbank (Jquery)
+
+= Welche Erfahrungen habe ich mit der Zusammenarbeit im Team gemacht?
+* Regelmäßiges Absprechen erforderlich.
+* Termineinhaltung ( Dein Kode ist Voraussetzung für Weiterarbeit eines anderen Teammitglieds)
+* Kompromissfähigkeit
+
+== Welche Erfahrungen habe ich bei der Wiederverwendung von Bibliotheken/FrameworksV (insbesondere SalesPoint) gemacht?
+* Bibs/Frameworks sind einfach einzubinden, erleichert bzw. reduzieren Code und sind zuverlässig.
+
+
+== Welche Vorschläge zur weiteren Verbesserung des Softwarepraktikums gibt es?
+* Nicht nur die Salespoint API sollte zugänglich, sondern auch der Code . Evtl. Leserechte.
+
+== Sonstiges und Anmerkungen
