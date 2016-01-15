@@ -14,6 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.services.DataService;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Statistic.
+ */
 public class Statistic {
 	/**
 	 * The Statistic class is responsible for all financial transactions. It
@@ -23,16 +27,34 @@ public class Statistic {
 
 	private final DataService dataService;
 
+	/** The interval. */
 	private Interval interval;
 
+	/** The unit. */
 	private String unit;
 
+	/** The turnover. */
 	private Map<LocalDate, Money> turnover = new HashMap<LocalDate, Money>();
+	
+	/** The orders. */
 	private Map<LocalDate, Long> orders = new HashMap<LocalDate, Long>();
+	
+	/** The returns. */
 	private Map<LocalDate, Long> returns = new HashMap<LocalDate, Long>();
+	
+	/** The expenses. */
 	private Map<LocalDate, Money> expenses = new HashMap<LocalDate, Money>();
+	
+	/** The profit. */
 	private Map<LocalDate, Money> profit = new HashMap<LocalDate, Money>();
 
+	/**
+	 * Instantiates a new statistic.
+	 *
+	 * @param dataService the data service
+	 * @param interval the interval
+	 * @param unit the unit
+	 */
 	@Autowired
 	public Statistic(DataService dataService, Interval interval, String unit) {
 		this.dataService = dataService;
@@ -41,42 +63,92 @@ public class Statistic {
 		calculateStatistics();
 	}
 
+	/**
+	 * Gets the interval.
+	 *
+	 * @return the interval
+	 */
 	public Interval getInterval() {
 		return this.interval;
 	}
 
+	/**
+	 * Gets the unit.
+	 *
+	 * @return the unit
+	 */
 	public String getUnit() {
 		return this.unit;
 	}
 
+	/**
+	 * Gets the turnover.
+	 *
+	 * @return the turnover
+	 */
 	public Map<LocalDate, Money> getTurnover() {
 		return this.turnover;
 	}
 
+	/**
+	 * Gets the orders.
+	 *
+	 * @return the orders
+	 */
 	public Map<LocalDate, Long> getOrders() {
 		return this.orders;
 	}
 
+	/**
+	 * Gets the returns.
+	 *
+	 * @return the returns
+	 */
 	public Map<LocalDate, Long> getReturns() {
 		return this.returns;
 	}
 
+	/**
+	 * Gets the expenses.
+	 *
+	 * @return the expenses
+	 */
 	public Map<LocalDate, Money> getExpenses() {
 		return this.expenses;
 	}
 
+	/**
+	 * Gets the profit.
+	 *
+	 * @return the profit
+	 */
 	public Map<LocalDate, Money> getProfit() {
 		return this.profit;
 	}
 
+	/**
+	 * Sets the interval.
+	 *
+	 * @param interval the new interval
+	 */
 	public void setInterval(Interval interval) {
 		this.interval = interval;
 	}
 
+	/**
+	 * Sets the unit.
+	 *
+	 * @param unit the new unit
+	 */
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
 
+	/**
+	 * Calculate statistics.
+	 *
+	 * @return true, if successful
+	 */
 	private boolean calculateStatistics() {
 		LocalTime midnight = LocalTime.MIDNIGHT;
 		LocalDate start = interval.getStart().toLocalDate();

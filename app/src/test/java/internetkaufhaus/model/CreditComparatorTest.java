@@ -1,6 +1,7 @@
 package internetkaufhaus.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +20,6 @@ import internetkaufhaus.AbstractIntegrationTests;
 import internetkaufhaus.Application;
 import internetkaufhaus.entities.ConcreteUserAccount;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CreditComparatorTest.
  */
@@ -27,11 +27,11 @@ import internetkaufhaus.entities.ConcreteUserAccount;
 @ContextConfiguration(classes = Application.class)
 
 @Transactional
-public class CreditComparatorTest extends AbstractIntegrationTests{
-	
+public class CreditComparatorTest extends AbstractIntegrationTests {
+
 	/** The acc1. */
 	private ConcreteUserAccount acc1;
-	
+
 	/** The acc2. */
 	private ConcreteUserAccount acc2;
 
@@ -40,7 +40,7 @@ public class CreditComparatorTest extends AbstractIntegrationTests{
 	UserAccountManager u;
 
 	/**
-	 * Inits the.
+	 * Inits the test.
 	 */
 	@Before
 	public void init() {
@@ -58,14 +58,14 @@ public class CreditComparatorTest extends AbstractIntegrationTests{
 	public void testCompare() {
 		List<ConcreteUserAccount> list = new ArrayList<ConcreteUserAccount>();
 		List<ConcreteUserAccount> sorted = new ArrayList<ConcreteUserAccount>();
-		
+
 		list.add(acc1);
 		list.add(acc2);
 		Collections.sort(list, new CreditComparator());
-		
+
 		sorted.add(acc2);
 		sorted.add(acc1);
-		
+
 		assertTrue("compare", list.equals(sorted));
 	}
 

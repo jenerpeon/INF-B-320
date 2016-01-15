@@ -47,7 +47,6 @@ import internetkaufhaus.services.DataService;
 import internetkaufhaus.services.HumanResourceService;
 import internetkaufhaus.services.ProductManagementService;
 
-// TODO: Auto-generated Javadoc
 /**
  * This is the admin controller. It controls the admin. Or maybe it admins the
  * controls? You never know... In this class you may find the controllers for
@@ -73,7 +72,7 @@ public class AdminController {
 	@Autowired
 	private ProductManagementService productManagementService;
 
-	/** The HumanResourceService */
+	/** The HumanResourceService. */
 	@Autowired
 	private HumanResourceService humanResourceService;
 
@@ -132,6 +131,8 @@ public class AdminController {
 	 *
 	 * @param id
 	 *            the id
+	 * @param admin
+	 *            the admin
 	 * @return redirectToChangeUserPage
 	 */
 	@RequestMapping(value = "/admin/changeuser/deleteUser/{id}")
@@ -228,6 +229,10 @@ public class AdminController {
 	 *            the edituserform
 	 * @param result
 	 *            the result
+	 * @param admin
+	 *            the admin
+	 * @param model
+	 *            the model
 	 * @return the string
 	 */
 	@RequestMapping(value = "/admin/changeuser/editedUser", method = RequestMethod.POST)
@@ -314,11 +319,13 @@ public class AdminController {
 		return "balance";
 	}
 
-/*	@RequestMapping(value = "/admin/statisticsJson", produces = MediaType.APPLICATION_JSON_VALUE)
-	public String getStatisticsJson(ModelMap model) {
-
-		return "";
-	}*/
+	/*
+	 * @RequestMapping(value = "/admin/statisticsJson", produces =
+	 * MediaType.APPLICATION_JSON_VALUE) public String
+	 * getStatisticsJson(ModelMap model) {
+	 * 
+	 * return ""; }
+	 */
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
@@ -326,11 +333,12 @@ public class AdminController {
 	 * @param model
 	 *            the model
 	 * @return the winners
-	 * @throws JsonProcessingException 
+	 * @throws JsonProcessingException
+	 *             the json processing exception
 	 */
-	@RequestMapping(value = "/admin/statistics", method=RequestMethod.GET)
+	@RequestMapping(value = "/admin/statistics", method = RequestMethod.GET)
 	public String getStatistics(ModelMap model) throws JsonProcessingException {
-		
+
 		ObjectMapper mapper = new ObjectMapper();
 
 		LocalDateTime to = LocalDateTime.now();
@@ -359,21 +367,24 @@ public class AdminController {
 			Statistic stat = new Statistic(dataService, key, intervals.get(key));
 			stats.add(stat);
 		}
-		
-		
+
 		model.addAttribute("message1", mapper.writeValueAsString(stats));
 
-		/*try {
-			System.out.println(mapper.writeValueAsString(stats));
-			return "statistics";
-
-		} catch (Exception e) {
-			System.out.println("Mapping to Json failed"+e.getMessage());
-			return "statistics";
-		}*/
+		/*
+		 * try { System.out.println(mapper.writeValueAsString(stats)); return
+		 * "statistics";
+		 * 
+		 * } catch (Exception e) { System.out.println("Mapping to Json failed"
+		 * +e.getMessage()); return "statistics"; }
+		 */
 		return "statistics";
-	} 
+	}
 
+	/**
+	 * Competition.
+	 *
+	 * @return the string
+	 */
 	@RequestMapping(value = "/admin/lottery")
 	public String competition() {
 		return "competition"; // TODO: what does this even do?
@@ -381,9 +392,10 @@ public class AdminController {
 
 	/**
 	 * This is a Request Mapping. It Maps Requests. Or does it Request Maps?
-	 * 
+	 *
 	 * @param model
-	 * @return
+	 *            the model
+	 * @return the winners
 	 */
 	@RequestMapping(value = "/admin/competitionButton")
 	public String getWinners(ModelMap model) {
