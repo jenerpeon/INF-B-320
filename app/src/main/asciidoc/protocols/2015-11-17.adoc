@@ -1,0 +1,54 @@
+= Protokoll Gruppe 22
+
+__Treffen am 15.12.2015__
+
+__Schriftführer:__ Max Staff
+
+__Nächstes Treffen: 05.01.2016__
+
+__Teilnehmer:__ 
+
+Christoph Biering
+
+Heiner Ludwig, Max Staff, Linda Doan, Lars Behrens, Wilhelm Mundt, Martin Bens 
+
+== Anmerkungen durch Christoph
+
+=== kleinere Fehler:
+Pootstrap
+Frostend
+bei Architektur Top-Level-Architektur, Entwurfsklassendiagramm und kurze Beschreibung dazufügen
+Glossar hinzufügen (für und verständliche, für den Kunden unverständliche Begriffe erklären)
+DataInitializer hinzufügen
+Package-Diagramm um die Salespoint-Teile im Entwurfsklassendiagramm
+Adresse bei ConcreteUserAccount eintragen (siehe Videoshop, überarbeiten)
+"UserRepo" von Videoshop abgucken (ConcreteUserAccountManager implementieren)
+Guest-Klassen können weg, Registrieren soll in Controller
+Controller alle einbauen, deren Fkt. nicht unbedingt
+auf UML-Konformität achten
+Empfehlung, Management-Klassen zu verwenden
+Beans verwenden (?)
+Entwurfsklassendiagramm überarbeiten um an eigentliche Implementation anzupassen
+Max soll Issues erstellen, Issues zuweisen, Zeit verwalten
+Wöchentlich Scrum mit Präsentationen, was nicht klappt soll gezeigt werden
+Tests für alles schreiben für Continuous Integration
+Testframework von Oliver Gierke aufsetzen
+(Spring hat ein eigenes JUnit)
+Asciidoc-Testplan erstellen, Tests alle aufstellen
+Tests evtl. in Issues übersetzen
+Protoypen fertig zusammenfügen, feingeschliffene lauffähige Anwendung schreiben
+Whitelabel error pages minimieren
+Bei Schlusspräsentation muss Produkt "verkauft" werden
+
+Verschärfte Anforderungen auf nächste Woche:
+Funktionierende Anwendung
+Auf jeder Seite GUI
+Funktionalität:
+*Registriergung,
+*Login,
+*Ausloggen,
+*Kundenverwaltung,
+*Artikelverwaltung,
+*Kategorienverwaltung,
+*Benutzerverwalung,
+
