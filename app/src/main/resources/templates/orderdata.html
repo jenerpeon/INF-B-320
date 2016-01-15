@@ -5,12 +5,19 @@
 <head>
   <meta charset="utf-8">
   <title>Main Page</title>
-  <script src="/resources/script/jquery-1.11.2.min.js" type="text/javascript"></script>
+  <script src="/resources/script/jquery.min.js" type="text/javascript"></script>
   <script src="/resources/script/bootstrap.min.js" type="text/javascript"></script>
   <link href="/resources/css/main.css" rel="stylesheet" type=text/css>
   <link href="/resources/css/paymethod.css" rel="stylesheet" type=text/css>
-  <script src="http://use.edgefonts.net/clara:n4:default.js" type="text/javascript"></script>
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <script type="text/javascript">
+  
+  $(function() {
+	    $( "#datepicker" ).datepicker({
+	    	dateFormat: "yy-mm-dd"
+	    });
+	  });
   
   window.onload = function() {fillForm();}
   
@@ -239,8 +246,8 @@
 								<input type="text" name="nameOnCard"/>
 							</li>
 							<li>
-								<label for="expiryDate">Läuft ab am:</label>
-								<input type="text" name="expiryDate"/>
+								<label for="expiryDate">Läuft ab am (YYYY-MM-DD):</label>
+								<input id="datepicker" type="text" name="expiryDate"/>
 							</li>
 							<li>
 								<label for="cardVerificationCode">Verifizierungscode:</label>
@@ -270,8 +277,8 @@
 								<input type="text" name="nameOnCard"/>
 							</li>
 							<li>
-								<label for="expiryDate">Läuft ab am:</label>
-								<input type="text" name="expiryDate"/>
+								<label for="expiryDate">Läuft ab am (YYYY-MM-DD):</label>
+								<input id="datepicker" type="text" name="expiryDate"/>
 							</li>
 							<li>
 								<label for="cardVerificationCode">Verifizierungscode:</label>

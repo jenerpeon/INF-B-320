@@ -471,7 +471,7 @@ nav a { text-decoration: none; }
 }
 
 .footerrow {
-	width: 950px;
+	width: 945px;
 	display: inline-block;
 	list-style-type: none;
 	padding-left: 0px;
@@ -481,11 +481,11 @@ nav a { text-decoration: none; }
 	margin-top: 0px;
 	margin-right: 0px;
 	margin-bottom: 0px;
-	margin-left: 45px;
+	margin-left: 55px;
 }
 
 .footerrow .footercolumn {
-	width: 22%;
+	width: 30%;
 	float: left;
 	margin-left: 1.5%;
 	margin-right: 1.5%;

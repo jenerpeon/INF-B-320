@@ -1,9 +1,9 @@
 package internetkaufhaus;
 
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.io.File;
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -32,6 +32,7 @@ import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.entities.ConcreteUserAccount;
+import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.model.StartPage;
 import internetkaufhaus.services.DataService;
 
@@ -50,6 +51,8 @@ public class Initialize implements DataInitializer {
 
 	private final DataService dataService;
 
+	private final Creditmanager creditmanager;
+
 	// private final Map<String, String> recruits;
 
 	/**
@@ -59,28 +62,16 @@ public class Initialize implements DataInitializer {
 	 *
 	 * @param startPage
 	 *            the start page
-	 * @param concreteOrderRepo
-	 *            singleton, passed by spring/salespoint
-	 * @param productCatalog
-	 *            singleton, passed by spring/salespoint
-	 * @param userAccountManager
-	 *            singleton, passed by spring/salespoint
-	 * @param ConcreteUserAccountManager
-	 *            singleton, passed by spring/salespoint
-	 * @param inventory
-	 *            singleton, passed by spring/salespoint
-	 * @param orderManager
-	 *            singleton, passed by spring/salespoint
-	 * @param productSearch
-	 *            singleton, passed by spring/salespoint
-	 * @param concreteProductRepository
-	 *            singleton, passed by spring/salespoint
+	 * @param dataService
+	 *            the data service
+	 * @param creditmanager
+	 *            the creditmanager
 	 */
 	@Autowired
-	public Initialize(StartPage startPage, DataService dataService) {
+	public Initialize(StartPage startPage, DataService dataService, Creditmanager creditmanager) {
 		this.startPage = startPage;
 		this.dataService = dataService;
-		// this.recruits = recruits;
+		this.creditmanager = creditmanager;
 	}
 
 	/**

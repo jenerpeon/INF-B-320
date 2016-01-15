@@ -27,42 +27,22 @@
 			<ul class="footerrow">
 				<li>
 					<div class="footercolumn">
-						<h2>Sortiment</h2>
+						<h2>Navigation</h2>
 						<hr />
 						<ul>
-							<li><a>Delikatessen</a></li>
-							<li><a>Spirituosen</a></li>
-							<li><a>Tabakwaren</a></li>
-							<li><a>Parfums</a></li>
-							<li><a>Schmuck</a></li>
-							<li><a>Geschenkartikel</a></li>
-							<li><a>Polo und Golf</a></li>
-							<li><a>Kreuzfahrten</a></li>
-						</ul>
-					</div>
-				</li>
-				<li>
-					<div class="footercolumn">
-						<h2>Service</h2>
-						<hr />
-						<ul>
-							<li><a>Kundenserivce</a></li>
-							<li><a>Service Center</a></li>
-							<li><a>Lieferung</a></li>
-							<li><a>Zahlungsmöglichkeiten</a></li>
-							<li><a>FAQ - Fragen &amp; Antworten</a></li>
-							<li><a>Über Woods Super Dooper Shop</a></li>
-						</ul>
-					</div>
-				</li>
-				<li>
-					<div class="footercolumn">
-						<h2>Mein Konto</h2>
-						<hr />
-						<ul>
-							<li><a>Bestellungen</a></li>
-							<li><a>Persönliche Daten</a></li>
-							<li><a>Kundenkonto</a></li>
+							<li th:if="${employeeNaviagtion == null and adminNaviagtion == null and customerNaviagtion == null}"
+								th:each="c : ${categories}"><a
+								th:href="@{'/catalog/'+${c.link}+'/name'+'/1'+'/6'+'/1'}"
+								th:text="${c.name}" th:id="${c.name}"></a></li>
+							<li th:if="${adminNaviagtion != null}"
+								th:each="c : ${adminNaviagtion}"><a th:href="${c.link}"
+								th:text="${c.name}" th:id="${c.name}"></a></li>
+							<li th:if="${employeeNaviagtion != null}"
+								th:each="c : ${employeeNaviagtion}"><a th:href="${c.link}"
+								th:text="${c.name}" th:id="${c.name}"></a></li>
+							<li th:if="${customerNaviagtion != null}"
+								th:each="c : ${customerNaviagtion}"><a th:href="${c.link}"
+								th:text="${c.name}" th:id="${c.name}"></a></li>
 						</ul>
 					</div>
 				</li>
@@ -80,7 +60,7 @@
 										<tbody>
 											<tr id="newslettercolumn">
 												<td>
-													<fieldset>
+													<fieldset style="border: none">
 														<input type="email" id="newslettermail" name="email" placeholder="E-Mail Adresse" size="12" onFocus="value=''"/>
 													</fieldset>
 												</td>	
@@ -90,63 +70,21 @@
 											</tr>
 										</tbody>
 									</table>
-								</form></li>
+								</form>
+							</li>
 						</ul>
 					</div>
 				</li>
-			</ul>
-			<ul class="footerrow">
 				<li>
 					<div class="footercolumn">
 						<h2>Haben Sie noch Fragen</h2>
-						<hr />
-						<ul>
-							<li><a>Wir freuen uns auf ihren Anruf</a></li>
-							<li><a id="phone">0351/12345678</a></li>
-							<li><a>Service Hotline, erreichbar 24 Stunden täglich,
-									356 Tage im Jahr</a></li>
-						</ul>
-					</div>
-				</li>
-				<li>
-					<div class="footercolumn">
-						<h2>Zahlungsmöglichkeiten</h2>
-						<hr />
-						<ul>
-							<li><a>Zahlung per Paypal, Kreditkarte, Giropay,
-									Rechnung, Komfortkauf und Vorkasse möglich.</a><br>
-							<br></li>
-							<li><div id="payment-options">
-									<img src="/resources/Bilder/Zahlung_logo.png" height="40"
-										alt="" />
-								</div></li>
-						</ul>
-					</div>
-				</li>
-				<li>
-					<div class="footercolumn">
-						<h2>Geschenk-Karten</h2>
-						<hr />
-						<ul>
-							<li><a>Immer die perfekte Geschenkidee im Wert von 25,
-									50 oder 100 Euro.<br />
-								<br />
-							</a></li>
-							<li><a>Zu den Geschenkkarten &gt; </a></li>
-						</ul>
-					</div>
-				</li>
-				<li>
-					<div class="footercolumn">
-						<h2>Jobs und Karriere</h2>
-						<hr />
-						<ul>
-							<li><a>Wir bieten interessante Perspektiven für Ihre
-									berufliche Zukunft.<br>
-								<br>
-							</a></li>
-							<li><a>Mehr Informationen &gt; </a></li>
-						</ul>
+							<hr />
+							<ul>
+								<li><a>Wir freuen uns auf ihren Anruf</a></li>
+								<li><a id="phone">0351/12345678</a></li>
+								<li><a>Service Hotline, erreichbar 24 Stunden täglich,
+										356 Tage im Jahr</a></li>
+							</ul>
 					</div>
 				</li>
 			</ul>
@@ -156,10 +94,10 @@
 			<div id="bottomline">
 				<hr class="bottomline-line" />
 				<ul>
-					<li><a>AGB</a></li>
-					<li><a>Impressum</a></li>
-					<li><a>Datenschutz</a></li>
-					<li><a>Kontakt</a></li>
+					<li><a href="/agb">AGB</a></li>
+					<li><a href="/impressum">Impressum</a></li>
+					<li><a href="/datenschutz">Datenschutz</a></li>
+					<li><a href="/contact">Kontakt</a></li>
 				</ul>
 				<hr class="bottomline-line" />
 			</div>

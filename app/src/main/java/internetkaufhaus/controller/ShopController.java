@@ -14,7 +14,6 @@ import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.model.StartPage;
 import internetkaufhaus.services.DataService;
 
-// TODO: Auto-generated Javadoc
 /**
  * This is the shop controller. It controls the shop. Or maybe it shops the
  * controls? You never know... In this class you may find the controllers for
@@ -31,6 +30,7 @@ public class ShopController {
 	@Autowired
 	private StartPage startPage;
 
+	/** The data service. */
 	@Autowired
 	private DataService dataService;
 
@@ -66,4 +66,43 @@ public class ShopController {
 		return "index";
 	}
 
+	/**
+	 * Agb.
+	 *
+	 * @return the string
+	 */
+	@RequestMapping(value = "/agb")
+	public String agb() {
+		return "agb";
+	}
+
+	/**
+	 * Impressum.
+	 *
+	 * @return the string
+	 */
+	@RequestMapping(value = "/impressum")
+	public String impressum() {
+		return "impressum";
+	}
+
+	/**
+	 * Datenschutz.
+	 *
+	 * @return the string
+	 */
+	@RequestMapping(value = "/datenschutz")
+	public String datenschutz() {
+		return "datenschutz";
+	}
+
+	/**
+	 * Kontakt.
+	 *
+	 * @return the string
+	 */
+	@RequestMapping(value = "/contact")
+	public String contact() {
+		return "contact";
+	}
 }

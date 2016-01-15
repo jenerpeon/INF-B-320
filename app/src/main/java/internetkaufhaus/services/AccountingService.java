@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import internetkaufhaus.entities.ConcreteUserAccount;
 import internetkaufhaus.forms.StandardUserForm;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class AccountingService.
  */
@@ -94,6 +93,8 @@ public class AccountingService {
 	/**
 	 * Update user.
 	 *
+	 * @param user
+	 *            the user
 	 * @return true, if successful
 	 */
 	public boolean updateUser(ConcreteUserAccount user) {

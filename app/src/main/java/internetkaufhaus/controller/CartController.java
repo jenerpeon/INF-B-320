@@ -116,7 +116,7 @@ class CartController {
 			long points = usablePoints(cart,
 					dataService.getConcreteUserAccountRepository().findByUserAccount(userAccount.get()).get());
 			model.addAttribute("points", points);
-			model.addAttribute("discount", formatter.format(points/100));
+			model.addAttribute("discount", formatter.format(((double)points)/100));
 		} else {
 			model.addAttribute("points", 0);
 			model.addAttribute("discount", formatter.format(0));

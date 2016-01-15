@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -16,12 +17,12 @@ public class PaymentForm {
 
 	/** The card name. */
 	@NotEmpty(message = "Bitte geben Sie einen Kartennamen an.")
-	@Pattern(regexp = "([A-Za-z -/])+", message = "Der Kartenname enthält unzulässige Zeichen.")
+	@Pattern(regexp = "([A-Za-z -/ß])+", message = "Der Kartenname enthält unzulässige Zeichen.")
 	private String cardName;
 
 	/** The card association name. */
 	@NotEmpty(message = "Biite geben Sie den Banknamen der Karte an.")
-	@Pattern(regexp = "([A-Za-z ])+", message = "Der Bankname enthält unzulässige Zeichen.")
+	@Pattern(regexp = "([A-Za-zß ])+", message = "Der Bankname enthält unzulässige Zeichen.")
 	private String cardAssociationName;
 
 	/** The card number. */
@@ -31,7 +32,7 @@ public class PaymentForm {
 
 	/** The name on card. */
 	@NotEmpty(message = "Bitte geben Sie den Namen auf der Karte an.")
-	@Pattern(regexp = "([A-Za-z ])+", message = "Der Name auf der Karte erhält unzulässige Zeichen.")
+	@Pattern(regexp = "([A-Za-z ßäüö-])+", message = "Der Name auf der Karte erhält unzulässige Zeichen.")
 	private String nameOnCard;
 
 	/** The expiry date. */
