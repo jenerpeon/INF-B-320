@@ -5,11 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -49,11 +46,6 @@ public class NewsletterService {
 
 	/** The map. */
 	private BidiMap map = new DualHashBidiMap();
-
-	/** The old abos. */
-	// Map with User and Email
-	private Map<String, Map<Date, String>> oldAbos = new HashMap<String, Map<Date, String>>();
-	// Map with subject and text of email
 
 	/**
 	 * Instantiates a new newsletter service.
@@ -95,41 +87,6 @@ public class NewsletterService {
 	public void setMap(BidiMap map) {
 		this.map = map;
 	}
-
-	/**
-	 * Gets the old abos.
-	 *
-	 * @return the old abos
-	 */
-	public Map<String, Map<Date, String>> getOldAbos() {
-		return oldAbos;
-	}
-
-	/**
-	 * Sets the old abos.
-	 *
-	 * @param oldAbos
-	 *            the old abos
-	 */
-	public void setOldAbos(Map<String, Map<Date, String>> oldAbos) {
-		this.oldAbos = oldAbos;
-	}
-
-	/**
-	 * The sendNewsletters method sends the given text as newsletter to all
-	 * costumers which have subscribed the newsletter.
-	 * 
-	 * @param content
-	 *            the newsletter content as String
-	 *
-	 */
-	/*
-	 * public void sendNewsletter(String subject, String content) { for (String
-	 * email : this.getMap().values()) { mailsender.sendMail(email, content,
-	 * "zu@googlemail.com", subject); }
-	 * 
-	 * }
-	 */
 
 	/**
 	 * Gets the map.
