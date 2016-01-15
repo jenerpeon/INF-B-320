@@ -55,16 +55,20 @@ public class DataService {
 	 *            the catalog
 	 * @param inventory
 	 *            the inventory
-	 * @param concreteProductRepo
-	 *            the concrete product repo
-	 * @param concreteAccountRepo
-	 *            the concrete account repo
+	 * @param concreteInventory
+	 *            the concrete inventory
+	 * @param concreteProductRepositroy
+	 *            the concrete product repositroy
+	 * @param concreteAccountRepository
+	 *            the concrete account repository
 	 * @param userAccountManager
 	 *            the user account manager
-	 * @param concreteOrderRepo
-	 *            the concrete order repo
+	 * @param concreteOrderRepository
+	 *            the concrete order repository
 	 * @param orderManager
 	 *            the order manager
+	 * @param newsletterRepository
+	 *            the newsletter repository
 	 */
 	@Autowired
 	public DataService(Catalog<ConcreteProduct> catalog, Inventory<InventoryItem> inventory,
@@ -131,11 +135,10 @@ public class DataService {
 		return concreteProductRepository;
 	}
 
-
 	public NewsletterRepository getNewsletterRepository() {
 		return this.newsletterRepository;
 	}
-	
+
 	public ConcreteUserAccountRepository getConcreteUserAccountRepository() {
 		return concreteUserAccountRepository;
 	}

@@ -1,9 +1,9 @@
 package internetkaufhaus;
 
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.io.File;
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -50,7 +50,7 @@ public class Initialize implements DataInitializer {
 	private final StartPage startPage;
 
 	private final DataService dataService;
-	
+
 	private final Creditmanager creditmanager;
 
 	// private final Map<String, String> recruits;
@@ -62,22 +62,10 @@ public class Initialize implements DataInitializer {
 	 *
 	 * @param startPage
 	 *            the start page
-	 * @param concreteOrderRepo
-	 *            singleton, passed by spring/salespoint
-	 * @param productCatalog
-	 *            singleton, passed by spring/salespoint
-	 * @param userAccountManager
-	 *            singleton, passed by spring/salespoint
-	 * @param ConcreteUserAccountManager
-	 *            singleton, passed by spring/salespoint
-	 * @param inventory
-	 *            singleton, passed by spring/salespoint
-	 * @param orderManager
-	 *            singleton, passed by spring/salespoint
-	 * @param productSearch
-	 *            singleton, passed by spring/salespoint
-	 * @param concreteProductRepository
-	 *            singleton, passed by spring/salespoint
+	 * @param dataService
+	 *            the data service
+	 * @param creditmanager
+	 *            the creditmanager
 	 */
 	@Autowired
 	public Initialize(StartPage startPage, DataService dataService, Creditmanager creditmanager) {

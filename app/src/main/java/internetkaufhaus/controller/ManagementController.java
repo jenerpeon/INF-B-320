@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,6 +45,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+
 import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
@@ -76,6 +78,7 @@ public class ManagementController {
 	@Autowired
 	private ProductManagementService productManagementService;
 
+	/** The data service. */
 	@Autowired
 	private DataService dataService;
 
@@ -184,12 +187,14 @@ public class ManagementController {
 	 * This page adds an article as requested by an employee and then redirects
 	 * the user to the article Overview.
 	 *
-	 * @param editForm
-	 *            the form in which the employee specified which article to add
 	 * @param img
 	 *            the new image which the should have.
+	 * @param editForm
+	 *            the form in which the employee specified which article to add
 	 * @param result
 	 *            the result which (in)validates above mentioned form
+	 * @param model
+	 *            the model
 	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/changecatalog/addedArticle", method = RequestMethod.POST)
@@ -242,12 +247,14 @@ public class ManagementController {
 	 * This page edits an article as requested by an employee and then redirects
 	 * the user to the article Overview.
 	 *
-	 * @param editForm
-	 *            the form in which the employee specified which article to edit
 	 * @param img
 	 *            the new image which the should have.
+	 * @param editForm
+	 *            the form in which the employee specified which article to edit
 	 * @param result
 	 *            the result which (in)validates above mentioned form
+	 * @param model
+	 *            the model
 	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/changecatalog/editedArticle", method = RequestMethod.POST)
@@ -366,6 +373,8 @@ public class ManagementController {
 	 *            the stock form
 	 * @param result
 	 *            the result
+	 * @param userAccount
+	 *            the user account
 	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/changecatalog/decreasedArticle/{prodId}", method = RequestMethod.POST)
@@ -643,7 +652,18 @@ public class ManagementController {
 		model.addAttribute("mailingList", newsManager.getMap());
 		return "newsletter";
 	}
-	
+
+	/**
+	 * Send newsletter.
+	 *
+	 * @param newsId
+	 *            the news id
+	 * @return the string
+	 * @throws MessagingException
+	 *             the messaging exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	@RequestMapping(value = "/employee/newsletter/newsletter/send")
 	public String sendNewsletter(@RequestParam("newsletter") NewsletterIdentifier newsId)
 			throws MessagingException, IOException {
@@ -654,7 +674,16 @@ public class ManagementController {
 		}
 		return "redirect:/employee/newsletter";
 	}
-	
+
+	/**
+	 * View newsletter.
+	 *
+	 * @param newsId
+	 *            the news id
+	 * @param model
+	 *            the model
+	 * @return the string
+	 */
 	@RequestMapping(value = "/employee/newsletter/newsletter/view")
 	public String viewNewsletter(@RequestParam("newsletter") NewsletterIdentifier newsId, ModelMap model) {
 		Newsletter newsletter = dataService.getNewsletterRepository().findOne(newsId);
@@ -679,27 +708,43 @@ public class ManagementController {
 		return "newnewsletter";
 	}
 
+	/**
+	 * New newsletter previe.
+	 *
+	 * @param prodsArray
+	 *            the prods array
+	 * @param locale
+	 *            the locale
+	 * @param request
+	 *            the request
+	 * @param response
+	 *            the response
+	 * @param model
+	 *            the model
+	 * @return the string
+	 */
 	@RequestMapping(value = "/employee/newsletter/newNewsletter/preview", method = RequestMethod.POST)
 	public String newNewsletterPrevie(@RequestParam("prods") ProductIdentifier[] prodsArray, final Locale locale,
 			HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		List<ProductIdentifier> prodIds = Arrays.asList(prodsArray);
 		List<ConcreteProduct> prods = dataService.getConcreteProductRepository().findByIds(prodIds);
-		
+
 		if (prodIds.size() % 3 != 0 || prodIds.size() == 0) {
 			Sort sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "name", Sort.NullHandling.NATIVE));
 			model.addAttribute("prods", dataService.getConcreteProductRepository().findAll(sorting));
 			model.addAttribute("error", "Geben Sie mehr als 0 eine durch 3 teilbare Anzahl an Produkten an.");
 			return "newnewsletter";
 		}
-		
-		String htmlContent = newsManager.processTemplate(prods, "mail/newsletter-template.html", locale, request, response);
+
+		String htmlContent = newsManager.processTemplate(prods, "mail/newsletter-template.html", locale, request,
+				response);
 
 		htmlContent = htmlContent.replace("cid:Logo", "/resources/Bilder/Logo.png");
 		htmlContent = htmlContent.replace("cid:Newsletter", "/resources/Bilder/Newsletter.png");
 		htmlContent = htmlContent.replace("cid:SocialMedia", "/resources/Bilder/SocialMedia.png");
-		
+
 		htmlContent = newsManager.getPreviewHTML(htmlContent, prods);
-		
+
 		model.addAttribute("prods", prods);
 		model.addAttribute("htmlContent", htmlContent);
 
@@ -707,25 +752,47 @@ public class ManagementController {
 
 	}
 
+	/**
+	 * New newsletter created.
+	 *
+	 * @param prodsArray
+	 *            the prods array
+	 * @param locale
+	 *            the locale
+	 * @param request
+	 *            the request
+	 * @param response
+	 *            the response
+	 * @param model
+	 *            the model
+	 * @return the string
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws MessagingException
+	 *             the messaging exception
+	 */
 	@RequestMapping(value = "/employee/newsletter/newNewsletter/created", method = RequestMethod.POST)
 	public String newNewsletterCreated(@RequestParam("prods") ProductIdentifier[] prodsArray, final Locale locale,
-			HttpServletRequest request, HttpServletResponse response, ModelMap model) throws IOException, MessagingException {
+			HttpServletRequest request, HttpServletResponse response, ModelMap model)
+					throws IOException, MessagingException {
 
 		List<ProductIdentifier> prodIds = Arrays.asList(prodsArray);
-		
+
 		if (prodIds.size() % 3 != 0 || prodIds.size() == 0) {
 			Sort sorting = new Sort(new Sort.Order(Sort.Direction.DESC, "name", Sort.NullHandling.NATIVE));
 			model.addAttribute("prods", dataService.getConcreteProductRepository().findAll(sorting));
 			model.addAttribute("error", "Geben Sie mehr als 0 und eine durch 3 teilbare Anzahl an Produkten an.");
 			return "newnewsletter";
 		}
-		
+
 		List<ConcreteProduct> prods = dataService.getConcreteProductRepository().findByIds(prodIds);
-		
-		String htmlContent = newsManager.processTemplate(prods, "mail/newsletter-template.html", locale, request, response);
+
+		String htmlContent = newsManager.processTemplate(prods, "mail/newsletter-template.html", locale, request,
+				response);
 		String htmlPreviewContent = newsManager.getPreviewHTML(htmlContent, prods);
 
-		Newsletter newsletter = new Newsletter("mail/newsletter-template.html", htmlContent, htmlPreviewContent, prods, LocalDate.now());
+		Newsletter newsletter = new Newsletter("mail/newsletter-template.html", htmlContent, htmlPreviewContent, prods,
+				LocalDate.now());
 		dataService.getNewsletterRepository().save(newsletter);
 
 		return "redirect:/employee/newsletter";
@@ -757,6 +824,8 @@ public class ManagementController {
 	 *            the subject
 	 * @param mailBody
 	 *            the mail body
+	 * @param model
+	 *            the model
 	 * @return the string
 	 */
 	@RequestMapping(value = "/employee/newsletter/changeNewsletter/showNewsletter", method = RequestMethod.GET)
