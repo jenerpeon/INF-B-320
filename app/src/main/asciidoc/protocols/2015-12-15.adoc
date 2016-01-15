@@ -1,0 +1,40 @@
+= Protokoll Gruppe 22
+
+__Treffen am 15.12.2015__
+
+__Schriftführer:__ Max Staff
+
+__Nächstes Treffen: 05.01.2016__
+
+__Teilnehmer:__ 
+
+Christoph Biering
+
+Heiner Ludwig, Max Staff, Linda Doan, Lars Behrens, Wilhelm Mundt, Martin Bens 
+
+== Aufgabenverteilung
+
+=== Muss-Kriterien:
+
+Katalog: Thubnails (Martin)
+Detailansicht: Tabellenkopf unsichtbar wenn nicht eingeloggt (Martin)
+Header: Platzhalter ersetzen (Lars)
+Bestellung: Formular-Design grundlegend überarbeiten (Max)
+Verwaltung: Admin soll Mitarbeiterrechte bekommen (Max)
+Sonstiges: Reklamation (Heiner), Formvalidierung (Max), Statistik verlinken (Martin)
+Newsletter-Formattierung anlegen (Max)
+Whitelabel-Errorpages entfernen (Lars)
+Gewinnspiel überarbeiten (Wilhelm)
+
+"Startseite auffrischen": (Martin, Max)
+beliebteste (Bewertung) Produkte
+meistverkaufte Produkte
+User-Highscores (auch für Gäste)
+mehr generierte Daten (Martin)
+
+Cross-Testing: compiliertes jar und readme in entsprechenden Ordner packen. (Linda)
+Benutzerdokumentation: Heiner
+
+=== Kann-Kriterien:
+
+Startseite: Warenkarusell konfiguerbar machen (Martin, Max)
