@@ -16,6 +16,7 @@ import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.payment.PaymentCard;
+
 import com.google.common.collect.Iterators;
 
 // TODO: Auto-generated Javadoc
@@ -30,13 +31,16 @@ public class ConcreteOrder extends Order {
 	private static final long serialVersionUID = 1L;
 
 	/** The user. */
-	@OneToOne(cascade = {CascadeType.ALL})
+	@OneToOne(cascade = { CascadeType.ALL })
 	private ConcreteUserAccount user;
-	
+
+	/** The date ordered. */
 	private Long dateOrdered;
-	
+
+	/** The status. */
 	private OrderStatus status;
-	
+
+	/** The used discount points. */
 	private long usedDiscountPoints = 0;
 
 	/** The billing gender. */
@@ -106,8 +110,8 @@ public class ConcreteOrder extends Order {
 	 *
 	 * @param account
 	 *            the account
-	 * @param cash
-	 *            the cash
+	 * @param pay
+	 *            the pay
 	 */
 	public ConcreteOrder(ConcreteUserAccount account, Cash pay) {
 		super(account.getUserAccount(), pay);
@@ -115,24 +119,32 @@ public class ConcreteOrder extends Order {
 		this.dateOrdered = LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(1));
 		this.status = super.getOrderStatus();
 	}
-	
+
+	/**
+	 * Instantiates a new concrete order.
+	 *
+	 * @param account
+	 *            the account
+	 * @param pay
+	 *            the pay
+	 */
 	public ConcreteOrder(ConcreteUserAccount account, PaymentCard pay) {
 		super(account.getUserAccount(), pay);
 		this.user = account;
 		this.dateOrdered = LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(1));
 		this.status = super.getOrderStatus();
 	}
-	
+
 	/**
 	 * Sets the user account.
 	 *
-	 * @param account
-	 *            the new user account
+	 * @param user
+	 *            the new user
 	 */
 	public void setUser(ConcreteUserAccount user) {
 		this.user = user;
 	}
-	
+
 	/**
 	 * Gets the user.
 	 *
@@ -141,27 +153,60 @@ public class ConcreteOrder extends Order {
 	public ConcreteUserAccount getUser() {
 		return this.user;
 	}
-	
+
+	/**
+	 * Sets the date ordered.
+	 *
+	 * @param dateOrdered
+	 *            the new date ordered
+	 */
 	public void setDateOrdered(Long dateOrdered) {
 		this.dateOrdered = dateOrdered;
 	}
-	
+
+	/**
+	 * Gets the date ordered.
+	 *
+	 * @return the date ordered
+	 */
 	public Long getDateOrdered() {
 		return this.dateOrdered;
 	}
-	
+
+	/**
+	 * Sets the status.
+	 *
+	 * @param status
+	 *            the new status
+	 */
 	public void setStatus(OrderStatus status) {
 		this.status = status;
 	}
-	
+
+	/**
+	 * Gets the status.
+	 *
+	 * @return the status
+	 */
 	public OrderStatus getStatus() {
 		return this.status;
 	}
-	
+
+	/**
+	 * Sets the used discount points.
+	 *
+	 * @param usedDiscountPoints
+	 *            the new used discount points
+	 */
 	public void setUsedDiscountPoints(long usedDiscountPoints) {
 		this.usedDiscountPoints = usedDiscountPoints;
 	}
-	
+
+	/**
+	 * Gets the used discount points.
+	 *
+	 * @return the used discount points
+	 */
 	public long getUsedDiscountPoints() {
 		return this.usedDiscountPoints;
 	}
@@ -331,17 +376,27 @@ public class ConcreteOrder extends Order {
 		}
 		return total;
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.salespointframework.order.Order#getTotalPrice()
+	 */
 	@Override
 	public Money getTotalPrice() {
 		return super.getTotalPrice().subtract(Money.of(this.getUsedDiscountPoints(), "EUR").divide(100));
 	}
-	
+
+	/**
+	 * Gets the date ordered formatted.
+	 *
+	 * @return the date ordered formatted
+	 */
 	public String getDateOrderedFormatted() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 		return LocalDateTime.ofEpochSecond(this.dateOrdered, 0, ZoneOffset.ofHours(1)).format(formatter);
 	}
-		
+
 	/**
 	 * Gets the returned.
 	 *
@@ -544,9 +599,15 @@ public class ConcreteOrder extends Order {
 		this.shippingZipCode = shippingAddress.get(6);
 		this.shippingTown = shippingAddress.get(7);
 	}
-	
+
+	/**
+	 * Checks if is retournable.
+	 *
+	 * @return true, if is retournable
+	 */
 	public boolean isRetournable() {
-		return ((this.dateOrdered > LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(1)) - 2592000) && !this.returned);
+		return ((this.dateOrdered > LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(1)) - 2592000)
+				&& !this.returned);
 	}
 
 	/**

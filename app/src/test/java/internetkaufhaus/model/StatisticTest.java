@@ -1,20 +1,13 @@
-/*package internetkaufhaus.model;
+package internetkaufhaus.model;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDateTime;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.salespointframework.order.Cart;
-import org.salespointframework.order.Order;
-import org.salespointframework.order.OrderManager;
-import org.salespointframework.order.OrderStatus;
-import org.salespointframework.payment.Cash;
-import org.salespointframework.quantity.Quantity;
 import org.salespointframework.time.Interval;
-import org.salespointframework.useraccount.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -22,112 +15,55 @@ import org.springframework.transaction.annotation.Transactional;
 
 import internetkaufhaus.AbstractIntegrationTests;
 import internetkaufhaus.Application;
-import internetkaufhaus.entities.ConcreteOrder;
-import internetkaufhaus.entities.ConcreteProduct;
-import internetkaufhaus.entities.ConcreteUserAccount;
-import internetkaufhaus.repositories.ConcreteOrderRepository;
-import internetkaufhaus.repositories.ConcreteProductRepository;
-import internetkaufhaus.repositories.ConcreteUserAccountRepository;
 import internetkaufhaus.services.DataService;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class StatisticTest.
- *//*
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 
+@Transactional
 public class StatisticTest extends AbstractIntegrationTests {
 
 	@Autowired
 	private DataService data;
 
+	private Statistic statistic;
+
 	/**
 	 * Inits the test.
-	 *//*
+	 */
 	@Before
 	public void initTest() {
-		Cart c = new Cart();
-		for (ConcreteProduct p : prods.findAll()) {
-			c.addOrUpdateItem(p, Quantity.of(1));
-		}
-		for (ConcreteUserAccount u : ConcreteUserAccountManager.findByRole(Role.of("ROLE_CUSTOMER"))) {
-
-			ConcreteOrder order = new ConcreteOrder(u.getUserAccount(), Cash.CASH);
-			c.addItemsTo(order.getOrder());
-
-			Order o = order.getOrder();
-			c.addItemsTo(o);
-
-			order.setBillingGender("Herr");
-			order.setBillingFirstName(u.getUserAccount().getFirstname());
-			order.setBillingLastName(u.getUserAccount().getLastname());
-			order.setBillingStreet(u.getAddress());
-			order.setBillingHouseNumber("2");
-			order.setBillingTown(u.getCity());
-			order.setBillingZipCode(u.getZipCode());
-
-			order.setShippingGender("Herr");
-			order.setShippingFirstName(u.getUserAccount().getFirstname());
-			order.setShippingLastName(u.getUserAccount().getLastname());
-			order.setShippingStreet(u.getAddress());
-			order.setShippingHouseNumber("2");
-			order.setShippingTown(u.getCity());
-			order.setShippingZipCode(u.getZipCode());
-
-			orderManager.payOrder(o);
-			// only set orderManager.payOrder(o), do not use
-			// orderManager.completeOrder(0), to complete Order look at the next
-			// line!
-			order.setStatus(OrderStatus.COMPLETED);
-			// to complete Order do not use orderManager.completeOrder
-			order.setDateOrdered(LocalDateTime.now().minusDays(31));
-			concreteOrderRepo.save(order);
-			orderManager.save(o);
-		}
-		c.clear();
+		Interval interval = Interval.from(LocalDateTime.now().minusDays(7)).to(LocalDateTime.now());
+		statistic = new Statistic(data, interval, "week");
+		statistic.setInterval(interval);
+		statistic.setUnit("week");
 	}
 
 	/**
-	 * Test get turnover by interval.
-	 *//*
+	 * Test get interval.
+	 */
 	@Test
-	public void testGetTurnoverByInterval() {
-		assertTrue("hola", true);
+	public void testGetInterval() {
+		Interval interval = Interval.from(LocalDateTime.now().minusDays(7)).to(LocalDateTime.now());
+		statistic.setInterval(interval);
+		assertEquals("testGetInterval", statistic.getInterval(), interval);
 	}
-
-	/**
-	 * Test get sales by interval.
-	 *//*
+	
 	@Test
-	public void testGetSalesByInterval() {
-		assertTrue("hola", true);
+	public void testGetUnit() {
+		assertEquals("testGetUnit", statistic.getUnit(), "week");
 	}
 
-	/**
-	 * Test get purchases by interval.
-	 *
-	 * @param i the i
-	 * @param q the q
-	 *//*
-	public void testGetPurchasesByInterval(Interval i, int q) {
+	@Test
+	public void testGetTurnover() {
+		System.out.println(statistic.getTurnover().size());
+		System.out.println(statistic.getExpenses().size());
+		System.out.println(statistic.getProfit().size());
+		System.out.println(statistic.getReturns().size());
+		System.out.println(statistic.getOrders().size());
 	}
-
-	/**
-	 * Test get profit by interval.
-	 *
-	 * @param i the i
-	 * @param q the q
-	 *//*
-	public void testGetProfitByInterval(Interval i, int q) {
-	}
-
-	/**
-	 * Test get retours by interval.
-	 *
-	 * @param i the i
-	 * @param q the q
-	 *//*
-	public void testGetRetoursByInterval(Interval i, int q) {
-	}
-}*/
+}
