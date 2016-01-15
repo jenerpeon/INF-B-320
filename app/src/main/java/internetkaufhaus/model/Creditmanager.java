@@ -47,7 +47,7 @@ public class Creditmanager {
 		Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "dateOrdered", Sort.NullHandling.NATIVE));
 		for (ConcreteUserAccount user : recruits) {
 			for (ConcreteOrder order : dataService.getConcreteOrderRepository().findByUser(user, sorting)) {
-				if (order.isRetournable() && order.getStatus().equals(OrderStatus.COMPLETED)) {
+				if (!order.isRetournable() && order.getStatus().equals(OrderStatus.COMPLETED)) {
 					credits = credits + order.getTotalPrice().getNumber().doubleValue();
 				}
 			}

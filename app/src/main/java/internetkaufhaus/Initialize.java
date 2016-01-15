@@ -32,6 +32,7 @@ import internetkaufhaus.entities.Comment;
 import internetkaufhaus.entities.ConcreteOrder;
 import internetkaufhaus.entities.ConcreteProduct;
 import internetkaufhaus.entities.ConcreteUserAccount;
+import internetkaufhaus.model.Creditmanager;
 import internetkaufhaus.model.StartPage;
 import internetkaufhaus.services.DataService;
 
@@ -49,6 +50,8 @@ public class Initialize implements DataInitializer {
 	private final StartPage startPage;
 
 	private final DataService dataService;
+	
+	private final Creditmanager creditmanager;
 
 	// private final Map<String, String> recruits;
 
@@ -77,10 +80,10 @@ public class Initialize implements DataInitializer {
 	 *            singleton, passed by spring/salespoint
 	 */
 	@Autowired
-	public Initialize(StartPage startPage, DataService dataService) {
+	public Initialize(StartPage startPage, DataService dataService, Creditmanager creditmanager) {
 		this.startPage = startPage;
 		this.dataService = dataService;
-		// this.recruits = recruits;
+		this.creditmanager = creditmanager;
 	}
 
 	/**
