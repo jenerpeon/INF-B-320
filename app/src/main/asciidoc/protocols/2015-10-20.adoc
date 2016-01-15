@@ -1,126 +1,110 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2015-10-20T11:57:54+00:00
+= Protokoll Gruppe 22
 
-====== 20.10.2015 - Protokoll ======
-Created Dienstag 20 Oktober 2015
+__Treffen am 20.10.2015__
 
-===== Was wurde Besprochen: =====
-* Kundengespraech
-	* kann kriterien
-	* muss kriterien
-* ziele
-* Umgang mit der Versionsverwaltung 
-* Kommunikation
-* Magicdraw
+__Schriftführer:__ Wilhelm Mundt
 
-===== Welche Ergebnisse wurden Erziehlt: =====
+__Nächstes Treffen: 27.10.2015__
 
-==== Musskriterien ====
-* hat Sortimentverwaltung, 
-* Katalog, Produkte, kundenmeinungen, 
-* Abwicklung von kaeufen,
-* Rabatt und Retourbehandlung
-	* retourgrund
-* Ermittlung des Geschaeftsergebnisses
-	* Lager Festkosten 
-	* einkaufspreis
-	* verkaufspreis
-	* Monatliches intervall fuer billanz
-* Rollen
-	* gast
-		* Kann sortiment einsehen
-	* kunde
-		* Kann Bestellungen Taetigen
-		* konto hat passwort vergessen funktion
-		* daten aendern: email, name username addresse
-	* mitarbeiter
-		* lagerhaltung - einkauf
-		* neue artikel hinzufuegen 
-		* artikel entfernen
-	* admin (mindestens ein admin)
-		* personalverwaltung
-		* Werwaltet Geschaeftsergebnisse
-* Ermittlung der erfolgreichsten Werber
+__Teilnehmer:__ 
 
-==== Kannkriterien ====
-* Retourpaketschein generieren
-* Meinungen/Bewertungen anonym abgeben
+Christoph Biering
+
+Heiner Ludwig, Max Staff, Linda Doan, Lars Behrens, Wilhelm Mundt, Martin Bens 
+
+== Bemerkungen
+
+Als Kommunikationsplatform wurde Slack gewählt.
+Christoph erhält einen Zugang.
+
+Als Modellierungstool wurde MagicDraw gewählt.
 
 
-==== Naehre Ausfuehrung der Funktionalitaeten: ====
+== Retrospektive des letzten Sprints
+*Issue referenziert die Issue ID von GitHub*
 
-=== Katalog: ===
-* Der Katalog besteht aus einer Menge von Produkten
+Kein letzter Sprint vorhanden.
 
-=== Produkt: ===
-* jedes Produkt hat eine WWW seite
-	* Bilder
-	* Detailinformation des Herstellers
-	* Kundenmeinungen
-* Email Newsletter mit informationen zu neu aufgenommenen Artikeln 
-* Jedes Produkt kann von einem Nutzer genau einmal kommentiert/Bewertet werden
 
-=== Rabattkonto: ===
-* Werbern werden 5% aller Umseatze eines Geworbenen gutgeschrieben (nach einem Monat)
-* Es werden (maximal) Rabatte von 20% auf alle Einkaeufe gewaehrt, bis das Rabattkonto verbraucht ist.
+== Aktueller Stand
+Anmerkungen und Kritik zum aktuellen Stand der Software, den Diagrammen und den
+Dokumenten.
 
-=== Artikelverwaltung: ===
-* schlecht verkaufte/ mehrfach schlecht beurteilte artikel fliegen aus dem Sortiment
+__Ergebnis des Kundengesprächs:__
 
-=== Mit Emma in 80 Tagen um die Welt: ===
-* 10% erfolgreichsten Werber (hoechste Rabatteinnahmen) nehmen teil
-* Anzahl der Reisen von Jahresgewinn Abhaengig
+.*Pflichtanforderungen:*
 
-=== Kaufabwicklung: ===
-* als Kunde ueber die Produktseite
-* bestellbestaetigung und artikelinformation per mail
+. Katalog
+.. Artikelbeschreibung enthält Beschreibung, Bild, Preis, Titel, Bewertungs- und Kommentarfunktion
+.. Kommentare filtern
+.. Sortimentspflege  
+... schlecht bewertete Artikel aus dem Sortiment nehmen
+... neue Artikel erstellen
+. Einkäufe
+.. Warenkorb-Funktion
+.. Bestell-Mail ohne Rechnung
+.. Versand-Mail mit Rechnung
+. User-Profil
+.. Daten wie Passwort, Adresse, Mail, Name ändern können
+.. Passwort vergessen Funktion
+.. Möglichkeit der Rückgabe von Artikeln mit Erfolgsmeldung
+. Lager
+.. Waren müssen nachbestellt werden (Festpreis)
+. Newsletter
+.. informiert über neue Produkte
+.. manueller Versand per Mitarbeiter/Admin
+. Ermittlung des Geschäftsergebnisses
+.. monatlich (1 Monat = 30 Tage)
+.. grafisch aufbereitet
+. Rabattsystem
+.. Kunden werben Kunden
+.. 5% vom Umsatz des geworbenen Kunden
+.. max. 20% Rabatt auf eine Bestellung
+.. Ermittlung der erfolgreichsten Werber (10%) per Admin-Button
+. Design
+.. Ein Corporate-Design soll erstellt werden
+. Rollen
+.. Gast
+... kann Katalog einsehen und Artikel in den Warenkorb legen
+.. User
+... kann Produkte kaufen und zurückgeben
+... genau eine Produktbewertung/Kommentar pro User
+... Profil verwalten
+.. Mitarbeiter
+... filtern Kommentare
+... bestellen Artikel nach
+... Newsletter
+.. Admin
+... ein Admin muss immer erhalten bleiben
+... Personalverwaltung
+... Gewinnspiel
 
-==== Fragen: ====
-* Benoetigen Mitarbeiter und Admins einen Account? Taetigen Sie Ihre arbeit ueber das Kaufhausportal?
-	* Ja
-* Muessen kundenmeinungen auf Sinnhaftigkeit ueberprueft werden, bevor sie oeffentlich werden?
-	* koennen meinungen und Kommentare auch anonym abgegeben werden? 
-		* kann kriterium
-	* Es ist genau eine bewertung pro produkt und user moeglich
-* Welche Informationen Sollen im Newsletter ueber neue Produkte enthalten sein. In welcher Sortierung?
-	* Wird erstmal so schlicht wie moeglich gehalten.
-* Besitzt Emma eine Zertifizierte Domain fuer mails?
-	* Nein
-* Welche Werber sind die mit dem hoechsten Rabattkontofluss?
-	* Die Bewerber mit den hoechsten Einnahmen
-* Gibt Design kriterien (korporate design) der Firma Emma?
-	* nein
+.*Kann-Anforderungen:*
+.. anonyme Kommentare
 
-==== Umgang mit der Versionsverwaltung ====
-* Fuer jede Programmieraufgabe wird ein Issue angelegt
-* Issues werden mit milestones assoziiert
 
-==== Kommunikation ====
-* Christoph bekommt einen Slack invite
 
-==== Magic Draw ====
-* Christoph schickt uns eine Lizenz via mail.
+.*Ziele bis zur nächsten Woche:*
+.. Kontextdiagramm
+.. Use-Case-Diagramm
+.. Top-Level-Architektur
 
-===== Formulierte Ziele: =====
+.*Ziele bis zur übernächsten Woche:*
+.. Pflichtenheft
+.. Akzeptanztestfälle
+.. Sequenzdiagramme
+.. GUI-Prototyp
+.. Analyseklassendiagramme 
 
-==== bis 26.10.2015 (23Uhr) ====
 
-=== muss: ===
-* kontextdiagramm
-* use case 
-* top level architektur
+== Planung des nächsten Sprints
+*Issue referenziert die Issue ID von GitHub*
 
-=== kann: ===
-* pflichtenheft tabellarisch durchnummeriert
-* akzeptanztestfaelle (bilden sich aus anforderungen)
-* analyse klassendiagramm
-
-==== bis 02.11.2015 (23Uhr) ====
-* pflichtenheft tabellarisch durchnummeriert
-* akzeptanztestfaelle (bilden sich aus anforderungen)
-* Analyseklassendiagramm
-* Sequenzdiagramme
-* pflichtenheft
-* gui-prototyp: skizzen 
-
+// See http://asciidoctor.org/docs/user-manual/=tables
+[option="headers"]
+|===
+|Issue |Titel |Beschreibung |Verantwortlicher |Status
+|#1    |Kontextdiagramm erstellen       |Systemschnittstellen(Akteure) definieren|Gruppe 22|ToDo      
+|#2    |Top-Level-Architektur  modellieren         |Erste Verfeinerung des Kontextdiagramms|Gruppe 22| ToDo      
+|#3      |UseCase-Diagramme         | Anwendungsfälle aus dem Kundengespräch abbilden|Gruppe 22|ToDo       
+|===

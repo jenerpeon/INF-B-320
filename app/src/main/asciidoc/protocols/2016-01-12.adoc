@@ -1,0 +1,34 @@
+= Protokoll Gruppe 22
+
+__Treffen am 12.01.2016__
+
+__Schriftführer:__ Max Staff
+
+__Nächstes Treffen: 19.01.2016__
+
+__Teilnehmer:__ 
+
+Christoph Biering
+
+Heiner Ludwig, Max Staff, Linda Doan, Lars Behrens, Wilhelm Mundt, Martin Bens 
+
+== Bemerkungen von Christoph
+
+Durchschnitte pro Mitglied, pro Woche, pro Team im time_recording.adoc eintragen
+Lars' Daten in time_recording.adoc eintragen
+Javadoc fertigstellen, in asciidoc-Ordner verschieben/verlinken
+Diagramme anpassen, vor allem Entwurfsklassendiagramm
+Deadline: 15.01.16, 23:00
+Alte Protokoll- und Organisations-Ordner löschen
+Issues bis Freitag aus Git-Repo entfernen (als gelöst kennzeichnen oder löschen)
+Merge-Konflikt-Dateien (mit Endung ~) löschen
+
+==Schwerpunkte Endpräsentation
+
+Team vorstellen, melden, wer wer ist, wer Scrum Master ist ansagen, grob erklären, wer was gemacht hat
+Projektverlauf darstellen (evtl. mithilfe v. Timeline, Diagrammen, etc)
+Arbeitszeigen darstellen ( -"- )
+Probleme, Herausforderungen (und Lösungen) aufzeigen
+Demo: evtl. Rollenspiel (ein Nutzer, ein Mitarbeiter/Admin, wie usecase-Diagramme)
+Präsentation ist auf Beamer, da ggf. mehrere Fenster öffnen
+jQuery einbinden, falls WLAN-Empfang schlecht ist!
