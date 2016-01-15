@@ -17,7 +17,6 @@ import internetkaufhaus.AbstractIntegrationTests;
 import internetkaufhaus.Application;
 import internetkaufhaus.services.DataService;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class StatisticTest.
  */
@@ -52,7 +51,7 @@ public class StatisticTest extends AbstractIntegrationTests {
 		statistic.setInterval(interval);
 		assertEquals("testGetInterval", statistic.getInterval(), interval);
 	}
-	
+
 	@Test
 	public void testGetUnit() {
 		assertEquals("testGetUnit", statistic.getUnit(), "week");
