@@ -76,7 +76,7 @@ public class CreditmanagerTest extends AbstractIntegrationTests {
 	public void testupdateCreditpointsByUser() {
 		manager.updateCreditpointsByUser(
 				data.getConcreteUserAccountRepository().findByEmail("martin.bens@live.de").get());
-		assertEquals("UpdatePoints",
-				data.getConcreteUserAccountRepository().findByEmail("martin.bens@live.de").get().getCredits(), 0);
+		assertEquals("UpdatePoints", 25,
+				data.getConcreteUserAccountRepository().findByEmail("martin.bens@live.de").get().getCredits());
 	}
 }
