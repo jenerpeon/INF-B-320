@@ -273,7 +273,7 @@ class CartController {
 			
 			order.setUsedDiscountPoints(usablePoints(cart, caccount));
 
-			order.setStatus(OrderStatus.COMPLETED);
+			order.setStatus(OrderStatus.PAID);
 			dataService.getConcreteOrderRepository().save(order);
 
 			String articles = "";
