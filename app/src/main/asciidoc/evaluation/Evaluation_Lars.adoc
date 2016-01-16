@@ -1,0 +1,57 @@
+= Persönliches Feedback eines Teammitgliedes des Softwarepraktikums 2015/16
+
+**Von:Lars**
+
+**Gruppe:22**
+
+== Was habe ich gelernt?
+* Spring
+  ** boot 
+  *** app bootstrap ohne xml metaconfig
+  *** application context, bean factory
+  *** classloader
+  *** Annotation based singleton beans: Service, controller repository
+** data
+ *** hibernate nach jpa Spzifikation
+ *** crud repositories
+* mvc pattern
+* doc description, styling, client side code: html, css, javascript (bootstrap, plot.ly, c3.js, jquery)
+* template engine: Thymeleaf
+* tools:
+ ** magic uml 
+ ** maven
+ ** vagrant
+ ** spring-sts
+ ** git, github
+ ** slack
+ ** jenkins
+ ** sonarcube
+ ** kickstarter spring, salespoint app template
+
+= Welche Erfahrungen habe ich mit der Zusammenarbeit im Team gemacht?
+* hauptsaechlich gute
+
+== Welche Erfahrungen habe ich bei der Wiederverwendung von Bibliotheken/FrameworksV (insbesondere SalesPoint) gemacht?
+
+* Jackson: gute doku, simpel, nuetzlich fur xml, pojo, json konvertierung
+* Spring: Interessant, aber zu umfangreich fuer unser Projekt
+** spring devtools: ist zum spring coden offenbar essentiell. Mit Salespoint bei mir immernoch inkompatibel. Haette eher auf salespoint verzichtet...
+* Salespoint: Wegen des vorherigen Punktes etwas aergerlich. Maessige Erweiterbarkeit, maessige doku
+* jquery: muss wohl
+* d3.js: sehr gute doku, umfangreich, steile lernkurve
+
+
+== Welche Vorschläge zur weiteren Verbesserung des Softwarepraktikums gibt es?
+* Aufbereitung der Thematik (Webprogrammierung):
+ ** Technologien der Webprogrammierung
+  *** https://coggle.it/diagram/52e97f8c5a143de239005d1b/56212c4e4c505e0045c0d3bda59b77e5977c2c9bd40f3fd0b451bdcf8da4aa52
+** Architektur
+** workflow & devops
+
+* Teamorganisation
+ ** Austausch der Praktikumsgruppen foerdern
+  *** public repos, interessante aufgaben
+ ** stack exchange statt auditorium
+ ** https://de.wikipedia.org/wiki/Die_Kathedrale_und_der_Basar => basar! 
+
+== Sonstiges und Anmerkungen
