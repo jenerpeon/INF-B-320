@@ -21,4 +21,3 @@ Die verwendete Zeit beinhaltet auch das Lesen von Dokumentationen, Besprechungen
 |12.01.2016	|15.01.2016	|10:00h	|12:00h	|02:00h	|28:00h |10:00h	|05:00h	|67:00h |11:10
 | | | | | | | | |
 |13.10.2015	|15.01.2016	|120:00h	|188:00h	|140:00h	|269:00h	|166:00h	|164:30h	|1047:30h	|15:05
-
