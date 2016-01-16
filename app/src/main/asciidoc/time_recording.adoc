@@ -22,4 +22,5 @@ Die verwendete Zeit beinhaltet auch das Lesen von Dokumentationen, Besprechungen
 | | | | | | | | |
 |13.10.2015	|15.01.2016	|120:00h	|188:00h	|143:00h	|269:00h	|156:00h	|165h	|1041h
 
+Anmerkung: Team-Treffen pro Woche sind in den jeweiligen Entwickler-Zeiten enthalten. 
 
