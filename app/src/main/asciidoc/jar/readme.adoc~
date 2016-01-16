@@ -1,0 +1,30 @@
+= Persönliches Feedback eines Teammitgliedes des Softwarepraktikums 2015/16
+
+**Von:Martin**
+
+**Gruppe:22**
+
+== Was habe ich gelernt?
+* Auffrischung im Umgang mit Java
+* Persistenz mit SQL bzw. HQL
+* Nutzung von Thmyleaf als Schnittstelle für die Prozessierung von html Templates
+* Erweiterung der Webdesign Kenntnisse inklusive neue Elemente in HTML, CSS und Javascript
+* Maven als Grundlage für Softwareprojekte im Allgemeinen
+* Verwendung von Spring und Salespoint als leistungsfähiges Framework für OnlineShops
+
+= Welche Erfahrungen habe ich mit der Zusammenarbeit im Team gemacht?
+* Regelmäßiges Meetings sind erforderlich
+* Termineinhaltung für Funktionen und Code ist wünschenswert aber nicht zwingend notwendig (meist gibt es genügend Baustellen an denen gearbeitet werden kann, wenn es an einer Stelle nicht weitergeht; zumindest wenn die Abgabe nicht direkt bevor steht)
+* Gemeinsames programmieren (in einem Raum) steigert selten die Produktivität (für mich persönlich)
+
+== Welche Erfahrungen habe ich bei der Wiederverwendung von Bibliotheken/FrameworksV (insbesondere SalesPoint) gemacht?
+* Frameworks erleichtern viele Vorgänge erheblich
+* An einigen Stellen wäre es enorm von Vorteil gewesen, wenn Salespoint als Open Source vorliegen würde; Bsp. Orderstatus hätte um RETURNED und STOCK einfach erweitert werden können; generell wäre das erben von order und product nicht nötig gewesen bzw. wäre das erben oder erweitern von useraccount möglich gewesen (möglich, dass wir da aber nur eine Möglichkeit übersehen haben)
+
+
+== Welche Vorschläge zur weiteren Verbesserung des Softwarepraktikums gibt es?
+* Salespoint sollte als modifizierbare Open Source vorliegen. Bei bedenken, dass es das Projekt zu sehr vereinfachen würde sollte bedacht werden, dass der Code jederzeit durch Decompilierung einsehbar ist
+* Es sollten Materialien zu den Projekten vorheriger Jahre zugänglich gemacht werden. Eventuell auch jars nach Obfuskation.
+
+== Sonstiges und Anmerkungen
+* Christoph war ein super Betreuer

@@ -1,0 +1,10 @@
+= Begleitdocument zum Softwareprojket
+
+== Accountdaten
+[option="headers"]
+|===
+| Rolle | Benutzername | Passwort
+| Administrator | peon | peon
+| Mitarbeiter | saul | saul
+| Kunde | admin | admin
+| Kunde | siehe accounts.txt | siehe accounts.txt
