@@ -1,0 +1,32 @@
+= Persönliches Feedback eines Teammitgliedes des Softwarepraktikums 2015/16
+
+**Von:Max Staff**
+
+**Gruppe:22 (intern)**
+
+== Was habe ich gelernt?
+* Eine Gruppe zu "leiten"
+* mit Hibernate umzugehen
+* Jar-Dateien zu dekompilieren
+* Umgang mit Thymeleaf
+* Umgang mit Spring
+* Umgang mit einem Gemisch aus eigenem (vertrautem) und fremden, teils kommentierten, teils unkommentierten Quellcode in einem Projekt
+
+= Welche Erfahrungen habe ich mit der Zusammenarbeit im Team gemacht?
+* Regelmäßige Meetings sind wichtig
+* Regelmäßiges Abfragen des Fortschrittes ist wichtig
+* Manche erledigen einfach die Aufgaben der anderen
+* Manche machen so lange nichts, bis man fragt, was sie machen
+* Paired programming ist manchmal sinnvoll, aber nicht immer
+* Niemand sagt rechtzeitig bescheid, wenn er bereits absehen kann, dass er nicht seine Termine/Fristen einhalten kann
+
+== Welche Erfahrungen habe ich bei der Wiederverwendung von Bibliotheken/Frameworks (insbesondere SalesPoint) gemacht?
+* Umgang mit einem halbfertigen closed-source framework, für das diverse patches geschrieben wurden
+* egal ob open-source oder closed-source: erstmal den Quellcode angucken, dann weiß man meistens weiter
+
+== Welche Vorschläge zur weiteren Verbesserung des Softwarepraktikums gibt es?
+* Salespoint realistischer gestalten. Natürlich brauchen Benutzer keine Adresse, der Postengel weiß ja, wo er hinliefert.
+* Sonarqube übersichtlicher gestalten, den UserAccounts der Gruppe mehr Rechte zuweisen (ja, wir dürfen unseren eigenen Quellcode sehen!)
+
+== Sonstiges und Anmerkungen
+* s.o.
