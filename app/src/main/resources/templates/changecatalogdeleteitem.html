@@ -34,7 +34,7 @@
 					<h1 th:text="${concreteproduct.name}">Artikle</h1>
 					<p class="description" th:text="${concreteproduct.description}">Beschreibung</p>
 					<div class="rating">
-						<span class="filled" th:each="i : ${concreteproduct.rating}">☆</span>
+						<span class="filled" th:each="i : ${#numbers.sequence(1, concreteproduct.averageRating)}">☆</span>
 					</div>
 					<p th:text="${concreteproduct.ratings}+' Bewertung(en)'"></p>
 					<p class="price" th:text="@{'Preis: '+${concreteproduct.priceFloat}}">1 Euro</p>
