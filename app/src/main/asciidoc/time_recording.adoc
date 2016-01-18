@@ -21,7 +21,7 @@ Die verwendete Zeit beinhaltet auch das Lesen von Dokumentationen, Besprechungen
 |12.01.2016	|15.01.2016	|10:00h	|12:00h	|02:00h	|28:00h |10:00h	|05:00h	|67:00h |11:10h
 | | | | | | | | | |
 |13.10.2015	|15.01.2016	|120:00h	|188:00h	|143:00h	|269:00h	|156:00h	|165:00h	|1041:00h |173:30h
-|Durchschnitt ||10:00h  |15:40h |15:40h |11:55h |22:25h |13:00h |13:45h |86:45h
+|Durchschnitt ||10:00h  |15:40h |15:40h |11:55h |22:25h |13:00h |13:45h |15:00h
 |===
 Anmerkung: Team-Treffen pro Woche sind in den jeweiligen Entwickler-Zeiten enthalten. 
 
