@@ -39,7 +39,7 @@
 							<td class="name" ><a target="newtab" th:text="${concreteproduct.name}" title="Artikel in Katalog anzeigen" th:href="@{'/detail/'+${concreteproduct.identifier}}"></a></td>
 							<td class="picture" ><img  th:href="@{'/detail/'+${concreteproduct.identifier}}" th:src="@{'/resources/Bilder/Produkte/' + ${concreteproduct.imagefile}}"/></td>
 							<td class="price" ><a  th:text="${concreteproduct.priceFloat}"></a></td>
-							<td class="quantity"><a  th:text="${concreteproduct.getQuantity(inventory)}"></a></td>
+							<td class="quantity"><a  th:text="${inventory.findByProductIdentifier(concreteproduct.getIdentifier()).get().quantity}"></a></td>
 							<td class="btn-group" >
 								<div  role="group">
 									<button type="button" onclick="self.location.href = this.getAttribute('href');" th:href="@{'/employee/changecatalog/editArticle/'+${concreteproduct.identifier}}" class="edit-button" title="Edit Article"></button>

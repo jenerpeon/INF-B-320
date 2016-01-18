@@ -51,8 +51,6 @@ public class Initialize implements DataInitializer {
 
 	private final DataService dataService;
 
-	private final Creditmanager creditmanager;
-
 	// private final Map<String, String> recruits;
 
 	/**
@@ -68,10 +66,9 @@ public class Initialize implements DataInitializer {
 	 *            the creditmanager
 	 */
 	@Autowired
-	public Initialize(StartPage startPage, DataService dataService, Creditmanager creditmanager) {
+	public Initialize(StartPage startPage, DataService dataService) {
 		this.startPage = startPage;
 		this.dataService = dataService;
-		this.creditmanager = creditmanager;
 	}
 
 	/**

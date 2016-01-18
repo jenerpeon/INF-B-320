@@ -163,7 +163,7 @@ public class ManagementController {
 	public String articleManagement(ModelMap model) {
 		Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "name", Sort.NullHandling.NATIVE));
 		model.addAttribute("prod50", dataService.getConcreteProductRepository().findAll(sorting));
-		model.addAttribute("inventory", dataService.getInventory());
+		model.addAttribute("inventory", dataService.getConcreteInventory());
 
 		return "changecatalog";
 	}
