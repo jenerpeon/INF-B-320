@@ -3,7 +3,6 @@
 #ignore packages
 *.tar.xz
 #ignore java builds files
-*.jar
 *.war
 *.swo
 #ignore vagrant meta files
