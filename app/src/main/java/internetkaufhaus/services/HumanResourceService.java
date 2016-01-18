@@ -85,7 +85,7 @@ public class HumanResourceService {
 				.equals(admin.map(UserAccount::getIdentifier).get()));
 		dataService.getUserAccountManager()
 				.disable(dataService.getConcreteUserAccountRepository().findOne(id).getUserAccount().getId());
-		dataService.getConcreteUserAccountRepository().delete(id);
+		//dataService.getConcreteUserAccountRepository().delete(id);
 		return true;
 	}
 

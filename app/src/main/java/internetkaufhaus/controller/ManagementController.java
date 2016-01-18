@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -506,7 +508,7 @@ public class ManagementController {
 
 		String mail = "Sehr geehrte(r) " + o.getUserAccount().getFirstname() + " " + o.getUserAccount().getLastname()
 				+ "!\n";
-		mail += "Ihre unten aufgeführte Bestellung vom " + o.getDateCreated().toString()
+		mail += "Ihre unten aufgeführte Bestellung vom " + LocalDateTime.ofEpochSecond(o.getDateOrdered(), 0, ZoneOffset.ofHours(1))
 				+ " wurde von einem unserer Mitarbeiter bearbeitet und ist nun auf dem Weg zu Ihnen!\n";
 		mail += "Es handelt sich um Ihre Bestellung folgender Artikel:";
 		Iterator<OrderLine> i = o.getOrderLines().iterator();
